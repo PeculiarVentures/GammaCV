@@ -19,7 +19,7 @@ export default (mode) => {
       new CopyWebpackPlugin([
         {
           from: path.join(__dirname, `../../${CONFIG.SRC_FOLDER}/assets/static`),
-          to: './assets',
+          to: './',
         },
       ]),
     ],
