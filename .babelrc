@@ -1,0 +1,15 @@
+{
+  "presets": [
+    [
+      "env",
+      { "modules": false }
+    ]
+  ],
+  "compact": "false",
+  "plugins": [],
+  "env": {
+    "test": {
+      "presets": [["env"]]
+    }
+  }
+}

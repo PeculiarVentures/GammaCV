@@ -1,0 +1,66 @@
+.main_content
+	display: grid
+	grid-template-columns: repeat(3, 1fr)
+	grid-auto-rows: 100px
+	grid-gap: 20px
+
+.plate_container
+	cursor: pointer
+	animation: showAnim 0.4s cubic-bezier(0,1.85,1,1.07) forwards
+
+.plate
+	animation: opacity 0.4s cubic-bezier(0,1.85,1,1.07) forwards
+	width: 100%
+	height: 100%
+	border: 1px solid rgba(214,219,222,0.15)
+	box-shadow: 0 4px 10px 0 rgba(64,72,79,0.1)
+	border-radius: 8px
+	position: relative
+	opacity: 0
+	transition: box-shadow .3s, transform .3s
+	padding: 20px
+	background: #fff
+	white-space: nowrap
+	overflow: hidden
+	-ms-text-overflow: ellipsis
+	text-overflow: ellipsis
+	&:before
+		content: ''
+		display: inline-block
+		vertical-align: middle
+		height: 100%
+	&:focus
+		z-index: 1
+		transform: scale(1.05)
+		box-shadow: 0 4px 30px 0 rgba(64,72,79,0.15)
+	&:hover
+		z-index: 1
+		transform: scale(1.05)
+		box-shadow: 0 4px 30px 0 rgba(64,72,79,0.15)
+	&:active
+		transform: scale(0.95)
+		box-shadow: 0 3px 7px 0 rgba(64,72,79,0.08)
+	& > *,
+	&.link
+		display: inline-block
+		vertical-align: middle
+		color: #898989
+		font-size: 15px
+
+@keyframes showAnim
+	0%
+		opacity: 0
+		transform: scale(0.8)
+	100%
+		opacity: 1
+		transform: scale(1)
+
+@keyframes opacity
+	0%
+		opacity: 0
+	100%
+		opacity: 1
+
+@media #{$mobile_sizes}
+	.main_content
+		grid-template-columns: repeat(1, 1fr)

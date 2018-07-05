@@ -1,0 +1,32 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8.2.1-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}-{{ checksum "app/package.json" }}
+      - run:
+          name: install-npm-dependencies
+          command: 'npm install && cd app && npm install'
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}-{{ checksum "app/package.json" }}
+          paths:
+            - /node_modules
+            - /app/node_modules
+      - run:
+          name: run-lint-command
+          command: 'npm run lint'
+      - run:
+          name: run-test-command
+          command: 'npm run test'
+      - deploy:
+          name: deploy-to-gh-pages
+          when: on_success
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              # Deploy to gh-pages
+              cd app && npm run deploy:gh-pages
+            fi

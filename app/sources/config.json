@@ -1,0 +1,66 @@
+{
+  "docs": [
+    {
+      "group": "Basics",
+      "items": [
+        {
+          "name": "Get Started",
+          "path": "./docs/get_started.md"
+        },
+        {
+          "name": "Create operation",
+          "path": "./docs/create_operation.md"
+        },
+        {
+          "name": "Contributing",
+          "path": "../../CONTRIBUTING.md"
+        }
+      ]
+    },
+    {
+      "group": "API",
+      "items": [
+        { "path": "../../lib/program/tensor.js" },
+        { "path": "../../lib/program/session.js" },
+        { 
+          "name": "GLSL Chunks",
+          "path": "../../lib/program/glsl/chunks/index.js"
+        }
+      ]
+    },
+    {
+      "group": "Image processing",
+      "items": [
+        { "path": "../../lib/ops/downsample/index.js" },
+        { "path": "../../lib/ops/gaussian_blur/index.js" },
+        { "path": "../../lib/ops/grayscale/index.js" },
+        { "path": "../../lib/ops/norm/index.js" },
+        { "path": "../../lib/ops/color_segmentation/index.js" },
+        { "path": "../../lib/ops/hsv_color/index.js" }
+      ]
+    }, {
+      "group": "Image derivative",
+      "items": [
+        { "path": "../../lib/ops/sobel_operator/index.js" }
+      ]
+    }, {
+      "group": "Feature extraction",
+      "items": [
+        { "path": "../../lib/ops/hog/index.js" },
+        { "path": "../../lib/ops/canny_edges/index.js" },
+        { "path": "../../lib/ops/skin_test/index.js" },
+        { "path": "../../lib/ops/motion_detect/index.js" },
+        { "path": "../../lib/ops/swt/index.js" }
+      ]
+    }, {
+      "group": "Utils",
+      "items": [
+        { "path": "../../lib/ops/mean_std/index.js" },
+        { "path": "../../lib/ops/minmax/index.js" },
+        { "path": "../../lib/ops/sliding_window/index.js" },
+        { "path": "../../lib/ops/concat/index.js" },
+        { "path": "../../lib/ops/cast/index.js" }
+      ]
+    }
+  ]
+}

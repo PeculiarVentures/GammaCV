@@ -1,0 +1,3 @@
+--timeout 15000
+--recursive test
+--require babel-core/register

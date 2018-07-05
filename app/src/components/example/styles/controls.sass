@@ -1,0 +1,118 @@
+.padding
+  padding-bottom: calc(108.5% + 20px)
+
+.controls_wrapper
+  position: absolute
+  top: 0
+  left: 0
+  width: 100%
+  z-index: 5
+  height: 100%
+  border-radius: 8px
+  border: 1px solid #F1F3F8
+
+.header
+  padding: 20px
+  border-bottom: 1px solid #F1F3F8
+
+.title
+  width: calc(100% - 60px)
+  display: inline-block
+  vertical-align: top
+
+.reset
+  cursor: pointer
+  transition: opacity .3s
+  display: inline-block
+  vertical-align: top
+  &:hover
+    opacity: .6 
+
+.groups
+  padding: 20px
+  height: calc(100% - 69px)
+  overflow: auto
+  -webkit-overflow-scrolling: touch
+
+.group_name
+  margin-bottom: 21px
+
+.group
+  margin-bottom: 36px
+  border-bottom: 1px solid #F1F3F8
+
+.group_item
+  text-align: left
+  margin-bottom: 14px
+
+  &:before
+    display: inline-block
+    height: 100%
+    vertical-align: middle
+    content: ''
+
+.group_item_name
+  width: 98px
+  overflow: hidden
+  text-overflow: ellipsis
+  white-space: nowrap
+  display: inline-block
+  vertical-align: middle
+  margin-right: 20px
+
+.group_item_value
+  width: 40px
+  margin-left: 15px
+  display: inline-block
+  vertical-align: middle
+
+.tabs
+  display: inline-block
+  vertical-align: middle
+  width: calc(100% - 160px)
+
+.slider
+  width: calc(100% - 205px)
+  display: inline-block
+  vertical-align: middle
+
+.icon
+  margin-right: 10px
+  width: 22px
+  display: inline-block
+  vertical-align: middle
+
+.m_disabled
+  pointer-events: none
+  opacity: .5
+
+@media #{$mobile_sizes}
+  .padding
+    padding-bottom: calc(100vh - 60px)
+
+  .controls_wrapper
+    border-radius: 0
+    border: none
+
+  .header
+    padding: 15px 30px
+    border-bottom: 1px solid rgba(245, 246, 249, 0.19)
+
+  .groups
+    height: calc(100% - 59px)
+    padding: 30px
+
+  .title
+    color: #F4F5F9!important
+
+  .group
+    border-bottom: none
+
+  .group_name
+    margin-bottom: 16px
+
+  .group_item_name
+    color: #F4F5F9!important
+
+  .group_item_value
+    color: #F4F5F9!important

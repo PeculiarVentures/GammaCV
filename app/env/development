@@ -1,0 +1,3 @@
+NODE_ENV=development
+URL=http://localhost
+PORT=3000

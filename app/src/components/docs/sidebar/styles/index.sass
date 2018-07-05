@@ -1,0 +1,72 @@
+.sidebar_wrapper
+  width: 350px
+  border-right: 1px solid rgba(203, 207, 215, .15)
+  height: 100%
+  display: inline-block
+  vertical-align: top
+  padding: 0
+  background-color: rgba(244, 245, 249, 0.5)
+
+.parts_list
+  padding: 64px 48px 0
+
+.empty
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+
+.search_container
+  padding: 25px 25px 55px
+
+.search_value
+  white-space: nowrap
+  overflow: hidden
+  max-width: 250px
+  text-overflow: ellipsis
+
+.line
+  margin: 15px 40px 15px 20px
+  height: 1px
+
+.nav
+  position: relative
+  height: calc(100% - 125px)
+  overflow: auto
+  padding: 0 0 60px
+  -webkit-overflow-scrolling: touch
+
+.sub_list
+  padding: 0 48px
+  margin-bottom: 35px
+  &:last-child
+    margin-bottom: 0
+
+.title
+  margin-bottom: 5px
+
+.item
+  line-height: 30px !important
+  transition: opacity 200ms
+  cursor: pointer
+  display: block
+  &:hover
+    opacity: .6
+  &:focus
+    opacity: .6
+
+.active_sub_link
+  cursor: default !important
+  pointer-events: none !important
+  font-weight: 600 !important
+  opacity: 1 !important
+
+.active_link
+  cursor: default !important
+  pointer-events: none !important
+  opacity: 1 !important
+  color: #373D4D !important
+
+@media #{$tablet_sizes}
+  .sidebar_wrapper
+    width: 280px

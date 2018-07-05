@@ -1,0 +1,13 @@
+{
+  "presets": [
+    "env",
+    "stage-0",
+    "react"
+  ],
+  "compact": "false",
+  "plugins": [
+    "dynamic-import-node",
+    "transform-runtime"
+  ],
+  "env": {}
+}

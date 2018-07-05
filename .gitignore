@@ -1,0 +1,13 @@
+.DS_Store
+node_modules
+dst/
+.idea
+.vscode
+*.log
+compiled_env.json
+package-lock.json
+*.sketch
+dist/
+dist-es6/
+app/_data
+.backup

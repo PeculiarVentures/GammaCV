@@ -1,0 +1,87 @@
+.main_page_wrapper
+  -webkit-overflow-scrolling: touch
+  height: calc(100% - 80px)
+  overflow: auto
+
+.wrapper
+  padding: 100px 0 170px
+  position: relative
+
+.cont
+  -webkit-overflow-scrolling: touch
+  min-height: calc(100% - 80px)
+
+.header
+  z-index: 2
+  width: 100%
+  position: absolute
+  top: 0
+  left: 0
+
+.main_container
+  padding: 0 200px
+
+.content
+  max-width: 770px
+
+.title
+  margin-bottom: 40px
+
+.advantages
+  padding: 100px 200px 125px
+
+.adv_cont
+  width: 100%
+
+.adv_item
+  display: inline-block
+  vertical-align: top
+  margin-right: 7.5vw
+  width: calc((100% - 15vw) / 3)
+
+  &:last-child
+    margin-right: 0
+
+.icon_container
+  height: 40px
+  margin-bottom: 20px
+
+.compact_icon
+  width: 36px
+
+.fast_icon
+  width: 40px
+
+.cross_icon
+  width: 50px
+
+@media #{$mobile_sizes}
+  .main_page_wrapper
+    height: 100%
+  .wrapper
+    padding: 148px 0 94px
+
+  .main_container
+    padding: 0 30px
+
+  .advantages
+    padding: 93px 30px
+
+  .adv_item
+    display: block
+    width: 100%
+    margin-right: 0
+    margin-bottom: 80px
+
+    &:last-child
+      margin-bottom: 0
+
+  .icon
+    margin-bottom: 17px
+
+@media #{$tablet_sizes}
+  .advantages
+    padding: 100px 70px 120px
+
+  .main_container
+    padding: 0 70px

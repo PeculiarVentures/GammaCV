@@ -1,0 +1,51 @@
+.main
+  max-width: 900px
+  width: 100%
+  display: inline-block
+  h1, h2, h3, h4, h5, h6
+    margin-top: 24px
+    margin-bottom: 16px
+    font-weight: 600
+    line-height: 1.25
+  ul, ol
+    padding-left: 2em
+  ul
+    ul, ol
+      margin-top: 0
+      margin-bottom: 0
+  ol
+    ol, ul
+      margin-top: 0
+      margin-bottom: 0
+  li
+    > p
+      margin-top: 16px
+    + li
+      margin-top: 0.25em
+
+  p, ul, ol, dl, table, pre
+      margin-top: 0
+      margin-bottom: 16px
+
+  blockquote
+    margin: 0
+    padding: 1em
+    & > p
+      margin: 0
+    >
+    \:first-child
+      margin-top: 0
+      \:last-child
+        margin-bottom: 0
+  a
+    background-color: transparent
+    -webkit-text-decoration-skip: objects
+    text-decoration: none
+    &:hover
+      text-decoration: underline
+    &:active, &:hover
+      outline-width: 0
+
+@media #{$mobile_sizes}
+  .main
+    width: 100%

@@ -1,0 +1,50 @@
+.sidebar_wrapper
+  -webkit-overflow-scrolling: touch
+  width: 100%
+  overflow: auto
+  height: 100%
+  display: inline-block
+  vertical-align: top
+  padding: 60px 40px 38px
+
+.parts_list
+  padding: 0
+  margin-bottom: 35px
+
+.line
+  margin: 15px 0 15px 0
+  height: 1px
+
+.nav
+  -webkit-overflow-scrolling: touch
+  padding-bottom: 20px
+
+.sub_list
+  padding: 0
+  margin-bottom: 35px
+  &:last-child
+    margin-bottom: 0
+
+.title
+  margin-bottom: 4px
+
+.item
+  line-height: 30px !important
+  transition: opacity 200ms
+  cursor: pointer
+  display: block
+  &:hover
+    opacity: .6
+  &:focus
+    opacity: .6
+
+.active_sub_link
+  cursor: default !important
+  pointer-events: none !important
+  font-weight: 600 !important
+  opacity: 1 !important
+
+.active_link
+  cursor: default !important
+  pointer-events: none !important
+  opacity: 1 !important
