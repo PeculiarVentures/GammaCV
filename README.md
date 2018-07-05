@@ -33,7 +33,7 @@ This assumes you are using [npm](https://www.npmjs.com/) as your package manager
 You can find the GammaCV documentation [on the website](https://gammacv.com/docs).
 
 ## Want to help?
-Want to file a bug, contribute some code, or improve documentation? Excellent! Read up on our guidelines for [contribution](https://github.com/peculaiarventures/gammacv/blob/master/CONTIBUTING.md).
+Want to file a bug, contribute some code, or improve documentation? Excellent! Read up on our guidelines for [contribution](https://github.com/PeculiarVentures/GammaCV/blob/master/CONTRIBUTING.md).
 
 ## Core Contributors
 [Arkadiy Pilguk](https://github.com/apilguk),
