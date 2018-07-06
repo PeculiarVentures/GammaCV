@@ -1,4 +1,6 @@
-# <a href='https://gammacv.com'><img src='https://github.com/PeculiarVentures/GammaCV/blob/master/logo/gammacv-logo.png' height='60' alt='GammaCV Logo' aria-label='GammaCV Site' /></a>
+# <a href='https://gammacv.com'><img src='https://github.com/PeculiarVentures/GammaCV/blob/master/static/gammacv-logo.png' height='60' alt='GammaCV Logo' aria-label='GammaCV Site' /></a>
+
+# <a href='https://gammacv.com'><img src='https://github.com/PeculiarVentures/GammaCV/blob/master/static/example-lines-extract.gif' width='890' alt='Lines Extraction Example' aria-label='Lines Extraction Example' /></a>
 
 #### GammaCV is a WebGL accelerated Computer Vision library for modern web applications. 
 
