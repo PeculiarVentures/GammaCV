@@ -30,7 +30,7 @@ const RootShell = props => (
       <meta
         name="Keywords"
         content="computer vision, WebGL, javascript"
-      /> 
+      />
       <style dangerouslySetInnerHTML={{ __html: "@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&subset=cyrillic');" }} />
       <style dangerouslySetInnerHTML={{ __html: props.inlineStyles }} />
       {props.initRollbar && (
