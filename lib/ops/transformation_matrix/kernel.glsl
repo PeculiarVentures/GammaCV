@@ -1,3 +1,11 @@
+/**
+ * @license MIT
+ * @author Arkadiy Pilguk(apilguk@gmail.com)
+ * @author Mihail Zachepilo(mihailzachepilo@gmail.com)
+ * Copyright 2018 Peculiar Ventures and Pentatonica.
+ * All rights reserved.
+ */
+
 vec2 getPoint(bool tx, int pn) {
   if (tx) {
     return pickValue_tPoints(float(pn), 0.0).xy;

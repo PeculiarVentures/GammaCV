@@ -1,3 +1,11 @@
+/**
+ * @license MIT
+ * @author Arkadiy Pilguk(apilguk@gmail.com)
+ * @author Mihail Zachepilo(mihailzachepilo@gmail.com)
+ * Copyright 2018 Peculiar Ventures and Pentatonica.
+ * All rights reserved.
+ */
+
 float A = 180.0 / 9.0; // size of channel in deg
 float S = 3.0;
 
