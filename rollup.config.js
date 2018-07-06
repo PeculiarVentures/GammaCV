@@ -5,8 +5,7 @@ import json from 'rollup-plugin-json';
 import babel from 'rollup-plugin-babel';
 import { version } from './package.json';
 
-const banner = `
-/**
+const banner = `/**
  * GammaCV v${version}
  * @license MIT
  * @author Arkadiy Pilguk(apilguk@gmail.com)
@@ -76,15 +75,15 @@ export default [
   getConfig(
     'index.js',
     [],
-    'dist/es',
-    'index',
+    'dist',
+    'index.es',
     FORMATS.ES,
   ),
   getConfig(
     'index.js',
     [uglify(uglifyParams)],
-    'dist/es',
-    'index.min',
+    'dist',
+    'index.es.min',
     FORMATS.ES,
   ),
 ];

@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
-  "jsnext:main": "dist/es/index.js",
-  "module": "dist-es6/index.js",
+  "jsnext:main": "dist/index.es.js",
+  "module": "dist/index.es.js",
   "scripts": {
     "prebuild": "npm run clean",
     "build": "rollup -c rollup.config.js",
@@ -21,10 +21,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/PeculiarVentures/GammaCV.git"
+    "url": "https://github.com/PeculiarVentures/GammaCV"
   },
-  "author": "",
+  "author": {
+    "name": "Peculiar Ventures",
+    "url": "https://peculiarventures.com"
+  },
   "license": "MIT",
+  "contributors": [
+    { "name": "Mihail Zachepilo", "email": "mihailzachepilo@gmail.com" },
+    { "name": "Arkadiy Pilguk", "email": "apilguk@gmail.com" }
+  ],
   "bugs": {
     "url": "https://github.com/PeculiarVentures/GammaCV/issues"
   },
