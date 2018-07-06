@@ -8,7 +8,11 @@ import { version } from './package.json';
 const banner = `
 /**
  * GammaCV v${version}
- * Copyright ${new Date().getFullYear()}
+ * @license MIT
+ * @author Arkadiy Pilguk(apilguk@gmail.com)
+ * @author Mihail Zachepilo(mihailzachepilo@gmail.com)
+ * Copyright 2018 Peculiar Ventures and Pentatonica.
+ * All rights reserved.
  */
 `;
 
@@ -47,7 +51,7 @@ function getConfig(
       {
         file: `${outputFolder}/${outputName}.js`,
         format,
-        name: 'LibCV',
+        name: 'GammaCV',
         banner,
       },
     ],
