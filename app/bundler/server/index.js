@@ -11,6 +11,7 @@ export default (mode, config) => {
       new WebpackDevServer(webpack(config), {
         publicPath: '/',
         hot: true,
+        https: true,
         historyApiFallback: true,
         stats: {
           colors: true,
