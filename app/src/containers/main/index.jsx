@@ -33,6 +33,18 @@ const MainPage = (props, { theme, intl }) => {
           theme.fill_black,
         )}
         >
+          <div
+            className={classNames(
+              s.css_gradients,
+              s.orangetopink,
+            )}
+          />
+          <div
+            className={classNames(
+              s.css_gradients,
+              s.tealtopink,
+            )}
+          />
           <div className={s.main_container}>
             <div className={s.content}>
               <Typography

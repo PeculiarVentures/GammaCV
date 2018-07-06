@@ -14,11 +14,23 @@ import MobileSidebar from '../docs/mobile_sidebar';
 import s from './styles/index.sass';
 
 class Header extends Component {
+  static propTypes = {
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    }),
+  }
+
   static contextTypes = {
     theme: PropTypes.object,
     intl: PropTypes.object,
     device: PropTypes.object,
-  };
+  }
+
+  static defaultProps = {
+    location: {
+      pathname: '',
+    },
+  }
 
   state = {
     showSidebar: false,
@@ -39,12 +51,19 @@ class Header extends Component {
   }
 
   render() {
+    const { location } = this.props;
     const { theme, device, intl } = this.context;
     const { showSidebar } = this.state;
 
     return (
       <div
-        className={classNames(s.wrapper, theme.fill_black)}
+        className={classNames(
+          s.wrapper,
+          {
+            [s.wrapper_main]: location.pathname === '/',
+            [theme.fill_black]: location.pathname !== '/',
+          },
+        )}
       >
         {device.type === 'mobile' && showSidebar && (
           <div className={s.sidebar}>

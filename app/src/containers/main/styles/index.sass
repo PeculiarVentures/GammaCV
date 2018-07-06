@@ -1,11 +1,43 @@
-.main_page_wrapper
-  -webkit-overflow-scrolling: touch
-  height: calc(100% - 80px)
-  overflow: auto
+$color1: #00D093
+$color2: #8F70FA
+$color3: #FF6788
+$threewidth: 300%
+$animTime: 7s
+
+@keyframes pulse-opacity
+  0%
+    opacity: .2
+  50%
+    opacity: .8
+  100%
+    opacity: .2
+
+@keyframes reverse-pulse-opacity
+  0%
+    opacity: .8
+  50%
+    opacity: .2
+  100%
+    opacity: .8
 
 .wrapper
-  padding: 100px 0 170px
+  padding: 180px 0 170px
   position: relative
+
+.css_gradients
+  position: absolute
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  &.orangetopink
+    background-image: -webkit-radial-gradient(center $threewidth, rgba($color2, .9) 10%, rgba($color3, .6) $threewidth/4)
+    background-image: radial-gradient(center $threewidth, rgba($color2, .9) 10%, rgba($color3, .6) $threewidth/4)
+    animation: reverse-pulse-opacity $animTime linear infinite
+  &.tealtopink
+    background-image: -webkit-linear-gradient(top left, rgba($color1, .8), rgba($color3, .3))
+    background-image: linear-gradient(top left, rgba($color1, .8), rgba($color3, .3))
+    animation: pulse-opacity $animTime linear infinite
 
 .cont
   -webkit-overflow-scrolling: touch
@@ -20,6 +52,7 @@
 
 .main_container
   padding: 0 200px
+  position: relative
 
 .content
   max-width: 770px
