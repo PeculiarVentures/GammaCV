@@ -24,7 +24,7 @@ export default {
         default: 0.1,
       },
       c: {
-        name: 'Chanel',
+        name: 'Channel',
         type: 'constant',
         min: 0,
         max: 2,

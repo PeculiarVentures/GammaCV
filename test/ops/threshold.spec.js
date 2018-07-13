@@ -13,7 +13,7 @@ describe('Threshold', () => {
     sess = new gm.Session();
   });
 
-  it('Chanel R', async () => {
+  it('Channel R', async () => {
     const input = new gm.Tensor('uint8', [1, 1, 4], new Uint8Array([110, 120, 130, 255]));
     const op = gm.threshold(input, 0.4, 0);
     const out = gm.tensorFrom(op);
@@ -27,7 +27,7 @@ describe('Threshold', () => {
     ));
   });
 
-  it('Chanel G', async () => {
+  it('Channel G', async () => {
     const input = new gm.Tensor('uint8', [1, 1, 4], new Uint8Array([110, 120, 130, 255]));
     const op = gm.threshold(input, 0.5, 1);
     const out = gm.tensorFrom(op);
@@ -41,7 +41,7 @@ describe('Threshold', () => {
     ));
   });
 
-  it('Chanel B', async () => {
+  it('Channel B', async () => {
     const input = new gm.Tensor('uint8', [1, 1, 4], new Uint8Array([110, 120, 130, 255]));
     const op = gm.threshold(input, 0.5, 2);
     const out = gm.tensorFrom(op);
