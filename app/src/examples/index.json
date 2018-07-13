@@ -26,6 +26,10 @@
         "type": "video",
         "name": "HSV Color Converter",
         "path": "hsv_color"
+      }, {
+        "type": "video",
+        "name": "Threshold",
+        "path": "threshold"
       }
     ]
   }, {
