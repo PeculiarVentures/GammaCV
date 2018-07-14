@@ -36,7 +36,8 @@
         { "path": "../../lib/ops/grayscale/index.js" },
         { "path": "../../lib/ops/norm/index.js" },
         { "path": "../../lib/ops/color_segmentation/index.js" },
-        { "path": "../../lib/ops/hsv_color/index.js" }
+        { "path": "../../lib/ops/hsv_color/index.js" },
+        { "path": "../../lib/ops/threshold/index.js" }
       ]
     }, {
       "group": "Image derivative",

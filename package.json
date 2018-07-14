@@ -29,8 +29,14 @@
   },
   "license": "MIT",
   "contributors": [
-    { "name": "Mihail Zachepilo", "email": "mihailzachepilo@gmail.com" },
-    { "name": "Arkadiy Pilguk", "email": "apilguk@gmail.com" }
+    {
+      "name": "Mihail Zachepilo",
+      "email": "mihailzachepilo@gmail.com"
+    },
+    {
+      "name": "Arkadiy Pilguk",
+      "email": "apilguk@gmail.com"
+    }
   ],
   "bugs": {
     "url": "https://github.com/PeculiarVentures/GammaCV/issues"
