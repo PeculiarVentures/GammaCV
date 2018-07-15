@@ -41,5 +41,5 @@ vec4 operation(float y, float x) {
 
   float magniture = sqrt((dx * dx) + (dy * dy));
 
-	return vec4(magniture, dx, dy, 1.0);
+	return vec4(magniture, dx, dy, dx * dy);
 }
