@@ -40,6 +40,7 @@ vec4 operation(float y, float x) {
   dy += +1.0 * pickScalarValue_tSrc(y + wk, x + wk);
 
   float magniture = sqrt((dx * dx) + (dy * dy));
+  float theta = atan(dy / dx);
 
-	return vec4(magniture, dx, dy, dx * dy);
+	return vec4(magniture, dx, dy, theta);
 }
