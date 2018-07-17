@@ -19,9 +19,9 @@ vec4 operation(float y, float x) {
   for (float dx = 0.0; dx < KW; dx += SW) {
     for (float dy = 0.0; dy < KH; dy += SH) {
       float v = pickValue_tSrc((y - dy), (x - dx)).r;
+      float m = pickValue_tStructureElement(dy, dx).r;
 
-
-      if (v < value) {
+      if (v < value && m > 0.0) {
         value = v;
       }
     }
