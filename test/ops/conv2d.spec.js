@@ -1,7 +1,8 @@
 import testImage from '../assets/lena.png';
 import * as gm from '../../lib';
+import { arrayToTexture } from '../../lib/program/utils';
 
-describe.only('Convolution', () => {
+describe('Convolution', () => {
   let sess;
   const setup = (input, kernel) => {
     const op = gm.conv2d(input, kernel);
@@ -25,11 +26,11 @@ describe.only('Convolution', () => {
 
   it('Identity kernel', async () => {
     const input = await gm.imageTensorFromURL(testImage);
-    const identityKernel = new gm.Tensor('float32', [3, 3, 4], new Float32Array([
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    ]));
+    const identityKernel = new gm.Tensor('float32', [3, 3, 4], new Float32Array(arrayToTexture([
+      0, 0, 0,
+      0, 1, 0,
+      0, 0, 0,
+    ])));
     const test = setup(input, identityKernel);
 
     sess.runOp(test.op, 0, test.output);

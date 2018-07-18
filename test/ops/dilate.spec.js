@@ -4,6 +4,7 @@ import * as gm from '../../lib';
 import testImageSrc from '../assets/morphology_src.png';
 import testImageDilated from '../assets/morphology_dilated.png';
 import testImageDilatedCustomKernel from '../assets/morphology_dilated_custom_kernel.png';
+import { arrayToTexture } from '../../lib/program/utils';
 
 describe('Dilation', () => {
   let sess = null;
@@ -42,23 +43,13 @@ describe('Dilation', () => {
     const src = await gm.imageTensorFromURL(testImageSrc);
     const dilated = await gm.imageTensorFromURL(testImageDilatedCustomKernel);
 
-    const kernel = new gm.Tensor('float32', [5, 5, 4]);
-    const kernelMarix = [
-      [1, 1, 1, 1, 1],
-      [0, 1, 1, 1, 1],
-      [0, 0, 1, 1, 1],
-      [0, 0, 0, 1, 1],
-      [0, 0, 0, 0, 1],
-    ];
-
-    for (let x = 0; x < 5; x += 1) {
-      for (let y = 0; y < 5; y += 1) {
-        kernel.set(x, y, 0, kernelMarix[x][y]);
-        kernel.set(x, y, 1, kernelMarix[x][y]);
-        kernel.set(x, y, 2, kernelMarix[x][y]);
-        kernel.set(x, y, 3, kernelMarix[x][y]);
-      }
-    }
+    const kernel = new gm.Tensor('float32', [5, 5, 4], new Float32Array(arrayToTexture([
+      1, 1, 1, 1, 1,
+      0, 1, 1, 1, 1,
+      0, 0, 1, 1, 1,
+      0, 0, 0, 1, 1,
+      0, 0, 0, 0, 1,
+    ])));
 
     const op = gm.dilate(src, [5, 5], kernel);
     const out = gm.tensorFrom(op);
