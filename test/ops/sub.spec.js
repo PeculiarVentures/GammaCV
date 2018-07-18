@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import * as gm from '../../lib';
 
-describe.only('Substraction', () => {
+describe('Substraction', () => {
   let sess = null;
 
   beforeEach(async () => {
@@ -38,17 +38,17 @@ describe.only('Substraction', () => {
         A.set(x, y, 0, matrixA[x][y]);
         A.set(x, y, 1, matrixA[x][y]);
         A.set(x, y, 2, matrixA[x][y]);
-        A.set(x, y, 3, matrixA[x][y]);
+        A.set(x, y, 3, 1.0);
 
         B.set(x, y, 0, matrixB[x][y]);
         B.set(x, y, 1, matrixB[x][y]);
         B.set(x, y, 2, matrixB[x][y]);
-        B.set(x, y, 3, matrixB[x][y]);
+        B.set(x, y, 3, 1.0);
 
         C.set(x, y, 0, matrixC[x][y]);
         C.set(x, y, 1, matrixC[x][y]);
         C.set(x, y, 2, matrixC[x][y]);
-        C.set(x, y, 3, matrixC[x][y]);
+        C.set(x, y, 3, 1.0);
       }
     }
 

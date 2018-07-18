@@ -10,5 +10,5 @@ vec4 operation(float y, float x) {
   vec4 A = pickValue_tA(y, x);
   vec4 B = pickValue_tB(y, x);
 
-	return A - B;
+	return vec4(A.rgb - B.rgb, 1.0);
 }
