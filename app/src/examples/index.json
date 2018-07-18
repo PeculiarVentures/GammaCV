@@ -12,6 +12,11 @@
         "type": "video",
         "name": "Dilation",
         "path": "dilate"
+      },
+      {
+        "type": "video",
+        "name": "Extended Morphology",
+        "path": "morphology_ex"
       }
     ]
   },
