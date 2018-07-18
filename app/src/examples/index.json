@@ -1,70 +1,107 @@
 [
   {
+    "key": "morphology",
+    "name": "MORPHOLOGY",
+    "examples": [
+      {
+        "type": "video",
+        "name": "Erosion",
+        "path": "erode"
+      },
+      {
+        "type": "video",
+        "name": "Dilation",
+        "path": "dilate"
+      },
+      {
+        "type": "video",
+        "name": "Extended Morphology",
+        "path": "morphology_ex"
+      }
+    ]
+  },
+  {
     "key": "processing",
     "name": "PROCESSING",
-    "examples": [{
+    "examples": [
+      {
         "type": "video",
         "name": "Gaussian Blur",
         "path": "gaussian_blur"
-      }, {
+      },
+      {
         "type": "video",
         "name": "Downsample",
         "path": "downsample"
-      }, {
+      },
+      {
         "type": "video",
         "name": "Color Segmentation",
         "path": "color_segmentation"
-      }, {
+      },
+      {
         "type": "video",
         "name": "Normalization",
         "path": "norm"
-      }, {
+      },
+      {
         "type": "video",
         "name": "Histogram Equalization",
         "path": "histogram_equalization"
-      }, {
+      },
+      {
         "type": "video",
         "name": "HSV Color Converter",
         "path": "hsv_color"
-      }, {
+      },
+      {
         "type": "video",
         "name": "Threshold",
         "path": "threshold"
       }
     ]
-  }, {
+  },
+  {
     "key": "feature_extraction",
     "name": "Feature extraction",
-    "examples": [{
+    "examples": [
+      {
         "type": "video",
         "name": "Hog",
         "path": "hog"
-      }, {
+      },
+      {
         "type": "video",
         "name": "Canny Edges",
         "path": "canny_edges"
-      }, {
+      },
+      {
         "type": "video",
         "name": "Skin Test",
         "path": "skin_test"
-      }, {
+      },
+      {
         "type": "video",
         "name": "PCLinest",
         "path": "pc_lines"
-      }, {
+      },
+      {
         "type": "video",
         "name": "Extract Mean and Std",
         "path": "extract_mean_std"
-      }, {
+      },
+      {
         "type": "video",
         "name": "Extract Histogram",
         "path": "histogram"
       }
     ]
-  }, {
+  },
+  {
     "key": "image_derivatives",
     "name": "Image Derivatives",
-    "examples": [{
+    "examples": [
+      {
         "type": "video",
         "name": "Sobel Operator",
         "path": "sobel_operator"
