@@ -3,7 +3,7 @@ import * as gm from '../../../lib';
 export default {
   op: (input, params) => {
     let pipeline = input;
-    const kernelGenerator = gm.convolutionKernels[params.CONV2D.kernel];
+    const kernelGenerator = gm.kernels[params.CONV2D.kernel];
 
     pipeline = gm.conv2d(
       pipeline,
@@ -20,7 +20,7 @@ export default {
       kernel: {
         name: 'Kernel',
         type: 'constant',
-        values: Object.keys(gm.convolutionKernels).map(name => ({ name, value: name })),
+        values: Object.keys(gm.kernels).map(name => ({ name, value: name })),
       },
       factor: {
         name: 'Factor',
