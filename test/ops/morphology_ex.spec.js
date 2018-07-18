@@ -25,7 +25,7 @@ describe('MorphTransform', () => {
     sess = new gm.Session();
   });
 
-  it('tophat', async () => {
+  it('blackhat', async () => {
     const src = await gm.imageTensorFromURL(testImageSrc);
     const open = await gm.imageTensorFromURL(testImageBlackhat);
     const op = gm.morphologyEx(src, 'blackhat', [5, 5]);
@@ -45,7 +45,7 @@ describe('MorphTransform', () => {
     ));
   });
 
-  it('tophat custom kernel', async () => {
+  it('blackhat custom kernel', async () => {
     const src = await gm.imageTensorFromURL(testImageSrc);
     const open = await gm.imageTensorFromURL(testImageBlackhatCustomKernel);
 
