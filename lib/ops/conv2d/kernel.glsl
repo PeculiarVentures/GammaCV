@@ -6,21 +6,19 @@
  * All rights reserved.
  */
 
-const int mWidth = int(KERNEL_WIDTH);
-const int hWidth = (mWidth - 1) / 2;
-const int wHeight = int(KERNEL_HEIGHT);
-const int hHeight = (wHeight - 1) / 2;
+const float hWidth = (KERNEL_WIDTH - 1.0) / 2.0;
+const float hHeight = (KERNEL_HEIGHT - 1.0) / 2.0;
 
 vec4 operation(float y, float x) {
   vec3 finalColour = vec3(0.0);
 
-  for (int dy=-hHeight; dy <= hHeight; dy += 1) {
-    for (int dx=-hWidth; dx <= hWidth; dx += 1) {
-      float k = pickValue_tKernel(float(dy + hHeight), float(dx + hWidth)).a;
+  for (float dy=-hHeight; dy <= hHeight; dy += 1.0) {
+    for (float dx=-hWidth; dx <= hWidth; dx += 1.0) {
+      vec3 k = pickValue_tKernel(float(dy + hHeight), float(dx + hWidth)).rgb;
 
-      finalColour += pickValue_tSrc(y * Y_STEP + float(dy), x * X_STEP + float(dx)).rgb * k;
+      finalColour += pickValue_tSrc(y + dy, x + dx).rgb * k;
     }
   }
 
-  return vec4(finalColour, 1.0);
+  return vec4(finalColour * factor + bias, 1.0);
 }
