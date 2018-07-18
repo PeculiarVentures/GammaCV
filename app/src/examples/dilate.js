@@ -4,7 +4,6 @@ export default {
   op: (input, params) => {
     let pipeline = input;
 
-
     pipeline = gm.dilate(pipeline, [params.DILATE.w, params.DILATE.h]);
 
     return pipeline;
