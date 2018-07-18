@@ -1,9 +1,9 @@
 import { assert } from 'chai';
 import { visualize } from '../test_utils';
 import * as gm from '../../lib';
-import openCVTestImageSrc from '../assets/opencv_morphology_test_src.png';
-import openCVTestImageDilated from '../assets/opencv_morphology_test_dilated.png';
-import openCVTestImageDilatedCustomKernel from '../assets/opencv_morphology_test_dilated_custom_kernel.png';
+import testImageSrc from '../assets/morphology_src.png';
+import testImageDilated from '../assets/morphology_dilated.png';
+import testImageDilatedCustomKernel from '../assets/morphology_dilated_custom_kernel.png';
 
 describe('Dilation', () => {
   let sess = null;
@@ -18,8 +18,8 @@ describe('Dilation', () => {
   });
 
   it('dilate', async () => {
-    const src = await gm.imageTensorFromURL(openCVTestImageSrc);
-    const dilated = await gm.imageTensorFromURL(openCVTestImageDilated);
+    const src = await gm.imageTensorFromURL(testImageSrc);
+    const dilated = await gm.imageTensorFromURL(testImageDilated);
 
     const op = gm.dilate(src, [5, 5]);
     const out = gm.tensorFrom(op);
@@ -39,8 +39,8 @@ describe('Dilation', () => {
   });
 
   it('dilate custom kernel', async () => {
-    const src = await gm.imageTensorFromURL(openCVTestImageSrc);
-    const dilated = await gm.imageTensorFromURL(openCVTestImageDilatedCustomKernel);
+    const src = await gm.imageTensorFromURL(testImageSrc);
+    const dilated = await gm.imageTensorFromURL(testImageDilatedCustomKernel);
 
     const kernel = new gm.Tensor('float32', [5, 5, 4]);
     const kernelMarix = [
@@ -60,7 +60,7 @@ describe('Dilation', () => {
       }
     }
 
-    const op = gm.dilate(src, [5, 5], [1, 1], kernel);
+    const op = gm.dilate(src, [5, 5], kernel);
     const out = gm.tensorFrom(op);
 
     sess.init(op);

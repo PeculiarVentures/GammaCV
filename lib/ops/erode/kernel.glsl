@@ -16,8 +16,8 @@ vec4 operation(float y, float x) {
   y = y + HKH;
   x = x + HKW;
 
-  for (float dx = 0.0; dx < KW; dx += SW) {
-    for (float dy = 0.0; dy < KH; dy += SH) {
+  for (float dx = 0.0; dx < KW; dx += 1.0) {
+    for (float dy = 0.0; dy < KH; dy += 1.0) {
       float v = pickValue_tSrc((y - dy), (x - dx)).r;
       float m = pickValue_tKernel(dy, dx).r;
 
