@@ -8,6 +8,10 @@
         "path": "gaussian_blur"
       }, {
         "type": "video",
+        "name": "Convolution",
+        "path": "conv2d"
+      }, {
+        "type": "video",
         "name": "Downsample",
         "path": "downsample"
       }, {
