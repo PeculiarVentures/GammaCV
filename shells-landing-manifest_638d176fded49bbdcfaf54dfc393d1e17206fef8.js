@@ -1,1 +1,0 @@
-webpackJsonp([11],{11:function(n,e,t){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=t(124),u=t.n(o);e.default=function(n){return u.a.resolve().then(function(){return u.a.all([n.mountTemplate("not_found","template"),n.mountLang("not_found")])}).then(function(){return n.localizeTemplate("not_found")})}}});
