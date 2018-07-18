@@ -40,6 +40,12 @@
         { "path": "../../lib/ops/threshold/index.js" }
       ]
     }, {
+      "group": "Morphology",
+      "items": [
+        { "path": "../../lib/ops/erode/index.js" },
+        { "path": "../../lib/ops/dilate/index.js" }
+      ]
+    }, {
       "group": "Image derivative",
       "items": [
         { "path": "../../lib/ops/sobel_operator/index.js" }
