@@ -5,10 +5,11 @@ export default {
     let pipeline = input;
 
     pipeline = gm.grayscale(pipeline);
+    pipeline = gm.downsample(pipeline, params.UPSAMPLE.coeficient, 'max');
     pipeline = gm.upsample(
       pipeline,
       params.UPSAMPLE.coeficient,
-      params.UPSAMPLE.type || 'near', // crutch until we have no select prop feature #46
+      params.UPSAMPLE.type || 'nearest', // crutch until we have no select prop feature #46
     );
 
     return pipeline;
@@ -26,12 +27,12 @@ export default {
         name: 'Coeficient', type: 'constant', min: 1, max: 5, step: 0.25, default: 1.75,
       },
       type: {
-        name: 'Type',
+        name: 'Interpolation',
         type: 'constant',
         values: [{
-          name: 'Nearest', value: 'near',
+          name: 'Nearest', value: 'nearest',
         }, {
-          name: 'Mean', value: 'mean',
+          name: 'Linear', value: 'linear',
         }],
       },
     },

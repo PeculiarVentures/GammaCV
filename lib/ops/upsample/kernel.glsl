@@ -10,16 +10,25 @@ vec4 operation(float y, float x) {
   vec4 value;
   
   if (S == 0.0) {
+    // Nearest neighbor
     value = pickValue_tSrc(floor(y / K), floor(x / K));
   } else {
-    float _y = y / K;
-    float _x = x / K;
+    // Linear
+    float _y = y / K - 0.501; // 501 to fix calculations for K=2,4...
+    float _x = x / K - 0.501;
     float fy = floor(_y);
     float fx = floor(_x);
     float cy = ceil(_y);
     float cx = ceil(_x);
+    float dcy = cy - _y;
+    float dcx = cx - _x;
+    float dfy = _y - fy;
+    float dfx = _x - fx;
 
-    value = (pickValue_tSrc(fy, fx) + pickValue_tSrc(cy, cx) + pickValue_tSrc(cy, fx) + pickValue_tSrc(fy, cx)) / 4.0;
+    value = pickValue_tSrc(fy, fx) * (dcy * dcx)
+    + pickValue_tSrc(cy, fx) * (dfy * dcx)
+    + pickValue_tSrc(cy, cx) * (dfy * dfx)
+    + pickValue_tSrc(fy, cx) * (dcy * dfx);
   }
 
 	return value;
