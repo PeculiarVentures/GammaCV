@@ -11,8 +11,6 @@ export default {
       params.GAUSSIANBLUR.sigma,
     );
 
-    window.gm = gm;
-
     return pipeline;
   },
   params: {
