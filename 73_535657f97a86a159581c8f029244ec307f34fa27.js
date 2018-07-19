@@ -1,0 +1,1 @@
+webpackJsonp([73],{528:function(e,t,a){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n=a(80);t.default={op:function(e,t){var a=e;return n.c(a,t.HSV.type)},params:{HSV:{type:{name:"Type",type:"constant",values:[{name:"RGB to HSV",value:"rgb_to_hsv"},{name:"HSV to RGB",value:"hsv_to_rgb"}]}}}}}});
