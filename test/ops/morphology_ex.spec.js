@@ -12,7 +12,6 @@ import testImageTophat from '../assets/morphology_tophat.png';
 import testImageTophatCustomKernel from '../assets/morphology_tophat_custom_kernel.png';
 import testImageBlackhat from '../assets/morphology_blackhat.png';
 import testImageBlackhatCustomKernel from '../assets/morphology_blackhat_custom_kernel.png';
-import { arrayToTexture } from '../../lib/program/utils';
 
 describe('MorphTransform', () => {
   let sess = null;
@@ -50,7 +49,7 @@ describe('MorphTransform', () => {
     const src = await gm.imageTensorFromURL(testImageSrc);
     const open = await gm.imageTensorFromURL(testImageBlackhatCustomKernel);
 
-    const kernel = new gm.Tensor('float32', [5, 5, 4], new Float32Array(arrayToTexture([
+    const kernel = new gm.Tensor('float32', [5, 5, 4], new Float32Array(gm.arrayToTexture([
       1, 1, 1, 1, 1,
       0, 1, 1, 1, 1,
       0, 0, 1, 1, 1,
@@ -99,7 +98,7 @@ describe('MorphTransform', () => {
     const src = await gm.imageTensorFromURL(testImageSrc);
     const open = await gm.imageTensorFromURL(testImageTophatCustomKernel);
 
-    const kernel = new gm.Tensor('float32', [5, 5, 4], new Float32Array(arrayToTexture([
+    const kernel = new gm.Tensor('float32', [5, 5, 4], new Float32Array(gm.arrayToTexture([
       1, 1, 1, 1, 1,
       0, 1, 1, 1, 1,
       0, 0, 1, 1, 1,
@@ -148,7 +147,7 @@ describe('MorphTransform', () => {
     const src = await gm.imageTensorFromURL(testImageSrc);
     const open = await gm.imageTensorFromURL(testImageGradientCustomKernel);
 
-    const kernel = new gm.Tensor('float32', [5, 5, 4], new Float32Array(arrayToTexture([
+    const kernel = new gm.Tensor('float32', [5, 5, 4], new Float32Array(gm.arrayToTexture([
       1, 1, 1, 1, 1,
       0, 1, 1, 1, 1,
       0, 0, 1, 1, 1,
@@ -197,7 +196,7 @@ describe('MorphTransform', () => {
     const src = await gm.imageTensorFromURL(testImageSrc);
     const close = await gm.imageTensorFromURL(testImageCloseCustomKernel);
 
-    const kernel = new gm.Tensor('float32', [5, 5, 4], new Float32Array(arrayToTexture([
+    const kernel = new gm.Tensor('float32', [5, 5, 4], new Float32Array(gm.arrayToTexture([
       1, 1, 1, 1, 1,
       0, 1, 1, 1, 1,
       0, 0, 1, 1, 1,
@@ -246,7 +245,7 @@ describe('MorphTransform', () => {
     const src = await gm.imageTensorFromURL(testImageSrc);
     const open = await gm.imageTensorFromURL(testImageOpenCustomKernel);
 
-    const kernel = new gm.Tensor('float32', [5, 5, 4], new Float32Array(arrayToTexture([
+    const kernel = new gm.Tensor('float32', [5, 5, 4], new Float32Array(gm.arrayToTexture([
       1, 1, 1, 1, 1,
       0, 1, 1, 1, 1,
       0, 0, 1, 1, 1,

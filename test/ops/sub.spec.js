@@ -1,6 +1,5 @@
 import { assert } from 'chai';
 import * as gm from '../../lib';
-import { arrayToTexture } from '../../lib/program/utils';
 
 describe('Substraction', () => {
   let sess = null;
@@ -15,17 +14,17 @@ describe('Substraction', () => {
   });
 
   it('sub', async () => {
-    const A = new gm.Tensor('float32', [3, 3, 4], new Float32Array(arrayToTexture([
+    const A = new gm.Tensor('float32', [3, 3, 4], new Float32Array(gm.arrayToTexture([
       1, 1, 1,
       1, 1, 1,
       1, 1, 1,
     ])));
-    const B = new gm.Tensor('float32', [3, 3, 4], new Float32Array(arrayToTexture([
+    const B = new gm.Tensor('float32', [3, 3, 4], new Float32Array(gm.arrayToTexture([
       0, 0, 2,
       0, 0, 2,
       0, 0, 2,
     ])));
-    const C = new gm.Tensor('float32', [3, 3, 4], new Float32Array(arrayToTexture([
+    const C = new gm.Tensor('float32', [3, 3, 4], new Float32Array(gm.arrayToTexture([
       1, 1, -1,
       1, 1, -1,
       1, 1, -1,

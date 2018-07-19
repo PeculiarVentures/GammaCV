@@ -69,4 +69,16 @@ describe('Utils: ', () => {
     assert.isTrue(gm.isValidGLSLVariableName('S'), 'Single character are allowed');
     assert.isTrue(gm.isValidGLSLVariableName('sFdaFdf'), 'Valid variable name');
   });
+
+  it('arrayToTexture', () => {
+    const res = gm.arrayToTexture([1, 2, 3]);
+
+    assert.deepEqual(res, [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3]);
+  });
+
+  it('arrayToTexture with specified alpha', () => {
+    const res = gm.arrayToTexture([1, 2, 3], 1);
+
+    assert.deepEqual(res, [1, 1, 1, 1, 2, 2, 2, 1, 3, 3, 3, 1]);
+  });
 });

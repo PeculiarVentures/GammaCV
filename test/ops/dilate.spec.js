@@ -4,7 +4,6 @@ import * as gm from '../../lib';
 import testImageSrc from '../assets/morphology_src.png';
 import testImageDilated from '../assets/morphology_dilated.png';
 import testImageDilatedCustomKernel from '../assets/morphology_dilated_custom_kernel.png';
-import { arrayToTexture } from '../../lib/program/utils';
 
 describe('Dilation', () => {
   let sess = null;
@@ -43,7 +42,7 @@ describe('Dilation', () => {
     const src = await gm.imageTensorFromURL(testImageSrc);
     const dilated = await gm.imageTensorFromURL(testImageDilatedCustomKernel);
 
-    const kernel = new gm.Tensor('float32', [5, 5, 4], new Float32Array(arrayToTexture([
+    const kernel = new gm.Tensor('float32', [5, 5, 4], new Float32Array(gm.arrayToTexture([
       1, 1, 1, 1, 1,
       0, 1, 1, 1, 1,
       0, 0, 1, 1, 1,

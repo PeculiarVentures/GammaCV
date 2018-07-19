@@ -4,7 +4,6 @@ import * as gm from '../../lib';
 import testImageSrc from '../assets/morphology_src.png';
 import testImageEroded from '../assets/morphology_eroded.png';
 import testImageErodedCustomKernel from '../assets/morphology_eroded_custom_kernel.png';
-import { arrayToTexture } from '../../lib/program/utils';
 
 describe('Erosion', () => {
   let sess = null;
@@ -42,7 +41,7 @@ describe('Erosion', () => {
     const src = await gm.imageTensorFromURL(testImageSrc);
     const eroded = await gm.imageTensorFromURL(testImageErodedCustomKernel);
 
-    const kernel = new gm.Tensor('float32', [5, 5, 4], new Float32Array(arrayToTexture([
+    const kernel = new gm.Tensor('float32', [5, 5, 4], new Float32Array(gm.arrayToTexture([
       1, 1, 1, 1, 1,
       0, 1, 1, 1, 1,
       0, 0, 1, 1, 1,
