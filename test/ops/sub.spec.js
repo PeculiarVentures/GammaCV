@@ -14,21 +14,21 @@ describe('Substraction', () => {
   });
 
   it('sub', async () => {
-    const A = new gm.Tensor('float32', [3, 3, 4], new Float32Array(gm.arrayToTexture([
+    const A = gm.tensorFromFlat([
       1, 1, 1,
       1, 1, 1,
       1, 1, 1,
-    ])));
-    const B = new gm.Tensor('float32', [3, 3, 4], new Float32Array(gm.arrayToTexture([
+    ], [3, 3, 4], 'float32');
+    const B = gm.tensorFromFlat([
       0, 0, 2,
       0, 0, 2,
       0, 0, 2,
-    ])));
-    const C = new gm.Tensor('float32', [3, 3, 4], new Float32Array(gm.arrayToTexture([
+    ], [3, 3, 4], 'float32');
+    const C = gm.tensorFromFlat([
       1, 1, -1,
       1, 1, -1,
       1, 1, -1,
-    ], 1)));
+    ], [3, 3, 4], 'float32', 1);
 
     const op = gm.sub(A, B);
     const out = gm.tensorFrom(op);

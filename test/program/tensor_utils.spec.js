@@ -156,4 +156,26 @@ describe('Tensor Utils', () => {
 
     assert.deepEqual(output, [0, 1, 2]);
   });
+
+  it('tensorFromFlat', () => {
+    const output = gm.tensorFromFlat([1, 2, 3], [1, 3, 4], 'float32');
+    const idealOutput = new gm.Tensor('float32', [1, 3, 4], new Float32Array([
+      1, 1, 1, 1,
+      2, 2, 2, 2,
+      3, 3, 3, 3,
+    ]));
+
+    gm.assert(gm.tensorAssertEqual(output, idealOutput), 'Tensors should be equal');
+  });
+
+  it('tensorFromFlat with specified alpha', () => {
+    const output = gm.tensorFromFlat([1, 2, 3], [1, 3, 4], 'float32', 1);
+    const idealOutput = new gm.Tensor('float32', [1, 3, 4], new Float32Array([
+      1, 1, 1, 1,
+      2, 2, 2, 1,
+      3, 3, 3, 1,
+    ]));
+
+    gm.assert(gm.tensorAssertEqual(output, idealOutput), 'Tensors should be equal');
+  });
 });

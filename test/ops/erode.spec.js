@@ -41,13 +41,13 @@ describe('Erosion', () => {
     const src = await gm.imageTensorFromURL(testImageSrc);
     const eroded = await gm.imageTensorFromURL(testImageErodedCustomKernel);
 
-    const kernel = new gm.Tensor('float32', [5, 5, 4], new Float32Array(gm.arrayToTexture([
+    const kernel = gm.tensorFromFlat([
       1, 1, 1, 1, 1,
       0, 1, 1, 1, 1,
       0, 0, 1, 1, 1,
       0, 0, 0, 1, 1,
       0, 0, 0, 0, 1,
-    ])));
+    ], [5, 5, 4], 'float32');
 
     const op = gm.erode(src, [5, 5], kernel);
     const out = gm.tensorFrom(op);
