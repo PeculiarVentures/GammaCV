@@ -37,13 +37,15 @@
         { "path": "../../lib/ops/norm/index.js" },
         { "path": "../../lib/ops/color_segmentation/index.js" },
         { "path": "../../lib/ops/hsv_color/index.js" },
-        { "path": "../../lib/ops/threshold/index.js" }
+        { "path": "../../lib/ops/threshold/index.js" },
+        { "path": "../../lib/ops/conv2d/index.js" }
       ]
     }, {
       "group": "Morphology",
       "items": [
         { "path": "../../lib/ops/erode/index.js" },
-        { "path": "../../lib/ops/dilate/index.js" }
+        { "path": "../../lib/ops/dilate/index.js" },
+        { "path": "../../lib/ops/morphology_ex/index.js" }
       ]
     }, {
       "group": "Image derivative",
