@@ -49,23 +49,13 @@ describe('MorphTransform', () => {
     const src = await gm.imageTensorFromURL(testImageSrc);
     const open = await gm.imageTensorFromURL(testImageBlackhatCustomKernel);
 
-    const kernel = new gm.Tensor('float32', [5, 5, 4]);
-    const kernelMarix = [
-      [1, 1, 1, 1, 1],
-      [0, 1, 1, 1, 1],
-      [0, 0, 1, 1, 1],
-      [0, 0, 0, 1, 1],
-      [0, 0, 0, 0, 1],
-    ];
-
-    for (let x = 0; x < 5; x += 1) {
-      for (let y = 0; y < 5; y += 1) {
-        kernel.set(x, y, 0, kernelMarix[x][y]);
-        kernel.set(x, y, 1, kernelMarix[x][y]);
-        kernel.set(x, y, 2, kernelMarix[x][y]);
-        kernel.set(x, y, 3, kernelMarix[x][y]);
-      }
-    }
+    const kernel = gm.tensorFromFlat([
+      1, 1, 1, 1, 1,
+      0, 1, 1, 1, 1,
+      0, 0, 1, 1, 1,
+      0, 0, 0, 1, 1,
+      0, 0, 0, 0, 1,
+    ], [5, 5, 4], 'float32');
 
     const op = gm.morphologyEx(src, 'blackhat', [5, 5], kernel);
     const out = gm.tensorFrom(op);
@@ -108,23 +98,13 @@ describe('MorphTransform', () => {
     const src = await gm.imageTensorFromURL(testImageSrc);
     const open = await gm.imageTensorFromURL(testImageTophatCustomKernel);
 
-    const kernel = new gm.Tensor('float32', [5, 5, 4]);
-    const kernelMarix = [
-      [1, 1, 1, 1, 1],
-      [0, 1, 1, 1, 1],
-      [0, 0, 1, 1, 1],
-      [0, 0, 0, 1, 1],
-      [0, 0, 0, 0, 1],
-    ];
-
-    for (let x = 0; x < 5; x += 1) {
-      for (let y = 0; y < 5; y += 1) {
-        kernel.set(x, y, 0, kernelMarix[x][y]);
-        kernel.set(x, y, 1, kernelMarix[x][y]);
-        kernel.set(x, y, 2, kernelMarix[x][y]);
-        kernel.set(x, y, 3, kernelMarix[x][y]);
-      }
-    }
+    const kernel = gm.tensorFromFlat([
+      1, 1, 1, 1, 1,
+      0, 1, 1, 1, 1,
+      0, 0, 1, 1, 1,
+      0, 0, 0, 1, 1,
+      0, 0, 0, 0, 1,
+    ], [5, 5, 4], 'float32');
 
     const op = gm.morphologyEx(src, 'tophat', [5, 5], kernel);
     const out = gm.tensorFrom(op);
@@ -167,23 +147,13 @@ describe('MorphTransform', () => {
     const src = await gm.imageTensorFromURL(testImageSrc);
     const open = await gm.imageTensorFromURL(testImageGradientCustomKernel);
 
-    const kernel = new gm.Tensor('float32', [5, 5, 4]);
-    const kernelMarix = [
-      [1, 1, 1, 1, 1],
-      [0, 1, 1, 1, 1],
-      [0, 0, 1, 1, 1],
-      [0, 0, 0, 1, 1],
-      [0, 0, 0, 0, 1],
-    ];
-
-    for (let x = 0; x < 5; x += 1) {
-      for (let y = 0; y < 5; y += 1) {
-        kernel.set(x, y, 0, kernelMarix[x][y]);
-        kernel.set(x, y, 1, kernelMarix[x][y]);
-        kernel.set(x, y, 2, kernelMarix[x][y]);
-        kernel.set(x, y, 3, kernelMarix[x][y]);
-      }
-    }
+    const kernel = gm.tensorFromFlat([
+      1, 1, 1, 1, 1,
+      0, 1, 1, 1, 1,
+      0, 0, 1, 1, 1,
+      0, 0, 0, 1, 1,
+      0, 0, 0, 0, 1,
+    ], [5, 5, 4], 'float32');
 
     const op = gm.morphologyEx(src, 'gradient', [5, 5], kernel);
     const out = gm.tensorFrom(op);
@@ -226,23 +196,13 @@ describe('MorphTransform', () => {
     const src = await gm.imageTensorFromURL(testImageSrc);
     const close = await gm.imageTensorFromURL(testImageCloseCustomKernel);
 
-    const kernel = new gm.Tensor('float32', [5, 5, 4]);
-    const kernelMarix = [
-      [1, 1, 1, 1, 1],
-      [0, 1, 1, 1, 1],
-      [0, 0, 1, 1, 1],
-      [0, 0, 0, 1, 1],
-      [0, 0, 0, 0, 1],
-    ];
-
-    for (let x = 0; x < 5; x += 1) {
-      for (let y = 0; y < 5; y += 1) {
-        kernel.set(x, y, 0, kernelMarix[x][y]);
-        kernel.set(x, y, 1, kernelMarix[x][y]);
-        kernel.set(x, y, 2, kernelMarix[x][y]);
-        kernel.set(x, y, 3, kernelMarix[x][y]);
-      }
-    }
+    const kernel = gm.tensorFromFlat([
+      1, 1, 1, 1, 1,
+      0, 1, 1, 1, 1,
+      0, 0, 1, 1, 1,
+      0, 0, 0, 1, 1,
+      0, 0, 0, 0, 1,
+    ], [5, 5, 4], 'float32');
 
     const op = gm.morphologyEx(src, 'close', [5, 5], kernel);
     const out = gm.tensorFrom(op);
@@ -285,23 +245,13 @@ describe('MorphTransform', () => {
     const src = await gm.imageTensorFromURL(testImageSrc);
     const open = await gm.imageTensorFromURL(testImageOpenCustomKernel);
 
-    const kernel = new gm.Tensor('float32', [5, 5, 4]);
-    const kernelMarix = [
-      [1, 1, 1, 1, 1],
-      [0, 1, 1, 1, 1],
-      [0, 0, 1, 1, 1],
-      [0, 0, 0, 1, 1],
-      [0, 0, 0, 0, 1],
-    ];
-
-    for (let x = 0; x < 5; x += 1) {
-      for (let y = 0; y < 5; y += 1) {
-        kernel.set(x, y, 0, kernelMarix[x][y]);
-        kernel.set(x, y, 1, kernelMarix[x][y]);
-        kernel.set(x, y, 2, kernelMarix[x][y]);
-        kernel.set(x, y, 3, kernelMarix[x][y]);
-      }
-    }
+    const kernel = gm.tensorFromFlat([
+      1, 1, 1, 1, 1,
+      0, 1, 1, 1, 1,
+      0, 0, 1, 1, 1,
+      0, 0, 0, 1, 1,
+      0, 0, 0, 0, 1,
+    ], [5, 5, 4], 'float32');
 
     const op = gm.morphologyEx(src, 'open', [5, 5], kernel);
     const out = gm.tensorFrom(op);

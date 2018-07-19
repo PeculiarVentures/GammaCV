@@ -42,9 +42,12 @@ export default class ExampleContainer extends Component {
         if (typeof op.params[key] === 'object') {
           for (const param in op.params[key]) {
             const origin = op.params[key][param];
-            result[key][param] = origin.default
-              || origin.min
-              || (origin.values ? origin.values[0].value : 0);
+            result[key][param] = typeof origin.default !== 'undefined'
+              ? origin.default
+              : (
+                origin.min
+                || (origin.values ? origin.values[0].value : 0)
+              );
 
             comp.items.push(origin);
           }
