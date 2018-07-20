@@ -37,7 +37,11 @@
         "type": "video",
         "name": "Downsample",
         "path": "downsample"
-      },
+      }, {
+          "type": "video",
+          "name": "Upsample",
+          "path": "upsample"
+        },
       {
         "type": "video",
         "name": "Color Segmentation",
