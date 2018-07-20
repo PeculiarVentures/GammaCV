@@ -38,6 +38,7 @@
         { "path": "../../lib/ops/color_segmentation/index.js" },
         { "path": "../../lib/ops/hsv_color/index.js" },
         { "path": "../../lib/ops/threshold/index.js" },
+        { "path": "../../lib/ops/adaptive_threshold/index.js" },
         { "path": "../../lib/ops/conv2d/index.js" }
       ]
     }, {
