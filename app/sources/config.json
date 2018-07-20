@@ -32,6 +32,7 @@
       "group": "Image processing",
       "items": [
         { "path": "../../lib/ops/downsample/index.js" },
+        { "path": "../../lib/ops/upsample/index.js" },
         { "path": "../../lib/ops/gaussian_blur/index.js" },
         { "path": "../../lib/ops/grayscale/index.js" },
         { "path": "../../lib/ops/norm/index.js" },
