@@ -15,6 +15,27 @@ export function visualize(tensor, scale = 1) {
   return debugCanvas;
 }
 
+export function logTensorAsTable(tensor, channel = 0) {
+  const table = [];
+
+  for (let y = 0; y < tensor.shape[0]; y += 1) {
+    const raw = [];
+
+    for (let x = 0; x < tensor.shape[1]; x += 1) {
+      if (tensor.shape.length === 3) {
+        raw.push(tensor.get(y, x, channel));
+      } else if (tensor.shape.length === 2) {
+        raw.push(tensor.get(y, x));
+      } else {
+        throw new Error(`Unable logTensorAsTable for shape [${tensor.shape}]`);
+      }
+    }
+    table.push(raw);
+  }
+
+  console.table(table);
+}
+
 export function imageDiff(input, output) {
   const result = new gm.Tensor('uint8', input.shape);
 
