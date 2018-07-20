@@ -38,7 +38,8 @@
         { "path": "../../lib/ops/color_segmentation/index.js" },
         { "path": "../../lib/ops/hsv_color/index.js" },
         { "path": "../../lib/ops/threshold/index.js" },
-        { "path": "../../lib/ops/conv2d/index.js" }
+        { "path": "../../lib/ops/conv2d/index.js" },
+        { "path": "../../lib/ops/summed_area_table/index.js" }
       ]
     }, {
       "group": "Morphology",
@@ -59,8 +60,7 @@
         { "path": "../../lib/ops/canny_edges/index.js" },
         { "path": "../../lib/ops/skin_test/index.js" },
         { "path": "../../lib/ops/motion_detect/index.js" },
-        { "path": "../../lib/ops/swt/index.js" },
-        { "path": "../../lib/ops/summed_area_table/index.js" }
+        { "path": "../../lib/ops/swt/index.js" }
       ]
     }, {
       "group": "Utils",
