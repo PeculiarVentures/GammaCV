@@ -98,6 +98,11 @@
         "type": "video",
         "name": "Extract Histogram",
         "path": "histogram"
+      },
+      {
+        "type": "video",
+        "name": "Summed Area Table",
+        "path": "summed_area_table"
       }
     ]
   },
