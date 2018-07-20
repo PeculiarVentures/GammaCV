@@ -37,7 +37,11 @@
         "type": "video",
         "name": "Downsample",
         "path": "downsample"
-      },
+      }, {
+          "type": "video",
+          "name": "Upsample",
+          "path": "upsample"
+        },
       {
         "type": "video",
         "name": "Color Segmentation",
@@ -62,6 +66,11 @@
         "type": "video",
         "name": "Threshold",
         "path": "threshold"
+      },
+      {
+        "type": "video",
+        "name": "Summed Area Table",
+        "path": "summed_area_table"
       }
     ]
   },

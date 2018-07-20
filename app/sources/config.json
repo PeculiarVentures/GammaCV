@@ -32,13 +32,15 @@
       "group": "Image processing",
       "items": [
         { "path": "../../lib/ops/downsample/index.js" },
+        { "path": "../../lib/ops/upsample/index.js" },
         { "path": "../../lib/ops/gaussian_blur/index.js" },
         { "path": "../../lib/ops/grayscale/index.js" },
         { "path": "../../lib/ops/norm/index.js" },
         { "path": "../../lib/ops/color_segmentation/index.js" },
         { "path": "../../lib/ops/hsv_color/index.js" },
         { "path": "../../lib/ops/threshold/index.js" },
-        { "path": "../../lib/ops/conv2d/index.js" }
+        { "path": "../../lib/ops/conv2d/index.js" },
+        { "path": "../../lib/ops/summed_area_table/index.js" }
       ]
     }, {
       "group": "Morphology",
