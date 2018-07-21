@@ -10,7 +10,7 @@ export default {
       pipeline,
       params.THRESHOLD.uS,
       params.THRESHOLD.uT,
-      params.THRESHOLD.c,
+      0,
     );
 
     return pipeline;
