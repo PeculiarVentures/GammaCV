@@ -2,39 +2,54 @@ import * as gm from '../../../lib';
 
 export default {
   init: () => {
-    
+    const prevFrame = new gm.Tensor('uint8', [384, 500, 4]);
+
+    return { prevFrame };
   },
-  op: (input, params) => {
+  op: (input, params, context) => {
     let pipeline = input;
 
-    pipeline = gm.grayscale(pipeline);
-    pipeline = gm.downsample(
-      pipeline,
-      params.DOWNSAMPLE.coeficient,
-      params.DOWNSAMPLE.type || 'mean', // crutch until we have no select prop feature #46
-    );
+    // console.log(input, params, context)
 
+    if (params.MATH.type === 'mult') {
+      pipeline = gm.mult(pipeline, context.prevFrame);
+    }
+
+    if (params.MATH.type === 'div') {
+      pipeline = gm.div(pipeline, context.prevFrame);
+    }
+
+    if (params.MATH.type === 'add') {
+      pipeline = gm.add(pipeline, context.prevFrame);
+    }
+
+    if (params.MATH.type === 'sub') {
+      pipeline = gm.sub(pipeline, context.prevFrame);
+    }
     return pipeline;
   },
   tick(frame, {
-    canvas, operation, output, session,
+    canvas, operation, output, session, context,
   }) {
     gm.clearCanvas(canvas);
     session.runOp(operation, frame, output);
+
+    gm.tensorClone(this.imgInput, context.prevFrame);
     gm.canvasFromTensor(canvas, output);
   },
   params: {
-    DOWNSAMPLE: {
-      coeficient: {
-        name: 'Coeficient', type: 'constant', min: 1, max: 20, step: 0.25, default: 1.75,
-      },
+    MATH: {
       type: {
-        name: 'Type',
+        name: 'Operation',
         type: 'constant',
         values: [{
-          name: 'Maximum', value: 'max',
+          name: 'Mult', value: 'mult',
         }, {
-          name: 'Mean', value: 'mean',
+          name: 'Div', value: 'div',
+        }, {
+          name: 'Add', value: 'add',
+        }, {
+          name: 'Sub', value: 'sub',
         }],
       },
     },

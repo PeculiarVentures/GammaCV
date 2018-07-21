@@ -4,8 +4,21 @@ export default {
   op: (input, params) => {
     let pipeline = input;
 
-    
-    pipeline = gm.multScalar(pipeline, )
+    if (params.MATH.type === 'mult') {
+      pipeline = gm.multScalar(pipeline, params.MATH.uScalar);
+    }
+
+    if (params.MATH.type === 'div') {
+      pipeline = gm.divScalar(pipeline, params.MATH.uScalar);
+    }
+
+    if (params.MATH.type === 'add') {
+      pipeline = gm.addScalar(pipeline, params.MATH.uScalar);
+    }
+
+    if (params.MATH.type === 'sub') {
+      pipeline = gm.subScalar(pipeline, params.MATH.uScalar);
+    }
 
     return pipeline;
   },
@@ -17,17 +30,21 @@ export default {
     gm.canvasFromTensor(canvas, output);
   },
   params: {
-    PARAMS: {
-      coeficient: {
-        name: 'Value', type: 'uniform', min: 1, max: 20, step: 0.25, default: 1.75,
+    MATH: {
+      uScalar: {
+        name: 'Value', type: 'uniform', min: 0, max: 1, step: 0.1, default: 0.5,
       },
       type: {
         name: 'Operation',
         type: 'constant',
         values: [{
-          name: 'Maximum', value: 'max',
+          name: 'Mult', value: 'mult',
         }, {
-          name: 'Mean', value: 'mean',
+          name: 'Div', value: 'div',
+        }, {
+          name: 'Add', value: 'add',
+        }, {
+          name: 'Sub', value: 'sub',
         }],
       },
     },

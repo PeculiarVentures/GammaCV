@@ -301,11 +301,6 @@ export default class ExampleContainer extends Component {
 
     checkExample(props.example, props.exampleName);
 
-    this.op = props.example.op(this.imgInput, this.params);
-
-    if (!(this.op instanceof gm.Operation)) {
-      throw new Error(`Error in ${props.exampleName} example: function <op> must return Operation`, null, null);
-    }
 
     try {
       this.sess = new gm.Session();
@@ -314,6 +309,13 @@ export default class ExampleContainer extends Component {
       if (props.example.init) {
         this.opContext = props.example.init(this.op, this.sess, this.params);
       }
+
+      this.op = props.example.op(this.imgInput, this.params, this.opContext);
+
+      if (!(this.op instanceof gm.Operation)) {
+        throw new Error(`Error in ${props.exampleName} example: function <op> must return Operation`, null, null);
+      }
+
 
       this.imgOutput = gm.tensorFrom(this.op);
       this.sess.init(this.op);
