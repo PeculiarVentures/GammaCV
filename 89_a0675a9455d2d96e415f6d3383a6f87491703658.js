@@ -1,0 +1,1 @@
+webpackJsonp([89],{525:function(e,u,a){"use strict";Object.defineProperty(u,"__esModule",{value:!0});var t=a(78);u.default={op:function(e,u){var a=e;return a=t.t(a),t.g(a,u.THRESHOLD.uS,u.THRESHOLD.uT,0)},params:{THRESHOLD:{name:"THRESHOLD",uS:{name:"Size",type:"uniform",min:0,max:100,step:1,default:5},uT:{name:"Value",type:"uniform",min:0,max:100,step:1,default:15}}}}}});
