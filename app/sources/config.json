@@ -32,6 +32,7 @@
       "group": "Image processing",
       "items": [
         { "path": "../../lib/ops/downsample/index.js" },
+        { "path": "../../lib/ops/upsample/index.js" },
         { "path": "../../lib/ops/gaussian_blur/index.js" },
         { "path": "../../lib/ops/grayscale/index.js" },
         { "path": "../../lib/ops/norm/index.js" },
@@ -39,6 +40,7 @@
         { "path": "../../lib/ops/hsv_color/index.js" },
         { "path": "../../lib/ops/threshold/index.js" },
         { "path": "../../lib/ops/adaptive_threshold/index.js" },
+        { "path": "../../lib/ops/adaptive_threshold/index.js"},
         { "path": "../../lib/ops/conv2d/index.js" }
       ]
     }, {
@@ -60,8 +62,7 @@
         { "path": "../../lib/ops/canny_edges/index.js" },
         { "path": "../../lib/ops/skin_test/index.js" },
         { "path": "../../lib/ops/motion_detect/index.js" },
-        { "path": "../../lib/ops/swt/index.js" },
-        { "path": "../../lib/ops/summed_area_table/index.js" }
+        { "path": "../../lib/ops/swt/index.js" }
       ]
     }, {
       "group": "Utils",

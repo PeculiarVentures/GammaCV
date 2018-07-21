@@ -19,9 +19,13 @@ vec4 operation(float y, float x) {
 		- pickValue_tIntegralImage(p1.y - 1.0, p2.x).r
 		+ pickValue_tIntegralImage(p1.y - 1.0, p1.x - 1.0).r;
 
-	if (pixel[int(C)] * s <= sum * (100.0 - uT)/ 100.0) {
-		return vec4(0.0, 0.0, 0.0, 1.0);	
-	} else {
-		return vec4(1.0, 1.0, 1.0, 1.0);
-	}
+	sum = sum / s;	
+
+	return vec4(sum, sum, sum, 1.0);	
+
+	// if (pixel[int(C)] * s <= sum * (100.0 - uT)/ 100.0) {
+	// 	return vec4(0.0, 0.0, 0.0, 1.0);	
+	// } else {
+	// 	return vec4(1.0, 1.0, 1.0, 1.0);
+	// }
 }

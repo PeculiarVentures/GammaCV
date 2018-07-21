@@ -4,8 +4,11 @@ export default {
   op: (input, params) => {
     let pipeline = input;
 
+    pipeline = gm.grayscale(pipeline);
+    // pipeline = gm.morphologyEx(pipeline, 'blackhat', [5, 5]);
+
     pipeline = gm.adaptiveThreshold(
-      gm.grayscale(pipeline),
+      pipeline,
       params.THRESHOLD.uS,
       params.THRESHOLD.uT,
       params.THRESHOLD.c,
