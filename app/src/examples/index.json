@@ -66,8 +66,11 @@
         "type": "video",
         "name": "Threshold",
         "path": "threshold"
-      },
-      {
+      },{
+        "type": "video",
+        "name": "Adaptive Threshold",
+        "path": "adaptive_threshold"
+      },{
         "type": "video",
         "name": "Summed Area Table",
         "path": "summed_area_table"
