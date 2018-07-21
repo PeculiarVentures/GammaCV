@@ -1,18 +1,11 @@
 import * as gm from '../../../lib';
 
 export default {
-  init: () => {
-    
-  },
   op: (input, params) => {
     let pipeline = input;
 
-    pipeline = gm.grayscale(pipeline);
-    pipeline = gm.downsample(
-      pipeline,
-      params.DOWNSAMPLE.coeficient,
-      params.DOWNSAMPLE.type || 'mean', // crutch until we have no select prop feature #46
-    );
+    
+    pipeline = gm.multScalar(pipeline, )
 
     return pipeline;
   },
@@ -24,12 +17,12 @@ export default {
     gm.canvasFromTensor(canvas, output);
   },
   params: {
-    DOWNSAMPLE: {
+    PARAMS: {
       coeficient: {
-        name: 'Coeficient', type: 'constant', min: 1, max: 20, step: 0.25, default: 1.75,
+        name: 'Value', type: 'uniform', min: 1, max: 20, step: 0.25, default: 1.75,
       },
       type: {
-        name: 'Type',
+        name: 'Operation',
         type: 'constant',
         values: [{
           name: 'Maximum', value: 'max',

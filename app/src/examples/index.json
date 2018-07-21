@@ -120,5 +120,20 @@
         "path": "sobel_operator"
       }
     ]
+  }, {
+    "key": "math",
+    "name": "Math",
+    "examples": [
+      {
+        "type": "video",
+        "name": "Tensor with scalar",
+        "path": "math_tensor_scalar"
+      },
+      {
+        "type": "video",
+        "name": "Pixelwise Math",
+        "path": "math_pixelwise"
+      }
+    ]
   }
 ]
