@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import * as gm from '../../lib';
 import sampleImage from '../assets/white_black.png';
 
-describe.only('Summed Area Table', () => {
+describe('Summed Area Table', () => {
   let sess = null;
 
   beforeEach(async () => {
