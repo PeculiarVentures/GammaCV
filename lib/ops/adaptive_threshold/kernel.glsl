@@ -33,6 +33,6 @@ vec4 operation(float y, float x) {
 	if (pixel[Channel] * s <= sum * (100.0 - uT)/ 100.0) {
 		return vec4(0.0, 0.0, 0.0, 1.0);	
 	} else {
-		return vec4(0.0, 0.0, 0.0, 0.0);
+		return vec4(1.0, 1.0, 1.0, 1.0);
 	}
 }
