@@ -1,11 +1,7 @@
 import { assert } from 'chai';
-import { visualize } from '../test_utils';
 import * as gm from '../../lib';
-import testImageSrc from '../assets/morphology_src.png';
-import testImageEroded from '../assets/morphology_eroded.png';
-import testImageErodedCustomKernel from '../assets/morphology_eroded_custom_kernel.png';
 
-describe.only('Math', () => {
+describe('Math', () => {
   let sess = null;
 
   beforeEach(async () => {

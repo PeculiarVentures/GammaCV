@@ -73,6 +73,14 @@
         { "path": "../../lib/ops/concat/index.js" },
         { "path": "../../lib/ops/cast/index.js" }
       ]
+    },
+    {
+      "group": "Math",
+      "items": [
+        {
+          "path": "../../lib/ops/math/index.js"
+        }
+      ]
     }
   ]
 }
