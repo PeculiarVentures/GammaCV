@@ -4,7 +4,7 @@ import testImage200 from './assets/haar_test_200.png';
 import testImage300 from './assets/haar_test_300.png';
 import * as gm from '../lib';
 
-describe.only('HAAR Features', () => {
+describe('HAAR Features', () => {
   let sess;
   const feature1 = [
     [0, 0, 10, 20, +1],
@@ -60,7 +60,7 @@ describe.only('HAAR Features', () => {
     assert.closeTo(f4, 200, 1);
   });
 
-  it.only('test200', async () => {
+  it('test200', async () => {
     const input = await gm.imageTensorFromURL(testImage200);
     const op = gm.summedAreaTable(gm.grayscale(input));
     const out = gm.tensorFrom(op);
