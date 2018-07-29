@@ -124,8 +124,8 @@ describe('Math', () => {
     ], [2, 2, 4], 'float32');
 
     const C = gm.tensorFromFlat([
-      6, 6,
-      6, 6,
+      8, 8,
+      8, 8,
     ], [2, 2, 4], 'float32', 1);
 
     const op = gm.multScalar(A, 2);
