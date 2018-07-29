@@ -128,7 +128,7 @@ describe('Math', () => {
       6, 6,
     ], [2, 2, 4], 'float32', 1);
 
-    const op = gm.addScalar(A, 2);
+    const op = gm.multScalar(A, 2);
     const out = gm.tensorFrom(op);
 
     sess.init(op);

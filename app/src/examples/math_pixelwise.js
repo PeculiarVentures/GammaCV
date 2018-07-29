@@ -9,8 +9,6 @@ export default {
   op: (input, params, context) => {
     let pipeline = input;
 
-    // console.log(input, params, context)
-
     if (params.MATH.type === 'mult') {
       pipeline = gm.mult(pipeline, context.prevFrame);
     }
