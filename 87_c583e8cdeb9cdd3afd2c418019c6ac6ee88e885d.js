@@ -1,1 +1,0 @@
-webpackJsonp([87],{527:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var s=n(78);t.default={op:function(e,t){var n=e;return n=s.t(n),s.n(n,t.COLORSEGMENTATION.clusters)},params:{COLORSEGMENTATION:{name:"COLOR SEGMENTATION",clusters:{name:"Num Clusters",type:"constant",min:2,max:255,step:1,default:3}}}}}});
