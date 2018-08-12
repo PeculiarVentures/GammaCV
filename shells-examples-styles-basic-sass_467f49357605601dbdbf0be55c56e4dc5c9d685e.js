@@ -1,0 +1,1 @@
+webpackJsonp([32],{474:function(i,a,n){(a=i.exports=n(67)(!1)).push([i.i,".main_34SLt{width:100%;height:100%;display:flex}.valign_1WV2v{margin:auto}",""]),a.locals={main:"main_34SLt",valign:"valign_1WV2v"}},56:function(i,a,n){var o=n(474);"string"==typeof o&&(o=[[i.i,o,""]]),n(68)(o,{hmr:!0,transform:void 0}),o.locals&&(i.exports=o.locals)}});
