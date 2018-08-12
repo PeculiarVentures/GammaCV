@@ -18,6 +18,10 @@ module.exports = function makeConfig(config) {
       'karma-chrome-launcher',
     ],
     webpack: webpackConfig,
+    webpackMiddleware: {
+      stats: 'errors-only',
+      logLevel: 'error',
+    },
     customLaunchers: {
       ChromeHeadlessWithGPU: {
         base: 'ChromeHeadless',
@@ -28,5 +32,6 @@ module.exports = function makeConfig(config) {
         ],
       },
     },
+    logLevel: config.LOG_WARN,
   });
 };
