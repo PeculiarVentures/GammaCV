@@ -75,7 +75,7 @@
     "rimraf": "^2.6.2",
     "rollup": "^0.59.1",
     "rollup-plugin-babel": "^3.0.7",
-    "rollup-plugin-glsl": "^1.2.0",
+    "rollup-plugin-glsl": "git+https://github.com/WorldThirteen/rollup-plugin-glsl.git#dist",
     "rollup-plugin-json": "^3.0.0",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-uglify": "^3.0.0",
