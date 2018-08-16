@@ -1,14 +1,12 @@
 import * as gm from '../../../lib';
 
-const DOWNSAMPLE_RATE = 2;
-
 export default {
   init: () => ({ line: new gm.Line() }),
   op: (input, params) => {
     let pipeline = input;
 
     pipeline = gm.grayscale(pipeline);
-    pipeline = gm.downsample(pipeline, DOWNSAMPLE_RATE);
+    pipeline = gm.downsample(pipeline, params.PROCESSING.dCoef);
     pipeline = gm.gaussianBlur(pipeline, 3, 3);
     pipeline = gm.sobelOperator(pipeline);
     pipeline = gm.cannyEdges(pipeline, 0.25, 0.75);
@@ -42,7 +40,7 @@ export default {
 
     for (let i = 0; i < lines.length; i += 1) {
       context.line.fromParallelCoords(
-        lines[i][1] * DOWNSAMPLE_RATE, lines[i][2] * DOWNSAMPLE_RATE,
+        lines[i][1] * params.PROCESSING.dCoef, lines[i][2] * params.PROCESSING.dCoef,
         input.shape[1], input.shape[0], maxP, maxP / 2,
       );
 
@@ -50,6 +48,17 @@ export default {
     }
   },
   params: {
+    PROCESSING: {
+      name: 'PROCESSING',
+      dCoef: {
+        name: 'Downsample',
+        type: 'constant',
+        min: 1,
+        max: 4,
+        step: 1,
+        default: 2,
+      },
+    },
     PCLINES: {
       name: 'PC LINES',
       count: {
