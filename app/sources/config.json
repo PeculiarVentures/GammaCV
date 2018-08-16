@@ -61,7 +61,8 @@
         { "path": "../../lib/ops/canny_edges/index.js" },
         { "path": "../../lib/ops/skin_test/index.js" },
         { "path": "../../lib/ops/motion_detect/index.js" },
-        { "path": "../../lib/ops/swt/index.js" }
+        { "path": "../../lib/ops/swt/index.js" },
+        { "path": "../../lib/ops/pclines/index.js" }
       ]
     }, {
       "group": "Utils",
