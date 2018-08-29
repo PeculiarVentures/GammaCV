@@ -1,6 +1,28 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.3.0] - 2018-08-29
+### Added
+- Export internal PCLines functions:
+    - `gm.pcLines`
+    - `gm.pcLinesEnhance`
+    - `gm.pcLinesReduceMax`
+    - `gm.pcLinesTransform`
+- Math Operations:
+    - `gm.sub`-
+    - `gm.div`
+    - `gm.mult`
+    - `gm.add`
+    - `gm.subScalar`
+    - `gm.divScalar`
+    - `gm.multScalar`
+    - `gm.addScalar`
+- Haar features related functions:
+    - `gm.calcHAARFeature`
+    - `gm.calcIntegralSum`
+### Changed
+- Bundle size reduced by removing comments from glsl operations
+
 ## [0.2.0] - 2018-07-24
 ### Added
 - Convolution 2d operation `gm.conv2d`
