@@ -43,7 +43,7 @@ describe('HAAR Features', () => {
 
   it('test100', async () => {
     const input = await gm.imageTensorFromURL(testImage100);
-    const op = gm.summedAreaTable(gm.grayscale(input));
+    const op = gm.sat(gm.grayscale(input));
     const out = gm.tensorFrom(op);
 
     sess.init(op);
@@ -62,7 +62,7 @@ describe('HAAR Features', () => {
 
   it('test200', async () => {
     const input = await gm.imageTensorFromURL(testImage200);
-    const op = gm.summedAreaTable(gm.grayscale(input));
+    const op = gm.sat(gm.grayscale(input));
     const out = gm.tensorFrom(op);
 
     sess.init(op);
@@ -81,7 +81,7 @@ describe('HAAR Features', () => {
 
   it('test300', async () => {
     const input = await gm.imageTensorFromURL(testImage300);
-    const op = gm.summedAreaTable(gm.grayscale(input));
+    const op = gm.sat(gm.grayscale(input));
     const out = gm.tensorFrom(op);
 
     sess.init(op);
