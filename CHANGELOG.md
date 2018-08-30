@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+### Added
+- Squared summed area table operation `gm.sqsat`
+### Changed
+- Opearation renamed `gm.summedAreaTable` -> `gm.sat`
+
 ## [0.3.0] - 2018-08-29
 ### Added
 - Export internal PCLines functions:
@@ -9,7 +15,7 @@ All notable changes to this project will be documented in this file.
     - `gm.pcLinesReduceMax`
     - `gm.pcLinesTransform`
 - Math Operations:
-    - `gm.sub`-
+    - `gm.sub`
     - `gm.div`
     - `gm.mult`
     - `gm.add`
