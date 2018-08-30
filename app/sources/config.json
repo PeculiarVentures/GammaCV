@@ -41,7 +41,7 @@
         { "path": "../../lib/ops/threshold/index.js" },
         { "path": "../../lib/ops/adaptive_threshold/index.js" },
         { "path": "../../lib/ops/conv2d/index.js" },
-        { "path": "../../lib/ops/summed_area_table/index.js" }
+        { "path": "../../lib/ops/sat/index.js" }
       ]
     }, {
       "group": "Morphology",
