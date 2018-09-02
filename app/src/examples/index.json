@@ -72,7 +72,7 @@
         "path": "adaptive_threshold"
       },{
         "type": "video",
-        "name": "SAT",
+        "name": "Summed Area Table",
         "path": "sat"
       }
     ]
