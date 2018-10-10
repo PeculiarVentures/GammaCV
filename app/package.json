@@ -41,7 +41,7 @@
 		"history": "^4.7.2",
 		"js-beautify": "^1.7.5",
 		"lib-pwa-engine": "^0.0.9",
-		"lib-react-components": "^0.0.24",
+		"lib-react-components": "0.1.0",
 		"loader-utils": "^1.1.0",
 		"marked": "^0.4.0",
 		"lib-pintl": "^0.0.2",
