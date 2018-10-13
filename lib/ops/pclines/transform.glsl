@@ -103,7 +103,7 @@ float getValue(float i, float lx, float ly, vec4 side) {
   }
 
   if (xx > 0.0 && xx < uWidth && yy > 0.0 && yy < uHeight) {
-    float a = pickScalarValue_tSrc(yy, xx);
+    float a = pickScalarValue_tSrc(floor(yy), floor(xx));
 
     if (a > 0.0) {
       return 1.0;
