@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+# [Unreleased]
+### Fixed
+- PCLines operation extra lines bug on Safari (part of https://github.com/PeculiarVentures/GammaCV/issues/25)
+
 ## [0.3.0] - 2018-08-29
 ### Added
 - Export internal PCLines functions:
