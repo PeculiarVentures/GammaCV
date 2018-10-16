@@ -15,7 +15,7 @@ const imgURL = 'https://avatars1.githubusercontent.com/u/33897736?s=400&v=4';
 
 // load image from URL or base64 string and store a result in input tensor
 gm.imageTensorFromURL(imgURL, 'uint8', [400, 400, 4], true).then((input) => {
-  // use the image tensor as the input for the in sobelOperator operation
+  // use the image tensor as the input for the sobelOperator operation
   // operations return a compiled operation instance
   const operation = gm.sobelOperator(input);
 
