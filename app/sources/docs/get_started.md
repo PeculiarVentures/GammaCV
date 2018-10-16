@@ -57,10 +57,10 @@ gm.imageTensorFromURL(imgURL, 'uint8', [400, 400, 4], true).then((input) => {
   pipeline = gm.cannyEdges(pipeline, 1, 1);
 
   // Run your operation
-  const output = gm.tensorFrom(operation);
+  const output = gm.tensorFrom(pipeline);
   const sess = new gm.Session();
-  sess.init(operation);
-  sess.runOp(operation, 0, output);
+  sess.init(pipeline);
+  sess.runOp(pipeline, 0, output);
   
   // display your output
   const canvas = gm.canvasCreate(400, 400);
