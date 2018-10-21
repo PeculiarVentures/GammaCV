@@ -15,7 +15,7 @@ describe('Summed Area Table', () => {
     sess = new gm.Session();
   });
 
-  it('summedAreaTable simple', async () => {
+  it('sat simple', async () => {
     const A = gm.tensorFromFlat([
       1, 1, 1,
       1, 1, 1,
@@ -38,7 +38,7 @@ describe('Summed Area Table', () => {
     ));
   });
 
-  it('summedAreaTable 1D', async () => {
+  it('sat 1D', async () => {
     const A = gm.tensorFromFlat([
       1, 2, 3, 4, 5, 6, 7, 8, 9,
     ], [1, 9, 4], 'float32', 255);
@@ -62,7 +62,7 @@ describe('Summed Area Table', () => {
     ));
   });
 
-  it('summedAreaTable on image', async () => {
+  it('sat on image', async () => {
     const A = await gm.imageTensorFromURL(sampleImage, 'float32');
 
     const op = gm.sat(A, 2);
@@ -92,7 +92,7 @@ describe('Summed Area Table', () => {
     ));
   });
 
-  it('squared summedAreaTable simple', async () => {
+  it('sqsat simple', async () => {
     const A = gm.tensorFromFlat([
       2, 2, 2,
       2, 2, 2,
@@ -115,7 +115,7 @@ describe('Summed Area Table', () => {
     ));
   });
 
-  it('squared summedAreaTable on image', async () => {
+  it('sqsat on image', async () => {
     const A = await gm.imageTensorFromURL(sampleImage, 'float32');
 
     const op = gm.sqsat(A, 2);
@@ -145,7 +145,7 @@ describe('Summed Area Table', () => {
     ));
   });
 
-  it('large summedAreaTable on image', async () => {
+  it('large sat', async () => {
     const A = new gm.Tensor('float32', [720, 720, 4], new Float32Array(720 ** 2 * 4).fill(255));
 
     const op = gm.sat(A, 2);
@@ -157,7 +157,7 @@ describe('Summed Area Table', () => {
     assert.equal(out.get(719, 719, 0), 255 * 720 ** 2);
   });
 
-  it('large squared summedAreaTable on image', async () => {
+  it('large sqsat', async () => {
     const size = 1000;
     const area = size * size;
     const A = new gm.Tensor('float32', [size, size, 4], new Float32Array(area * 4).fill(255));
@@ -174,7 +174,7 @@ describe('Summed Area Table', () => {
     assert.isBelow(Math.abs(result - expected) / expected, 0.001);
   });
 
-  it('squared summed area image test', async () => {
+  it('sqsat image test', async () => {
     const A = await gm.imageTensorFromURL(lenaImg, 'float32');
     const op = gm.sqsat(A, undefined);
     const out = gm.tensorFrom(op);
