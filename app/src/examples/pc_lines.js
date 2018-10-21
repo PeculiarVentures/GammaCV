@@ -10,7 +10,7 @@ export default {
     pipeline = gm.gaussianBlur(pipeline, 3, 3);
     pipeline = gm.sobelOperator(pipeline);
     pipeline = gm.cannyEdges(pipeline, 0.25, 0.75);
-    pipeline = gm.pcLines(pipeline, params.PCLINES.layers, 2);
+    pipeline = gm.pcLines(pipeline, params.PCLINES.layers, 2, 2);
 
     return pipeline;
   },
@@ -25,10 +25,10 @@ export default {
 
     for (let i = 0; i < output.size / 4; i += 1) {
       const y = ~~(i / output.shape[1]);
-      const x = i - (y * output.shape[0]);
-      const value = output.get(x, y, 0);
-      const x0 = output.get(x, y, 1);
-      const y0 = output.get(x, y, 2);
+      const x = i - (y * output.shape[1]);
+      const value = output.get(y, x, 0);
+      const x0 = output.get(y, x, 1);
+      const y0 = output.get(y, x, 2);
 
       if (value > 0.0) {
         lines.push([value, x0, y0]);
