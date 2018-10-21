@@ -1,6 +1,6 @@
 {
   "name": "gammacv",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "GammaCV is a WebGL accelerated Computer Vision library for browser",
   "main": "dist/index.js",
   "jsnext:main": "dist/index.es.js",
