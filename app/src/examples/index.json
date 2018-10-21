@@ -73,7 +73,7 @@
       },{
         "type": "video",
         "name": "Summed Area Table",
-        "path": "summed_area_table"
+        "path": "sat"
       }
     ]
   },

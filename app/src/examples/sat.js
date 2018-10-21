@@ -1,7 +1,9 @@
 import * as gm from '../../../lib';
 
 export default {
-  op: input => gm.summedAreaTable(input),
+  op: (input, params) => (params.SUMMED_AREA_TABLE.squared === 'sqsum'
+    ? gm.sqsat(input, 2)
+    : gm.sat(input, 2)),
   tick(frame, {
     canvas, operation, output, session,
   }) {
@@ -22,7 +24,21 @@ export default {
       data[i + 2] /= max;
       data[i + 3] = 255;
     }
+
     gm.canvasFromTensor(canvas, output);
   },
-  params: {},
+  params: {
+    SUMMED_AREA_TABLE: {
+      name: 'Summed Area Table',
+      squared: {
+        name: 'Type',
+        type: 'constant',
+        values: [{
+          name: 'Sum', value: 'sum',
+        }, {
+          name: 'Squared sum', value: 'sqsum',
+        }],
+      },
+    },
+  },
 };

@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+### Added
+- Squared summed area table operation `gm.sqsat`
+### Changed
+- Opearation renamed `gm.summedAreaTable` -> `gm.sat`
 ### Fixed
 - Enhance precision of floats encode/decode on iOS devices
 
@@ -18,7 +22,7 @@ All notable changes to this project will be documented in this file.
     - `gm.pcLinesReduceMax`
     - `gm.pcLinesTransform`
 - Math Operations:
-    - `gm.sub`-
+    - `gm.sub`
     - `gm.div`
     - `gm.mult`
     - `gm.add`
