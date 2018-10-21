@@ -1,7 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-# [0.3.1] - 2018-10-14
+## Unreleased
+### Fixed
+- Enhance precision of floats encode/decode on iOS devices
+
+
+## [0.3.1] - 2018-10-14
 ### Fixed
 - PCLines operation extra lines bug on Safari (part of https://github.com/PeculiarVentures/GammaCV/issues/25)
 
