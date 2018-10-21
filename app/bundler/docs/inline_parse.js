@@ -38,7 +38,7 @@ const inlineRules = {
   autolink: /^<([^ >]+(@|:\/)[^ >]+)>/,
   url: /^(https?:\/\/[^\s<]+[^<.,:;"')\]\s])/,
   tag: /^<!--[\s\S]*?-->|^<\/?\w+(?:"[^"]*"|'[^']*'|[^'">])*?>/,
-  link: /^!?\[(inside)\]\(href\)/,
+  link: /^!?\[(inside)\]\((href)\)+/,
   reflink: /^!?\[(inside)\]\s*\[([^\]]*)\]/,
   nolink: /^!?\[((?:\[[^\]]*\]|[^\[\]])*)\]/,
   strong: /^__([\s\S]+?)__(?!_)|^\*\*([\s\S]+?)\*\*(?!\*)/,
@@ -54,7 +54,7 @@ const inlineRules = {
 
 function prepareRegexp() {
   inlineRules._inside = /(?:\[[^\]]*\]|[^\[\]]|\](?=[^\[]*\]))*/;
-  inlineRules._href = /\s*<?([\s\S]*?)>?(?:\s+['"]([\s\S]*?)['"])?\s*/;
+  inlineRules._href = /\s*<?([\s\S]*?)>?(?:\s+['"]([\s\S]*?)['"])?\)*\s*/;
 
   inlineRules.link = replace(inlineRules.link)('inside', inlineRules._inside)('href', inlineRules._href)();
 
@@ -165,7 +165,7 @@ class InlineLexer {
         this.inLink = true;
         result.push(this.outputLink(cap, {
           href: cap[2],
-          title: cap[3],
+          title: cap[2],
         }) );
         this.inLink = false;
         continue;
