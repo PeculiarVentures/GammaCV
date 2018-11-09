@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [0.3.3] - 2018-11-9
+## [0.3.4] - 2018-11-9
 ### Fixed
 - Fix the requested ratio for webrtc video
 
