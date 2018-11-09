@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+### Fixed
+- Fix the requested ratio for webrtc video
+
 ## [0.3.2] - 2018-10-21
 ### Added
 - Squared summed area table operation `gm.sqsat`
