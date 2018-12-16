@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Unrelesed
+### Changed
+- Downsample operation supports RGBA (#32), add test
+
 ## [0.3.4] - 2018-11-9
 ### Fixed
 - Fix the requested ratio for webrtc video
