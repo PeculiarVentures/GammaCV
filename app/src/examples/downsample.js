@@ -1,18 +1,11 @@
 import * as gm from '../../../lib';
 
 export default {
-  op: (input, params) => {
-    let pipeline = input;
-
-    pipeline = gm.grayscale(pipeline);
-    pipeline = gm.downsample(
-      pipeline,
-      params.DOWNSAMPLE.coeficient,
-      params.DOWNSAMPLE.type || 'mean', // crutch until we have no select prop feature #46
-    );
-
-    return pipeline;
-  },
+  op: (input, params) => gm.downsample(
+    input,
+    params.DOWNSAMPLE.coeficient,
+    params.DOWNSAMPLE.type || 'mean', // crutch until we have no select prop feature #46
+  ),
   tick(frame, {
     canvas, operation, output, session,
   }) {
