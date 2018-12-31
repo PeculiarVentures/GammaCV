@@ -8,7 +8,7 @@ To install the latest stable version run:
 `npm install gammacv --save`
 
 ## Core Concepts
-To use GammaCV, you need to understand three core concepts: tensors, operations, and sessions. The basic unit of this library is a tensor. `Tensor` allows you to create N-dimensional vector and store it in memory using TypedArrays. The second part of the library is an operation. `Operation` under the hood is graph node which will have multiple inputs and always produce a single output. The third component is a session. `Session` is a runtime which allows you to run computational graphs on different backends with the same API. For a better understanding of how it works let's create a simple program and run it on the GPU using WebGL:
+To use GammaCV, you need to understand three core concepts: tensors, operations, and sessions. The basic unit of this library is a tensor. `Tensor` allows you to create an N-dimensional vector and store it in memory using TypedArrays. The second part of the library is an operation. `Operation` under the hood is graph node which will have multiple inputs and always produce a single output. The third component is a session. `Session` is a runtime which allows you to run computational graphs on different backends with the same API. For a better understanding of how it works let's create a simple program and run it on the GPU using WebGL:
 
 ````JS
 const imgURL = 'https://avatars1.githubusercontent.com/u/33897736?s=400&v=4';
