@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Typography } from 'lib-react-components';
 import { Link } from 'react-router-dom';
 import getPath from '../../../../utils/get_build_path';
+import MarkDownRender from '../../../md';
 import s from './styles/index.sass';
 
 import nameSpace from '../../../../../_data/docs/namespace.json';
@@ -168,13 +169,7 @@ const PropsList = (props, { intl, device }) => {
                 {typeValue || ''}
               </td>
               <td>
-                <Typography
-                  className={s.type}
-                  color="dark_grey"
-                  type="b2"
-                >
-                  {description || ''}
-                </Typography>
+                <MarkDownRender data={description} />
               </td>
             </tr>
           );

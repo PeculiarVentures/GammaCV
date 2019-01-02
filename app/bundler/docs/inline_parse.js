@@ -25,12 +25,6 @@ function replace(_regex, _opt) {
 
 function escape(html, encode) {
   return html;
-  // return html
-  //   .replace(!encode ? /&(?!#?\w+;)/g : /&/g, '&amp;')
-  //   .replace(/</g, '&lt;')
-  //   .replace(/>/g, '&gt;')
-  //   .replace(/"/g, '&quot;')
-  //   .replace(/'/g, '&#39;');
 }
 
 const inlineRules = {
@@ -48,7 +42,7 @@ const inlineRules = {
   del: /^~~(?=\S)([\s\S]*?\S)~~/,
   text: /^[\s\S]+?(?=[@{\\<!\[_*`]| {2,}\n|$)/,
   documentation: /^([\s]+)?{{([A-z./0-9-_]+)}}/,
-  people: /^@([\S]+?(?=[{\\<!\[_*`]|\n|$))/,
+  people: /^@([a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38})/i,
   issue: /^\\(#([\d]+)(?=[@{\\<!\[_*`]|\n|$))/,
 };
 
@@ -113,9 +107,7 @@ class InlineLexer {
       if (this.opts.issues) {
         cap = this.rules.issue.exec(src)
         if (cap) {
-          console.log('insert');
           src = src.substring(cap[0].length);
-          // result.push(this.builder.text(escape(cap[0])) );
           result.push(this.outputLink(cap[1], {
             href: this.opts.issues.replace(/{{arg}}/, cap[2]),
             title: cap[1],
@@ -233,9 +225,7 @@ class InlineLexer {
       // people
       if (this.opts.mentions) {
         if (cap = this.rules.people.exec(src)) {
-          console.log('insertmm', cap);
           src = src.substring(cap[0].length);
-          // result.push(this.builder.text(escape(cap[0])) );
           result.push(this.outputLink(cap[0], {
             href: this.opts.mentions.replace(/{{arg}}/, cap[1]),
             title: cap[0],
