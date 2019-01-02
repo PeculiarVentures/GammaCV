@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { Typography } from 'lib-react-components';
 import { Link } from 'react-router-dom';
 import getPath from '../../../../utils/get_build_path';
@@ -25,7 +26,7 @@ const TypeInner = (type, theme) => {
     return (
       <Link
         onClick={e => e.stopPropagation()}
-        className={theme.text_primary}
+        className={classNames(theme.text_primary, s.link)}
         to={url}
       >
         {content}
