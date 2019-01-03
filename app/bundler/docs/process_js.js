@@ -101,7 +101,10 @@ function processComment(samples, node, scope) {
 
           result.params.push({
             name: tag.name,
-            description: tag.description,
+            description: markdownToJson(tag.description || '', {}, {
+              mentions: 'https://github.com/{{arg}}',
+              issues: `${packageJSON.bugs.url}/{{arg}}`,
+            }),
             type,
             rest: flags.rest,
             optional: flags.optional,

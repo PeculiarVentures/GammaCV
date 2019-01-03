@@ -13,7 +13,6 @@ import * as gm from 'gammacv';
 const myOperation = new gm.RegisterOperation('MyOp')
 ```
 
-
 ## Describe inputs and output
 ### Inputs
 You can append input using ```.Input(name <string>, dtype <string>)```
@@ -159,10 +158,10 @@ index.js
 import * as gm from 'gammacv';
 import kernel from './kernel.glsl';
 
-const tSrc = new gm.Tensor('uint8', [2, 2, 4], [
+const tSrc = new gm.Tensor('uint8', [2, 2, 4], new Uint8Array([
   200, 2, 3, 34,  5, 6, 7, 125,
   9, 6, 7, 0,     3, 4, 5, 0,
-]);
+]));
 
 const myOperation = new gm.RegisterOperation('MyOp')
   .Input('tSrc', 'uint8')
