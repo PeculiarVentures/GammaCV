@@ -2,8 +2,8 @@ import * as gm from '../../lib';
 
 describe('Extract histogram', () => {
   let sess;
-  const setup = (input, layers, min, max, step) => {
-    const op = gm.histogram(input, layers, min, max, step);
+  const setup = (input) => {
+    const op = gm.histogramExperimental(input);
     const output = gm.tensorFrom(op);
 
     sess.init(op);
@@ -24,7 +24,7 @@ describe('Extract histogram', () => {
 
   it('For single pixel', () => {
     const input = new gm.Tensor('uint8', [1, 1, 4], new Uint8Array([0, 1, 255, 255]));
-    const test = setup(input, 1, 0, 1, 1 / 255);
+    const test = setup(input);
 
     sess.runOp(test.op, 0, test.output);
 
@@ -45,7 +45,7 @@ describe('Extract histogram', () => {
       7, 2, 13, 0,
       13, 5, 2, 3,
     ]));
-    const test = setup(input, 1, 4, 10, 1);
+    const test = setup(input);
 
     sess.runOp(test.op, 0, test.output);
 
@@ -79,7 +79,7 @@ describe('Extract histogram', () => {
     }
 
     it('For image single layer', () => {
-      const test = setup(input, 1, 0, 1, 1 / 255);
+      const test = setup(input);
 
       sess.runOp(test.op, 0, test.output);
 
@@ -87,7 +87,7 @@ describe('Extract histogram', () => {
     });
 
     it('For image 2 layers', () => {
-      const test = setup(input, 2, 0, 1, 1 / 255);
+      const test = setup(input);
 
       sess.runOp(test.op, 0, test.output);
 
@@ -95,7 +95,7 @@ describe('Extract histogram', () => {
     });
 
     it('For image 3 layers', () => {
-      const test = setup(input, 3, 0, 1, 1 / 255);
+      const test = setup(input);
 
       sess.runOp(test.op, 0, test.output);
 

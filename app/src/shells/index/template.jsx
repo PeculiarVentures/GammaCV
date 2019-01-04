@@ -107,17 +107,23 @@ const RootShell = props => (
           />
         ) : null
       }
-      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-115158166-2" />
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `window.dataLayer = window.dataLayer || [];
-            function gtag() {
-              dataLayer.push(arguments);
-            }
-            gtag('js', new Date());
-            gtag('config', 'UA-115158166-2');`,
-        }}
-      />
+      {
+        CONFIG.NODE_ENV === 'production' ? (
+          <Fragment>
+            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-115158166-2" />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `window.dataLayer = window.dataLayer || [];
+                  function gtag() {
+                    dataLayer.push(arguments);
+                  }
+                  gtag('js', new Date());
+                  gtag('config', 'UA-115158166-2');`,
+              }}
+            />
+          </Fragment>
+        ) : null
+      }
     </body>
   </html>
 );

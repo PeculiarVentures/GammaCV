@@ -110,6 +110,11 @@
         "type": "video",
         "name": "Extract Histogram",
         "path": "histogram"
+      },
+      {
+        "type": "video",
+        "name": "Extract Histogram (Experimental)",
+        "path": "histogram_experimental"
       }
     ]
   },
