@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+### Changed
+- KernelConstructor: make arguments of main glsl function optional for check.
+
 ## [0.3.5] - 2018-12-17
 ### Changed
 - Downsample operation supports RGBA (#32), add test
