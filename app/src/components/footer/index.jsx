@@ -31,7 +31,7 @@ export default function Footer(props, { intl, device }) {
         </div>
         <a
           className={s.get}
-          href="mailto:pentatonica.co@gmail.com"
+          href="mailto:info@peculiarventures.com"
         >
           <Typography
             type="b3"
@@ -68,7 +68,7 @@ export default function Footer(props, { intl, device }) {
       </div>
       <a
         className={s.get}
-        href="mailto:pentatonica.co@gmail.com"
+        href="mailto:info@peculiarventures.com"
       >
         <Typography
           type="b3"
