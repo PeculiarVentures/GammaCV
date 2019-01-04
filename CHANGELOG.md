@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+### Changed
+- Enhance performance when float polyfill is not needed
+
 ## [0.3.5] - 2018-12-17
 ### Changed
 - Downsample operation supports RGBA (#32), add test
