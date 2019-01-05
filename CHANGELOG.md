@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## Unreleased
 ### Changed
 - KernelConstructor: make arguments of main glsl function optional for check.
+- Enhance errors messages
 
 ## [0.3.5] - 2018-12-17
 ### Changed
