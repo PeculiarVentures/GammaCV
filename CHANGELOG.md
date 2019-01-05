@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 ### Changed
+- Enhance performance when float polyfill is not needed
 - KernelConstructor: make arguments of main glsl function optional for check.
 - Enhance errors messages
 
