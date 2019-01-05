@@ -29,4 +29,4 @@ export const NODE_ENV = env('NODE_ENV');
 // ======== Rollbar Key ========
 export const ROLLBAR_API_KEY = env('ROLLBAR_API_KEY', 'null') !== 'null' ? env('ROLLBAR_API_KEY') : '';
 
-export const GOOGLE_ANALYTICS = env('GOOGLE_ANALYTICS', 'null') !== 'null' ? env('ROLLBAR_API_KEY') : '';
+export const GOOGLE_ANALYTICS = env('GOOGLE_ANALYTICS', 'null') !== 'null' ? env('GOOGLE_ANALYTICS') : '';
