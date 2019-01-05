@@ -2,7 +2,4 @@ NODE_ENV=production
 URL=http://localhost
 PORT=3000
 ROLLBAR_API_KEY=2747c18861de445cb1f042ceaffb0a34
-
-##### Deployment Configuration #####
-AWS_DEPLOY_BUCKET_NAME=name
-AWS_DEPLOY_REGION=region
+GOOGLE_ANALYTICS=UA-115158166-2
