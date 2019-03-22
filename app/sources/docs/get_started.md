@@ -16,7 +16,7 @@ const width = 500;
 const heigth = 400;
 
 // load image from URL or base64 string and store a result in input tensor
-gm.imageTensorFromURL(imgURL, 'uint8', [400, 400, 4], true).then((input) => {
+gm.imageTensorFromURL(imgURL, 'uint8', [heigth, width, 4], true).then((input) => {
   // use the image tensor as the input for the sobelOperator operation
   // operations return a compiled operation instance
   const operation = gm.sobelOperator(input);
@@ -64,6 +64,7 @@ gm.imageTensorFromURL(imgURL, 'uint8', [heigth, width, 4], true).then((input) =>
 
   // allocate output tensor
   const output = gm.tensorFrom(pipeline);
+  const sess = new gm.Session();
 
   sess.init(pipeline);
 
@@ -114,19 +115,19 @@ const output = gm.tensorFrom(pipeline);
 
 // create loop
 const tick = () => {
-    requestAnimationFrame(tick);
-    // Read current in to the tensor
-    stream.getImageBuffer(input);
+  requestAnimationFrame(tick);
+  // Read current in to the tensor
+  stream.getImageBuffer(input);
 
-    // finaly run operation on GPU and then write result in to output tensor
-    sess.runOp(pipeline, context, output);
+  // finaly run operation on GPU and then write result in to output tensor
+  sess.runOp(pipeline, context, output);
 
-    // draw result into canvas
-    gm.canvasFromTensor(canvasProcessed, output);
+  // draw result into canvas
+  gm.canvasFromTensor(canvasProcessed, output);
 
-    // if we would like to be graph recalculated we need 
-    // to change the context for next frame
-    context += 1;
+  // if we would like to be graph recalculated we need 
+  // to change the context for next frame
+  context += 1;
 }
 
 // start capturing a camera and run loop
