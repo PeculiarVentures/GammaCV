@@ -1,1 +1,0 @@
-webpackJsonp([78],{560:function(e,n,t){"use strict";Object.defineProperty(n,"__esModule",{value:!0});var r=t(69);n.default={init:function(e,n){var t=r.P(e);return n.feedDict({prevFrame:t}),{prevFrame:t}},op:function(e){return r.n(e)},tick:function(e,n){var t=n.canvas,u=n.operation,i=n.output,o=n.session,a=n.context,c=n.input;e%5==0?r.O(c,a.prevFrame):o.runOp(u,e,i),r.m(t,i)}}}});
