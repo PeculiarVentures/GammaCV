@@ -118,10 +118,10 @@ const tick = () => {
     // Read current in to the tensor
     stream.getImageBuffer(input);
 
-    // Finaly run operation on GPU and then write result in to output tensor
+    // finaly run operation on GPU and then write result in to output tensor
     sess.runOp(pipeline, context, output);
 
-    // Draw result into canvas
+    // draw result into canvas
     gm.canvasFromTensor(canvasProcessed, output);
 
     // if we would like to be graph recalculated we need 
@@ -129,7 +129,7 @@ const tick = () => {
     context += 1;
 }
 
-// Start capturing a camera and run loop
+// start capturing a camera and run loop
 stream.start();
 tick();
 
