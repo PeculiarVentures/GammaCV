@@ -186,6 +186,14 @@ const Parser = (props) => {
     );
   }
 
+  if (type === 'html') {
+    const html = props.data.children.map(el => el.children || el).join('');
+
+    return (
+      <div dangerouslySetInnerHTML={{ __html: html }} />
+    );
+  }
+
   return (
     <div>NEED PARSE TYPE - {type}</div>
   );
