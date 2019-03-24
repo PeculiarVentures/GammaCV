@@ -1,7 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [0.3.6] - 2019-03-24
+### Added
+- Shortcut for library as umd module: `gm`.
 ### Changed
 - Enhance performance when float polyfill is not needed
 - KernelConstructor: make arguments of main glsl function optional for check.
