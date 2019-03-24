@@ -26,6 +26,14 @@ const uglifyParams = {
   },
 };
 
+const assignUMDNameShortcut = `(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (factory(global));
+}(this, function(global) {
+  global.gm = global.GammaCV;
+}))`;
+
 function getConfig(
   entry,
   plugins = [],
@@ -52,6 +60,7 @@ function getConfig(
         format,
         name: 'GammaCV',
         banner,
+        footer: format === 'umd' ? assignUMDNameShortcut : '',
       },
     ],
   };
