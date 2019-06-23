@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
-### Added
+## [0.3.7] - 2019-06-23
 - Typescript support
 
 ## [0.3.6] - 2019-03-24
