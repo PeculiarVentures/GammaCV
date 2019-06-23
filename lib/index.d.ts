@@ -9,6 +9,13 @@ export class CaptureVideo {
   stop(): void;
 }
 
+export function canvasFromTensor(canvas: HTMLCanvasElement, target: Tensor): void
+export function canvasDrawRect(canvas: HTMLCanvasElement, rect: Rect, color?: string, lineWeight?: number): void
+export function canvasDrawLine(canvas: HTMLCanvasElement, line: Line, color?: string, lineWeight?: number): void
+export function canvasDrawCircle(canvas: HTMLCanvasElement, center: number[], radius?: number, color?: string): void
+export function canvasCreate(width: number, height: number): HTMLCanvasElement
+export function imageTensorFromURL(url: string, dtype: 'uint8' | 'float32', size?: number[]): void
+
 /* math */
 
 export class Line {
@@ -69,6 +76,10 @@ export class TypedPool<T = any> {
   release(): void
 }
 
+export function generateTransformMatrix(rect: Rect, outScale: number[], tMatrix: InputType): Operation
+export function calcIntegralSum(input: Tensor, x: number, y: number, w: number, h: number): Operation
+export function calcHAARFeature(input: Tensor, feature: number[], size: number, x: number, y: number, coef: number): Operation
+
 /* ops */
 
 export function histogramEqualization(input: InputType, layers?: number): Operation
@@ -96,17 +107,7 @@ export function multScalar(A: InputType, scalar: number): Operation
 export function perspectiveProjection(input: InputType, tMatrix: InputType, outScale: number[]): Operation
 export function swt(sobel: InputType, canny: InputType): Operation
 
-export function generateTransformMatrix(rect: Rect, outScale: number[], tMatrix: InputType): Operation
-
-export function canvasFromTensor(canvas: HTMLCanvasElement, target: Tensor): void
-export function canvasDrawRect(canvas: HTMLCanvasElement, rect: Rect, color?: string, lineWeight?: number): void
-export function canvasDrawLine(canvas: HTMLCanvasElement, line: Line, color?: string, lineWeight?: number): void
-export function canvasDrawCircle(canvas: HTMLCanvasElement, center: number[], radius?: number, color?: string): void
-export function canvasCreate(width: number, height: number): HTMLCanvasElement
-export function imageTensorFromURL(url: string, dtype: 'uint8' | 'float32', size?: number[]): void
-export function calcIntegralSum(input: Tensor, x: number, y: number, w: number, h: number): Operation
-export function calcHAARFeature(input: Tensor, feature: number[], size: number, x: number, y: number, coef: number): Operation
-export function cast(input: Tensor, dtype?: dtype): Operation
+export function cast(input: Tensor, dtype?: DType): Operation
 export function colorSegmentation(input: Tensor, numClusters?: number): Operation
 export function adaptiveThreshold(input: Tensor, boxSize?: number, threshold?: number, pichChanel?: number, integralImage?: Tensor): Operation
 export function concat(A: Tensor, B: Tensor, mask?: string[]): Operation
@@ -118,7 +119,7 @@ export function hog(input: Tensor, max: number, type: 'max' | 'visualize'): Oper
 /* program */
 
 type TensorDataView = Float32Array | Uint8Array | Uint16Array | Uint32Array | Uint8ClampedArray | number[];
-type dtype =
+type DType =
   'uint8' |
   'uint16' |
   'uint32' |
@@ -130,43 +131,56 @@ type dtype =
   'uint8c' |
   'array'
 
-export class Tensor<T extends TensorDataView> {
+export class Tensor<T extends TensorDataView = Uint8Array> {
   shape: number[];
   size: number;
+  stride: number[];
+  offset: number;
   constructor(
-    type: dtype,
+    type: DType,
     shape: number[],
-    data?: T
+    data?: T,
+    stride?: number[],
+    offset?: number,
   )
   public data: T
   public get(...args: number[]): number
   public set(...args: number[]): void
+  public index(...args: number[]): number
   public assign(input: T): void
   public relese(): this
   public clone(): Tensor<T>
 
   static IndexToCoord(shape: number[], index: number): number[]
   static CoordToIndex(shape: number[], coords: number[]): number
+  static Malloc(dtype: DType, size: number): TensorDataView
+  static DefineType(data: TensorDataView): DType
+  static GetTypedArray(dtype: DType, data: TensorDataView): TensorDataView
+  static GetSize(shape: number[]): number
 
 }
 
+type Chunk = 'pickCurrentValue' | 'pickValue' | 'float' | string;
+
 export class RegisterOperation {
   constructor(name: string)
-  GLSLKernel(kernel: string): RegisterOperation
-  LoadChunk<T>(T): RegisterOperation
-  Input(name: string, dtype: string): RegisterOperation
-  Output(dtype: string): RegisterOperation
-  Constant(name: string, value: number): RegisterOperation
-  SetShapeFn(fn: Function): RegisterOperation
-  PreCompile(fn: Function): RegisterOperation
-  PostCompile(fn: Function): RegisterOperation
-  Uniform(name: string, dtype: string, defaultValue: number): RegisterOperation
-  Compile(input: object): RegisterOperation
+  GLSLKernel(kernel: string): this
+  LoadChunk(...chunks: Chunk[]): this
+  Input(name: string, dtype: DType): this
+  Output(dtype: DType): this
+  Uniform(name: string, dtype: string, defaultValue: number | number[]): this // ?
+  Constant(name: string, value: number | string): this
+  SetShapeFn(fn: () => number[]): this
+  PreCompile(fn: Function): this
+  PostCompile(fn: Function): this
+  Compile(input: { [key: string]: InputType }): Operation
 }
 
 export class Session {
   init(op: Operation): void
   runOp(op: Operation, frame: number, out: Tensor): boolean
+  destroy(): void
+  readToTensor(tensor: Tensor<Uint8Array | Float32Array>)
 }
 
 export class Operation {
