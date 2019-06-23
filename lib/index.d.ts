@@ -249,6 +249,20 @@ export function tensorMap(input: Tensor, cb: (a: number, i: number) => void, out
 export function tensorOnes(dtype: DType, shape: number[]): Tensor
 export function tensorFromFlat(arr: TensorDataView, shape?: number[], dtype?: DType, alpha?: number): Tensor
 
+/* utils */
+
+export function assert(expression: boolean, msg: text): void
+export function assertShapesAreEqual(a: number[], b: number[]): boolean
+export function isValidShape(shape: number[]): boolean
+export function isOperation(op: any): boolean
+export function isTensor(tensor: any): boolean
+export function isValidGLSLChunk(name: string): boolean
+export function isValidGLSLVariableName(name: string): boolean
+export function isValidOperationShape(shape: number[]): boolean
+export function deprecationWarning(name: string, msg: string): void
+export function deprecationError(name: string, msg: string): void
+export class DeprecationError extends Error { }
+
 
 /* Common */
 type InputType = Tensor | Operation;
