@@ -1,21 +1,4 @@
-export class RegisterOperation {
-  constructor(name: string)
-  GLSLKernel(kernel: string): RegisterOperation
-  LoadChunk<T>(T): RegisterOperation
-  Input(name: string, dtype: string): RegisterOperation
-  Output(dtype: string): RegisterOperation
-  Constant(name: string, value: number): RegisterOperation
-  SetShapeFn(fn: Function): RegisterOperation
-  PreCompile(fn: Function): RegisterOperation
-  PostCompile(fn: Function): RegisterOperation
-  Uniform(name: string, dtype: string, defaultValue: number): RegisterOperation
-  Compile(input: object): RegisterOperation
-}
-
-export class Session {
-  init(op: Operation): void
-  runOp(op: Operation, frame: number, out: Tensor): boolean
-}
+/* io */
 
 export class CaptureVideo {
   constructor(width: number, height: number);
@@ -24,20 +7,7 @@ export class CaptureVideo {
   stop(): void;
 }
 
-export class Tensor {
-  shape: number[];
-  size: number;
-  constructor(
-    type: string,
-    shape: number[],
-    data?: Float32Array | Uint8Array | Uint16Array | Uint32Array | Uint8ClampedArray
-  )
-  public data: Float32Array | Uint8Array | Uint16Array | Uint32Array | Uint8ClampedArray
-  public get(...args: number[]): number
-  public set(...args: number[]): void
-  public assign(input: Float32Array | Uint8Array | Uint16Array | Uint32Array | Uint8ClampedArray): void
-}
-
+/* math */
 
 export class Line {
   constructor(input: number[])
@@ -89,9 +59,6 @@ export class Rect {
   isInRect(rect: Rect)
 }
 
-export class Operation {
-}
-
 export class TypedPool<T = any> {
   constructor(instance: T, count: number)
   public length: number
@@ -100,7 +67,7 @@ export class TypedPool<T = any> {
   release(): void
 }
 
-type InputType = Tensor | Operation;
+/* ops */
 
 export function histogramEqualization(input: InputType): Operation
 export function grayscale(input: InputType): Operation
@@ -138,5 +105,43 @@ export function imageTensorFromURL(url: string, dtype: 'uint8' | 'float32', size
 export function calcIntegralSum(input: Tensor, x: number, y: number, w: number, h: number): number
 export function calcHAARFeature(input: Tensor, feature: number[], size: number, x: number, y: number, coef: number): number
 
+/* program */
 
-export type DatasetLabel = Rect | Line | Point
+export class Tensor {
+  shape: number[];
+  size: number;
+  constructor(
+    type: string,
+    shape: number[],
+    data?: Float32Array | Uint8Array | Uint16Array | Uint32Array | Uint8ClampedArray
+  )
+  public data: Float32Array | Uint8Array | Uint16Array | Uint32Array | Uint8ClampedArray
+  public get(...args: number[]): number
+  public set(...args: number[]): void
+  public assign(input: Float32Array | Uint8Array | Uint16Array | Uint32Array | Uint8ClampedArray): void
+}
+
+export class RegisterOperation {
+  constructor(name: string)
+  GLSLKernel(kernel: string): RegisterOperation
+  LoadChunk<T>(T): RegisterOperation
+  Input(name: string, dtype: string): RegisterOperation
+  Output(dtype: string): RegisterOperation
+  Constant(name: string, value: number): RegisterOperation
+  SetShapeFn(fn: Function): RegisterOperation
+  PreCompile(fn: Function): RegisterOperation
+  PostCompile(fn: Function): RegisterOperation
+  Uniform(name: string, dtype: string, defaultValue: number): RegisterOperation
+  Compile(input: object): RegisterOperation
+}
+
+export class Session {
+  init(op: Operation): void
+  runOp(op: Operation, frame: number, out: Tensor): boolean
+}
+
+export class Operation {
+}
+
+/* Common */
+type InputType = Tensor | Operation;
