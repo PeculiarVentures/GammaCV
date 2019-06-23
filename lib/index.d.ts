@@ -263,6 +263,14 @@ export function deprecationWarning(name: string, msg: string): void
 export function deprecationError(name: string, msg: string): void
 export class DeprecationError extends Error { }
 
+/* math utils */
+
+export function sortPoints(points: number[], canvas?: HTMLCanvasElement)
+export function angleBetweenLines(A: Line, B: Line)
+export function transfromPoint(px: number, py: number, transformation: Tensor)
+export function generateTransformMatrix(rect, dstBounds, transformMatrix, pad = 0)
+export function calcIntegralSum(img: Tensor, x: number, y: number, w: number, h: number)
+export function calcHAARFeature(img: Tensor, feature: number[][], size: number, dx: number, dy: number, dStep: number)
 
 /* Common */
 type InputType = Tensor | Operation;
