@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+### Added
+- Typescript support
+
 ## [0.3.6] - 2019-03-24
 ### Added
 - Shortcut for library as umd module: `gm`.
