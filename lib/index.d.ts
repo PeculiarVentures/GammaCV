@@ -184,6 +184,12 @@ export class Session {
 }
 
 export class Operation {
+  constructor(name: string)
+  run(sess: Session, ctx?: number, isRecalculated?: bool): void
+  init(gl: WebGLObject): void
+  assignInput(name: string, input: InputType): void
+  destroy(): void
+  clone(): Operation
 }
 
 /* Common */
