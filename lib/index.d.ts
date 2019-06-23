@@ -1,3 +1,5 @@
+
+
 /* io */
 
 export class CaptureVideo {
@@ -69,17 +71,17 @@ export class TypedPool<T = any> {
 
 /* ops */
 
-export function histogramEqualization(input: InputType): Operation
+export function histogramEqualization(input: InputType, layers?: number): Operation
 export function grayscale(input: InputType): Operation
-export function downsample(input: InputType, coef: number): Operation
-export function gaussianBlur(input: InputType, sigma: number, ksize: number): Operation
+export function downsample(input: InputType, coef?: number, type?: 'mean' | 'max'): Operation
+export function gaussianBlur(input: InputType, sigma?: number, ksize?: number): Operation
 export function sobelOperator(input: InputType): Operation
-export function cannyEdges(input: InputType, lowThreshold: number, highThreshold: number): Operation
+export function cannyEdges(input: InputType, lowThreshold?: number, highThreshold?: number): Operation
 export function pcLinesTransform(input: InputType, reduction: number): Operation
 export function pcLinesEnhance(input: InputType): Operation
 export function pcLinesReduceMax(input: InputType, reduction: number): Operation
 export function pcLinesReduceMax(input: InputType, reduction: number, coef: number): Operation
-export function conv2d(): Operation
+export function conv2d(inout: Tensor, kernel: Tensor, factor?: number, bias?: number): Operation
 export function sat(input: InputType): Operation
 export function sqsat(input: InputType): Operation
 export function tensorFrom(target: InputType | Operation): Tensor
@@ -102,8 +104,16 @@ export function canvasDrawLine(canvas: HTMLCanvasElement, line: Line, color?: st
 export function canvasDrawCircle(canvas: HTMLCanvasElement, center: number[], radius?: number, color?: string): void
 export function canvasCreate(width: number, height: number): HTMLCanvasElement
 export function imageTensorFromURL(url: string, dtype: 'uint8' | 'float32', size?: number[]): void
-export function calcIntegralSum(input: Tensor, x: number, y: number, w: number, h: number): number
-export function calcHAARFeature(input: Tensor, feature: number[], size: number, x: number, y: number, coef: number): number
+export function calcIntegralSum(input: Tensor, x: number, y: number, w: number, h: number): Operation
+export function calcHAARFeature(input: Tensor, feature: number[], size: number, x: number, y: number, coef: number): Operation
+export function cast(input: Tensor, dtype?: string): Operation
+export function colorSegmentation(input: Tensor, numClusters?: number): Operation
+export function adaptiveThreshold(input: Tensor, boxSize?: number, threshold?: number, pichChanel?: number, integralImage?: Tensor): Operation
+export function concat(A: Tensor, B: Tensor, mask?: string[]): Operation
+export function dilate(input: Tensor, size: number[], kernel?: boolean): Operation
+export function erode(input: Tensor, size: number[], kernel?: boolean): Operation
+export function histogram(input: Tensor, layers?: number, min?: number, max?: number, step?: number): Operation
+export function hog(input: Tensor, max: number, type: 'max' | 'visualize'): Operation
 
 /* program */
 
