@@ -1,11 +1,11 @@
 {
   "name": "gammacv",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "GammaCV is a WebGL accelerated Computer Vision library for browser",
   "main": "dist/index.js",
   "jsnext:main": "dist/index.es.js",
   "module": "dist/index.es.js",
-  "types": "./lib/index.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "prebuild": "npm run clean",
     "build": "rollup -c rollup.config.js && cp lib/index.d.ts dist/index.d.ts",
