@@ -221,5 +221,20 @@ export class Operation {
   clone(): Operation
 }
 
+/* tensor utils */
+
+export function range(n: number): number[]
+export function tensorFrom(input: InputType, dtype?: DType): Tensor | null
+export function tensorClone(from: Tensor, to: Tensor): void
+export function tensorInvert(input: Tensor, output?: Tensor, invertShape?: number[]): Tensor
+export function tensorAssertEqual(actual: Tensor, expected: Tensor): bool
+export function tensorAssertCloseEqual(actual: Tensor, expected: Tensor, delta: number): bool
+export function tensorAssertMSEEqual(actual: Tensor, expected: Tensor, delta: number): bool
+export function flipTensor(input: Tensor, output?: Tensor, invertShape?: number[]): Tensor
+export function tensorMap(input: Tensor, cb: (a: number, i: number) => void, output?: Tensor)
+export function tensorOnes(dtype: DType, shape: number[]): Tensor
+export function tensorFromFlat(arr: TensorDataView, shape?: number[], dtype?: DType, alpha?: number): Tensor
+
+
 /* Common */
 type InputType = Tensor | Operation;
