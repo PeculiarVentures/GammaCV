@@ -106,7 +106,7 @@ export function canvasCreate(width: number, height: number): HTMLCanvasElement
 export function imageTensorFromURL(url: string, dtype: 'uint8' | 'float32', size?: number[]): void
 export function calcIntegralSum(input: Tensor, x: number, y: number, w: number, h: number): Operation
 export function calcHAARFeature(input: Tensor, feature: number[], size: number, x: number, y: number, coef: number): Operation
-export function cast(input: Tensor, dtype?: string): Operation
+export function cast(input: Tensor, dtype?: dtype): Operation
 export function colorSegmentation(input: Tensor, numClusters?: number): Operation
 export function adaptiveThreshold(input: Tensor, boxSize?: number, threshold?: number, pichChanel?: number, integralImage?: Tensor): Operation
 export function concat(A: Tensor, B: Tensor, mask?: string[]): Operation
