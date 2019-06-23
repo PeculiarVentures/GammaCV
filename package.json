@@ -5,9 +5,10 @@
   "main": "dist/index.js",
   "jsnext:main": "dist/index.es.js",
   "module": "dist/index.es.js",
+  "types": "./lib/index.d.ts",
   "scripts": {
     "prebuild": "npm run clean",
-    "build": "rollup -c rollup.config.js",
+    "build": "rollup -c rollup.config.js && cp lib/index.d.ts dist/index.d.ts",
     "clean": "rimraf dist dist-es6",
     "test": "NODE_ENV=test SINGLE_RUN=true babel-node ./node_modules/.bin/karma start",
     "test-server": "NODE_ENV=test babel-node ./node_modules/.bin/karma start",
