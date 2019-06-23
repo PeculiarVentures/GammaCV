@@ -1,8 +1,10 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { Typography } from 'lib-react-components';
 import { Link } from 'react-router-dom';
 import getPath from '../../../../utils/get_build_path';
+import MarkDownRender from '../../../md';
 import s from './styles/index.sass';
 
 import nameSpace from '../../../../../_data/docs/namespace.json';
@@ -24,7 +26,7 @@ const TypeInner = (type, theme) => {
     return (
       <Link
         onClick={e => e.stopPropagation()}
-        className={theme.text_primary}
+        className={classNames(theme.text_primary, s.link)}
         to={url}
       >
         {content}
@@ -168,13 +170,7 @@ const PropsList = (props, { intl, device }) => {
                 {typeValue || ''}
               </td>
               <td>
-                <Typography
-                  className={s.type}
-                  color="dark_grey"
-                  type="b2"
-                >
-                  {description || ''}
-                </Typography>
+                <MarkDownRender data={description} />
               </td>
             </tr>
           );

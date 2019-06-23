@@ -1,6 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.3.6] - 2019-03-24
+### Added
+- Shortcut for library as umd module: `gm`.
+### Changed
+- Enhance performance when float polyfill is not needed
+- KernelConstructor: make arguments of main glsl function optional for check.
+- Enhance errors messages
+
+## [0.3.5] - 2018-12-17
+### Changed
+- Downsample operation supports RGBA (#32), add test
+
 ## [0.3.4] - 2018-11-9
 ### Fixed
 - Fix the requested ratio for webrtc video

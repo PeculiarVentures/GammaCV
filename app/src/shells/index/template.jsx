@@ -7,6 +7,7 @@ import * as CONFIG from '../../../bundler/config';
 import APP_CONFIG from '../../../app_config';
 import s from './styles/basic.sass';
 
+
 const RootShell = props => (
   <html lang="en">
     <head>
@@ -60,6 +61,23 @@ const RootShell = props => (
       <noscript>
         <Noscript />
       </noscript>
+      {
+        props.initAnalytics ? (
+          <Fragment>
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${CONFIG.GOOGLE_ANALYTICS}`} />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `window.dataLayer = window.dataLayer || [];
+                  function gtag() {
+                    dataLayer.push(arguments);
+                  }
+                  gtag('js', new Date());
+                  gtag('config', '${CONFIG.GOOGLE_ANALYTICS}');`,
+              }}
+            />
+          </Fragment>
+        ) : null
+      }
     </head>
     <body>
       <div className={s.root} id="root">
@@ -107,17 +125,6 @@ const RootShell = props => (
           />
         ) : null
       }
-      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-115158166-2" />
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `window.dataLayer = window.dataLayer || [];
-            function gtag() {
-              dataLayer.push(arguments);
-            }
-            gtag('js', new Date());
-            gtag('config', 'UA-115158166-2');`,
-        }}
-      />
     </body>
   </html>
 );
@@ -131,6 +138,7 @@ RootShell.propTypes = {
   ]),
   initServiceWorker: PropTypes.bool,
   initRollbar: PropTypes.bool,
+  initAnalytics: PropTypes.bool,
   disableReactDevTools: PropTypes.bool,
 };
 
@@ -140,6 +148,7 @@ RootShell.defaultProps = {
   inlineStyles: [],
   initServiceWorker: false,
   initRollbar: false,
+  initAnalytics: false,
   disableReactDevTools: false,
 };
 

@@ -4,7 +4,6 @@ export default {
   op: (input, params) => {
     let pipeline = input;
 
-    pipeline = gm.grayscale(pipeline);
     pipeline = gm.downsample(pipeline, params.UPSAMPLE.coeficient, 'max');
     pipeline = gm.upsample(
       pipeline,
