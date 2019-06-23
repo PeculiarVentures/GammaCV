@@ -117,18 +117,37 @@ export function hog(input: Tensor, max: number, type: 'max' | 'visualize'): Oper
 
 /* program */
 
-export class Tensor {
+type TensorDataView = Float32Array | Uint8Array | Uint16Array | Uint32Array | Uint8ClampedArray | number[];
+type dtype =
+  'uint8' |
+  'uint16' |
+  'uint32' |
+  'int8' |
+  'int16' |
+  'int32' |
+  'float32' |
+  'float64' |
+  'uint8c' |
+  'array'
+
+export class Tensor<T extends TensorDataView> {
   shape: number[];
   size: number;
   constructor(
-    type: string,
+    type: dtype,
     shape: number[],
-    data?: Float32Array | Uint8Array | Uint16Array | Uint32Array | Uint8ClampedArray
+    data?: T
   )
-  public data: Float32Array | Uint8Array | Uint16Array | Uint32Array | Uint8ClampedArray
+  public data: T
   public get(...args: number[]): number
   public set(...args: number[]): void
-  public assign(input: Float32Array | Uint8Array | Uint16Array | Uint32Array | Uint8ClampedArray): void
+  public assign(input: T): void
+  public relese(): this
+  public clone(): Tensor<T>
+
+  static IndexToCoord(shape: number[], index: number): number[]
+  static CoordToIndex(shape: number[], coords: number[]): number
+
 }
 
 export class RegisterOperation {
