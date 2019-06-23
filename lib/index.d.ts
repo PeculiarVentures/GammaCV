@@ -27,7 +27,7 @@ export function canvasDrawCircle(canvas: HTMLCanvasElement, center: number[], ra
 export function canvasFillCircle(canvas: HTMLCanvasElement, center: number[], radius?: number, color?: string): void
 export function canvasCreate(width: number, height: number): HTMLCanvasElement
 
-export function imageTensorFromURL(url: string, dtype?: 'uint8' | 'float32', shape?: number[], cors?: boolean): void
+export function imageTensorFromURL(url: string, dtype?: 'uint8' | 'float32', shape?: Shape, cors?: boolean): void
 
 /* math */
 
@@ -175,15 +175,15 @@ type DType =
   'array'
 
 export class Tensor<T extends TensorDataView = Uint8Array> {
-  shape: number[];
+  shape: Shape;
   size: number;
   stride: number[];
   offset: number;
   constructor(
     type: DType,
-    shape: number[],
+    shape: Shape,
     data?: T,
-    stride?: number[],
+    stride?: Shape,
     offset?: number,
   )
   public data: T
@@ -194,12 +194,12 @@ export class Tensor<T extends TensorDataView = Uint8Array> {
   public relese(): this
   public clone(): Tensor<T>
 
-  static IndexToCoord(shape: number[], index: number): number[]
-  static CoordToIndex(shape: number[], coords: number[]): number
+  static IndexToCoord(shape: Shape, index: number): number[]
+  static CoordToIndex(shape: Shape, coords: number[]): number
   static Malloc(dtype: DType, size: number): TensorDataView
   static DefineType(data: TensorDataView): DType
   static GetTypedArray(dtype: DType, data: TensorDataView): TensorDataView
-  static GetSize(shape: number[]): number
+  static GetSize(shape: Shape): number
 
 }
 
@@ -213,7 +213,7 @@ export class RegisterOperation {
   Output(dtype: DType): this
   Uniform(name: string, dtype: string, defaultValue: number | number[]): this // ?
   Constant(name: string, value: number | string): this
-  SetShapeFn(fn: () => number[]): this
+  SetShapeFn(fn: () => Shape): this
   PreCompile(fn: Function): this
   PostCompile(fn: Function): this
   Compile(input: { [key: string]: InputType }): Operation
@@ -240,37 +240,42 @@ export class Operation {
 export function range(n: number): number[]
 export function tensorFrom(input: InputType, dtype?: DType): Tensor | null
 export function tensorClone(from: Tensor, to: Tensor): void
-export function tensorInvert(input: Tensor, output?: Tensor, invertShape?: number[]): Tensor
+export function tensorInvert(input: Tensor, output?: Tensor, invertShape?: Shape): Tensor
 export function tensorAssertEqual(actual: Tensor, expected: Tensor): boolean
 export function tensorAssertCloseEqual(actual: Tensor, expected: Tensor, delta: number): boolean
 export function tensorAssertMSEEqual(actual: Tensor, expected: Tensor, delta: number): boolean
-export function flipTensor(input: Tensor, output?: Tensor, invertShape?: number[]): Tensor
+export function flipTensor(input: Tensor, output?: Tensor, invertShape?: Shape): Tensor
 export function tensorMap(input: Tensor, cb: (a: number, i: number) => void, output?: Tensor)
 export function tensorOnes(dtype: DType, shape: number[]): Tensor
-export function tensorFromFlat(arr: TensorDataView, shape?: number[], dtype?: DType, alpha?: number): Tensor
+export function tensorFromFlat(arr: TensorDataView, shape?: Shape, dtype?: DType, alpha?: number): Tensor
 
 /* utils */
 
 export function assert(expression: boolean, msg: text): void
-export function assertShapesAreEqual(a: number[], b: number[]): boolean
-export function isValidShape(shape: number[]): boolean
+export function assertShapesAreEqual(a: Shape, b: Shape): boolean
+export function isValidShape(shape: Shape): boolean
 export function isOperation(op: any): boolean
 export function isTensor(tensor: any): boolean
 export function isValidGLSLChunk(name: string): boolean
 export function isValidGLSLVariableName(name: string): boolean
-export function isValidOperationShape(shape: number[]): boolean
+export function isValidOperationShape(shape: Shape): boolean
 export function deprecationWarning(name: string, msg: string): void
 export function deprecationError(name: string, msg: string): void
 export class DeprecationError extends Error { }
 
 /* math utils */
 
-export function sortPoints(points: number[], canvas?: HTMLCanvasElement)
-export function angleBetweenLines(A: Line, B: Line)
-export function transfromPoint(px: number, py: number, transformation: Tensor)
-export function generateTransformMatrix(rect, dstBounds, transformMatrix, pad = 0)
-export function calcIntegralSum(img: Tensor, x: number, y: number, w: number, h: number)
-export function calcHAARFeature(img: Tensor, feature: number[][], size: number, dx: number, dy: number, dStep: number)
+export function sortPoints(points: number[], canvas?: HTMLCanvasElement): number[]
+export function angleBetweenLines(A: Line, B: Line): number
+export function transfromPoint(px: number, py: number, transformation: Tensor): [number, number]
+export function generateTransformMatrix(rect: Rect, dstBounds: [number, number], transformMatrix: Tensor, pad?: number): Tensor
+export function calcIntegralSum(img: Tensor, x: number, y: number, w: number, h: number): number
+export function calcHAARFeature(img: Tensor, feature: number[][], size: number, dx: number, dy: number, dStep: number): number
 
 /* Common */
 type InputType = Tensor | Operation;
+
+/**
+ * Array of positive integers, that describe n-dimensional shape, should cotain n elements
+ */
+type Shape = number[];
