@@ -20,31 +20,28 @@ export function imageTensorFromURL(url: string, dtype: 'uint8' | 'float32', size
 export class Line {
   constructor(input: number[])
   constructor(...args: number[])
-  static Intersection(a: Line, b: Line): number[]
   public angle: number
   public x1: number
   public y1: number
   public x2: number
   public y2: number
+  public px: number
+  public py: number
+  public length: number
   public data: number[]
+  static Intersection(a: Line, b: Line): number[]
   public clone(): Line
-  fromParallelCoords(a, b, c, d, e, f): void;
+  public fromParallelCoords(a: number, b: number, c: number, d: number, e: number, f: number): void;
   public scale(w: number, h: number): Line
-}
-
-export class Point {
-  public clone(): Point
-  public scale(w: number, h: number): Point
+  public set(a: number, b: number, c: number, d: number, x: number, y: number): Line
+  public fromArray(array: number[]): Rect
+  public toArray(): number[]
 }
 
 export class Rect {
+  constructor(input: number[])
+  constructor(...args: number[])
   public data: Float32Array | Uint8Array | Uint16Array | Uint32Array | Uint8ClampedArray
-  static TriangleS(...args: number[])
-  constructor(data?: number[])
-  static Distance(a: Rect, b: Rect): number
-  public scale(w: number, h: number): Rect
-  public clone(): Rect
-  public fromLines(a: Line, b: Line, c: Line, d: Line): Rect
   public distA: number
   public distB: number
   public distC: number
@@ -64,7 +61,25 @@ export class Rect {
   public dx: number
   public dy: number
   public area: number
-  isInRect(rect: Rect)
+  public P: number
+  static TriangleS(...args: number[]): number
+  static Distance(a: Rect, b: Rect): number
+  public scale(w: number, h: number): Rect
+  public clone(): Rect
+  public clear(): Rect
+  public fromDeep(array: number[]): Rect
+  public fromArray(array: number[]): Rect
+  public toArray(): number[]
+  public toJSON(): number[]
+  public fromLines(a: Line, b: Line, c: Line, d: Line): Rect
+  public isInRect(rect: Rect): boolean
+  public isNotEmpty(): boolean
+  public set(ax: number, ay: number, bx: number, by: number, cx: number, cy: number, dx: number, dy: number): Rect
+  public assign(rect: Rect): Rect
+  public scale(xCoef: number, yCoef: number): Rect
+  public mul(coef: number): Rect
+  public scaleAt(coef: number): Rect
+  public perspective(matrix: Tensor): Rect
 }
 
 export class TypedPool<T = any> {
