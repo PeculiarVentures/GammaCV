@@ -235,6 +235,14 @@ export function tensorMap(input: Tensor, cb: (a: number, i: number) => void, out
 export function tensorOnes(dtype: DType, shape: number[]): Tensor
 export function tensorFromFlat(arr: TensorDataView, shape?: number[], dtype?: DType, alpha?: number): Tensor
 
+/* math utils */
+
+export function sortPoints(points: number[], canvas?: HTMLCanvasElement)
+export function angleBetweenLines(A: Line, B: Line)
+export function transfromPoint(px: number, py: number, transformation: Tensor)
+export function generateTransformMatrix(rect, dstBounds, transformMatrix, pad = 0)
+export function calcIntegralSum(img: Tensor, x: number, y: number, w: number, h: number)
+export function calcHAARFeature(img: Tensor, feature: number[][], size: number, dx: number, dy: number, dStep: number)
 
 /* Common */
 type InputType = Tensor | Operation;
