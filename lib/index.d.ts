@@ -1,19 +1,33 @@
 /* io */
 
+export function initDrawable(canvas: HTMLCanvasElement, output: Tensor, updater?: () => void): void
+export function initMouseTracking(canvas: HTMLCanvasElement, handler: (a: number, b: number) => void): Function
+export function toImageData(img: Tensor, rgba?: boolean, transposed?: boolean): ImageData
+export function getImageData(canvas: HTMLCanvasElement, x?: number, y?: number, w?: number, h?: number): ImageData
+export function putImageData(canvas: HTMLCanvasElement, imageData: ImageData, x?: number, y?: number, dx?: number, dy?: number, dw?: number, dh?: number, clear?: boolean): void
+
 export class CaptureVideo {
   constructor(width: number, height: number);
-  getImageBuffer(type: 'uint8' | 'float32'): Float32Array | Uint8Array | Uint16Array | Uint32Array | Uint8ClampedArray
-  start(): void;
+  start(deviceID?: string, exactFacingMode?: string): void;
   stop(): void;
+  getImageBuffer(type: 'uint8' | 'float32' | Tensor): Float32Array | Uint8Array | Tensor | ImageData
+  getImageBufferTo(dtype: 'uint8' | 'float32' | Tensor, ctx?: CanvasRenderingContext2D, width?: number, height?: number, x?: number, y?: number, w?: number, h?: number, to: Tensor): void
+  getSourceImageBuffer(dtype: 'uint8' | 'float32' | Tensor, x?: number, y?: number, w?: number, h?: number): Float32Array | Uint8Array | Tensor | ImageData
 }
 
-export function tensorFrom(target: InputType | Operation): Tensor
-export function canvasFromTensor(canvas: HTMLCanvasElement, target: Tensor): void
-export function canvasDrawRect(canvas: HTMLCanvasElement, rect: Rect, color?: string, lineWeight?: number): void
-export function canvasDrawLine(canvas: HTMLCanvasElement, line: Line, color?: string, lineWeight?: number): void
-export function canvasDrawCircle(canvas: HTMLCanvasElement, center: number[], radius?: number, color?: string): void
+export function canvasFromTensor(canvas: HTMLCanvasElement, target: Tensor, rgba?: boolean, transposed?: boolean): void
+export function canvasToTensor(canvas: HTMLCanvasElement, target: Tensor): void
+export function canvasFill(canvas: HTMLCanvasElement, color?: string): void
+export function canvasClear(canvas: HTMLCanvasElement): void
+export function canvasInit(id: string, width: number, height: number): void
 export function canvasCreate(width: number, height: number): HTMLCanvasElement
-export function imageTensorFromURL(url: string, dtype: 'uint8' | 'float32', size?: number[]): void
+export function canvasDrawRect(canvas: HTMLCanvasElement, rect: Rect, color?: string, lineWeight?: number, cross?: boolean, fill?: boolean): void
+export function canvasDrawLine(canvas: HTMLCanvasElement, line: Line | number[], color?: string, lineWeight?: number): void
+export function canvasDrawCircle(canvas: HTMLCanvasElement, center: number[], radius?: number, color?: string): void
+export function canvasFillCircle(canvas: HTMLCanvasElement, center: number[], radius?: number, color?: string): void
+export function canvasCreate(width: number, height: number): HTMLCanvasElement
+
+export function imageTensorFromURL(url: string, dtype?: 'uint8' | 'float32', shape?: number[], cors?: boolean): void
 
 /* math */
 
@@ -214,7 +228,7 @@ export class Session {
 
 export class Operation {
   constructor(name: string)
-  run(sess: Session, ctx?: number, isRecalculated?: bool): void
+  run(sess: Session, ctx?: number, isRecalculated?: boolean): void
   init(gl: WebGLObject): void
   assignInput(name: string, input: InputType): void
   destroy(): void
@@ -227,9 +241,9 @@ export function range(n: number): number[]
 export function tensorFrom(input: InputType, dtype?: DType): Tensor | null
 export function tensorClone(from: Tensor, to: Tensor): void
 export function tensorInvert(input: Tensor, output?: Tensor, invertShape?: number[]): Tensor
-export function tensorAssertEqual(actual: Tensor, expected: Tensor): bool
-export function tensorAssertCloseEqual(actual: Tensor, expected: Tensor, delta: number): bool
-export function tensorAssertMSEEqual(actual: Tensor, expected: Tensor, delta: number): bool
+export function tensorAssertEqual(actual: Tensor, expected: Tensor): boolean
+export function tensorAssertCloseEqual(actual: Tensor, expected: Tensor, delta: number): boolean
+export function tensorAssertMSEEqual(actual: Tensor, expected: Tensor, delta: number): boolean
 export function flipTensor(input: Tensor, output?: Tensor, invertShape?: number[]): Tensor
 export function tensorMap(input: Tensor, cb: (a: number, i: number) => void, output?: Tensor)
 export function tensorOnes(dtype: DType, shape: number[]): Tensor
