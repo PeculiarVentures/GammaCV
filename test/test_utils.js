@@ -33,7 +33,9 @@ export function logTensorAsTable(tensor, channel = 0) {
     table.push(raw);
   }
 
+  /* eslint-disable no-console */ /* due to test util */
   console.table(table);
+  /* eslint-enable no-console */
 }
 
 export function imageDiff(input, output) {
