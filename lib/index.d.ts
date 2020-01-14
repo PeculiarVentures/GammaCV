@@ -19,7 +19,7 @@ export function canvasFromTensor(canvas: HTMLCanvasElement, target: Tensor, rgba
 export function canvasToTensor(canvas: HTMLCanvasElement, target: Tensor): void
 export function canvasFill(canvas: HTMLCanvasElement, color?: string): void
 export function canvasClear(canvas: HTMLCanvasElement): void
-export function canvasInit(id: string, width: number, height: number): void
+export function canvasInit(canvasId: string, width: number, height: number): void
 export function canvasCreate(width: number, height: number): HTMLCanvasElement
 export function canvasDrawRect(canvas: HTMLCanvasElement, rect: Rect, color?: string, lineWeight?: number, cross?: boolean, fill?: boolean): void
 export function canvasDrawLine(canvas: HTMLCanvasElement, line: Line | number[], color?: string, lineWeight?: number): void
@@ -27,7 +27,7 @@ export function canvasDrawCircle(canvas: HTMLCanvasElement, center: number[], ra
 export function canvasFillCircle(canvas: HTMLCanvasElement, center: number[], radius?: number, color?: string): void
 export function canvasCreate(width: number, height: number): HTMLCanvasElement
 
-export function imageTensorFromURL(url: string, dtype?: 'uint8' | 'float32', shape?: Shape, cors?: boolean): void
+export function imageTensorFromURL<T extends 'uint8' | 'float32' = 'uint8'>(url: string, dtype?: T, shape?: Shape, cors?: boolean): Promise<Tensor<MapDTypeToDataView[T]>>
 
 /* math */
 
@@ -161,7 +161,7 @@ export function upsample(input: Tensor, coef: number, interpolatoion: 'nearest' 
 
 /* program */
 
-type TensorDataView = Float32Array | Uint8Array | Uint16Array | Uint32Array | Uint8ClampedArray | number[];
+type TensorDataView = Float32Array | Float64Array | Uint8Array | Uint16Array | Uint32Array | Int8Array | Int16Array | Int32Array | Uint8ClampedArray | number[];
 type DType =
   'uint8' |
   'uint16' |
@@ -172,7 +172,20 @@ type DType =
   'float32' |
   'float64' |
   'uint8c' |
-  'array'
+  'array';
+
+type MapDTypeToDataView = {
+  'uint8': Uint8Array;
+  'uint16': Uint16Array;
+  'uint32': Uint32Array;
+  'int8': Int8Array;
+  'int16': Int16Array;
+  'int32': Int32Array;
+  'float32': Float32Array;
+  'float64': Float64Array;
+  'uint8c': Uint8ClampedArray;
+  'array': number[];
+}
 
 export class Tensor<T extends TensorDataView = Uint8Array> {
   shape: Shape;
@@ -251,7 +264,7 @@ export function tensorFromFlat(arr: TensorDataView, shape?: Shape, dtype?: DType
 
 /* utils */
 
-export function assert(expression: boolean, msg: text): void
+export function assert(expression: boolean, msg: string): void
 export function assertShapesAreEqual(a: Shape, b: Shape): boolean
 export function isValidShape(shape: Shape): boolean
 export function isOperation(op: any): boolean
