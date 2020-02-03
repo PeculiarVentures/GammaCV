@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.3.10] - 2020-02-03
+### Fixed
+- Typescript typings
+- Cross Origin Issue for imageTensorFromURL (@adamelmore)
+
 ## [0.3.8] - 2019-06-23
 ### Added
 - Typescript support
