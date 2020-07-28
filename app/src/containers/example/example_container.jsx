@@ -66,7 +66,7 @@ export default class ExampleContainer extends Component {
   static propTypes = {
     example: PropTypes.shape({
       op: PropTypes.func,
-      params: PropTypes.object,
+      params: PropTypes.object, // eslint-disable-line
       tick: PropTypes.func,
       init: PropTypes.func,
     }),
