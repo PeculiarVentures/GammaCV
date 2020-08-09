@@ -7,7 +7,9 @@ import s from './styles/index.sass';
 
 export default class Container extends Component {
   static propTypes = {
-    match: PropTypes.shape({ params: PropTypes.object }),
+    match: PropTypes.shape({
+      params: PropTypes.object, // eslint-disable-line
+    }),
   }
 
   static defaultProps = {

@@ -162,11 +162,11 @@ const UsagePart = (props, { intl, theme }) => {
             {
               inner && usedData.params ? (
                 <span className={s.title_text}>
-                ({
-                  usedData.params
-                    .map(param => `${param.name}${param.optional ? '?' : ''}${param.rest ? ', ...' : ''}`)
-                    .join(', ')
-                })
+                  ({
+                    usedData.params
+                      .map(param => `${param.name}${param.optional ? '?' : ''}${param.rest ? ', ...' : ''}`)
+                      .join(', ')
+                  })
                 </span>
               ) : null
             }
