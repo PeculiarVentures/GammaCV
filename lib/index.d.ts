@@ -11,7 +11,7 @@ export class CaptureVideo {
   start(deviceID?: string, exactFacingMode?: string): void;
   stop(): void;
   getImageBuffer(type: 'uint8' | 'float32' | Tensor): Float32Array | Uint8Array | Tensor | ImageData
-  getImageBufferTo(dtype: 'uint8' | 'float32' | Tensor, ctx?: CanvasRenderingContext2D, width?: number, height?: number, x?: number, y?: number, w?: number, h?: number, to: Tensor): void
+  getImageBufferTo(dtype: 'uint8' | 'float32' | Tensor, ctx?: CanvasRenderingContext2D, width?: number, height?: number, x?: number, y?: number, w?: number, h?: number, to?: Tensor): void
   getSourceImageBuffer(dtype: 'uint8' | 'float32' | Tensor, x?: number, y?: number, w?: number, h?: number): Float32Array | Uint8Array | Tensor | ImageData
 }
 
@@ -81,12 +81,12 @@ export class Rect {
   public scale(w: number, h: number): Rect
   public clone(): Rect
   public clear(): Rect
-  public fromDeep(array: number[]): Rect
+  public fromDeep(array: number[][]): Rect
   public fromArray(array: number[]): Rect
   public toArray(): number[]
   public toJSON(): number[]
   public fromLines(a: Line, b: Line, c: Line, d: Line): Rect
-  public isInRect(rect: Rect): boolean
+  public isInRect(x: number, y: number): boolean
   public isNotEmpty(): boolean
   public set(ax: number, ay: number, bx: number, by: number, cx: number, cy: number, dx: number, dy: number): Rect
   public assign(rect: Rect): Rect
@@ -96,8 +96,8 @@ export class Rect {
   public perspective(matrix: Tensor): Rect
 }
 
-export class TypedPool<T = any> {
-  constructor(instance: T, count: number)
+export class TypedPool<T> {
+  constructor(instance: new () => T, count: number)
   public length: number
   at(index: number): T
   push(item: T): void
@@ -158,7 +158,6 @@ export function threshold(input: Tensor, value?: number, axis?: number): Operati
 export function transformationMatrix(input: Tensor, output: Tensor): Operation
 export function upsample(input: Tensor, coef: number, interpolatoion: 'nearest' | 'linear'): Operation
 
-
 /* program */
 
 type TensorDataView = Float32Array | Float64Array | Uint8Array | Uint16Array | Uint32Array | Int8Array | Int16Array | Int32Array | Uint8ClampedArray | number[];
@@ -187,7 +186,7 @@ type MapDTypeToDataView = {
   'array': number[];
 }
 
-export class Tensor<T extends TensorDataView = Uint8Array> {
+export class Tensor<T = TensorDataView> {
   shape: Shape;
   size: number;
   stride: number[];
@@ -205,7 +204,7 @@ export class Tensor<T extends TensorDataView = Uint8Array> {
   public index(...args: number[]): number
   public assign(input: T): void
   public relese(): this
-  public clone(): Tensor<T>
+  public clone(): Tensor
 
   static IndexToCoord(shape: Shape, index: number): number[]
   static CoordToIndex(shape: Shape, coords: number[]): number
@@ -213,7 +212,6 @@ export class Tensor<T extends TensorDataView = Uint8Array> {
   static DefineType(data: TensorDataView): DType
   static GetTypedArray(dtype: DType, data: TensorDataView): TensorDataView
   static GetSize(shape: Shape): number
-
 }
 
 type Chunk = 'pickCurrentValue' | 'pickValue' | 'float' | string;
@@ -274,18 +272,19 @@ export function isValidGLSLVariableName(name: string): boolean
 export function isValidOperationShape(shape: Shape): boolean
 export function deprecationWarning(name: string, msg: string): void
 export function deprecationError(name: string, msg: string): void
-export class DeprecationError extends Error { }
+export class DeprecationError extends Error {}
 
 /* math utils */
 
 export function sortPoints(points: number[], canvas?: HTMLCanvasElement): number[]
 export function angleBetweenLines(A: Line, B: Line): number
-export function transfromPoint(px: number, py: number, transformation: Tensor): [number, number]
+export function transformPoint(px: number, py: number, transformation: Tensor): [number, number]
 export function generateTransformMatrix(rect: Rect, dstBounds: [number, number], transformMatrix: Tensor, pad?: number): Tensor
 export function calcIntegralSum(img: Tensor, x: number, y: number, w: number, h: number): number
 export function calcHAARFeature(img: Tensor, feature: number[][], size: number, dx: number, dy: number, dStep: number): number
 
-/* Common */
+/* common */
+
 type InputType = Tensor | Operation;
 
 /**
