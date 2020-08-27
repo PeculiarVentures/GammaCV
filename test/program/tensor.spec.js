@@ -127,7 +127,7 @@ describe('Tensor', () => {
   it('release', () => {
     const input = new gm.Tensor('float32', [2, 2], new Float32Array([1, 2, 3, 4]));
 
-    input.relese();
+    input.release();
 
     assert.deepEqual(input.data, new Float32Array([0, 0, 0, 0]));
   });
