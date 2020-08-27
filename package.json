@@ -87,8 +87,5 @@
     "LICENSE.md",
     "README.md",
     "dist/"
-  ],
-  "dependencies": {
-    "babel-plugin-dynamic-import-node": "^2.3.3"
-  }
+  ]
 }
