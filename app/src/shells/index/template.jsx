@@ -31,7 +31,7 @@ const RootShell = props => (
         name="Keywords"
         content="computer vision, WebGL, javascript"
       />
-      <link rel="stylesheet" href="https://unpkg.com/lib-react-components@latest/themes/default.css" />
+      <link rel="stylesheet" href={`${CONFIG.GIT_URL}/assets/css/theme.css`} />
       <style dangerouslySetInnerHTML={{ __html: "@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&subset=cyrillic');" }} />
       <style dangerouslySetInnerHTML={{ __html: props.inlineStyles }} />
       {props.initRollbar && (
