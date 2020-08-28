@@ -1,4 +1,5 @@
 import path from 'path';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import themeConstructor from 'lib-theme-contructor';
 import theme from '../../src/themes/default';
 

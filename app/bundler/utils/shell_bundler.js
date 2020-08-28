@@ -133,7 +133,7 @@ function prepareConfig(resolve, extractSASS, entry, outputPath) {
     plugins: [
       extractSASS,
       new webpack.DefinePlugin({
-        HTMLElement: function() {
+        HTMLElement() {
           return false;
         },
       }),

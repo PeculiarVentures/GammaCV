@@ -36,7 +36,7 @@ const renderExamples = (data, ignoreTitle) => (
   ))
 );
 
-const NoData = (intl) => (
+const NoData = intl => (
   <div className={s.section_wrapper}>
     <Typography
       className={s.title}

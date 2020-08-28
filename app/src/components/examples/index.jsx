@@ -70,6 +70,7 @@ export default class Examples extends Component {
     );
   }
 
+  // eslint-disable-next-line class-methods-use-this
   highlightSearchQuery(text, query) {
     const chunks = text.split(new RegExp(`(${query})`, 'gi'));
 
