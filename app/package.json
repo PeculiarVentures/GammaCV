@@ -88,6 +88,7 @@
 		"html-webpack-plugin": "^2.30.1",
 		"jsdom": "^11.6.2",
 		"json-loader": "^0.5.7",
+		"lib-theme-contructor": "^0.3.1",
 		"md5-file": "^4.0.0",
 		"node-sass": "^4.6.1",
 		"path": "^0.12.7",
