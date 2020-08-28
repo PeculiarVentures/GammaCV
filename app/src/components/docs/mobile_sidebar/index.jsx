@@ -32,13 +32,7 @@ export default class Sidebar extends Component {
 
   static contextTypes = {
     intl: PropTypes.object,
-    theme: PropTypes.object,
   };
-
-  static contextTypes = {
-    intl: PropTypes.object,
-    theme: PropTypes.object,
-  }
 
   static defaultProps = {
     docsList: [],
@@ -64,7 +58,6 @@ export default class Sidebar extends Component {
   }
 
   renderGroupElement(item) {
-    const { theme } = this.context;
     const { hideSidebar } = this.props;
     const { searchValue } = this.state;
     const chunks = (names[getRoute(item)] || item.name)
@@ -77,12 +70,12 @@ export default class Sidebar extends Component {
         onClick={hideSidebar}
         className={classNames(
           s.item,
-          theme.text_white,
-          theme.b2,
+          'text_white',
+          'b2',
         )}
       >
         {chunks.map((chunk, index) => (chunk.toLowerCase() === searchValue.toLowerCase()
-          ? <mark key={index} className={theme.fill_secondary}>{chunk}</mark> //eslint-disable-line
+          ? <mark key={index} className="fill_secondary">{chunk}</mark> //eslint-disable-line
           : chunk))}
       </NavLink>
     );
@@ -149,10 +142,8 @@ export default class Sidebar extends Component {
   }
 
   render() {
-    const { theme } = this.context;
-
     return (
-      <div className={classNames(s.sidebar_wrapper, theme.fill_black)}>
+      <div className={classNames(s.sidebar_wrapper, 'fill_black')}>
         <div className={s.nav}>
           {this.renderContent()}
         </div>

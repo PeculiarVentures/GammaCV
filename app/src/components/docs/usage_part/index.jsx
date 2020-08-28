@@ -36,7 +36,7 @@ const renderExamples = (data, ignoreTitle) => (
   ))
 );
 
-const NoData = (intl, theme) => (
+const NoData = (intl) => (
   <div className={s.section_wrapper}>
     <Typography
       className={s.title}
@@ -55,7 +55,7 @@ const NoData = (intl, theme) => (
         {' '}
         <a
           href={packageJSON.repository.url}
-          className={theme.text_primary}
+          className="text_primary"
         >
           GitHub
         </a>
@@ -120,12 +120,12 @@ const Params = (usedData, inner) => (
   ) : null
 );
 
-const UsagePart = (props, { intl, theme }) => {
+const UsagePart = (props, { intl }) => {
   const usedData = props.data;
   const inner = props.inner;
 
   if (!usedData) {
-    return NoData(intl, theme);
+    return NoData(intl);
   }
 
   return (
@@ -236,7 +236,6 @@ UsagePart.defaultProps = {
 
 UsagePart.contextTypes = {
   intl: PropTypes.object,
-  theme: PropTypes.object,
 };
 
 const JSDocs = ({ data }) => (

@@ -8,7 +8,7 @@ import s from './styles/index.sass';
 
 const ADVANTAGES = ['compact', 'fast', 'cross_platform'];
 
-const MainPage = (props, { theme, intl }) => {
+const MainPage = (props, { intl }) => {
   function renderIcon(adv) {
     if (adv === 'compact') {
       return <CompactIcon className={s.compact_icon} />;
@@ -30,7 +30,7 @@ const MainPage = (props, { theme, intl }) => {
           key="main"
           className={classNames(
           s.wrapper,
-          theme.fill_black,
+          'fill_black',
         )}
         >
           <div
@@ -106,7 +106,6 @@ const MainPage = (props, { theme, intl }) => {
 
 MainPage.contextTypes = {
   intl: PropTypes.object,
-  theme: PropTypes.object,
 };
 
 export default MainPage;

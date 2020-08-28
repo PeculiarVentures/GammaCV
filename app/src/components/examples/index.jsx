@@ -16,7 +16,6 @@ export default class Examples extends Component {
 
   static contextTypes = {
     intl: PropTypes.object,
-    theme: PropTypes.object,
   };
 
   static defaultProps = {
@@ -72,7 +71,6 @@ export default class Examples extends Component {
   }
 
   highlightSearchQuery(text, query) {
-    const { theme } = this.context;
     const chunks = text.split(new RegExp(`(${query})`, 'gi'));
 
     return (
@@ -81,7 +79,7 @@ export default class Examples extends Component {
         color="dark_grey"
       >
         {chunks.map((chunk, index) => (chunk.toLowerCase() === query.toLowerCase()
-          ? <mark key={index} className={theme.fill_secondary}>{chunk}</mark> //eslint-disable-line
+          ? <mark key={index} className="fill_secondary">{chunk}</mark> //eslint-disable-line
           : chunk))}
       </Typography>
     );

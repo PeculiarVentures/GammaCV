@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
  * @param {object} props
  * @return {ReactElement} markup
  */
-const MDLink = (props, { theme }) => {
+const MDLink = (props) => {
   const { children, href, title } = props;
 
   if (/^https?:\/\//.test(href)) {
@@ -15,7 +15,7 @@ const MDLink = (props, { theme }) => {
       <a
         href={href}
         title={title}
-        className={theme.text_primary}
+        className="text_primary"
       >
         {children}
       </a>
@@ -26,7 +26,7 @@ const MDLink = (props, { theme }) => {
     <Link
       to={href}
       title={title}
-      className={theme.text_primary}
+      className="text_primary"
     >
       {children}
     </Link>
@@ -45,10 +45,6 @@ MDLink.propTypes = {
   children: PropTypes.node,
   href: PropTypes.string,
   title: PropTypes.string,
-};
-
-MDLink.contextTypes = {
-  theme: PropTypes.object,
 };
 
 MDLink.defaultProps = {

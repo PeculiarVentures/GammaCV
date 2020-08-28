@@ -75,7 +75,6 @@ export default class ExampleContainer extends Component {
 
   static contextTypes = {
     device: PropTypes.object,
-    theme: PropTypes.object,
     intl: PropTypes.object,
   }
 
@@ -345,7 +344,6 @@ export default class ExampleContainer extends Component {
 
   renderCloseBlock() {
     const { showParams } = this.state;
-    const { theme } = this.context;
 
     return (
       <div //eslint-disable-line
@@ -353,15 +351,15 @@ export default class ExampleContainer extends Component {
         className={s.close_block}
       >
         {showParams && (
-          <CrossIcon className={classNames(s.icon, s.cross, theme.fill_light_grey)} />
+          <CrossIcon className={classNames(s.icon, s.cross, 'fill_light_grey')} />
         )}
         {!showParams && (
           <SettingsIcon
             className={classNames(
             s.icon,
             s.cross,
-            theme.fill_light_grey,
-            theme.stroke_light_grey,
+            'fill_light_grey',
+            'stroke_light_grey',
           )}
           />
         )}
@@ -411,7 +409,7 @@ export default class ExampleContainer extends Component {
 
   render() {
     const { example, exampleName } = this.props;
-    const { device, theme, intl } = this.context;
+    const { device, intl } = this.context;
     const {
       playing, exampleInitialized, loading, showParams, error,
     } = this.state;
@@ -436,7 +434,7 @@ export default class ExampleContainer extends Component {
                 {PrepareExampleName(exampleName)}
               </span>
               <span
-                className={classNames(s.fps, this.context.theme.text_grey)}
+                className={classNames(s.fps, 'text_grey')}
                 style={{
                   opacity: !loading && playing ? 1 : 0,
                 }}
@@ -477,7 +475,7 @@ export default class ExampleContainer extends Component {
                 {(
                   device.type === 'mobile'
                   && showParams
-                  && <div className={classNames(theme.fill_black, s.mask)} />
+                  && <div className={classNames('fill_black', s.mask)} />
                 )}
                 <Controls
                   onChangeParams={this.onChangeParams.bind(this)}

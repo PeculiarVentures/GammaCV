@@ -31,13 +31,7 @@ export default class Sidebar extends Component {
 
   static contextTypes = {
     intl: PropTypes.object,
-    theme: PropTypes.object,
   };
-
-  static contextTypes = {
-    intl: PropTypes.object,
-    theme: PropTypes.object,
-  }
 
   static defaultProps = {
     docsList: [],
@@ -62,7 +56,6 @@ export default class Sidebar extends Component {
   }
 
   renderGroupElement(item) {
-    const { theme } = this.context;
     const { searchValue } = this.state;
     const chunks = (names[getRoute(item)] || item.name)
       .split(new RegExp(`(${searchValue})`, 'gi'));
@@ -73,13 +66,13 @@ export default class Sidebar extends Component {
         key={getRoute(item)}
         className={classNames(
           s.item,
-          theme.text_black,
-          theme.b2,
+          'text_black',
+          'b2',
         )}
         // activeClassName={s.active_sub_link}
       >
         {chunks.map((chunk, index) => (chunk.toLowerCase() === searchValue.toLowerCase()
-          ? <mark key={index} className={theme.fill_secondary}>{chunk}</mark> //eslint-disable-line
+          ? <mark key={index} className="fill_secondary">{chunk}</mark> //eslint-disable-line
           : chunk))}
       </NavLink>
     );
