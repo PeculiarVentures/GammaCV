@@ -16,7 +16,6 @@ export default class Controls extends Component {
   };
 
   static contextTypes = {
-    theme: PropTypes.object,
     device: PropTypes.object,
   };
 
@@ -167,7 +166,7 @@ export default class Controls extends Component {
   renderResetButton() {
     const { dafaultParams } = this.state;
     const { data } = this.props;
-    const { theme, device } = this.context;
+    const { device } = this.context;
 
     if (Object.keys(data).length) {
       return (
@@ -182,8 +181,8 @@ export default class Controls extends Component {
         >
           <ResetIcon
             className={classNames({
-                [theme.fill_dark_grey]: device.type !== 'mobile',
-                [theme.fill_light_grey]: device.type === 'mobile',
+                fill_dark_grey: device.type !== 'mobile',
+                fill_light_grey: device.type === 'mobile',
               })}
             style={{ width: '13px', display: 'inline-block' }}
           />
