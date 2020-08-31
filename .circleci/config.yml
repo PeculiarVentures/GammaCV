@@ -25,10 +25,9 @@ jobs:
       - save_cache: *save-node-modules-cache
       - persist_to_workspace:
           root: "."
-          paths: [
-            node_modules
-            app/node_modules
-          ]
+          paths:
+            - /node_modules
+            - /app/node_modules
 
   lint:
     docker: *docker-node-browsers
