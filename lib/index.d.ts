@@ -234,7 +234,7 @@ export class RegisterOperation {
 
 export class Session {
   init(op: Operation): void
-  runOp(op: Operation, frame: number, out: Tensor): boolean
+  runOp(op: Operation, frame: number, out?: Tensor | HTMLCanvasElement): boolean
   destroy(): void
   readToTensor(tensor: Tensor<Uint8Array | Float32Array>)
 }
