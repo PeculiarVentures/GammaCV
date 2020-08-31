@@ -1,32 +1,60 @@
-version: 2
+version: 2.1
+
+aliases:
+  - &docker-node-browsers
+    - image: circleci/node:8.2.1-browsers
+
+  - &restore-node-modules-cache
+    name: Restore node_modules cache
+    key: npm-deps-{{ checksum "package.json" }}-{{ checksum "app/package.json" }}
+
+  - &save-node-modules-cache
+    name: Save node_modules cache
+    paths:
+      - node_modules
+      - app/node_modules
+    key: npm-deps-{{ checksum "package.json" }}-{{ checksum "app/package.json" }}
 
 jobs:
-  build:
-    docker:
-      - image: circleci/node:8.2.1-browsers
+  checkout-code:
+    docker: *docker-node-browsers
     steps:
       - checkout
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}-{{ checksum "app/package.json" }}
-      - run:
-          name: install-npm-dependencies
-          command: 'npm install && cd app && npm install'
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}-{{ checksum "app/package.json" }}
-          paths:
-            - /node_modules
-            - /app/node_modules
-      - run:
-          name: run-lint-command
-          command: 'npm run lint'
-      - run:
-          name: run-test-command
-          command: 'npm run test'
-      - deploy:
-          name: deploy-to-gh-pages
-          when: on_success
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              # Deploy to gh-pages
-              cd app && npm run deploy:gh-pages
-            fi
+      - restore_cache: *restore-node-modules-cache
+      - run: npm install && cd app && npm install
+      - save_cache: *save-node-modules-cache
+      - persist_to_workspace:
+          root: "."
+          paths: [
+            packages/*/node_modules
+          ]
+
+  lint:
+    docker: *docker-node-browsers
+    steps:
+      - checkout
+      - restore_cache: *restore-node-modules-cache
+      - attach_workspace: { at: "." }
+      - run: npm run lint
+
+  test:
+    docker: *docker-node-browsers
+    steps:
+      - checkout
+      - restore_cache: *restore-node-modules-cache
+      - attach_workspace: { at: "." }
+      - run: npm run test
+
+workflows:
+  version: 2
+  compile_lint_test_deploy:
+    jobs:
+      - checkout-code
+      - lint:
+          requires: [
+            checkout-code
+          ]
+      - test:
+          requires: [
+            checkout-code
+          ]
