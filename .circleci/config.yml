@@ -56,6 +56,7 @@ jobs:
           root: "."
           paths:
             - app/dst
+            - app/bundler/compiled_env.json
 
   deploy_app:
     docker: *docker-node-browsers
