@@ -44,6 +44,26 @@ jobs:
       - restore_cache: *restore-node-modules-cache
       - attach_workspace: { at: "." }
       - run: npm run test
+  
+  build_app:
+    docker: *docker-node-browsers
+    steps:
+      - checkout
+      - restore_cache: *restore-node-modules-cache
+      - attach_workspace: { at: "." }
+      - run: cd app && npm run build
+      - persist_to_workspace:
+          root: "."
+          paths:
+            - app/dst
+
+  deploy_app:
+    docker: *docker-node-browsers
+    steps:
+      - checkout
+      - restore_cache: *restore-node-modules-cache
+      - attach_workspace: { at: "." }
+      - run: cd app && npm run deploy:gh-pages
 
 workflows:
   version: 2
@@ -58,3 +78,16 @@ workflows:
           requires: [
             checkout-code
           ]
+      - build_app:
+          requires: [
+            test,
+            lint
+          ]
+      - deploy_app:
+          requires: [
+            build_app
+          ]
+          filters:
+            branches:
+              only:
+                - master
