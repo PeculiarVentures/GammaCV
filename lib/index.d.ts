@@ -113,6 +113,7 @@ export function calcHAARFeature(input: Tensor, feature: number[], size: number, 
 export function histogramEqualization(input: InputType, layers?: number): Operation
 export function grayscale(input: InputType): Operation
 export function downsample(input: InputType, coef?: number, type?: 'mean' | 'max'): Operation
+export function resize(input: InputType, w: number, h: number, type?: 'mean' | 'max'): Operation
 export function gaussianBlur(input: InputType, sigma?: number, ksize?: number): Operation
 export function sobelOperator(input: InputType): Operation
 export function cannyEdges(input: InputType, lowThreshold?: number, highThreshold?: number): Operation
