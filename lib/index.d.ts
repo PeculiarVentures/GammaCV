@@ -110,6 +110,7 @@ export function calcHAARFeature(input: Tensor, feature: number[], size: number, 
 
 /* ops */
 
+export function mediaInput(input: MediaInputType): Tensor
 export function histogramEqualization(input: InputType, layers?: number): Operation
 export function grayscale(input: InputType): Operation
 export function downsample(input: InputType, coef?: number, type?: 'mean' | 'max'): Operation
@@ -247,6 +248,11 @@ export class Operation {
   clone(): Operation
 }
 
+export class MediaInput {
+  constructor(media: MediaInputType, shape: Shape)
+  assignMedia(media: MediaInputType): void
+}
+
 /* tensor utils */
 
 export function range(n: number): number[]
@@ -286,7 +292,8 @@ export function calcHAARFeature(img: Tensor, feature: number[][], size: number, 
 
 /* common */
 
-type InputType = Tensor | Operation;
+type InputType = Tensor | Operation | MediaInput;
+type MediaInputType = HTMLVideoElement | HTMLCanvasElement;
 
 /**
  * Array of positive integers, that describe n-dimensional shape, should cotain n elements
