@@ -248,8 +248,8 @@ export class Operation {
 }
 
 export class MediaInput {
-  constructor(media: MediaInputType, shape: Shape)
-  assignMedia(media: MediaInputType): void
+  constructor(media?: MediaInputType, shape?: Shape)
+  assignMedia(media?: MediaInputType, shape?: Shape): void
 }
 
 /* tensor utils */
