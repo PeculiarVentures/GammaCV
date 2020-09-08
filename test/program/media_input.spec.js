@@ -43,7 +43,7 @@ describe('MediaInput', () => {
    * v_red_blue.png and v_white_black.png, commands used for creation:
    * ffmpeg -framerate 0.45 -t 1 -pattern_type glob -i 'v_*.png' -pix_fmt yuv420p video.ogg
    * ffmpeg -framerate 0.45 -t 1 -pattern_type glob -i 'v_*.png' -pix_fmt yuv420p video.mp4
-   * 
+   *
    * Notes:
    * Firefox and Safari doesn't support 1x1px video
    * Safari requires at least more than 12px
@@ -67,6 +67,7 @@ describe('MediaInput', () => {
 
     video.muted = true;
     video.loop = true;
+    video.preload = 'yes';
     video.playsInline = true;
     document.body.append(video);
 
@@ -78,7 +79,6 @@ describe('MediaInput', () => {
     sess.init(op);
 
     // start video
-    await new Promise(res => video.addEventListener('canplay', res));
     video.play();
     await new Promise(res => video.addEventListener('playing', res));
 
@@ -115,6 +115,7 @@ describe('MediaInput', () => {
 
           // make sure op works correctly
           const pxOffset = ((18 * 7) + 2) * 5; // 2nd pixel of 8-th row
+
           assert.equal(out.data[pxOffset + 0], 255, 'should be 255');
           assert.equal(out.data[pxOffset + 1], 255, 'should be 255');
           assert.equal(out.data[pxOffset + 2], 255, 'should be 255');
