@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import * as gm from '../../lib';
-import videoMp4URL from '../assets/out_5.mp4';
+import videoMp4URL from '../assets/video.mp4';
 import videoOGGURL from '../assets/video.ogg';
 
 describe('MediaInput', () => {
@@ -39,10 +39,14 @@ describe('MediaInput', () => {
   });
 
   /**
-   * Video was compiled from 2 1x1px png images with colors:
-   * #630094 and #FF3C6A, commands used for creation:
-   * ffmpeg -framerate 0.45 -t 1 -pattern_type glob -i '*.png' video.ogg
-   * ffmpeg -framerate 0.45 -t 1 -pattern_type glob -i '*.png' -vcodec libx264 video.mp4
+   * Video was compiled from 2 18x18px png images:
+   * v_red_blue.png and v_white_black.png, commands used for creation:
+   * ffmpeg -framerate 0.45 -t 1 -pattern_type glob -i 'v_*.png' -pix_fmt yuv420p video.ogg
+   * ffmpeg -framerate 0.45 -t 1 -pattern_type glob -i 'v_*.png' -pix_fmt yuv420p video.mp4
+   * 
+   * Notes:
+   * Firefox and Safari doesn't support 1x1px video
+   * Safari requires at least more than 12px
    */
   it('run pipeline with video element', async function test() {
     this.timeout(9000);
@@ -67,7 +71,7 @@ describe('MediaInput', () => {
     document.body.append(video);
 
     // setup pipeline
-    const input = new gm.MediaInput(video, [1, 1, 4]);
+    const input = new gm.MediaInput(video, [18, 18, 4]);
     const op = gm.grayscale(input);
     const out = gm.tensorFrom(op);
 
@@ -85,10 +89,11 @@ describe('MediaInput', () => {
           sess.runOp(op, 0, out);
 
           // make sure op works correctly
-          assert.equal(out.data[0], 32, 'should be 32');
-          assert.equal(out.data[1], 32, 'should be 32');
-          assert.equal(out.data[2], 32, 'should be 32');
-          assert.equal(out.data[3], 255, 'should be 255');
+          // used closeTo since video decoding very in Safari
+          assert.closeTo(out.data[0], 54, 2, 'should be 54');
+          assert.closeTo(out.data[1], 54, 2, 'should be 54');
+          assert.closeTo(out.data[2], 54, 2, 'should be 54');
+          assert.closeTo(out.data[3], 255, 2, 'should be 255');
 
           video.ontimeupdate = null;
           res();
@@ -103,10 +108,17 @@ describe('MediaInput', () => {
           sess.runOp(op, 1, out);
 
           // make sure op works correctly
-          assert.equal(out.data[0], 105, 'should be 105');
-          assert.equal(out.data[1], 105, 'should be 105');
-          assert.equal(out.data[2], 105, 'should be 105');
+          assert.equal(out.data[0], 0, 'should be 105');
+          assert.equal(out.data[1], 0, 'should be 105');
+          assert.equal(out.data[2], 0, 'should be 105');
           assert.equal(out.data[3], 255, 'should be 255');
+
+          // make sure op works correctly
+          const pxOffset = ((18 * 7) + 2) * 5; // 2nd pixel of 8-th row
+          assert.equal(out.data[pxOffset + 0], 255, 'should be 255');
+          assert.equal(out.data[pxOffset + 1], 255, 'should be 255');
+          assert.equal(out.data[pxOffset + 2], 255, 'should be 255');
+          assert.equal(out.data[pxOffset + 3], 255, 'should be 255');
 
           video.ontimeupdate = null;
           res();
