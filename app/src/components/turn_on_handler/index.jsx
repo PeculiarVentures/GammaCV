@@ -6,7 +6,6 @@ import s from './styles/index.sass';
 
 export default class TurnDeviceHandler extends Component {
   static contextTypes = {
-    theme: PropTypes.object,
     intl: PropTypes.object,
     device: PropTypes.object,
   };
@@ -42,12 +41,12 @@ export default class TurnDeviceHandler extends Component {
   }
 
   render() {
-    const { intl, theme } = this.context;
+    const { intl } = this.context;
     const { show } = this.state;
 
     return (
       show &&
-      <div className={classNames(s.container, theme.fill_primary)}>
+      <div className={classNames(s.container, 'fill_primary')}>
         <Typography
           type="h4"
           color="light_grey"

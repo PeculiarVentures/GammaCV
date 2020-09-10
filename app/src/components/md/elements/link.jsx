@@ -6,14 +6,14 @@ import PropTypes from 'prop-types';
  * @param {object} props
  * @return {ReactElement} markup
  */
-const Link = (props, { theme }) => {
+const Link = (props) => {
   const { children, href, title } = props;
 
   return (
     <a
       href={href}
       title={title}
-      className={theme.text_primary}
+      className="text_primary"
     >
       {children}
     </a>
@@ -32,10 +32,6 @@ Link.propTypes = {
   children: PropTypes.node,
   href: PropTypes.string,
   title: PropTypes.string,
-};
-
-Link.contextTypes = {
-  theme: PropTypes.object,
 };
 
 Link.defaultProps = {

@@ -104,7 +104,7 @@ export class TypedPool<T> {
   release(): void
 }
 
-export function generateTransformMatrix(rect: Rect, outScale: number[], tMatrix: Operation | Tensor): Operation
+export function generateTransformMatrix(rect: Rect, outScale: number[], tMatrix: Tensor): Operation
 export function calcIntegralSum(input: Tensor, x: number, y: number, w: number, h: number): Operation
 export function calcHAARFeature(input: Tensor, feature: number[], size: number, x: number, y: number, coef: number): Operation
 

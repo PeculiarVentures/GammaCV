@@ -21,6 +21,10 @@ export default (mode) => {
           from: path.join(__dirname, `../../${CONFIG.SRC_FOLDER}/assets/static`),
           to: './',
         },
+        {
+          from: path.resolve(__dirname, '../../node_modules/.cache/themes/gc.css'),
+          to: './assets/css/theme.css',
+        },
       ]),
     ],
     output: {
