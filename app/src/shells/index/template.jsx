@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { ThemeProvider, CircularProgress } from 'lib-react-components';
-import theme from 'lib-react-components/lib/themes/tc.css';
+import { CircularProgress } from 'lib-react-components';
 import Noscript from './noscript';
 import * as CONFIG from '../../../bundler/config';
 import APP_CONFIG from '../../../app_config';
@@ -32,6 +31,7 @@ const RootShell = props => (
         name="Keywords"
         content="computer vision, WebGL, javascript"
       />
+      <link rel="stylesheet" href={`${CONFIG.GIT_URL}/assets/css/theme.css`} />
       <style dangerouslySetInnerHTML={{ __html: "@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&subset=cyrillic');" }} />
       <style dangerouslySetInnerHTML={{ __html: props.inlineStyles }} />
       {props.initRollbar && (
@@ -81,14 +81,12 @@ const RootShell = props => (
     </head>
     <body>
       <div className={s.root} id="root">
-        <ThemeProvider theme={theme}>
-          <CircularProgress
-            size={100}
-            colorProgress="primary"
-            thickness={2}
-            className={s.loader}
-          />
-        </ThemeProvider>
+        <CircularProgress
+          size={100}
+          colorProgress="primary"
+          thickness={2}
+          className={s.loader}
+        />
       </div>
       {props.disableReactDevTools && (
         <script

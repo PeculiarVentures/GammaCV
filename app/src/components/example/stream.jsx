@@ -22,7 +22,6 @@ export default class VideoStream extends Component {
 
   static contextTypes = {
     device: PropTypes.object,
-    theme: PropTypes.object,
   };
 
   static defaultProps = {
@@ -86,7 +85,7 @@ export default class VideoStream extends Component {
   }
 
   render() {
-    const { theme, device } = this.context;
+    const { device } = this.context;
     const {
       playing, onStop, onPlay, width, height, canvas, exampleInitialized, loading,
     } = this.props;
@@ -94,21 +93,21 @@ export default class VideoStream extends Component {
     return (
       <div className={s.wrapper}>
         <div
-          className={classNames({ [s.padding]: device.type !== 'mobile' }, theme.fill_light_grey)}
+          className={classNames({ [s.padding]: device.type !== 'mobile' }, 'fill_light_grey')}
         >
           <div //eslint-disable-line
             onMouseEnter={device.type !== 'mobile' ? this.onMouseEnter.bind(this) : null}
             onMouseLeave={device.type !== 'mobile' ? this.onMouseLeave.bind(this) : null}
             ref={(node) => { this.refNode = node; }}
-            className={classNames(s.mask, theme.fill_black)}
+            className={classNames(s.mask, 'fill_black')}
             onClick={playing ? onStop : onPlay}
           />
           <div
             ref={(node) => { this.refControl = node; }}
             className={s.controls}
           >
-            {playing && device.type !== 'mobile' && <PauseIcon className={classNames(s.icon, theme.fill_white)} />}
-            {!playing && <PlayIcon className={classNames(s.icon, theme.fill_white)} />}
+            {playing && device.type !== 'mobile' && <PauseIcon className={classNames(s.icon, 'fill_white')} />}
+            {!playing && <PlayIcon className={classNames(s.icon, 'fill_white')} />}
           </div>
           {
             !exampleInitialized || loading &&

@@ -104,13 +104,12 @@ export class TypedPool<T> {
   release(): void
 }
 
-export function generateTransformMatrix(rect: Rect, outScale: number[], tMatrix: InputType): Operation
+export function generateTransformMatrix(rect: Rect, outScale: number[], tMatrix: Tensor): Operation
 export function calcIntegralSum(input: Tensor, x: number, y: number, w: number, h: number): Operation
 export function calcHAARFeature(input: Tensor, feature: number[], size: number, x: number, y: number, coef: number): Operation
 
 /* ops */
 
-export function mediaInput(input: MediaInputType): Tensor
 export function histogramEqualization(input: InputType, layers?: number): Operation
 export function grayscale(input: InputType): Operation
 export function downsample(input: InputType, coef?: number, type?: 'mean' | 'max'): Operation
@@ -240,6 +239,7 @@ export class Session {
 
 export class Operation {
   constructor(name: string)
+  public shape: Shape
   run(sess: Session, ctx?: number, isRecalculated?: boolean): void
   init(gl: WebGLObject): void
   assignInput(name: string, input: InputType): void
@@ -250,6 +250,7 @@ export class Operation {
 export class MediaInput {
   constructor(media?: MediaInputType, shape?: Shape)
   assignMedia(media?: MediaInputType, shape?: Shape): void
+  public shape: Shape
 }
 
 /* tensor utils */
@@ -270,6 +271,7 @@ export function tensorFromFlat(arr: TensorDataView, shape?: Shape, dtype?: DType
 
 export function assert(expression: boolean, msg: string): void
 export function assertShapesAreEqual(a: Shape, b: Shape): boolean
+export function isVideoElement(element: any): boolean
 export function isValidShape(shape: Shape): boolean
 export function isOperation(op: any): boolean
 export function isTensor(tensor: any): boolean

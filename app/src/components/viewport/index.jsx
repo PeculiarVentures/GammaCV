@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactLoadable from 'react-loadable';
 import { Router, Route } from 'react-router-dom';
-import { ThemeProvider, CircularProgress } from 'lib-react-components';
-import theme from 'lib-react-components/lib/themes/tc.css';
+import { CircularProgress } from 'lib-react-components';
 import { IntlWrapper } from 'lib-pintl';
 import TurnHandler from '../turn_on_handler';
 import DeviceProvider from '../device_provider';
@@ -69,47 +68,45 @@ class Viewport extends Component { //eslint-disable-line
 
   render() {
     return (
-      <ThemeProvider theme={theme}>
-        <IntlWrapper
-          messages={this.props.lang}
-        >
-          <DeviceProvider>
-            <Router history={history}>
-              <div className={s.main_wrapper} style={{ height: '100%' }}>
-                <Header />
-                <TurnHandler />
-                <Route exact path={`${getPath}/`} component={Landing} />
-                <Route
-                  path={`${getPath}/docs`}
-                  component={() => (
-                    <div className={s.content_wrapper}>
-                      <Docs />
-                    </div>
-                )}
-                />
-                <Route
-                  exact
-                  path={`${getPath}/examples`}
-                  component={() => (
-                    <div className={s.content_wrapper}>
-                      <Examples />
-                    </div>
-                )}
-                />
-                <Route
-                  exact
-                  path={`${getPath}/examples/:id`}
-                  component={prs => (
-                    <div className={s.content_wrapper}>
-                      <Example {...prs} />
-                    </div>
-                )}
-                />
-              </div>
-            </Router>
-          </DeviceProvider>
-        </IntlWrapper>
-      </ThemeProvider>
+      <IntlWrapper
+        messages={this.props.lang}
+      >
+        <DeviceProvider>
+          <Router history={history}>
+            <div className={s.main_wrapper} style={{ height: '100%' }}>
+              <Header />
+              <TurnHandler />
+              <Route exact path={`${getPath}/`} component={Landing} />
+              <Route
+                path={`${getPath}/docs`}
+                component={() => (
+                  <div className={s.content_wrapper}>
+                    <Docs />
+                  </div>
+              )}
+              />
+              <Route
+                exact
+                path={`${getPath}/examples`}
+                component={() => (
+                  <div className={s.content_wrapper}>
+                    <Examples />
+                  </div>
+              )}
+              />
+              <Route
+                exact
+                path={`${getPath}/examples/:id`}
+                component={prs => (
+                  <div className={s.content_wrapper}>
+                    <Example {...prs} />
+                  </div>
+              )}
+              />
+            </div>
+          </Router>
+        </DeviceProvider>
+      </IntlWrapper>
     );
   }
 }
