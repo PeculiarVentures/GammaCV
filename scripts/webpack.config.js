@@ -17,7 +17,7 @@ export default {
         use: ['json-loader'],
       },
       {
-        test: /\.(png|woff|woff2|eot|ttf|svg|jpg|jpeg|gif)$/,
+        test: /\.(png|woff|woff2|eot|ttf|svg|jpg|jpeg|gif|mp4|webm|ogg)$/,
         use: ['url-loader'],
       },
       {
