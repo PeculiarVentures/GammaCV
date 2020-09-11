@@ -16,15 +16,15 @@ export default {
   params: {
     DOWNSAMPLE: {
       coeficient: {
-        name: 'Coeficient', type: 'constant', min: 1, max: 20, step: 0.25, default: 1.75,
+        name: 'Coefficient', type: 'constant', min: 1, max: 20, step: 0.25, default: 1.75,
       },
       type: {
         name: 'Type',
         type: 'constant',
         values: [{
-          name: 'Maximum', value: 'max',
+          name: 'Nearest', value: 'nearest',
         }, {
-          name: 'Mean', value: 'mean',
+          name: 'Bicubic', value: 'bicubic',
         }],
       },
     },

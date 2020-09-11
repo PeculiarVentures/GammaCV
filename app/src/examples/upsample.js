@@ -4,7 +4,7 @@ export default {
   op: (input, params) => {
     let pipeline = input;
 
-    pipeline = gm.downsample(pipeline, params.UPSAMPLE.coeficient, 'max');
+    pipeline = gm.downsample(pipeline, params.UPSAMPLE.coeficient, params.UPSAMPLE.type);
     pipeline = gm.upsample(
       pipeline,
       params.UPSAMPLE.coeficient,
@@ -23,15 +23,15 @@ export default {
   params: {
     UPSAMPLE: {
       coeficient: {
-        name: 'Coeficient', type: 'constant', min: 1, max: 5, step: 0.25, default: 1.75,
+        name: 'Coefficient', type: 'constant', min: 1, max: 5, step: 0.25, default: 1.75,
       },
       type: {
-        name: 'Interpolation',
+        name: 'Type',
         type: 'constant',
         values: [{
           name: 'Nearest', value: 'nearest',
         }, {
-          name: 'Linear', value: 'linear',
+          name: 'Bicubic', value: 'bicubic',
         }],
       },
     },

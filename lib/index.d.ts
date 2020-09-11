@@ -112,8 +112,8 @@ export function calcHAARFeature(input: Tensor, feature: number[], size: number, 
 
 export function histogramEqualization(input: InputType, layers?: number): Operation
 export function grayscale(input: InputType): Operation
-export function downsample(input: InputType, coef?: number, type?: 'mean' | 'max'): Operation
-export function resize(input: InputType, w: number, h: number, type?: 'mean' | 'max'): Operation
+export function downsample(input: InputType, coef?: number, type?: 'nearest' | 'bicubic'): Operation
+export function resize(input: InputType, w: number, h: number, type?: 'nearest' | 'bicubic'): Operation
 export function gaussianBlur(input: InputType, sigma?: number, ksize?: number): Operation
 export function sobelOperator(input: InputType): Operation
 export function cannyEdges(input: InputType, lowThreshold?: number, highThreshold?: number): Operation
@@ -157,7 +157,7 @@ export function soelOperator(input: Tensor): Operation
 export function swt(sobel: Tensor, canny: Tensor, min?: number, max?: number, steps?: number, returnCoords?: boolean, invert?: boolean): Operation
 export function threshold(input: Tensor, value?: number, axis?: number): Operation
 export function transformationMatrix(input: Tensor, output: Tensor): Operation
-export function upsample(input: Tensor, coef: number, interpolatoion: 'nearest' | 'linear'): Operation
+export function upsample(input: Tensor, coef: number, type?: 'nearest' | 'bicubic'): Operation
 
 /* program */
 

@@ -6,26 +6,45 @@
  * All rights reserved.
  */
 
-vec4 operation(float y, float x) {
-  vec4 value = vec4(0.0);
+vec4 operation(float j, float i) {
+  float x = ceil(i * TX);
+  float y = ceil(j * TY);
 
-  for (float dx = 0.0; dx < ceil(H); dx += 1.0) {
-    for (float dy = 0.0; dy < ceil(W); dy += 1.0) {
-      vec4 v = pickValue_tSrc((y * H) + dy, (x * W) + dx);
-
-      if (S == 0.0) {
-        value = v;
-      }
-
-      if (S == 1.0) {
-        value += v;
-      }
-    }
+  // nearest
+  if (S == 0.0) {
+    return pickValue_tSrc(y, x);
   }
 
+  // bicubic
   if (S == 1.0) {
-    value /= W * H;
-  }
+    float dx = TX * i - x;
+    float dy = TY * j - y;
 
-	return value;
+    vec4 C[4];
+
+    for (float jj = 0.0; jj <= 3.0; jj += 1.0) {
+      vec4 d0 = pickValue_tSrc(y - 1.0 + jj, x - 1.0) - pickValue_tSrc(y - 1.0 + jj, x);
+      vec4 d2 = pickValue_tSrc(y - 1.0 + jj, x + 1.0) - pickValue_tSrc(y - 1.0 + jj, x);
+      vec4 d3 = pickValue_tSrc(y - 1.0 + jj, x + 2.0) - pickValue_tSrc(y - 1.0 + jj, x);
+      vec4 a0 = pickValue_tSrc(y - 1.0 + jj, x);
+      vec4 a1 = -1.0 / 3.0 * d0 + d2 - 1.0 / 6.0 * d3;
+      vec4 a2 = 1.0 / 2.0 * d0 + 1.0 / 2.0 * d2;
+      vec4 a3 = -1.0 / 6.0 * d0 + 1.0 / 2.0 * d2 + 1.0 / 6.0 * d3;
+
+      C[int(jj)] = a0 + a1 * dx + a2 * dx * dx + a3 * dx * dx * dx;
+    }
+
+    vec4 d0 = C[0] - C[1];
+    vec4 d2 = C[2] - C[1];
+    vec4 d3 = C[3] - C[1];
+    vec4 a0 = C[1];
+
+    vec4 a1 = -1.0 / 3.0 * d0 + d2 - 1.0 / 6.0 * d3;
+    vec4 a2 = 1.0 / 2.0 * d0 + 1.0 / 2.0 * d2;
+    vec4 a3 = -1.0 / 6.0 * d0 - 1.0 / 2.0 * d2 + 1.0 / 6.0 * d3;
+
+    vec4 Cc = a0 + a1 * dy + a2 * dy * dy + a3 * dy * dy  * dy;
+
+    return Cc;
+  }
 }
