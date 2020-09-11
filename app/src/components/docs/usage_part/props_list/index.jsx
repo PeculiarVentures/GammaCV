@@ -11,7 +11,7 @@ import nameSpace from '../../../../../_data/docs/namespace.json';
 
 const capitalizeFirstLetter = string => string[0].toUpperCase() + string.slice(1);
 
-const TypeInner = (type, theme) => {
+const TypeInner = (type) => {
   const content = capitalizeFirstLetter(type) || '';
 
   if (nameSpace[type]) {
@@ -26,7 +26,7 @@ const TypeInner = (type, theme) => {
     return (
       <Link
         onClick={e => e.stopPropagation()}
-        className={classNames(theme.text_primary, s.link)}
+        className={classNames('text_primary', s.link)}
         to={url}
       >
         {content}
@@ -37,7 +37,7 @@ const TypeInner = (type, theme) => {
   return content;
 };
 
-const Types = (props, { theme }) => {
+const Types = (props) => {
   const type = props.data;
   let typeValue;
 
@@ -45,7 +45,7 @@ const Types = (props, { theme }) => {
     typeValue = [];
     const _typeValue = type.map((el, key) => {
       if (props.onlyText) {
-        return TypeInner(el.type, theme);
+        return TypeInner(el.type);
       }
 
       return (
@@ -56,7 +56,7 @@ const Types = (props, { theme }) => {
           key={key} //eslint-disable-line
         >
           {
-            TypeInner(el.type, theme)
+            TypeInner(el.type)
           }
           {
             el.applications ? (
@@ -101,10 +101,6 @@ Types.propTypes = {
   color: PropTypes.string,
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   onlyText: PropTypes.bool,
-};
-
-Types.contextTypes = {
-  theme: PropTypes.object,
 };
 
 Types.defaultProps = {
@@ -195,7 +191,6 @@ PropsList.defaultProps = {
 PropsList.contextTypes = {
   intl: PropTypes.object,
   device: PropTypes.object,
-  theme: PropTypes.object,
 };
 
 export const ArgType = Types;

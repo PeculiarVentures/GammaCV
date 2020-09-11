@@ -132,6 +132,11 @@ function prepareConfig(resolve, extractSASS, entry, outputPath) {
     },
     plugins: [
       extractSASS,
+      new webpack.DefinePlugin({
+        HTMLElement() {
+          return false;
+        },
+      }),
     ],
     cache: false,
     entry,

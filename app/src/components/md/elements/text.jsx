@@ -23,7 +23,7 @@ const supportedTypes = [
  * @param {object} props
  * @return {ReactElement} markup
  */
-const Text = (props, { theme }) => {
+const Text = (props) => {
   const { children, type } = props;
 
   if (type === 'strong'
@@ -34,11 +34,11 @@ const Text = (props, { theme }) => {
     const prs = {};
 
     if (type === 'blockquote') {
-      prs.className = theme.fill_light_grey;
+      prs.className = 'fill_light_grey';
     }
 
     if (type === 'code') {
-      prs.className = theme.fill_light_grey;
+      prs.className = 'fill_light_grey';
       prs.style = {
         padding: '0px 7px',
         display: 'inline-block',
@@ -81,10 +81,6 @@ Text.propTypes = {
 Text.defaultProps = {
   children: null,
   type: '',
-};
-
-Text.contextTypes = {
-  theme: PropTypes.object,
 };
 
 export default Text;

@@ -21,7 +21,6 @@ class Header extends Component {
   }
 
   static contextTypes = {
-    theme: PropTypes.object,
     intl: PropTypes.object,
     device: PropTypes.object,
   }
@@ -52,7 +51,7 @@ class Header extends Component {
 
   render() {
     const { location } = this.props;
-    const { theme, device, intl } = this.context;
+    const { device, intl } = this.context;
     const { showSidebar } = this.state;
 
     return (
@@ -61,7 +60,7 @@ class Header extends Component {
           s.wrapper,
           {
             [s.wrapper_main]: location.pathname === '/',
-            [theme.fill_black]: location.pathname !== '/',
+            fill_black: location.pathname !== '/',
           },
         )}
       >
@@ -84,7 +83,7 @@ class Header extends Component {
             className={classNames(s.nav_item, s.logo_padding)}
           >
             {device.type !== 'mobile' ? (
-              <FullLogo className={classNames(s.full_logo_icon, theme.fill_white)} />
+              <FullLogo className={classNames(s.full_logo_icon, 'fill_white')} />
             ) : (
               <SimpleLogo className={s.simple_logo_icon} />
             )}
@@ -99,8 +98,8 @@ class Header extends Component {
                 className={classNames(
                   s.nav_item,
                   s.docs,
-                  theme.b2,
-                  theme.text_white,
+                  'b2',
+                  'text_white',
                 )}
               >
                 {intl.getText('Header.Navigation', null, 'get')}
@@ -115,7 +114,7 @@ class Header extends Component {
               >
                 {intl.getText('Header.Navigation', null, 'get')}
                 {showSidebar ? (
-                  <CrossIcon className={classNames(theme.fill_white, s.burger)} />
+                  <CrossIcon className={classNames('fill_white', s.burger)} />
                  ) : (
                    <BurgerIcon className={s.burger} />
                  )
@@ -128,10 +127,10 @@ class Header extends Component {
             to={`${getPath}/examples`}
             className={classNames(
               s.nav_item,
-              theme.b2,
-              theme.text_white,
+              'b2',
+              'text_white',
             )}
-            activeClassName={theme.text_white}
+            activeClassName="text_white"
           >
             {intl.getText('Header.Navigation', null, 'examples')}
           </NavLink>
@@ -141,8 +140,8 @@ class Header extends Component {
             rel="noopener noreferrer"
             className={classNames(
               s.nav_item,
-              theme.b2,
-              theme.text_white,
+              'b2',
+              'text_white',
             )}
           >
             {intl.getText('Header.Navigation', null, 'github')}
