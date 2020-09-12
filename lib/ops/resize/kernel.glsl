@@ -7,8 +7,8 @@
  */
 
 vec4 operation(float j, float i) {
-  float x = ceil(i * TX);
-  float y = ceil(j * TY);
+  float x = floor(i * TX);
+  float y = floor(j * TY);
 
   // nearest
   if (S == 0.0) {
@@ -17,8 +17,8 @@ vec4 operation(float j, float i) {
 
   // bicubic
   if (S == 1.0) {
-    float dx = TX * i - x;
-    float dy = TY * j - y;
+    float dx = floor(TX * i) - x;
+    float dy = floor(TY * j) - y;
 
     vec4 C[4];
 

@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import * as gm from '../../lib';
 import downsampleTestImage from '../assets/white_black.png';
-import downsampleTestNearestImage from '../assets/upsample_test_nearest.png';
+import downsampleTestNearestImage from '../assets/upsample_result.png';
 
 describe('Downsample', () => {
   let sess = null;
@@ -15,9 +15,9 @@ describe('Downsample', () => {
     sess = new gm.Session();
   });
 
-  it('by max', async () => {
+  it('by nearest', async () => {
     const input = await gm.imageTensorFromURL(downsampleTestNearestImage);
-    const op = gm.downsample(input, 22, 'max');
+    const op = gm.downsample(input, 22, 'nearest');
     const out = gm.tensorFrom(op);
     const target = await gm.imageTensorFromURL(downsampleTestImage);
 
@@ -30,16 +30,16 @@ describe('Downsample', () => {
     ));
   });
 
-  it('by mean', async () => {
+  it('by bicubic', async () => {
     const input = await gm.imageTensorFromURL(downsampleTestImage, 'uint8');
-    const op = gm.downsample(input, 4, 'mean');
+    const op = gm.downsample(input, 4, 'bicubic');
     const out = gm.tensorFrom(op);
     const target = new gm.Tensor(
       'uint8',
       [2, 2, 4],
       new Uint8Array([
-        96, 96, 96, 255, 128, 128, 128, 255,
-        128, 128, 128, 255, 128, 128, 128, 255,
+        0, 0, 0, 255, 255, 255, 255, 255,
+        255, 255, 255, 255, 0, 0, 0, 255,
       ]),
     );
 

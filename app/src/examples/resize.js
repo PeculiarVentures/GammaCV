@@ -18,11 +18,19 @@ export default {
     RESIZE: {
       width: {
         name: 'width',
-        type: 'constant', min: 1, max: 1000, step: 1, default: 500,
+        type: 'constant',
+        min: 1,
+        max: 1000,
+        step: 1,
+        default: 500,
       },
       height: {
         name: 'height',
-        type: 'constant', min: 1, max: 1000, step: 1, default: 384,
+        type: 'constant',
+        min: 1,
+        max: 1000,
+        step: 1,
+        default: 384,
       },
       type: {
         name: 'Type',
