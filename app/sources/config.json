@@ -22,7 +22,7 @@
       "items": [
         { "path": "../../lib/program/tensor.js" },
         { "path": "../../lib/program/session.js" },
-        { 
+        {
           "name": "GLSL Chunks",
           "path": "../../lib/program/glsl/chunks/index.js"
         }
@@ -33,6 +33,7 @@
       "items": [
         { "path": "../../lib/ops/downsample/index.js" },
         { "path": "../../lib/ops/upsample/index.js" },
+        { "path": "../../lib/ops/resize/index.js" },
         { "path": "../../lib/ops/gaussian_blur/index.js" },
         { "path": "../../lib/ops/grayscale/index.js" },
         { "path": "../../lib/ops/norm/index.js" },
