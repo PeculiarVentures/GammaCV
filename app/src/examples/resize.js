@@ -1,18 +1,12 @@
 import * as gm from '../../../lib';
 
 export default {
-  op: (input, params) => {
-    let pipeline = input;
-
-    pipeline = gm.downsample(pipeline, params.UPSAMPLE.coeficient, params.UPSAMPLE.type);
-    pipeline = gm.upsample(
-      pipeline,
-      params.UPSAMPLE.coeficient,
-      params.UPSAMPLE.type || 'nearest', // crutch until we have no select prop feature #46
-    );
-
-    return pipeline;
-  },
+  op: (input, params) => gm.resize(
+    input,
+    params.RESIZE.width,
+    params.RESIZE.height,
+    params.RESIZE.type || 'nearest',
+  ),
   tick(frame, {
     canvas, operation, output, session,
   }) {
@@ -21,9 +15,22 @@ export default {
     gm.canvasFromTensor(canvas, output);
   },
   params: {
-    UPSAMPLE: {
-      coeficient: {
-        name: 'Coefficient', type: 'constant', min: 1, max: 5, step: 0.25, default: 1.75,
+    RESIZE: {
+      width: {
+        name: 'width',
+        type: 'constant',
+        min: 1,
+        max: 1000,
+        step: 1,
+        default: 500,
+      },
+      height: {
+        name: 'height',
+        type: 'constant',
+        min: 1,
+        max: 1000,
+        step: 1,
+        default: 384,
       },
       type: {
         name: 'Type',

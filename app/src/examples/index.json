@@ -38,11 +38,14 @@
         "name": "Downsample",
         "path": "downsample"
       }, {
+        "type": "video",
+        "name": "Upsample",
+        "path": "upsample"
+      }, {
           "type": "video",
-          "name": "Upsample",
-          "path": "upsample"
-        },
-      {
+          "name": "Resize",
+          "path": "resize"
+        }, {
         "type": "video",
         "name": "Color Segmentation",
         "path": "color_segmentation"

@@ -1,8 +1,7 @@
 import { assert } from 'chai';
 import * as gm from '../../lib';
-import upsampleTestImage from '../assets/upsample_test.png';
-import upsampleTestNearestImage from '../assets/upsample_test_nearest.png';
-import upsampleTestLinearImage from '../assets/upsample_test_linear.png';
+import upsampleTestImage from '../assets/white_black.png';
+import upsampleTestResultImage from '../assets/upsample_result.png';
 
 describe('Upsample', () => {
   let sess = null;
@@ -16,26 +15,11 @@ describe('Upsample', () => {
     sess = new gm.Session();
   });
 
-  it('by nearest neighbor', async () => {
+  it('by nearest', async () => {
     const input = await gm.imageTensorFromURL(upsampleTestImage);
-    const op = gm.upsample(input, 22.3);
+    const op = gm.upsample(input, 22, 'nearest');
     const out = gm.tensorFrom(op);
-    const target = await gm.imageTensorFromURL(upsampleTestNearestImage);
-
-    sess.init(op);
-    sess.runOp(op, Math.random(), out);
-
-    assert.isTrue(gm.tensorAssertEqual(
-      out,
-      target,
-    ));
-  });
-
-  it('by linear', async () => {
-    const input = await gm.imageTensorFromURL(upsampleTestImage, 'uint8');
-    const op = gm.upsample(input, 22.3, 'linear');
-    const out = gm.tensorFrom(op);
-    const target = await gm.imageTensorFromURL(upsampleTestLinearImage, 'uint8');
+    const target = await gm.imageTensorFromURL(upsampleTestResultImage);
 
     sess.init(op);
     sess.runOp(op, Math.random(), out);
@@ -43,7 +27,23 @@ describe('Upsample', () => {
     assert.isTrue(gm.tensorAssertMSEEqual(
       out,
       target,
-      0.1,
+      0.01,
+    ));
+  });
+
+  it('by bicubic', async () => {
+    const input = await gm.imageTensorFromURL(upsampleTestImage, 'uint8');
+    const op = gm.upsample(input, 22, 'bicubic');
+    const out = gm.tensorFrom(op);
+    const target = await gm.imageTensorFromURL(upsampleTestResultImage, 'uint8');
+
+    sess.init(op);
+    sess.runOp(op, Math.random(), out);
+
+    assert.isTrue(gm.tensorAssertMSEEqual(
+      out,
+      target,
+      0.01,
     ));
   });
 });
