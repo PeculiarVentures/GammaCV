@@ -87,9 +87,9 @@ describe('Session', () => {
     ));
   });
 
-  it('run op', () => {
+  it('run op with tensor output', () => {
     const input = new gm.Tensor('float32', [1, 1, 4], new Float32Array([0, 1, 0, 1]));
-    let pipeline = null;
+    let pipeline;
 
     pipeline = multScaalarOp(input, 2);
     pipeline = multScaalarOp(pipeline, 2);
@@ -103,6 +103,27 @@ describe('Session', () => {
       out,
       new gm.Tensor('float32', [1, 1, 4], new Float32Array([0, 4, 0, 4])),
     ));
+  });
+
+  it('run op with canvas output', () => {
+    const input = new gm.Tensor('float32', [1, 1, 4], new Float32Array([0, 0.25, 0, 0.25]));
+    let pipeline;
+
+    pipeline = multScaalarOp(input, 2);
+    pipeline = multScaalarOp(pipeline, 2);
+
+    const out = document.createElement('canvas');
+    const outCtx = out.getContext('2d');
+
+    sess.init(pipeline);
+    sess.runOp(pipeline, 0, out);
+
+    const pixels = outCtx.getImageData(0, 0, 1, 1).data;
+
+    assert.equal(pixels[0], 0);
+    assert.equal(pixels[1], 255);
+    assert.equal(pixels[2], 0);
+    assert.equal(pixels[3], 255);
   });
 
   it('run multiple input node', () => {
