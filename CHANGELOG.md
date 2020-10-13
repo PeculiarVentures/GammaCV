@@ -1,6 +1,17 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.4.0] - 2020-10-13
+### Added
+- Resize operation `gm.resize`
+- Ability to use HTMLCanvasElement and HTMLVideoElement as operation input
+- Experimental feature with output directly into canvas with context 2d
+### Changed
+- Algorithms used in `gm.upsample` and `gm.downsample`
+### Fixed
+- Typo in `Tensor.release` method (https://github.com/PeculiarVentures/GammaCV/issues/62)
+- Bugs in `gm.upsample` and `gm.downsample` operations on some video hardware (https://github.com/PeculiarVentures/GammaCV/issues/36)
+
 ## [0.3.10] - 2020-02-03
 ### Fixed
 - Typescript typings
