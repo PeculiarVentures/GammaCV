@@ -114,7 +114,7 @@ export function histogramEqualization(input: InputType, layers?: number): Operat
 export function grayscale(input: InputType): Operation
 
 /** @deprecated */
-export function downsample(input: InputType, coef?: number, type?: 'max' | 'mean'): Operation
+export function downsample(input: InputType, coef?: number, type: 'max' | 'mean'): Operation
 export function downsample(input: InputType, coef?: number, type?: 'nearest' | 'bicubic'): Operation
 export function resize(input: InputType, w: number, h: number, type?: 'nearest' | 'bicubic'): Operation
 export function gaussianBlur(input: InputType, sigma?: number, ksize?: number): Operation
@@ -122,11 +122,8 @@ export function sobelOperator(input: InputType): Operation
 export function cannyEdges(input: InputType, lowThreshold?: number, highThreshold?: number): Operation
 export function pcLinesTransform(input: InputType, reduction: number): Operation
 export function pcLinesEnhance(input: InputType): Operation
-export function pcLinesReduceMax(input: InputType, reduction: number): Operation
 export function pcLinesReduceMax(input: InputType, reduction: number, coef: number): Operation
-export function conv2d(inout: Tensor, kernel: Tensor, factor?: number, bias?: number): Operation
-export function sat(input: InputType): Operation
-export function sqsat(input: InputType): Operation
+export function conv2d(input: InputType, kernel: InputType, factor?: number, bias?: number): Operation
 export function sub(A: InputType, B: InputType): Operation
 export function div(A: InputType, B: InputType): Operation
 export function add(A: InputType, B: InputType): Operation
@@ -136,34 +133,32 @@ export function divScalar(A: InputType, scalar: number): Operation
 export function addScalar(A: InputType, scalar: number): Operation
 export function multScalar(A: InputType, scalar: number): Operation
 export function perspectiveProjection(input: InputType, tMatrix: InputType, outScale: number[], dtype?: DType): Operation
-export function swt(sobel: InputType, canny: InputType): Operation
-export function cast(input: Tensor, dtype?: DType): Operation
-export function colorSegmentation(input: Tensor, numClusters?: number): Operation
-export function adaptiveThreshold(input: Tensor, boxSize?: number, threshold?: number, pichChanel?: number, integralImage?: Tensor): Operation
-export function concat(A: Tensor, B: Tensor, mask?: string[]): Operation
-export function dilate(input: Tensor, size: number[], kernel?: Tensor): Operation
-export function erode(input: Tensor, size: number[], kernel?: Tensor): Operation
-export function histogram(input: Tensor, layers?: number, min?: number, max?: number, step?: number): Operation
-export function hog(input: Tensor, coef?: number, type?: 'max' | 'visualize'): Operation
-export function HSVColor(input: Tensor, type?: 'rgb_to_hsv' | 'hsv_to_rgb'): Operation
-export function meanStd(input: Tensor, layers?: number, ignoreStd?: boolean): Operation
-export function minMax(input: Tensor, layers?: number): Operation
-export function morphologyEx(input: Tensor, type: 'open' | 'close' | 'gradient' | 'tophat' | 'blackhat', size?: number[], kernel?: Tensor): Operation
-export function motionDetect(A: Tensor, B: Tensor,): Operation
-export function norm(input: Tensor, type?: 'minmax' | 'l2', layers?: number): Operation
-export function pcLines(input: Tensor, layers?: number, dStep?: number, rCoes?: number): Operation
-export function sat(input: Tensor, passes?: number): Operation
-export function sqsat(input: Tensor, passes?: number): Operation
-export function skinTest(input: Tensor): Operation
-export function slidingWindow(input: Tensor, windowSize: number[], stride?: number, startegy?: number): Operation
-export function soelOperator(input: Tensor): Operation
-export function swt(sobel: Tensor, canny: Tensor, min?: number, max?: number, steps?: number, returnCoords?: boolean, invert?: boolean): Operation
-export function threshold(input: Tensor, value?: number, axis?: number): Operation
-export function transformationMatrix(input: Tensor, output: Tensor): Operation
+export function cast(input: InputType, dtype?: DType): Operation
+export function colorSegmentation(input: InputType, numClusters?: number): Operation
+export function adaptiveThreshold(input: InputType, boxSize?: number, threshold?: number, pichChanel?: number, integralImage?: InputType): Operation
+export function concat(A: InputType, B: InputType, mask?: string[]): Operation
+export function dilate(input: InputType, size: number[], kernel?: Tensor): Operation
+export function erode(input: InputType, size: number[], kernel?: Tensor): Operation
+export function histogram(input: InputType, layers?: number, min?: number, max?: number, step?: number): Operation
+export function hog(input: InputType, coef?: number, type?: 'max' | 'visualize'): Operation
+export function HSVColor(input: InputType, type?: 'rgb_to_hsv' | 'hsv_to_rgb'): Operation
+export function meanStd(input: InputType, layers?: number, ignoreStd?: boolean): Operation
+export function minMax(input: InputType, layers?: number): Operation
+export function morphologyEx(input: InputType, type: 'open' | 'close' | 'gradient' | 'tophat' | 'blackhat', size?: number[], kernel?: Tensor): Operation
+export function motionDetect(A: InputType, B: InputType): Operation
+export function norm(input: InputType, type?: 'minmax' | 'l2', layers?: number): Operation
+export function pcLines(input: InputType, layers?: number, dStep?: number, rCoef?: number): Operation
+export function sat(input: InputType, passes?: number): Operation
+export function sqsat(input: InputType, passes?: number): Operation
+export function skinTest(input: InputType): Operation
+export function slidingWindow(input: InputType, windowSize: number[], stride?: number, strategy?: number): Operation
+export function swt(sobel: InputType, canny: InputType, min?: number, max?: number, steps?: number, returnCoords?: boolean, invert?: boolean): Operation
+export function threshold(input: InputType, value?: number, axis?: number): Operation
+export function transformationMatrix(input: InputType, output: InputType): Operation
 
 /** @deprecated */
-export function upsample(input: Tensor, coef: number, type?: 'max' | 'mean'): Operation
-export function upsample(input: Tensor, coef: number, type?: 'nearest' | 'bicubic'): Operation
+export function upsample(input: InputType, coef: number, type: 'max' | 'mean'): Operation
+export function upsample(input: InputType, coef: number, type?: 'nearest' | 'bicubic'): Operation
 
 /* program */
 
@@ -210,7 +205,9 @@ export class Tensor<T = TensorDataView> {
   public set(...args: number[]): void
   public index(...args: number[]): number
   public assign(input: T): void
+  /** @deprecated */
   public relese(): this
+  public release(): this
   public clone(): Tensor
 
   static IndexToCoord(shape: Shape, index: number): number[]
