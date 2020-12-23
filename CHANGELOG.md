@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.4.1] - 2020-12-23
+### Fixed
+- Assertion for WebGL availability (https://github.com/PeculiarVentures/GammaCV/pull/77)
+- Typescript typings for some operations
+
 ## [0.4.0] - 2020-10-13
 ### Added
 - Resize operation `gm.resize`
