@@ -5,7 +5,6 @@ dst/
 .vscode
 *.log
 compiled_env.json
-package-lock.json
 *.sketch
 dist/
 dist-es6/
