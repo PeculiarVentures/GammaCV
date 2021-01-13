@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+### Changed
+- Replace `eval` with `new Function` in tensor utils `gm.tensorInvert` and `gm.flipTensor`
+
 ## [0.4.1] - 2020-12-23
 ### Fixed
 - Assertion for WebGL availability (https://github.com/PeculiarVentures/GammaCV/pull/77)
