@@ -5,17 +5,13 @@ export default {
   devtool: 'cheap-module-inline-source-map',
   resolve: {
     modules: [path.join(__dirname, '../node_modules')],
-    extensions: ['.js', '.jsx', '.yaml'],
+    extensions: ['.js', '.jsx'],
     alias: {
       uuid: path.join(__dirname, '../app/src/utils/uuid'),
     },
   },
   module: {
     rules: [
-      {
-        test: /\.json?$/,
-        use: ['json-loader'],
-      },
       {
         test: /\.(png|woff|woff2|eot|ttf|svg|jpg|jpeg|gif|mp4|webm|ogg)$/,
         use: ['url-loader'],
@@ -28,11 +24,9 @@ export default {
           options: {
             babelrc: false,
             presets: [
-              ['env', { modules: false }],
-              'stage-0',
-              'react',
+              ['@babel/preset-env', { modules: false }],
             ],
-            plugins: ['transform-runtime'],
+            plugins: ['@babel/plugin-transform-runtime'],
           },
         }],
       },
