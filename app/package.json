@@ -32,7 +32,7 @@
 	"dependencies": {
 		"aws-sdk": "^2.267.1",
 		"classnames": "^2.2.5",
-		"css-loader": "^0.28.7",
+		"css-loader": "^1.0.0",
 		"eval": "^0.1.2",
 		"favicons": "^5.1.1",
 		"fs-extra": "^6.0.1",
@@ -70,7 +70,7 @@
 		"chai": "^4.1.2",
 		"child_process": "^1.0.2",
 		"compression": "^1.7.1",
-		"copy-webpack-plugin": "^5.1.2",
+		"copy-webpack-plugin": "^4.6.0",
 		"cross-env": "^5.1.1",
 		"debug": "^3.1.0",
 		"doctrine": "^2.1.0",
