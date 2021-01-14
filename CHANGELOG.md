@@ -2,6 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+### Changed
+- Replace `eval` with `new Function` in tensor utils `gm.tensorInvert` and `gm.flipTensor`
 ### Fixed
 - Fixed error on try to run is not initiated operation
 
