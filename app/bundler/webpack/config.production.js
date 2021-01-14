@@ -31,19 +31,17 @@ export default {
       async: true,
       minChunks: 3,
     }),
-    new TerserPlugin(
-      {
-        terserOptions: {
-          compress: {
-            drop_console: true,
-            unsafe: true
-          },
+    new TerserPlugin({
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          unsafe: true,
         },
-        parallel: true,
-        cache: true,
-        sourceMap: true,
-      }
-    ),
+      },
+      parallel: true,
+      cache: true,
+      sourceMap: true,
+    }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new SWPrecacheWebpackPlugin({
       stripPrefix: path.join(__dirname, `../../${CONFIG.DST_PATH}/`),
