@@ -1,6 +1,6 @@
 import path from 'path';
 import webpack from 'webpack'; // eslint-disable-line
-import UglifyJsPlugin from 'uglifyjs-webpack-plugin'; // eslint-disable-line
+import TerserPlugin from 'terser-webpack-plugin'; // eslint-disable-line
 import SWPrecacheWebpackPlugin from 'sw-precache-webpack-plugin'; // eslint-disable-line
 import FaviconsWebpackPlugin from 'favicons-webpack-plugin'; // eslint-disable-line
 import variables from '../../src/assets/variables';
@@ -31,17 +31,16 @@ export default {
       async: true,
       minChunks: 3,
     }),
-    new UglifyJsPlugin({
-      cache: true,
-      parallel: true,
-      sourceMap: true,
-      uglifyOptions: {
+    new TerserPlugin({
+      terserOptions: {
         compress: {
           drop_console: true,
           unsafe: true,
-          passes: 3,
         },
       },
+      parallel: true,
+      cache: true,
+      sourceMap: true,
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new SWPrecacheWebpackPlugin({
