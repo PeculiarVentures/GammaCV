@@ -1,6 +1,6 @@
 import resolve from 'rollup-plugin-node-resolve';
 import glsl from 'rollup-plugin-glsl';
-import uglify from 'rollup-plugin-uglify';
+import { terser } from 'rollup-plugin-terser';
 import json from 'rollup-plugin-json';
 import babel from 'rollup-plugin-babel';
 import { version } from './package.json';
@@ -20,9 +20,9 @@ const FORMATS = {
   ES: 'es', // Keep the bundle as an ES module file
 };
 
-const uglifyParams = {
+const terserOptions = {
   output: {
-    preamble: banner,
+    comments: new RegExp(`GammaCV v${version}`),
   },
 };
 
@@ -76,7 +76,7 @@ export default [
   ),
   getConfig(
     'index.js',
-    [babel(), uglify(uglifyParams)],
+    [babel(), terser(terserOptions)],
     'dist',
     'index.min',
     FORMATS.UMD,
@@ -90,7 +90,7 @@ export default [
   ),
   getConfig(
     'index.js',
-    [uglify(uglifyParams)],
+    [terser(terserOptions)],
     'dist',
     'index.es.min',
     FORMATS.ES,
