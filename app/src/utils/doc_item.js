@@ -1,4 +1,4 @@
-export const getRoute = (item) => {
+const getRoute = (item) => {
   if (item.route) {
     return item.route;
   }
@@ -14,4 +14,8 @@ export const getRoute = (item) => {
   }
 
   return item.path.split(/[./]/).filter(a => a).join('_');
+};
+
+module.exports = {
+  getRoute,
 };

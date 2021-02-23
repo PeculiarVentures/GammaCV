@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactLoadable from 'react-loadable';
-import { Router, Route } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import { CircularProgress } from 'lib-react-components';
 import { IntlWrapper } from 'lib-pintl';
 import TurnHandler from '../turn_on_handler';
@@ -55,6 +55,14 @@ const Docs = ReactLoadable({
   loading: () => <DocsContentLoader />,
 });
 
+const NotFound = ReactLoadable({
+  /* webpackChunkName: "not_found" */
+  loader: () => import('../../containers/not_found/index')
+    .then(module => module.default)
+    .catch(handleChunkError),
+  loading: () => null,
+});
+
 class Viewport extends Component { //eslint-disable-line
   static propTypes = {
     lang: PropTypes.oneOfType([
@@ -76,33 +84,44 @@ class Viewport extends Component { //eslint-disable-line
             <div className={s.main_wrapper} style={{ height: '100%' }}>
               <Header />
               <TurnHandler />
-              <Route exact path={`${getPath}/`} component={Landing} />
-              <Route
-                path={`${getPath}/docs`}
-                component={() => (
-                  <div className={s.content_wrapper}>
-                    <Docs />
-                  </div>
-              )}
-              />
-              <Route
-                exact
-                path={`${getPath}/examples`}
-                component={() => (
-                  <div className={s.content_wrapper}>
-                    <Examples />
-                  </div>
-              )}
-              />
-              <Route
-                exact
-                path={`${getPath}/examples/:id`}
-                component={prs => (
-                  <div className={s.content_wrapper}>
-                    <Example {...prs} />
-                  </div>
-              )}
-              />
+              <Switch>
+                <Route
+                  exact
+                  path={`${getPath}/`}
+                  component={Landing}
+                />
+                <Route
+                  path={`${getPath}/docs`}
+                  component={() => (
+                    <div className={s.content_wrapper}>
+                      <Docs />
+                    </div>
+                  )}
+                />
+                <Route
+                  exact
+                  path={`${getPath}/examples`}
+                  component={() => (
+                    <div className={s.content_wrapper}>
+                      <Examples />
+                    </div>
+                  )}
+                />
+                <Route
+                  exact
+                  path={`${getPath}/examples/:id`}
+                  component={prs => (
+                    <div className={s.content_wrapper}>
+                      <Example {...prs} />
+                    </div>
+                  )}
+                />
+                <Route
+                  component={() => (
+                    <NotFound />
+                  )}
+                />
+              </Switch>
             </div>
           </Router>
         </DeviceProvider>

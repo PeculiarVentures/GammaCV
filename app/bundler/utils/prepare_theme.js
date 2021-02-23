@@ -1,9 +1,9 @@
-import path from 'path';
+const path = require('path');
 // eslint-disable-next-line import/no-extraneous-dependencies
-import themeConstructor from 'lib-theme-contructor';
-import theme from '../../src/themes/default';
+const themeConstructor = require('lib-theme-contructor');
+const theme = require('../../src/themes/default');
 
-export default (name, output) => themeConstructor.createThemes([
+module.exports = (name, output) => themeConstructor.createThemes([
   {
     name,
     entry: path.join(__dirname, '../../node_modules/lib-react-components/styles/index.sss'),

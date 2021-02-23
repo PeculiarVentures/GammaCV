@@ -23,8 +23,8 @@ const loadable = routeList.map(item => (
           <div className={s.md_wrapper}>
             {
               /\.jsx?$/.test(item.path)
-              ? <UsagePart data={module} />
-              : <MDRenderer data={module} />
+              ? <UsagePart data={module.default} />
+              : <MDRenderer data={module.default} />
             }
           </div>
           <Footer />

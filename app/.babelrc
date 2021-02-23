@@ -1,13 +1,9 @@
 {
   "presets": [
-    "env",
-    "stage-0",
-    "react"
+    "@babel/preset-env",
+    "@babel/preset-react"
   ],
-  "compact": "false",
   "plugins": [
-    "dynamic-import-node",
-    "transform-runtime"
-  ],
-  "env": {}
+    "@babel/plugin-proposal-class-properties"
+  ]
 }

@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   version: 0.2,
   languages: ['en'],
   defaultLanguage: 'en',
@@ -6,21 +6,9 @@ export default {
   autoReloadOnNewVerison: true,
   shells: [
     'index',
-    'landing',
-    'not_found',
-    'main',
-    'examples',
-    'docs',
-    'example',
   ],
   endpoints: {
-    '/': 'main',
-    '/examples': 'examples',
-    '/examples/:id': 'example',
-    '/docs': 'docs',
-    '/docs/:type': 'docs',
-    '/docs/:type/:subtype': 'docs',
-    '*': 'not_found',
+    '*': 'main',
   },
   source: [{
     name: 'bootstrap',
