@@ -1,6 +1,6 @@
-import deployToGhPages from './utils/deploy_to_gh_pages';
-import deployToAWS from './utils/deploy_to_s3';
-import * as CONFIG from './config';
+const deployToGhPages = require('./utils/deploy_to_gh_pages');
+const deployToAWS = require('./utils/deploy_to_s3');
+const CONFIG = require('./config');
 
 const AWS = process.argv.includes('--aws');
 

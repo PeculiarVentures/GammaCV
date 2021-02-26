@@ -1,5 +1,4 @@
-import ghPages from 'gh-pages';
-
+const ghPages = require('gh-pages');
 const debug = require('./debug')('deploy:gh-pages');
 
 /**
@@ -17,7 +16,7 @@ const debug = require('./debug')('deploy:gh-pages');
  *    type in "GH_EMAIL" and for the value type in your email address associated
  *    with your github account.
  */
-export default function deployToGhPages(publishDir) {
+module.exports = function deployToGhPages(publishDir) {
   debug('> START');
 
   return new Promise((resolve, reject) => {
@@ -46,4 +45,4 @@ export default function deployToGhPages(publishDir) {
       },
     );
   });
-}
+};

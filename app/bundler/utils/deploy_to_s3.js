@@ -1,9 +1,9 @@
-import fs from 'fs';
-import path from 'path';
-import glob from 'glob'; // eslint-disable-line
-import async from 'async'; // eslint-disable-line
-import mime from 'mime'; // eslint-disable-line
-import AWS from 'aws-sdk';
+const fs = require('fs');
+const path = require('path');
+const glob = require('glob'); // eslint-disable-line
+const async = require('async'); // eslint-disable-line
+const mime = require('mime'); // eslint-disable-line
+const AWS = require('aws-sdk');
 
 const debug = require('./debug')('deploy:aws-s3');
 
@@ -128,7 +128,7 @@ const uploadDirectoryToS3 = (rootPath, search, opts) => { // eslint-disable-line
   });
 };
 
-export default function deployToAWS(dstPath, bucketName, bucketRegion) {
+module.exports = function deployToAWS(dstPath, bucketName, bucketRegion) {
   debug('> START');
 
   return new Promise((resolve, reject) => { // eslint-disable-line
@@ -163,5 +163,4 @@ export default function deployToAWS(dstPath, bucketName, bucketRegion) {
         debug(`> FAILED: ${err}`);
       });
   });
-}
-
+};
