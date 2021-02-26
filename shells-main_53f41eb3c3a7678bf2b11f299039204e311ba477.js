@@ -1,0 +1,1 @@
+(self.webpackChunkapp=self.webpackChunkapp||[]).push([[3910],{3499:(n,t,a)=>{"use strict";a.r(t),a.d(t,{default:()=>e});const e={templates:{not_found:"./not_found.jsx"},langFile:"transaction"}}}]);

@@ -1,1 +1,0 @@
-webpackJsonp([2],{5:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default={templates:{not_found:"./not_found.jsx"},langFile:"transaction"}}});
