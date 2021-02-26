@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as TYPES from '../types';
-import * as s from './styles/index.sass';
+import s from './styles/index.sass';
 
 function fixAlign(align, list) {
   return React.cloneElement(list, {

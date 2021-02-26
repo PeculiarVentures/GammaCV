@@ -73,7 +73,7 @@ const palette = {
   white: '#FFFFFF',
 };
 
-export default {
+module.exports = {
   palette,
   variables: {
     fonts,

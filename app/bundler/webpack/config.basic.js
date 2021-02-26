@@ -1,34 +1,59 @@
-import path from 'path';
-import GenerateJsonPlugin from 'generate-json-webpack-plugin'; // eslint-disable-line
-import CopyWebpackPlugin from 'copy-webpack-plugin'; // eslint-disable-line
-import * as CONFIG from '../config';
-import InitShells from './init_shells';
-
+const path = require('path');
+const GenerateJsonPlugin = require('generate-json-webpack-plugin'); // eslint-disable-line
+const CopyWebpackPlugin = require('copy-webpack-plugin'); // eslint-disable-line
+const HtmlWebpackPlugin = require('html-webpack-plugin'); // eslint-disable-line
+const CONFIG = require('../config');
 const debug = require('../utils/debug')('webpack:basic');
 
-export default (mode) => {
+module.exports = (mode) => {
   debug(`Building webpack config in mode - '${mode}'`);
 
+  const htmlConfig = {
+    template: path.join(__dirname, `../../${CONFIG.SRC_FOLDER}/index.ejs`),
+    title: CONFIG.APP_NAME,
+    /**
+     * Error tracking.
+     */
+    INIT_ROLLBAR: CONFIG.NODE_ENV !== 'development' && !!CONFIG.ROLLBAR_API_KEY,
+    ROLLBAR_API_KEY: CONFIG.ROLLBAR_API_KEY,
+    /**
+     * Analytics.
+     */
+    INIT_ANALYTICS: CONFIG.NODE_ENV !== 'development' && !!CONFIG.GOOGLE_ANALYTICS,
+    GOOGLE_ANALYTICS: CONFIG.GOOGLE_ANALYTICS,
+    /**
+     * React.
+     */
+    DISABLE_REACT_DEV_TOOLS: CONFIG.NODE_ENV !== 'development',
+  };
+
   return {
+    mode: mode === 'development' ? 'development' : 'production',
     cache: mode === 'development',
     plugins: [
-      ...InitShells(),
+      new HtmlWebpackPlugin(htmlConfig),
+      new HtmlWebpackPlugin({
+        ...htmlConfig,
+        filename: '404.html',
+      }),
       new GenerateJsonPlugin(CONFIG.BUILD_INFO_FILENAME, {
         buildInfo: CONFIG.BUILD_INFO,
       }),
-      new CopyWebpackPlugin([
-        {
-          from: path.join(__dirname, `../../${CONFIG.SRC_FOLDER}/assets/static`),
-          to: './',
-        },
-        {
-          from: path.resolve(__dirname, '../../node_modules/.cache/themes/gc.css'),
-          to: './assets/css/theme.css',
-        },
-      ]),
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: path.join(__dirname, `../../${CONFIG.SRC_FOLDER}/assets/static`),
+            to: './',
+          },
+          {
+            from: path.resolve(__dirname, '../../node_modules/.cache/themes/gc.css'),
+            to: './assets/css/theme.css',
+          },
+        ],
+      }),
     ],
     output: {
-      path: path.join(__dirname, `../../${CONFIG.SRC_FOLDER}`),
+      path: path.join(__dirname, `../../${CONFIG.DST_PATH}`),
       filename: `[name]_${CONFIG.HASH}.js`,
       chunkFilename: `[name]_${CONFIG.HASH}.js`,
       publicPath: '/',
@@ -42,10 +67,6 @@ export default (mode) => {
     },
     module: {
       rules: [
-        {
-          test: /\.json?$/,
-          use: ['json-loader'],
-        },
         {
           test: /\.(png|woff|woff2|eot|ttf|svg|jpg|jpeg|gif)$/,
           use: ['url-loader?limit=100001'],
@@ -66,11 +87,12 @@ export default (mode) => {
             options: {
               babelrc: false,
               presets: [
-                ['env', { modules: false }],
-                'stage-0',
-                'react',
+                '@babel/preset-env',
+                '@babel/preset-react',
               ],
-              plugins: ['transform-runtime'],
+              plugins: [
+                '@babel/plugin-proposal-class-properties',
+              ],
             },
           }],
         },

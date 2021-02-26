@@ -1,25 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from 'lib-react-components';
-import s from './styles/basic.sass';
+import s from './styles/index.sass';
 
-const PageNotFoundShell = (props, { intl }) => (
+const NotFound = (_, { intl }) => ((
   <div className={s.main}>
     <div className={s.valign}>
       <Typography
-        className={s.text}
-        type="h3"
+        type="h1"
+        color="black"
         align="center"
-        color="dark_grey"
+        style={{ marginBottom: '15px' }}
+      >
+        404
+      </Typography>
+      <Typography
+        type="h3"
+        color="black"
+        align="center"
       >
         {intl.getText('NotFound')}
       </Typography>
     </div>
   </div>
-);
+));
 
-PageNotFoundShell.contextTypes = {
+NotFound.contextTypes = {
   intl: PropTypes.object,
 };
 
-export default PageNotFoundShell;
+export default NotFound;
