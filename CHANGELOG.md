@@ -1,14 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [0.5.0] - 2021-02-26
 ### Added
 - Add support for WebWorker environment via OffscreenCanvas
 ### Changed
 - Replace `eval` with `new Function` in tensor utils `gm.tensorInvert` and `gm.flipTensor`
 - Change minifier, replace uglify with terser
 ### Fixed
-- Fixed error on try to run is not initiated operation
+- Fixed error on try to run is uninitialized operation
 - Fix dependencies with vulnerabilities
 
 ## [0.4.1] - 2020-12-23
