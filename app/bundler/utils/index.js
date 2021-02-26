@@ -1,4 +1,11 @@
-export clean from './clean';
-export hash from './hash';
-export uuid from './uuid';
-export bundle from './bundle';
+const clean = require('./clean');
+const hash = require('./hash');
+const uuid = require('./uuid');
+const bundle = require('./bundle');
+
+module.exports = {
+  clean,
+  hash,
+  uuid,
+  bundle,
+};

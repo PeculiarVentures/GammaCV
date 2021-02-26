@@ -1,11 +1,10 @@
-import path from 'path';
-import './compile_enviropment';
-import { DST_PATH, URL, PORT } from './config';
-import makeConfig from './webpack/make';
-import runServer from './server';
-import { clean, bundle } from './utils';
-import prepareTheme from './utils/prepare_theme';
-
+const path = require('path');
+require('./compile_enviropment');
+const { DST_PATH, URL, PORT } = require('./config');
+const makeConfig = require('./webpack/make');
+const runServer = require('./server');
+const { clean, bundle } = require('./utils');
+const prepareTheme = require('./utils/prepare_theme');
 const debug = require('./utils/debug')('app:run');
 
 const MODE = process.env.NODE_ENV;
@@ -34,7 +33,12 @@ if (CLEAR || TEST) {
   if (MODE === 'production' || MODE === 'build') {
     clean(DIST_DIRECTORY)
       .then(() => prepareTheme('gc', path.resolve(__dirname, '../node_modules/.cache/themes')))
-      .then(() => bundle(CONFIG));
+      .then(() => bundle(CONFIG))
+      .catch((error) => {
+        console.log(error);
+
+        process.exit(1);
+      });
   }
 
   if (MODE === 'server') {

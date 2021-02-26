@@ -1,11 +1,11 @@
-import path from 'path';
-import express from 'express'; // eslint-disable-line
-import webpack from 'webpack'; // eslint-disable-line
-import compression from 'compression'; // eslint-disable-line
-import WebpackDevServer from 'webpack-dev-server'; // eslint-disable-line
-import * as CONFIG from '../config'; // eslint-disable-line
+const path = require('path');
+const express = require('express'); // eslint-disable-line
+const webpack = require('webpack'); // eslint-disable-line
+const compression = require('compression'); // eslint-disable-line
+const WebpackDevServer = require('webpack-dev-server'); // eslint-disable-line
+const CONFIG = require('../config'); // eslint-disable-line
 
-export default (mode, config) => {
+module.exports = (mode, config) => {
   if (mode === 'development') {
     return new Promise((resolve, reject) => {
       new WebpackDevServer(webpack(config), {

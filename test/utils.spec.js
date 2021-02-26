@@ -6,7 +6,7 @@ describe('Utils: ', () => {
     assert.doesNotThrow(() => gm.assert(true, 'err message'), 'err message');
   });
 
-  it('should throw error', () => {
+  it('assert should throw error', () => {
     assert.throws(() => gm.assert(false, 'err message'), 'err message');
   });
 
@@ -68,5 +68,23 @@ describe('Utils: ', () => {
     assert.isFalse(gm.isValidGLSLVariableName('S!d.sd'), 'Variable name shouldn\'t contain special characters');
     assert.isTrue(gm.isValidGLSLVariableName('S'), 'Single character are allowed');
     assert.isTrue(gm.isValidGLSLVariableName('sFdaFdf'), 'Valid variable name');
+  });
+
+  it('getCanvas', () => {
+    assert.instanceOf(gm.getCanvas(), HTMLCanvasElement, 'Should return HTML Canvas Element in browser env');
+  });
+
+  it('getImage', () => {
+    assert.instanceOf(gm.getImage(), HTMLImageElement, 'Should return HTML Image Element in browser env');
+  });
+
+  it('getVideo', () => {
+    assert.instanceOf(gm.getVideo(), HTMLVideoElement, 'Should return HTML Video Element in browser env');
+  });
+
+  it('assertDOMFeature', () => {
+    assert.doesNotThrow(() => gm.assertCreateElement('canvas'), 'Should not throw an error for document.createElement in browser env.');
+    assert.doesNotThrow(() => gm.assertQuerySelector(), 'Should not throw an error for document.querySelector in browser env.');
+    assert.throw(() => gm.assertDOMFeature(false, 'Unexisted'), 'DOMFeature not supported, "Unexisted" is not supported in current environment');
   });
 });

@@ -2,6 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+### Added
+- Add support for WebWorker environment via OffscreenCanvas
 ### Changed
 - Replace `eval` with `new Function` in tensor utils `gm.tensorInvert` and `gm.flipTensor`
 - Change minifier, replace uglify with terser

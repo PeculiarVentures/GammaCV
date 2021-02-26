@@ -1,9 +1,8 @@
-import fs from 'fs';
-import path from 'path';
-import dotenv from 'dotenv'; // eslint-disable-line
-import uuid from './utils/uuid';
-import hash from './utils/hash';
-
+const fs = require('fs');
+const path = require('path');
+const dotenv = require('dotenv'); // eslint-disable-line
+const uuid = require('./utils/uuid');
+const hash = require('./utils/hash');
 const debug = require('./utils/debug')('app:environmentCompiler');
 
 const compileEnviorment = () => {

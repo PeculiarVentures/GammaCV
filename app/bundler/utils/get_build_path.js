@@ -1,4 +1,4 @@
-import * as CONFIG from '../../bundler/config';
+const CONFIG = require('../../bundler/config');
 
 const getPath = () => {
   const gitUrlRegexp = /https:\/\/([a-z-A-Z])\w+.github.io/g;
@@ -10,4 +10,4 @@ const getPath = () => {
   return '';
 };
 
-export default getPath();
+module.exports = getPath();

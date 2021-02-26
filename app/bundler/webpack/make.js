@@ -1,11 +1,11 @@
-import path from 'path';
-import developmentConfig from './config.development';
-import productionConfig from './config.production';
-import makeBasicConfig from './config.basic';
-import APP_CONFIG from '../../app_config.js';
-import * as CONFIG from '../config';
+const path = require('path');
+const developmentConfig = require('./config.development');
+const productionConfig = require('./config.production');
+const makeBasicConfig = require('./config.basic');
+const APP_CONFIG = require('../../app_config.js');
+const CONFIG = require('../config');
 
-export default (mode) => {
+module.exports = (mode) => {
   const basicConfig = makeBasicConfig(mode);
   const { source } = APP_CONFIG;
   const entry = {};
