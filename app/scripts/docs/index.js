@@ -14,7 +14,7 @@ function printError(errorBody, printStack = true) {
 function getAllJSFiles() {
   return DOCS_CONFIG
     .reduce((result, current) =>
-      result.concat(current.childrens
+      result.concat(current.children
         .filter(item => /\.jsx?$/.test(item.path))
         .map(item => ({
           src: path.join(sourceDirectory, item.path),
@@ -29,7 +29,7 @@ function getAllJSFiles() {
 function getAllMDFiles() {
   return DOCS_CONFIG
     .reduce((result, current) =>
-      result.concat(current.childrens
+      result.concat(current.children
         .filter(item => /\.md$/.test(item.path))
         .map(item => ({
           src: path.join(sourceDirectory, item.path),
