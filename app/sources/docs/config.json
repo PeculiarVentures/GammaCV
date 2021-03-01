@@ -1,7 +1,7 @@
 [
   {
     "name": "basics",
-    "childrens": [
+    "children": [
       {
         "name": "get_started",
         "path": "./get_started.md"
@@ -18,7 +18,7 @@
   },
   {
     "name": "api",
-    "childrens": [
+    "children": [
       {
         "name": "tensor",
         "path": "../../../lib/program/tensor.js"
@@ -35,7 +35,7 @@
   },
   {
     "name": "image_processing",
-    "childrens": [
+    "children": [
       {
         "name": "downsample",
         "path": "../../../lib/ops/downsample/index.js"
@@ -88,7 +88,7 @@
   },
   {
     "name": "morphology",
-    "childrens": [
+    "children": [
       {
         "name": "erode",
         "path": "../../../lib/ops/erode/index.js"
@@ -105,7 +105,7 @@
   },
   {
     "name": "image_derivative",
-    "childrens": [
+    "children": [
       {
         "name": "sobel_operator",
         "path": "../../../lib/ops/sobel_operator/index.js"
@@ -114,7 +114,7 @@
   },
   {
     "name": "feature_extraction",
-    "childrens": [
+    "children": [
       {
         "name": "hog",
         "path": "../../../lib/ops/hog/index.js"
@@ -143,7 +143,7 @@
   },
   {
     "name": "utils",
-    "childrens": [
+    "children": [
       {
         "name": "mean_std",
         "path": "../../../lib/ops/mean_std/index.js"
@@ -168,7 +168,7 @@
   },
   {
     "name": "math",
-    "childrens": [
+    "children": [
       {
         "name": "math",
         "path": "../../../lib/ops/math/index.js"
