@@ -15,6 +15,8 @@ export default function MyApp({ Component, pageProps }) {
         <link rel="icon" href="/static/manifest/favicon.ico" />
         <link rel="apple-touch-icon" href="/static/manifest/apple-touch-icon.png" />
         <link rel="manifest" href="/static/manifest/manifest.webmanifest" />
+
+        <noscript>You need to enable JavaScript to run this app.</noscript>
       </Head>
       <IntlWrapper messages={en}>
         <header>
