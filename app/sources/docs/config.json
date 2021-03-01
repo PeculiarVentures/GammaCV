@@ -1,0 +1,178 @@
+[
+  {
+    "name": "basics",
+    "childrens": [
+      {
+        "name": "get_started",
+        "path": "./get_started.md"
+      },
+      {
+        "name": "create_operation",
+        "path": "./create_operation.md"
+      },
+      {
+        "name": "contributing",
+        "path": "../../../CONTRIBUTING.md"
+      }
+    ]
+  },
+  {
+    "name": "api",
+    "childrens": [
+      {
+        "name": "tensor",
+        "path": "../../../lib/program/tensor.js"
+      },
+      {
+        "name": "session",
+        "path": "../../../lib/program/session.js"
+      },
+      {
+        "name": "glsl_chunks",
+        "path": "../../../lib/program/glsl/chunks/index.js"
+      }
+    ]
+  },
+  {
+    "name": "image_processing",
+    "childrens": [
+      {
+        "name": "downsample",
+        "path": "../../../lib/ops/downsample/index.js"
+      },
+      {
+        "name": "upsample",
+        "path": "../../../lib/ops/upsample/index.js"
+      },
+      {
+        "name": "resize",
+        "path": "../../../lib/ops/resize/index.js"
+      },
+      {
+        "name": "gaussian_blur",
+        "path": "../../../lib/ops/gaussian_blur/index.js"
+      },
+      {
+        "name": "grayscale",
+        "path": "../../../lib/ops/grayscale/index.js"
+      },
+      {
+        "name": "norm",
+        "path": "../../../lib/ops/norm/index.js"
+      },
+      {
+        "name": "color_segmentation",
+        "path": "../../../lib/ops/color_segmentation/index.js"
+      },
+      {
+        "name": "hsv_color",
+        "path": "../../../lib/ops/hsv_color/index.js"
+      },
+      {
+        "name": "threshold",
+        "path": "../../../lib/ops/threshold/index.js"
+      },
+      {
+        "name": "adaptive_threshold",
+        "path": "../../../lib/ops/adaptive_threshold/index.js"
+      },
+      {
+        "name": "conv2d",
+        "path": "../../../lib/ops/conv2d/index.js"
+      },
+      {
+        "name": "sat",
+        "path": "../../../lib/ops/sat/index.js"
+      }
+    ]
+  },
+  {
+    "name": "morphology",
+    "childrens": [
+      {
+        "name": "erode",
+        "path": "../../../lib/ops/erode/index.js"
+      },
+      {
+        "name": "dilate",
+        "path": "../../../lib/ops/dilate/index.js"
+      },
+      {
+        "name": "morphology_ex",
+        "path": "../../../lib/ops/morphology_ex/index.js"
+      }
+    ]
+  },
+  {
+    "name": "image_derivative",
+    "childrens": [
+      {
+        "name": "sobel_operator",
+        "path": "../../../lib/ops/sobel_operator/index.js"
+      }
+    ]
+  },
+  {
+    "name": "feature_extraction",
+    "childrens": [
+      {
+        "name": "hog",
+        "path": "../../../lib/ops/hog/index.js"
+      },
+      {
+        "name": "canny_edges",
+        "path": "../../../lib/ops/canny_edges/index.js"
+      },
+      {
+        "name": "skin_test",
+        "path": "../../../lib/ops/skin_test/index.js"
+      },
+      {
+        "name": "motion_detect",
+        "path": "../../../lib/ops/motion_detect/index.js"
+      },
+      {
+        "name": "swt",
+        "path": "../../../lib/ops/swt/index.js"
+      },
+      {
+        "name": "pclines",
+        "path": "../../../lib/ops/pclines/index.js"
+      }
+    ]
+  },
+  {
+    "name": "utils",
+    "childrens": [
+      {
+        "name": "mean_std",
+        "path": "../../../lib/ops/mean_std/index.js"
+      },
+      {
+        "name": "minmax",
+        "path": "../../../lib/ops/minmax/index.js"
+      },
+      {
+        "name": "sliding_window",
+        "path": "../../../lib/ops/sliding_window/index.js"
+      },
+      {
+        "name": "concat",
+        "path": "../../../lib/ops/concat/index.js"
+      },
+      {
+        "name": "cast",
+        "path": "../../../lib/ops/cast/index.js"
+      }
+    ]
+  },
+  {
+    "name": "math",
+    "childrens": [
+      {
+        "name": "math",
+        "path": "../../../lib/ops/math/index.js"
+      }
+    ]
+  }
+]

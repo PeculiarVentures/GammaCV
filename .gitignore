@@ -8,5 +8,7 @@ compiled_env.json
 *.sketch
 dist/
 dist-es6/
-app/_data
 .backup
+
+# App
+_data
