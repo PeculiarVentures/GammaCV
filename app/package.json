@@ -19,9 +19,11 @@
     "clean": "rimraf .next out",
     "dev": "next",
     "start": "next start",
-    "build": "npm run clean && next build && next export",
+    "build": "next build && next export",
     "build:theme": "node scripts/theme",
-    "build:docs": "node scripts/docs"
+    "build:docs": "node scripts/docs",
+    "predev": "npm run build:docs",
+    "prebuild": "npm run build:docs && npm run clean"
   },
   "keywords": [],
   "author": "PeculiarVentures Team",
