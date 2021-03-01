@@ -1,0 +1,13 @@
+{
+  "actions": {
+    "docs": "Docs",
+    "examples": "Examples",
+    "github": "Github"
+  },
+  "404": {
+    "title": "Page not found"
+  },
+  "hint": {
+    "turnDevice": "Turn on your device to portrait orientation"
+  }
+}
