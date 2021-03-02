@@ -2,12 +2,14 @@
   "actions": {
     "docs": "Docs",
     "examples": "Examples",
-    "github": "Github"
+    "github": "Github",
+    "getInTouch": "Get in touch"
   },
   "404": {
     "title": "Page not found"
   },
-  "hint": {
-    "turnDevice": "Turn on your device to portrait orientation"
+  "footer": {
+    "title": "Made with ❤️ across the globe",
+    "version": "Api version"
   }
 }

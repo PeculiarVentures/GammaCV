@@ -1,9 +1,13 @@
 import Head from 'next/head';
 import { IntlWrapper } from 'lib-pintl';
+import { useRouter } from 'next/router';
+import { Header, Footer } from '../src/components';
 import en from '../locales/en.json';
 import './reset.sass';
 
 export default function MyApp({ Component, pageProps }) {
+  const router = useRouter();
+
   return (
     <>
       <Head>
@@ -19,13 +23,13 @@ export default function MyApp({ Component, pageProps }) {
         <noscript>You need to enable JavaScript to run this app.</noscript>
       </Head>
       <IntlWrapper messages={en}>
-        <header>
-          Header
-        </header>
-        <Component {...pageProps} />
-        <footer>
-          Footer
-        </footer>
+        <Header
+          transparent={router.pathname === '/'}
+        />
+        <main>
+          <Component {...pageProps} />
+        </main>
+        <Footer />
       </IntlWrapper>
     </>
   );
