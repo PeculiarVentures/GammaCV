@@ -5,7 +5,7 @@ import { ExampleItem } from './example_item';
 import s from './index.module.sass';
 
 interface IExamplesPageProps {
-  config: IGroup[];
+  config: IExampleGroup[];
 }
 
 export const ExamplesPage: React.FC<IExamplesPageProps> = (props) => {

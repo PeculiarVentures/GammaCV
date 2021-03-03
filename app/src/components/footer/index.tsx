@@ -12,6 +12,7 @@ export const Footer = (props, context) => {
       strokeOpacity={0.15}
       strokeType="top"
       className={s.root}
+      fill="white"
     >
       <Typography
         type="b3"

@@ -1,38 +1,20 @@
-import Link from 'next/link';
+// import Link from 'next/link';
 import Head from 'next/head';
+import { DocsPage } from '../../src/pages';
 
 const Doc = (props) => {
+  const { id, config, data } = props;
+
   return (
     <>
       <Head>
-        <title>{props.id} - GammaCV</title>
+        <title>{id} - GammaCV</title>
       </Head>
-      <div
-        style={{
-          display: 'flex',
-        }}
-      >
-        <aside>
-          {props.list.map((item, key) => (
-            <div key={key}>
-              <Link
-                href={`/docs/${item.name}`}
-              >
-                {item.name}
-              </Link>
-            </div>
-          ))}
-        </aside>
-        <main
-          style={{
-            flex: 1,
-          }}
-        >
-          <h1>
-            Hello {props.id}
-          </h1>
-        </main>
-      </div>
+
+      <DocsPage
+        config={config}
+        data={data}
+      />
     </>
   );
 };
@@ -53,14 +35,13 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   const config = (await import('../../sources/docs/config.json')).default;
-  const list = config.reduce((res, group) => res.concat(group.children), []);
   const data = (await import(`../../sources/docs/_data/${context.params.id}.json`)).default;
 
   return {
     props: {
       id: context.params.id,
       data,
-      list,
+      config,
     },
   };
 }

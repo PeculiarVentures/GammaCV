@@ -4,7 +4,7 @@ interface IExample {
   path: string;
 }
 
-interface IGroup {
+interface IExampleGroup {
   key: string;
   name: string;
   examples: IExample[];
