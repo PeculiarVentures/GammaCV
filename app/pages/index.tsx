@@ -1,7 +1,3 @@
-import { Main } from '../src/pages';
+import { MainPage } from '../src/pages';
 
-const Index = () => (
-  <Main />
-);
-
-export default Index;
+export default MainPage;

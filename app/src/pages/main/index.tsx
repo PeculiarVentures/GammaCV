@@ -23,7 +23,7 @@ const facts = [
   },
 ];
 
-export const Main = () => {
+export const MainPage = () => {
   return (
     <>
       <Box
@@ -85,6 +85,6 @@ export const Main = () => {
   );
 };
 
-Main.contextTypes = {
+MainPage.contextTypes = {
   intl: PropTypes.object,
 };

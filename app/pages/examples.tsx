@@ -1,35 +1,28 @@
-import Link from 'next/link';
 import Head from 'next/head';
+import { ExamplesPage } from '../src/pages';
 
-const Examples = ({ routeList }) => {
+const Examples = (props) => {
+  const { config } = props;
+
   return (
     <>
       <Head>
         <title>Examples - GammaCV</title>
       </Head>
-      <h1>
-        Examples
-      </h1>
-      {routeList.map((item, key) => (
-        <div key={key}>
-          <Link
-            href={`/examples/${item.path}`}
-          >
-            {item.path}
-          </Link>
-        </div>
-      ))}
+
+      <ExamplesPage
+        config={config}
+      />
     </>
   );
 };
 
 export async function getStaticProps() {
-  const examples = (await import('../sources/examples/config.json')).default;
-  const routeList = examples.reduce((res, group) => res.concat(group.examples), []);
+  const config = (await import('../sources/examples/config.json')).default;
 
   return {
     props: {
-      routeList,
+      config,
     },
   };
 }
