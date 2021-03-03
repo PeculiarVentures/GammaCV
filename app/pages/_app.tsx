@@ -1,12 +1,14 @@
 import Head from 'next/head';
 import { IntlWrapper } from 'lib-pintl';
 import { useRouter } from 'next/router';
+import clx from 'classnames';
 import { Header, Footer } from '../src/components';
 import en from '../locales/en.json';
 import './reset.sass';
 
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
+  const showFooter = router.pathname !== '/examples/[id]';
 
   return (
     <>
@@ -26,10 +28,12 @@ export default function MyApp({ Component, pageProps }) {
         <Header
           transparent={router.pathname === '/'}
         />
-        <main>
+        <main className={clx('main', { m_full: !showFooter })}>
           <Component {...pageProps} />
         </main>
-        <Footer />
+        {showFooter && (
+          <Footer />
+        )}
       </IntlWrapper>
     </>
   );
