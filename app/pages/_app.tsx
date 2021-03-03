@@ -8,7 +8,7 @@ import './reset.sass';
 
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
-  const showFooter = router.pathname !== '/examples/[id]';
+  const showFooter = router.pathname !== '/examples/[id]' && router.pathname !== '/404';
 
   return (
     <>
@@ -28,12 +28,13 @@ export default function MyApp({ Component, pageProps }) {
         <Header
           transparent={router.pathname === '/'}
         />
-        <main className={clx('main', { m_full: !showFooter })}>
+        <main className={clx('main', { m_auto: router.pathname === '/' })}>
           <Component {...pageProps} />
+
+          {showFooter && (
+            <Footer />
+          )}
         </main>
-        {showFooter && (
-          <Footer />
-        )}
       </IntlWrapper>
     </>
   );

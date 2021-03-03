@@ -19,7 +19,6 @@ export const Header = (props: IHeaderProps, context) => {
       className={s.root}
     >
       <Link
-        exact
         href="/"
       >
         <a className={s.logo}>
