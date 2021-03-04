@@ -1,15 +1,17 @@
 /* eslint-disable */
 import React from 'react';
-import { Typography, HighlightCode } from 'lib-react-components';
-import parse, { attributesToProps, domToReact } from 'html-react-parser';
+import { HighlightCode } from 'lib-react-components';
+import parse, { domToReact } from 'html-react-parser';
 import Link from 'next/link';
 import clx from 'classnames';
+// import { useRouter } from 'next/router';
 import { Sidebar } from './sidebar';
 import s from './index.module.sass';
 
 interface IDocsPageProps {
   config: IDocGroup[];
   data: DocDataType;
+  id: string;
 }
 
 const options = {
@@ -19,6 +21,26 @@ const options = {
         <h6 className="text_grey c1">
           {domToReact(domNode.children, options)}
         </h6>
+      );
+    }
+
+    if (/h[1-5]/.test(domNode.name)) {
+      const Component = domNode.name;
+      // const router = useRouter();
+
+      return (
+        <Component
+          {...domNode.attribs}
+        >
+          <Link href={{
+            hash: `#${domNode.attribs.id}`,
+            // query: router.query,
+          }}>
+            <a>
+              {domToReact(domNode.children, options)}
+            </a>
+          </Link>
+        </Component>
       );
     }
 

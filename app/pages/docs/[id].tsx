@@ -13,6 +13,7 @@ const Doc = (props) => {
       <DocsPage
         config={config}
         data={data}
+        id={id}
       />
     </>
   );
