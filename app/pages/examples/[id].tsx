@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import { ExamplePage } from '../../src/pages/example';
 
 const Example = (props) => {
   const [data, setData] = useState({});
@@ -17,7 +18,6 @@ const Example = (props) => {
   };
 
   const isLoading = !data['default'];
-
   return (
     <>
       <Head>
@@ -28,9 +28,7 @@ const Example = (props) => {
           Loading - {props.id}
         </h1>
       ) : (
-        <h1>
-          Ready to use - {props.id}
-        </h1>
+        <ExamplePage params={data['default']['params']}/>
       )}
     </>
   );
