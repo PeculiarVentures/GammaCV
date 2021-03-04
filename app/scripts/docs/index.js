@@ -1,53 +1,54 @@
+const fs = require('fs');
 const path = require('path');
-const processMD = require('./process_md');
-const processJS = require('./process_js');
+const jsdoc2md = require('jsdoc-to-markdown');
 const DOCS_CONFIG = require('../../sources/docs/config.json');
 const { checkDir } = require('./utils');
 
 const sourceDirectory = path.join(__dirname, '../../sources/docs');
 const destinationDirectory = path.join(sourceDirectory, '_data');
+/**
+ * Available partials - https://github.com/jsdoc2md/dmd.
+ */
+const hbsPartials = [
+  path.join(__dirname, './partials/header.hbs'),
+  path.join(__dirname, './partials/description.hbs'),
+  path.join(__dirname, './partials/body.hbs'),
+  path.join(__dirname, './partials/main.hbs'),
+  path.join(__dirname, './partials/param-table-name.hbs'),
+  path.join(__dirname, './partials/docs.hbs'),
+  path.join(__dirname, './partials/params-table.hbs'),
+  path.join(__dirname, './partials/examples.hbs'),
+];
 
-function printError(errorBody, printStack = true) {
-  console.error(`\n\x1b[31mUnable to generate docs: ${errorBody.name}: ${errorBody.message}`, printStack ? errorBody.stack : '');
-}
+const handleMDFile = (docItem) => {
+  fs.copyFileSync(path.join(sourceDirectory, docItem.path), path.join(destinationDirectory, `${docItem.name}.md`));
+};
 
-function getAllJSFiles() {
-  return DOCS_CONFIG
-    .reduce((result, current) =>
-      result.concat(current.children
-        .filter(item => /\.jsx?$/.test(item.path))
-        .map(item => ({
-          src: path.join(sourceDirectory, item.path),
-          meta: { route: item.name },
-          dst: path.join(
-            destinationDirectory,
-            `${item.name}.json`,
-          ),
-        }))), []);
-}
+const handleJSFile = async (docItem) => {
+  const res = await jsdoc2md
+    .render({
+      files: path.join(sourceDirectory, docItem.path),
+      partial: hbsPartials,
+    });
 
-function getAllMDFiles() {
-  return DOCS_CONFIG
-    .reduce((result, current) =>
-      result.concat(current.children
-        .filter(item => /\.md$/.test(item.path))
-        .map(item => ({
-          src: path.join(sourceDirectory, item.path),
-          dst: path.join(destinationDirectory, `${item.name}.json`),
-        }))), []);
-}
+  fs.writeFileSync(path.join(destinationDirectory, `${docItem.name}.md`), res);
+};
 
 async function main() {
   await checkDir(destinationDirectory);
-  await processMD(getAllMDFiles());
-  process.stdout.write('\rMarkdown processed succesfully');
-  await processJS(getAllJSFiles(), destinationDirectory);
-  process.stdout.write('\rJS processed succesfully');
-  process.stdout.write('\r');
+
+  const items = DOCS_CONFIG.reduce((result, current) => result.concat(current.children), []);
+
+  for (let i = 0; i < items.length; i += 1) {
+    const item = items[i];
+    const isMD = /\.md$/.test(item.path);
+
+    if (isMD) {
+      handleMDFile(item);
+    } else {
+      await handleJSFile(item);
+    }
+  }
 }
 
-main()
-  .catch((err) => {
-    printError(err, err.name !== 'Error');
-    process.exit(err.code || 1);
-  });
+main();

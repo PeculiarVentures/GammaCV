@@ -1,4 +1,3 @@
-// import Link from 'next/link';
 import Head from 'next/head';
 import { DocsPage } from '../../src/pages';
 
@@ -35,7 +34,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   const config = (await import('../../sources/docs/config.json')).default;
-  const data = (await import(`../../sources/docs/_data/${context.params.id}.json`)).default;
+  const data = (await import(`../../sources/docs/_data/${context.params.id}.md`)).default;
 
   return {
     props: {

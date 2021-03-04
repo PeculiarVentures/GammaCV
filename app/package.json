@@ -27,6 +27,7 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "gammacv": "file:../",
+    "html-react-parser": "^1.2.4",
     "lib-pintl": "0.0.4",
     "lib-react-components": "^2.1.4",
     "micro-fps": "^0.1.2",
@@ -41,7 +42,9 @@
     "babel-traverse": "^6.26.0",
     "babylon": "^6.18.0",
     "doctrine": "^3.0.0",
+    "jsdoc-to-markdown": "^7.0.0",
     "lib-theme-contructor": "^0.4.1",
+    "markdown-loader": "^6.0.0",
     "marked": "^2.0.1",
     "rimraf": "^3.0.2",
     "sass": "^1.32.8",
