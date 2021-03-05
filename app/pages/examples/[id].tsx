@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import Head from 'next/head';
-import { ExamplePage } from '../../src/pages/example';
 
 const Example = (props) => {
   const [data, setData] = useState({});
@@ -18,6 +17,26 @@ const Example = (props) => {
   };
 
   const isLoading = !data['default'];
+
+  const renderX = () => {
+    const ExamplePage = lazy(() => import('../../src/pages/example'));
+    const dataDefault = data['default']
+    const op = dataDefault['op'];
+    const tick = dataDefault['tick'];
+    const init = dataDefault['init'];
+
+    return (
+      <Suspense fallback={(<div>isLoading</div>)}>
+        <ExamplePage
+          op={op}
+          tick={tick}
+          init={init}
+          params={data['default']['params']}
+        />
+      </Suspense>
+    );
+  };
+
   return (
     <>
       <Head>
@@ -27,9 +46,8 @@ const Example = (props) => {
         <h1>
           Loading - {props.id}
         </h1>
-      ) : (
-        <ExamplePage params={data['default']['params']}/>
-      )}
+      ) : renderX()
+      }
     </>
   );
 };
