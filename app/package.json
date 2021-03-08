@@ -27,25 +27,22 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "gammacv": "file:../",
-    "html-react-parser": "^1.2.4",
     "lib-pintl": "0.0.4",
-    "lib-react-components": "^2.1.4",
+    "lib-react-components": "^2.1.6",
     "micro-fps": "^0.1.2",
     "next": "^10.0.7",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-markdown": "^5.0.3",
+    "remark-gfm": "^1.0.0",
+    "remark-slug": "^6.0.0"
   },
   "devDependencies": {
     "@types/node": "^14.14.31",
     "@types/react": "^17.0.2",
-    "babel-traverse": "^6.26.0",
-    "babylon": "^6.18.0",
-    "doctrine": "^3.0.0",
     "jsdoc-to-markdown": "^7.0.0",
     "lib-theme-contructor": "^0.4.1",
-    "markdown-loader": "^6.0.0",
-    "marked": "^2.0.1",
     "rimraf": "^3.0.2",
     "sass": "^1.32.8",
     "typescript": "^4.2.2"

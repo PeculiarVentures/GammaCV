@@ -9,7 +9,7 @@ interface IExampleItemProps {
   path: string;
 }
 
-export const ExampleItem: React.FC<IExampleItemProps> = (props) => {
+export const ExampleItem: React.FC<IExampleItemProps & React.HTMLAttributes<HTMLElement>> = (props) => {
   const { name, type, path, ...other } = props;
 
   return (

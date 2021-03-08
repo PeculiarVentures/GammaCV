@@ -9,7 +9,7 @@ import './reset.sass';
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const isMain = router.pathname === '/';
-  const showFooter = router.pathname !== '/examples/[id]' && router.pathname !== '/404';
+  const showFooter = router.pathname === '/' || router.pathname === '/examples';
 
   return (
     <>
