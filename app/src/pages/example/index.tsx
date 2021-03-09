@@ -27,17 +27,17 @@ interface IExampleParam {
 }
 
 export interface IExamplePageProps {
-  op?: (input: gm.InputType, params: {}, context?: any) => gm.Operation,
+  op?: (input: gm.InputType, params?: {}, context?: any) => gm.Operation,
   tick?: (frame: any, params: {}) => void,
-  init?: () => {},
-  params: {
+  init?: Function,
+  params?: {
     [key: string]: IExampleParam;
   };
 }
 
 interface IExamplePageState {
   isPlaying: boolean;
-  frame: number,
+  exampleInitialized: boolean,
   canvas: {
     width: number;
     height: number;
@@ -55,37 +55,59 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
 
     this.initialState = this.getInitialState();
     this.state = {
-      frame: 0,
       isPlaying: false,
+      exampleInitialized: false,
       canvas: {
-        width: 900,
-        height: 300,
+        width: 500,
+        height: 384,
       },
       params: this.getInitialState(),
     };
+
     this.prepareParams = this.handlePreparePreference();
+    this.init(props);
+    this.frame = 0;
+    this.loading = false;
 
-    this.stream = new gm.CaptureVideo(this.state.canvas.width, this.state.canvas.height);
-    this.sess = new gm.Session();
-    this.imageTensor = new gm.Tensor('uint8', [this.state.canvas.height, this.state.canvas.width, 4]);
-    // this.init(props);
+    const tick = typeof props.tick === 'function' ? props.tick : this.tick;
 
-    this.pipeline = this.imageTensor;
-    // this.pipeline = gm.grayscale(this.pipeline);
+    this.tick = () => {
+      if (!this.state.exampleInitialized) {
+        this.setState({
+          exampleInitialized: true,
+        });
+      }
 
-    // console.log(this.state.params);
-    if (this.props.op) {
-      this.pipeline = this.props.op(this.imageTensor, this.prepareParams);
-    }
+      this.stream.getImageBuffer(this.imgInput);
 
-    this.sess.init(this.pipeline);
-    this.outputTensor = gm.tensorFrom(this.pipeline);
+      if (
+        this.loading
+        && !this.checkRerender(this.imgInput.data)
+      ) {
+        this.loading = false;
+      } else if (!this.loading) {
+        tick.apply(this, [this.frame, {
+          canvas: this.canvasRef.current,
+          params: this.prepareParams,
+          operation: this.op,
+          session: this.sess,
+          input: this.imgInput,
+          output: this.outputTensor,
+          context: this.opContext,
+        }]);
+
+        this.frame += 1;
+      }
+
+      this.timeoutRequestAnimation = window.requestAnimationFrame(this.tick);
+    };
   }
 
   getInitialState = () => {
     const result = {};
     const params = this.props.params;
 
+    // eslint-disable-next-line guard-for-in
     for (const blockName in params) {
       const block = params[blockName];
 
@@ -93,7 +115,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
         if (param !== 'name') {
           const value = block[param]['default'];
 
-          if (value) {
+          if (typeof value === 'number') {
             result[param] = {
               value,
             };
@@ -123,6 +145,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   getParamsName = () => {
     const result = [];
 
+    // eslint-disable-next-line guard-for-in
     for (const blockName in this.props.params) {
       result.push(blockName);
     }
@@ -134,6 +157,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     const params = this.props.params;
     const result = [];
 
+    // eslint-disable-next-line guard-for-in
     for (const blockName in params) {
       result.push(params[blockName]);
     }
@@ -146,6 +170,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
       return param.name;
     }
 
+    // eslint-disable-next-line guard-for-in
     for (const blockName in this.props.params) {
       return blockName;
     }
@@ -153,61 +178,51 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     return undefined;
   }
 
-  // init = (props: IExamplePageProps) => {
-  //   const { width, height } = this.state.canvas;
+  init = (props: IExamplePageProps) => {
+    const { width, height } = this.state.canvas;
 
-  //   try {
-  //     this.sess = new gm.Session();
-  //     this.stream = new gm.CaptureVideo(width, height);
+    try {
+      this.imgInput = new gm.Tensor('uint8', [height, width, 4]);
+      this.sess = new gm.Session();
+      this.stream = new gm.CaptureVideo(width, height);
 
-  //     if (props.init) {
-  //       console.log('Need init');
-  //     }
+      if (props.init) {
+        this.opContext = props.init(this.props.op, this.sess, this.prepareParams);
+      }
 
-  //     this.op = props.op(this.imageTensor, this.props.params);
+      this.op = props.op(this.imgInput, this.prepareParams, this.opContext);
 
-  //     if (!(this.op instanceof gm.Operation)) {
-  //       throw new Error(`Error in ${props} example: function <op> must return Operation`);
-  //     }
+      if (!(this.op instanceof gm.Operation)) {
+        throw new Error(`Error in ${props} example: function <op> must return Operation`);
+      }
 
-  //     this.sess.init(this.op);
-  //     this.outputTensor = gm.tensorFrom(this.op);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-
-  tick = () => {
-    const {
-      isPlaying, frame, canvas,
-    } = this.state;
-
-    if (isPlaying) {
-      this.timeoutRequestAnimation = requestAnimationFrame(this.tick);
+      this.sess.init(this.op);
+      this.outputTensor = gm.tensorFrom(this.op);
+    } catch (err) {
+      console.log(err);
     }
+  }
 
-    this.stream.getImageBuffer(this.imageTensor);
-    // const imageData = this.stream.getImageBuffer('uint8');
+  tick(frame) {
+    this.sess.runOp(this.op, frame, this.outputTensor);
 
-    // this.imageTensor.data = imageData;
-
-    this.canvasRef.current.height = canvas.height;
-    this.canvasRef.current.width = canvas.width;
-
-    this.sess.runOp(this.pipeline, this.state.frame, this.outputTensor);
     gm.canvasFromTensor(this.canvasRef.current, this.outputTensor);
-
-    this.setState({
-      frame: frame + 1,
-    });
   }
 
   start = () => {
-    this.stream.start(null, null);
-    this.setState({ isPlaying: true }, () => {
-      this.tick();
+    this.stream.start();
+
+    this.timeoutRequestAnimation = window.requestAnimationFrame(this.tick);
+    this.setState({
+      isPlaying: true,
     });
-  };
+    if (
+      !this.loading
+      && this.checkRerender(this.stream.getImageBuffer('uint8'))
+    ) {
+      this.loading = true;
+    }
+  }
 
   stop = (destroy = true) => {
     this.stream.stop();
@@ -219,17 +234,36 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     this.setState({ isPlaying: false });
   };
 
+  checkRerender = (arr) => {
+    let dark = true;
+
+    for (let i = 0; i < arr.length; i += 16) {
+      if (arr[i] !== 0) {
+        dark = false;
+      }
+    }
+
+    return dark;
+  }
+
+  onChangeParams() { //eslint-disable-line
+    this.stop();
+    this.init(this.props);
+    this.start();
+  }
+
   timeout = null;
   timeoutRequestAnimation;
   initialState;
-  stream;
-  sess;
-  op;
-  canvasProcessed;
-  pipeline;
-  imageTensor;
-  outputTensor;
+  stream: gm.CaptureVideo;
+  sess: gm.Session;
+  op: gm.Operation;
+  imgInput: gm.Tensor;
+  outputTensor: gm.Tensor<gm.TensorDataView>;
   prepareParams;
+  frame: number;
+  opContext: Function;
+  loading: boolean;
   canvasRef: React.RefObject<HTMLCanvasElement> = React.createRef();
 
   trottleUpdateCanvas = () => {
@@ -237,6 +271,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
 
     this.timeout = setTimeout(() => {
       this.prepareParams = this.handlePreparePreference();
+      this.onChangeParams();
     }, 1000);
   };
 
@@ -261,18 +296,30 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     const resultPreference = {};
     const params = this.props.params;
 
+    // eslint-disable-next-line guard-for-in
     for (const blockName in params) {
       for (const paramName in params[blockName]) {
         if (paramName !== 'name') {
           resultPreference[blockName] = {
             ...resultPreference[blockName],
             [paramName]: this.state.params[paramName].value,
-          }
+          };
         }
       }
     }
 
     return resultPreference;
+  }
+
+  handleStartStop = () => {
+    const isPlay = this.state.isPlaying;
+
+    if (isPlay) {
+      this.stop();
+    } else {
+      this.init(this.props);
+      this.start();
+    }
   }
 
   renderParam = (param: IExampleParam) => {
@@ -286,6 +333,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
 
         if (!isSelect) {
           result.push(
+            // eslint-disable-next-line react/jsx-filename-extension
             <Box key={column['name']}>
               <Box>{column['type'][0]}</Box>
               <Typography>
@@ -308,6 +356,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
 
         if (isSelect) {
           result.push(
+            // eslint-disable-next-line react/jsx-filename-extension
             <Box key={column['name']}>
               <Box>{column['type'][0]}</Box>
               <Typography>
@@ -332,47 +381,44 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   render() {
     const listParams = this.getParams();
 
-    if (listParams.length) {
-      return (
-        <div>
-          <Box>
-            <canvas
-              ref={this.canvasRef}
-              width={this.state.canvas.width}
-              height={this.state.canvas.height}
-            />
-            <button type="button" onClick={this.stop}>stop</button>
-            <button type="button" onClick={this.start}>start</button>
-          </Box>
-          <Box>
-            <div>
-              <div>Params</div>
-              <Button
-                onClick={this.handleResetParams}
-              >
-                reset
-              </Button>
-            </div>
+    console.log(this.state.isPlaying);
 
-            {listParams.map((param) => {
-              const name = this.getParamName(param);
+    return (
+      <div>
+        <Box>
+          <canvas
+            ref={this.canvasRef}
+            width={this.state.canvas.width}
+            height={this.state.canvas.height}
+          />
+          <button type="button" onClick={this.handleStartStop}>Stop|Start</button>
+        </Box>
+        <Box>
+          <div>
+            <div>Params</div>
+            <Button
+              onClick={this.handleResetParams}
+            >
+              reset
+            </Button>
+          </div>
 
-              return (
-                <Box key={name}>
-                  <div>
-                    <Typography>
-                      {name}
-                    </Typography>
-                  </div>
-                  {this.renderParam(param)}
-                </Box>
-              );
-            })}
-          </Box>
-        </div>
-      );
-    }
+          {listParams.map((param) => {
+            const name = this.getParamName(param);
 
-    return null;
+            return (
+              <Box key={name}>
+                <div>
+                  <Typography>
+                    {name}
+                  </Typography>
+                </div>
+                {this.renderParam(param)}
+              </Box>
+            );
+          })}
+        </Box>
+      </div>
+    );
   }
 }

@@ -24,6 +24,7 @@ const Example = (props) => {
     const op = dataDefault['op'];
     const tick = dataDefault['tick'];
     const init = dataDefault['init'];
+    const params = dataDefault['params'];
 
     return (
       <Suspense fallback={(<div>isLoading</div>)}>
@@ -31,7 +32,7 @@ const Example = (props) => {
           op={op}
           tick={tick}
           init={init}
-          params={data['default']['params']}
+          params={params}
         />
       </Suspense>
     );
