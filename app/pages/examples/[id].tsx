@@ -1,4 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
+import { DeviceProvider } from 'lib-react-components';
 import Head from 'next/head';
 
 const Example = (props) => {
@@ -28,12 +29,14 @@ const Example = (props) => {
 
     return (
       <Suspense fallback={(<div>isLoading</div>)}>
-        <ExamplePage
-          op={op}
-          tick={tick}
-          init={init}
-          params={params}
-        />
+        <DeviceProvider>
+          <ExamplePage
+            op={op}
+            tick={tick}
+            init={init}
+            params={params}
+          />
+        </DeviceProvider>
       </Suspense>
     );
   };

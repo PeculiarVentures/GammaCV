@@ -1,6 +1,9 @@
 import React from 'react';
 import { Typography, Slider, Select, Box, Button } from 'lib-react-components';
+import PropTypes from 'prop-types';
 import * as gm from 'gammacv';
+import { IntlContext } from 'lib-pintl';
+import LazyUpdate from '../../utils/lazy_update';
 // import s from './index.module.sass';
 
 interface ISlideParamProps {
@@ -25,7 +28,6 @@ interface IExampleParam {
   name: string;
   [key: string]: string | ISlideParamProps | ISelectParamProps;
 }
-
 export interface IExamplePageProps {
   op?: (input: gm.InputType, params?: {}, context?: any) => gm.Operation,
   tick?: (frame: any, params: {}) => void,
@@ -49,20 +51,33 @@ interface IExamplePageState {
   }
 }
 
+interface IContextType {
+  intl: IntlContext;
+  device: {
+    type: string;
+    width: number;
+    height: number;
+  };
+}
+
 export default class ExamplePage extends React.Component<IExamplePageProps, IExamplePageState> {
-  constructor(props: IExamplePageProps) {
+  static contextTypes = {
+    intl: PropTypes.object,
+    device: PropTypes.object,
+  };
+
+  constructor(props: IExamplePageProps, context: IContextType) {
     super(props);
 
     this.initialState = this.getInitialState();
     this.state = {
       isPlaying: false,
       exampleInitialized: false,
-      canvas: {
-        width: 500,
-        height: 384,
-      },
+      canvas: this.getSize(context),
       params: this.getInitialState(),
     };
+
+    this.lazyUpdate = new LazyUpdate(500, this.onResizeEnd);
 
     this.prepareParams = this.handlePreparePreference();
     this.init(props);
@@ -134,12 +149,36 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   }
 
   componentDidMount() {
+    window.addEventListener('resize', this.onResize);
     this.start();
   }
 
   componentWillUnmount() {
     clearTimeout(this.timeout);
+    window.removeEventListener('resize', this.onResize);
     this.stop();
+  }
+
+  onResize = () => {
+    this.lazyUpdate.activate();
+  }
+
+  onResizeEnd = () => {
+    console.log(this.context);
+    this.stop();
+    this.setState({ canvas: this.getSize() }, () => {
+      this.init(this.props);
+      this.start();
+    });
+  }
+
+  getSize = (context = this.context) => {
+    const { width } = context.device;
+
+    return {
+      width,
+      height: 384,
+    };
   }
 
   getParamsName = () => {
@@ -255,6 +294,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   timeout = null;
   timeoutRequestAnimation;
   initialState;
+  lazyUpdate;
   stream: gm.CaptureVideo;
   sess: gm.Session;
   op: gm.Operation;
@@ -392,6 +432,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
             height={this.state.canvas.height}
           />
           <button type="button" onClick={this.handleStartStop}>Stop|Start</button>
+          <button type="button" onClick={this.onResizeEnd}>resize</button>
         </Box>
         <Box>
           <div>
