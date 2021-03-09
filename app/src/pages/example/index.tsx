@@ -1,9 +1,11 @@
 import React from 'react';
 import { Typography, Slider, Select, Box, Button } from 'lib-react-components';
+import microFps from 'micro-fps';
 import PropTypes from 'prop-types';
 import * as gm from 'gammacv';
 import { IntlContext } from 'lib-pintl';
 import LazyUpdate from '../../utils/lazy_update';
+import { getMaxAvailableSize } from '../../utils/ratio';
 // import s from './index.module.sass';
 
 interface ISlideParamProps {
@@ -84,9 +86,11 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     this.frame = 0;
     this.loading = false;
 
+    const fpsTick = microFps((info) => { this.refFps.current.innerHTML = info.fps.toFixed(0); }, 3);
     const tick = typeof props.tick === 'function' ? props.tick : this.tick;
 
     this.tick = () => {
+      fpsTick();
       if (!this.state.exampleInitialized) {
         this.setState({
           exampleInitialized: true,
@@ -164,8 +168,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   }
 
   onResizeEnd = () => {
-    console.log(this.context);
-    this.stop();
+    this.stop(false);
     this.setState({ canvas: this.getSize() }, () => {
       this.init(this.props);
       this.start();
@@ -173,10 +176,22 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   }
 
   getSize = (context = this.context) => {
-    const { width } = context.device;
+    if (context.device.type === 'mobile') {
+      const el = document.getElementById('__next');
+      const res = getMaxAvailableSize(
+        el.offsetWidth / (el.offsetHeight - 60),
+        Math.min(el.offsetWidth, 600),
+        Math.min(el.offsetHeight, 600),
+      );
+
+      return {
+        width: ~~res.width,
+        height: ~~res.height,
+      };
+    }
 
     return {
-      width,
+      width: 500,
       height: 384,
     };
   }
@@ -226,7 +241,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
       this.stream = new gm.CaptureVideo(width, height);
 
       if (props.init) {
-        this.opContext = props.init(this.props.op, this.sess, this.prepareParams);
+        this.opContext = props.init(this.op, this.sess, this.prepareParams);
       }
 
       this.op = props.op(this.imgInput, this.prepareParams, this.opContext);
@@ -305,6 +320,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   opContext: Function;
   loading: boolean;
   canvasRef: React.RefObject<HTMLCanvasElement> = React.createRef();
+  refFps: React.RefObject<HTMLElement> = React.createRef();
 
   trottleUpdateCanvas = () => {
     clearTimeout(this.timeout);
@@ -426,13 +442,15 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     return (
       <div>
         <Box>
+          <div>
+            FPS: <span ref={this.refFps}>Inf.</span>
+          </div>
           <canvas
             ref={this.canvasRef}
             width={this.state.canvas.width}
             height={this.state.canvas.height}
           />
           <button type="button" onClick={this.handleStartStop}>Stop|Start</button>
-          <button type="button" onClick={this.onResizeEnd}>resize</button>
         </Box>
         <Box>
           <div>
