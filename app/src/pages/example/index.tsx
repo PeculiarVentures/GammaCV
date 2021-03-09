@@ -304,7 +304,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   }
 
   onChangeParams() { //eslint-disable-line
-    this.stop();
+    this.stop(false);
     this.init(this.props);
     this.start();
   }
