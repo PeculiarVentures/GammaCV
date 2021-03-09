@@ -6,7 +6,7 @@ import * as gm from 'gammacv';
 import { IntlContext } from 'lib-pintl';
 import LazyUpdate from '../../utils/lazy_update';
 import { getMaxAvailableSize } from '../../utils/ratio';
-// import s from './index.module.sass';
+import getExampleName from '../../utils/prepare_example_name';
 
 interface ISlideParamProps {
   name: string;
@@ -37,6 +37,13 @@ export interface IExamplePageProps {
   params?: {
     [key: string]: IExampleParam;
   };
+  exampleName: string;
+}
+
+interface IExampleParams {
+  [key: string]: {
+    value: string | number;
+  };
 }
 
 interface IExamplePageState {
@@ -46,11 +53,7 @@ interface IExamplePageState {
     width: number;
     height: number;
   };
-  params: {
-    [key: string]: {
-      value: string | number;
-    };
-  }
+  params: IExampleParams;
 }
 
 interface IContextType {
@@ -307,15 +310,15 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   }
 
   timeout = null;
-  timeoutRequestAnimation;
-  initialState;
-  lazyUpdate;
+  timeoutRequestAnimation = null;
+  initialState: IExampleParams;
+  lazyUpdate: LazyUpdate;
   stream: gm.CaptureVideo;
   sess: gm.Session;
   op: gm.Operation;
   imgInput: gm.Tensor;
   outputTensor: gm.Tensor<gm.TensorDataView>;
-  prepareParams;
+  prepareParams: IExampleParams;
   frame: number;
   opContext: Function;
   loading: boolean;
@@ -435,6 +438,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
 
 
   render() {
+    const { exampleName } = this.props;
     const listParams = this.getParams();
 
     console.log(this.state.isPlaying);
@@ -442,6 +446,9 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     return (
       <div>
         <Box>
+          <div>
+            {getExampleName(exampleName)}
+          </div>
           <div>
             FPS: <span ref={this.refFps}>Inf.</span>
           </div>

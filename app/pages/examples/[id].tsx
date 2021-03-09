@@ -35,6 +35,7 @@ const Example = (props) => {
             tick={tick}
             init={init}
             params={params}
+            exampleName={props.id}
           />
         </DeviceProvider>
       </Suspense>
