@@ -12,7 +12,7 @@ export const Sidebar: React.FC<ISidebarProps> = (props) => {
 
   return (
     <Box
-      tagType="aside"
+      tagType="nav"
       fill="light_grey"
       fillOpacity={0.5}
       stroke="grey"

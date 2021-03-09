@@ -7,6 +7,7 @@ import slug from 'remark-slug';
 import Link from 'next/link';
 import clx from 'classnames';
 import { Sidebar } from './sidebar';
+import { Footer } from '../../components';
 import s from './index.module.sass';
 
 interface IDocsPageProps {
@@ -24,8 +25,8 @@ export const DocsPage: React.FC<IDocsPageProps> = (props) => {
         config={config}
       />
 
-      <section
-        className={s.root}
+      <main
+        className={s.main}
       >
         <div className={s.m_width}>
           <div className={clx(s.doc, 'b1', 'text_black')}>
@@ -50,15 +51,23 @@ export const DocsPage: React.FC<IDocsPageProps> = (props) => {
 
                   const { id: idProp } = node.data;
 
-                  return React.createElement(`h${level}`, { id: idProp }, (
+                  return React.createElement(`h${level}`, {}, (
                     <>
+                      <a className={s.anchor_link} id={idProp}></a>
                       <Link
                         href={{
                           hash: idProp,
+                          pathname: '/docs/[id]',
                           query: { id },
                         }}
                       >
-                        <a>=</a>
+                        <a
+                          aria-hidden={true}
+                          aria-label="anchor"
+                          className={s.anchor_link_style}
+                        >
+                          =
+                        </a>
                       </Link>
                       {children}
                     </>
@@ -90,7 +99,10 @@ export const DocsPage: React.FC<IDocsPageProps> = (props) => {
             />
           </div>
         </div>
-      </section>
+        <br/>
+        <br/>
+        <Footer />
+      </main>
     </>
   );
 };

@@ -1,11 +1,21 @@
-.root
-  min-height: 100%
-  padding: 90px 0 90px 350px
+.main
+  padding-top: 170px
+  padding-left: 350px
 
 .m_width
   padding: 0 150px
   max-width: 1200px
   width: 100%
+
+.anchor_link
+  position: absolute
+  margin-top: -100px
+
+.anchor_link_style
+  float: left
+  width: 16px
+  margin-left: -16px
+  opacity: 0
 
 .doc
   pre,
@@ -22,6 +32,9 @@
     margin-bottom: 16px
     font-weight: 600
     line-height: 1.25
+    &:hover
+      .anchor_link_style
+        opacity: 1
 
   h6
     text-transform: uppercase
