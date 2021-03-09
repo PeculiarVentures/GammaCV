@@ -291,7 +291,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     this.setState({ isPlaying: false });
   };
 
-  checkRerender = (arr) => {
+  checkRerender = (arr: any) => {
     let dark = true;
 
     for (let i = 0; i < arr.length; i += 16) {
@@ -452,12 +452,26 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
           <div>
             FPS: <span ref={this.refFps}>Inf.</span>
           </div>
-          <canvas
-            ref={this.canvasRef}
-            width={this.state.canvas.width}
-            height={this.state.canvas.height}
-          />
-          <button type="button" onClick={this.handleStartStop}>Stop|Start</button>
+          <div
+            // styles added to test resize
+            style={{
+              width: '50%',
+              margin: '0 auto',
+            }}
+          >
+            <canvas
+              // styles added to test resize
+              style={{ width: '100%' }}
+              ref={this.canvasRef}
+              width={this.state.canvas.width}
+              height={this.state.canvas.height}
+            />
+          </div>
+          <Button
+            onClick={this.handleStartStop}
+          >
+            Stop|Start
+          </Button>
         </Box>
         <Box>
           <div>
