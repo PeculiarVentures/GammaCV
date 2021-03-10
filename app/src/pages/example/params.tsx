@@ -1,6 +1,10 @@
 import React from 'react';
 import { Typography, Slider, Select, Box, Button } from 'lib-react-components';
 
+interface IExampleParam {
+  name?: string;
+  [key: string]: string | ISlideParamProps | ISelectParamProps;
+}
 export interface ISlideParamProps {
   name: string;
   type: number;
@@ -19,40 +23,20 @@ export interface ISelectParamProps {
   }[];
 }
 
-export interface IExampleParams {
-  [key: string]: {
-    value: string | number;
-  };
-}
-
 interface IParamsProps {
-  onChangeParams: (newParams: IExampleParams) => void;
+  handleChangeState: (paramName: string, key: string, value: string | number) => void;
+  onReset: () => void;
   params?: {
-    [key: string]:{
+    [key: string]: {
       [key: string]: string | ISlideParamProps | ISelectParamProps;
     }
   };
-  initialState: {
-    [key: string]: {
-      value: string | number;
-    };
-  }
+  paramsValue: {
+    [key: string]: any
+  };
 }
 
-interface IParamsState {
-  params: IExampleParams;
-}
-
-export class ParamsWrapper extends React.Component<IParamsProps, IParamsState> {
-  constructor(props: IParamsProps) {
-    super(props);
-
-    this.initialState = this.props.initialState;
-    this.state = {
-      params: this.props.initialState,
-    };
-  }
-
+export class ParamsWrapper extends React.Component<IParamsProps> {
   componentWillUnmount() {
     clearTimeout(this.timeout);
   }
@@ -62,9 +46,10 @@ export class ParamsWrapper extends React.Component<IParamsProps, IParamsState> {
     const result = [];
 
     for (const blockName in params) {
-      result.push(params[blockName]);
+      result.push({ [blockName]: params[blockName] });
     }
 
+    debugger;
     return result;
   }
 
@@ -81,40 +66,11 @@ export class ParamsWrapper extends React.Component<IParamsProps, IParamsState> {
   }
 
   timeout = null;
-  initialState: {
-    [key: string]: {
-      value: string | number;
-    };
-  };
 
-  trottleUpdateCanvas = () => {
-    clearTimeout(this.timeout);
-
-    this.timeout = setTimeout(() => {
-      this.props.onChangeParams(this.state.params);
-    }, 1000);
-  };
-
-  handleChangeState = (key: string, value: string | number) => {
-    this.setState({
-      params: {
-        ...this.state.params,
-        [key]: { value },
-      },
-    });
-
-    this.trottleUpdateCanvas();
-  }
-
-  handleResetParams = () => {
-    this.setState({ params: this.initialState });
-
-    this.trottleUpdateCanvas();
-  }
-
-  renderParam = (param: IExampleParams) => {
+  renderParam = (paramName: string) => {
     const result = [];
-    const stateElement = this.state.params;
+    const param = this.props.params[paramName];
+    const values = this.props.paramsValue[paramName]
 
     for (const key in param) {
       if (key !== 'name') {
@@ -129,15 +85,15 @@ export class ParamsWrapper extends React.Component<IParamsProps, IParamsState> {
                 {column['name']}
               </Typography>
               <Slider
-                value={+stateElement[key].value}
+                value={+values[key]}
                 step={column['step']}
                 defaultValue={column['default']}
                 min={column['min']}
                 max={column['max']}
-                onChange={(_e, value) => this.handleChangeState(key, value)}
+                onChange={(_e, value) => this.props.handleChangeState(paramName, key, value)}
               />
               <Typography>
-                {stateElement[key].value}
+                {values[key]}
               </Typography>
             </Box>,
           );
@@ -151,8 +107,8 @@ export class ParamsWrapper extends React.Component<IParamsProps, IParamsState> {
                 {column['name']}
               </Typography>
               <Select
-                value={stateElement[key].value}
-                onChange={(event) => this.handleChangeState(key, event.target.value)}
+                value={values[key]}
+                onChange={(event) => this.props.handleChangeState(paramName, key, event.target.value)}
                 defaultValue={column['values'][0]['value']}
                 options={column['values'].map(({ name, value }) => ({ label: name, value }))}
               />
@@ -166,34 +122,37 @@ export class ParamsWrapper extends React.Component<IParamsProps, IParamsState> {
   }
 
   render() {
-    const listParams = this.getParams();
-    const isShowParams = !!listParams.length;
+    if (this.props.params) {
+      const listParams = Object.keys(this.props.params);
 
-    return isShowParams && (
-      <Box>
-        <div>
-          <div>Params</div>
-          <Button
-            onClick={this.handleResetParams}
-          >
-            reset
-          </Button>
-        </div>
-        {listParams.map((param) => {
-          const name = this.getParamName(param);
+      return (
+        <Box>
+          <div>
+            <div>Params</div>
+            <Button
+              onClick={this.props.onReset}
+            >
+              reset
+            </Button>
+          </div>
+          {listParams.map((paramName) => {
+            const name = this.getParamName(this.props.params);
 
-          return (
-            <Box>
-              <div>
-                <Typography>
-                  {name}
-                </Typography>
-              </div>
-              {this.renderParam(param)}
-            </Box>
-          );
-        })}
-      </Box>
-    );
+            return (
+              <Box>
+                <div>
+                  <Typography>
+                    {name}
+                  </Typography>
+                </div>
+                {this.renderParam(paramName)}
+              </Box>
+            );
+          })}
+        </Box>
+      );
+    }
+
+    return null;
   }
 }

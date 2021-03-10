@@ -9,7 +9,7 @@ import { IntlContext } from 'lib-pintl';
 import LazyUpdate from '../../utils/lazy_update';
 import { getMaxAvailableSize } from '../../utils/ratio';
 import getExampleName from '../../utils/prepare_example_name';
-import { ParamsWrapper, ISlideParamProps, ISelectParamProps, IExampleParams } from './params';
+import { ParamsWrapper, ISlideParamProps, ISelectParamProps } from './params';
 
 interface IExampleParam {
   name?: string;
@@ -34,7 +34,11 @@ interface IExamplePageState {
     width: number;
     height: number;
   };
-  params: IExampleParams;
+  params: {
+    [key: string]: {
+      value: string | number;
+    };
+  };
   error: string;
 }
 
@@ -60,13 +64,12 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
       isPlaying: false,
       exampleInitialized: false,
       canvas: this.getSize(context),
-      params: this.getInitialState(),
+      params: this.handlePrepareParams(),
       error: '',
     };
 
     this.lazyUpdate = new LazyUpdate(500, this.onResizeEnd);
     // prepare params from state to set in gammacv op
-    this.prepareParams = this.handlePreparePreference();
     this.init(props);
     this.frame = 0;
     this.loading = false;
@@ -85,7 +88,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
           exampleInitialized: true,
         });
       }
-
+      // Read current in to the tensor
       this.stream.getImageBuffer(this.imgInput);
 
       if (
@@ -96,7 +99,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
       } else if (!this.loading && this.canvasRef.current) {
         tick.apply(this, [this.frame, {
           canvas: this.canvasRef.current,
-          params: this.prepareParams,
+          params: this.state.params,
           operation: this.op,
           session: this.sess,
           input: this.imgInput,
@@ -154,13 +157,10 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     }
   }
 
-  onChangeParams = (newParams: IExampleParams) => {
-    this.setState({ params: newParams }, () => {
-      this.prepareParams = this.handlePreparePreference();
-      this.stop(false);
-      this.init(this.props);
-      this.start();
-    });
+  onChangeParams = () => {
+    this.stop(false);
+    this.init(this.props);
+    this.start();
   }
 
   onResize = () => {
@@ -197,23 +197,26 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   }
 
   init = (props: IExamplePageProps) => {
-    const { width, height } = this.state.canvas;
+    const { canvas, params } = this.state;
+    const { width, height } = canvas;
 
     try {
+      // initialize WebRTC stream and session for runing operations on GPU
       this.imgInput = new gm.Tensor('uint8', [height, width, 4]);
       this.sess = new gm.Session();
       this.stream = new gm.CaptureVideo(width, height);
 
       if (props.data.init) {
-        this.opContext = props.data.init(this.op, this.sess, this.prepareParams);
+        this.opContext = props.data.init(this.op, this.sess, params);
       }
 
-      this.op = props.data.op(this.imgInput, this.prepareParams, this.opContext);
+      this.op = props.data.op(this.imgInput, params, this.opContext);
 
       if (!(this.op instanceof gm.Operation)) {
         throw new Error(`Error in ${props.exampleName} example: function <op> must return Operation`);
       }
 
+      // initialize graph
       this.sess.init(this.op);
       this.outputTensor = gm.tensorFrom(this.op);
     } catch (err) {
@@ -222,14 +225,17 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   }
 
   tick = (frame: number) => {
+    // final run operation on GPU and then write result in to output tensor
     this.sess.runOp(this.op, frame, this.outputTensor);
 
     if (this.canvasRef.current) {
+      // draw result into canvas
       gm.canvasFromTensor(this.canvasRef.current, this.outputTensor);
     }
   }
 
   start = () => {
+    // start capturing a camera and run loop
     this.stream.start().catch(() => {
       this.stop();
       this.setState({ error: 'PermissionDenied' });
@@ -250,7 +256,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
 
   stop = (destroy = true) => {
     this.stream.stop();
-    if (destroy) {
+    if (destroy && this.state.isPlaying) {
       this.sess.destroy();
     }
     window.cancelAnimationFrame(this.timeoutRequestAnimation);
@@ -270,31 +276,36 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     return dark;
   }
 
+  timeout = null;
   timeoutRequestAnimation = null;
-  initialState: IExampleParams;
   lazyUpdate: LazyUpdate;
   stream: gm.CaptureVideo;
   sess: gm.Session;
   op: gm.Operation;
   imgInput: gm.Tensor;
   outputTensor: gm.Tensor<gm.TensorDataView>;
-  prepareParams: IExampleParams;
   frame: number;
   opContext: Function;
   loading: boolean;
   canvasRef: React.RefObject<HTMLCanvasElement> = React.createRef();
   refFps: React.RefObject<HTMLElement> = React.createRef();
 
-  handlePreparePreference() {
+  handlePrepareParams() {
     const resultPreference = {};
     const params = this.props.data.params;
 
     for (const blockName in params) {
       for (const paramName in params[blockName]) {
         if (paramName !== 'name') {
+          let paramValue = params[blockName][paramName]['default'];
+
+          if (typeof paramValue !== 'number') {
+            paramValue = params[blockName][paramName]['values'][0]['value'];
+          }
+
           resultPreference[blockName] = {
             ...resultPreference[blockName],
-            [paramName]: this.state.params[paramName].value,
+            [paramName]: paramValue,
           };
         }
       }
@@ -314,9 +325,37 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     }
   }
 
+  trottleUpdate = () => {
+    clearTimeout(this.timeout);
+
+    this.timeout = setTimeout(() => {
+      this.onChangeParams();
+    }, 1000);
+  };
+
+  handleChangeState = (paramName: string, key: string, value: string | number) => {
+    this.setState({
+      params: {
+        ...this.state.params,
+        [paramName]: {
+          ...this.state.params[paramName],
+          [key]: value,
+        },
+      },
+    });
+
+    this.trottleUpdate();
+  }
+
+  handleReset = () => {
+    this.setState({
+      params: this.handlePrepareParams(),
+    }, this.onChangeParams);
+  }
+
   render() {
     const { exampleName, data } = this.props;
-    const { error, isPlaying, params } = this.state;
+    const { error, isPlaying } = this.state;
 
     console.log(isPlaying, error);
 
@@ -353,8 +392,9 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
           </Box>
           <ParamsWrapper
             params={data.params}
-            initialState={params}
-            onChangeParams={this.onChangeParams}
+            onReset={this.handleReset}
+            handleChangeState={this.handleChangeState}
+            paramsValue={{ ...this.state.params }}
           />
         </div>
       );
