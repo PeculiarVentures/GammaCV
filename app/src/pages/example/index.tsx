@@ -1,3 +1,4 @@
+/* eslint-disable guard-for-in */
 import React from 'react';
 import { Typography, Box, Button } from 'lib-react-components';
 import microFps from 'micro-fps';
@@ -63,7 +64,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     };
 
     this.lazyUpdate = new LazyUpdate(500, this.onResizeEnd);
-
+    // prepare params from state to set in gammacv op
     this.prepareParams = this.handlePreparePreference();
     this.init(props);
     this.frame = 0;
@@ -113,7 +114,6 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     const result = {};
     const params = this.props.data.params;
 
-    // eslint-disable-next-line guard-for-in
     for (const blockName in params) {
       const block = params[blockName];
 
@@ -220,7 +220,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     }
   }
 
-  tick(frame) {
+  tick = (frame: number) => {
     this.sess.runOp(this.op, frame, this.outputTensor);
 
     if (this.canvasRef.current) {
@@ -288,7 +288,6 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     const resultPreference = {};
     const params = this.props.data.params;
 
-    // eslint-disable-next-line guard-for-in
     for (const blockName in params) {
       for (const paramName in params[blockName]) {
         if (paramName !== 'name') {
@@ -371,6 +370,13 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
           >
             {error}
           </Typography>
+          <Button
+            href={window.location.href}
+            size="large"
+            color="primary"
+          >
+            Try Again
+          </Button>
         </div>
       </div>
     );

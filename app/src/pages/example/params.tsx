@@ -1,6 +1,5 @@
 import React from 'react';
 import { Typography, Slider, Select, Box, Button } from 'lib-react-components';
-import * as gm from 'gammacv';
 
 export interface ISlideParamProps {
   name: string;
@@ -27,7 +26,7 @@ export interface IExampleParams {
 }
 
 interface IParamsProps {
-  onChangeParams: (newParams : IExampleParams) => void;
+  onChangeParams: (newParams: IExampleParams) => void;
   params?: {
     [key: string]: string | ISlideParamProps | ISelectParamProps;
   };
@@ -60,7 +59,6 @@ export class ParamsWrapper extends React.Component<IParamsProps, IParamsState> {
     const params = this.props.params;
     const result = [];
 
-    // eslint-disable-next-line guard-for-in
     for (const blockName in params) {
       result.push(params[blockName]);
     }
@@ -73,7 +71,6 @@ export class ParamsWrapper extends React.Component<IParamsProps, IParamsState> {
       return param.name;
     }
 
-    // eslint-disable-next-line guard-for-in
     for (const blockName in this.props.params) {
       return blockName;
     }
@@ -113,7 +110,7 @@ export class ParamsWrapper extends React.Component<IParamsProps, IParamsState> {
     this.trottleUpdateCanvas();
   }
 
-  renderParam = (param: IParams) => {
+  renderParam = (param: IExampleParams) => {
     const result = [];
     const stateElement = this.state.params;
 
@@ -124,7 +121,6 @@ export class ParamsWrapper extends React.Component<IParamsProps, IParamsState> {
 
         if (!isSelect) {
           result.push(
-            // eslint-disable-next-line react/jsx-filename-extension
             <Box key={column['name']}>
               <Box>{column['type'][0]}</Box>
               <Typography>
@@ -186,7 +182,6 @@ export class ParamsWrapper extends React.Component<IParamsProps, IParamsState> {
 
           return (
             <Box>
-              {/* <Box key={name}> */}
               <div>
                 <Typography>
                   {name}
