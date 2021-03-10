@@ -5,18 +5,20 @@ import clx from 'classnames';
 import s from './index.module.sass';
 
 interface IHeaderProps {
-  transparent?: boolean;
+  isMain?: boolean;
 }
 
 export const Header = (props: IHeaderProps, context) => {
-  const { transparent } = props;
+  const { isMain } = props;
   const { intl } = context;
 
   return (
     <Box
       tagType="header"
-      fill={transparent ? undefined : 'black'}
-      className={s.root}
+      fill={isMain ? undefined : 'black'}
+      className={clx(s.root, {
+        [s.m_not_main]: !isMain,
+      })}
     >
       <Link
         href="/"

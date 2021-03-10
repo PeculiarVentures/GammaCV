@@ -1,11 +1,21 @@
-.root
-  min-height: 100%
-  padding: 90px 0 90px 350px
+.main
+  padding-top: 170px
+  padding-left: 350px
 
 .m_width
   padding: 0 150px
   max-width: 1200px
   width: 100%
+
+.anchor_link
+  position: absolute
+  margin-top: -100px
+
+.anchor_link_style
+  float: left
+  width: 16px
+  margin-left: -16px
+  opacity: 0
 
 .doc
   pre,
@@ -18,10 +28,13 @@
   h3,
   h4,
   h5
-    margin-top: 24px
+    margin-top: 64px
     margin-bottom: 16px
     font-weight: 600
     line-height: 1.25
+    &:hover
+      .anchor_link_style
+        opacity: 1
 
   h6
     text-transform: uppercase
@@ -34,10 +47,12 @@
 
   table
     width: 100%
+    border-collapse: collapse
 
   td
     padding: 20px 10px 20px 0
     border-top: 1px solid #f6f6f6
+    border-bottom: 1px solid #f6f6f6
     width: 20%
     vertical-align: top
     &:nth-child(2)

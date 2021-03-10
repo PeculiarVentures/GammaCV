@@ -12,9 +12,6 @@ module.exports = {
           {
             loader: 'raw-loader',
           },
-          {
-            loader: 'markdown-loader',
-          },
         ],
       },
       {

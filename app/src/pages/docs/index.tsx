@@ -1,11 +1,13 @@
 /* eslint-disable */
 import React from 'react';
 import { HighlightCode } from 'lib-react-components';
-import parse, { domToReact } from 'html-react-parser';
+import ReactMarkdown from 'react-markdown';
+import gfm from 'remark-gfm';
+import slug from 'remark-slug';
 import Link from 'next/link';
 import clx from 'classnames';
-// import { useRouter } from 'next/router';
 import { Sidebar } from './sidebar';
+import { Footer } from '../../components';
 import s from './index.module.sass';
 
 interface IDocsPageProps {
@@ -14,77 +16,8 @@ interface IDocsPageProps {
   id: string;
 }
 
-const options = {
-  replace: (domNode) => {
-    if (domNode.name === 'h6') {
-      return (
-        <h6 className="text_grey c1">
-          {domToReact(domNode.children, options)}
-        </h6>
-      );
-    }
-
-    if (/h[1-5]/.test(domNode.name)) {
-      const Component = domNode.name;
-      // const router = useRouter();
-
-      return (
-        <Component
-          {...domNode.attribs}
-        >
-          <Link href={{
-            hash: `#${domNode.attribs.id}`,
-            // query: router.query,
-          }}>
-            <a>
-              {domToReact(domNode.children, options)}
-            </a>
-          </Link>
-        </Component>
-      );
-    }
-
-    if (domNode.name === 'pre') {
-      const dom = domToReact(domNode.children);
-
-      return (
-        <HighlightCode>
-          {dom.props.children}
-        </HighlightCode>
-      );
-    }
-
-    if (domNode.name === 'code') {
-      return (
-        <code
-          className="fill_light_grey round_small"
-          style={{
-            padding: '0 7px',
-          }}
-        >
-          {domToReact(domNode.children)}
-        </code>
-      );
-    }
-
-    if (domNode.name === 'a') {
-      return (
-        <Link href={domNode.attribs.href}>
-          <a className="text_primary">
-            {domToReact(domNode.children)}
-          </a>
-        </Link>
-      );
-    }
-
-    if (domNode.name === 'thead') {
-      return <></>;
-    }
-  },
-};
-
 export const DocsPage: React.FC<IDocsPageProps> = (props) => {
-  const { config, data } = props;
+  const { config, data, id } = props;
 
   return (
     <>
@@ -92,15 +25,84 @@ export const DocsPage: React.FC<IDocsPageProps> = (props) => {
         config={config}
       />
 
-      <section
-        className={s.root}
+      <main
+        className={s.main}
       >
         <div className={s.m_width}>
           <div className={clx(s.doc, 'b1', 'text_black')}>
-            {parse(data, options)}
+            <ReactMarkdown
+              allowDangerousHtml
+              children={data}
+              plugins={[gfm, slug]}
+              renderers={{
+                code: ({ value, language }) => {
+                  return (
+                    <HighlightCode lang={language}>
+                      {value}
+                    </HighlightCode>
+                  );
+                },
+                heading: ({ level, children, node }) => {
+                  if (level === 6) {
+                    return (
+                      <h6 className="text_grey c1" children={children} />
+                    );
+                  }
+
+                  const { id: idProp } = node.data;
+
+                  return React.createElement(`h${level}`, {}, (
+                    <>
+                      <a className={s.anchor_link} id={idProp}></a>
+                      <Link
+                        href={{
+                          hash: idProp,
+                          pathname: '/docs/[id]',
+                          query: { id },
+                        }}
+                      >
+                        <a
+                          aria-hidden={true}
+                          aria-label="anchor"
+                          className={s.anchor_link_style}
+                        >
+                          =
+                        </a>
+                      </Link>
+                      {children}
+                    </>
+                  ));
+                },
+                tableHead: () => null,
+                link: ({ href, children }) => {
+                  return (
+                    <Link href={href}>
+                      <a className="text_primary">
+                        {children}
+                      </a>
+                    </Link>
+                  );
+                },
+                inlineCode: ({ children }) => {
+                  return (
+                    <code
+                      className="fill_light_grey round_small"
+                      style={{
+                        padding: '0 7px',
+                      }}
+                    >
+                      {children}
+                    </code>
+                  );
+                },
+              }}
+            />
           </div>
         </div>
-      </section>
+        <br/>
+        <br/>
+        <Footer />
+      </main>
     </>
   );
 };

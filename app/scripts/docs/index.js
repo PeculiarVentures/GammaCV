@@ -6,32 +6,186 @@ const { checkDir } = require('./utils');
 
 const sourceDirectory = path.join(__dirname, '../../sources/docs');
 const destinationDirectory = path.join(sourceDirectory, '_data');
-/**
- * Available partials - https://github.com/jsdoc2md/dmd.
- */
-const hbsPartials = [
-  path.join(__dirname, './partials/header.hbs'),
-  path.join(__dirname, './partials/description.hbs'),
-  path.join(__dirname, './partials/body.hbs'),
-  path.join(__dirname, './partials/main.hbs'),
-  path.join(__dirname, './partials/param-table-name.hbs'),
-  path.join(__dirname, './partials/docs.hbs'),
-  path.join(__dirname, './partials/params-table.hbs'),
-  path.join(__dirname, './partials/examples.hbs'),
-];
 
 const handleMDFile = (docItem) => {
   fs.copyFileSync(path.join(sourceDirectory, docItem.path), path.join(destinationDirectory, `${docItem.name}.md`));
 };
 
+const renderMD = (data) => {
+  const out = [];
+
+  data.forEach((item) => {
+    const {
+      name,
+      kind,
+      params,
+      returns,
+      examples,
+      description,
+    } = item;
+
+    if (kind === 'class') {
+      return;
+    }
+
+    if (name) {
+      if (kind === 'function') {
+        let _params = [];
+        let _returns = [];
+
+        if (params) {
+          _params = params.map(p => (p.optional ? `${p.name}?` : p.name));
+        }
+
+        if (returns) {
+          _returns = returns.map(r => r.type.names.join(','));
+        }
+
+        out.push(
+          '###',
+          ' ',
+          name,
+          '(',
+          _params.join(', '),
+          ')',
+          ' ',
+          '=>',
+          ' ',
+          '`',
+          _returns.join(', ') || 'void',
+          '`',
+          '\n',
+          '\n',
+        );
+      } else if (kind === 'constructor') {
+        out.push(
+          '##',
+          ' ',
+          '`Class`',
+          ' ',
+          name,
+          '\n',
+          '\n',
+        );
+      } else {
+        out.push(
+          '##',
+          ' ',
+          name,
+          '\n',
+          '\n',
+        );
+      }
+    }
+
+    if (description) {
+      out.push(
+        '######',
+        ' ',
+        'Description',
+        '\n',
+        '\n',
+        description,
+        '\n',
+        '\n',
+      );
+    }
+
+    if (params && params.length) {
+      out.push(
+        '######',
+        ' ',
+        'Params',
+        '\n',
+        '\n',
+      );
+
+      out.push(
+        '| Param | Type | Description |',
+        '\n',
+        '| --- | --- | --- |',
+        '\n',
+      );
+
+      out.push(...params.map((e) => {
+        return ([
+          '|',
+          e.optional ? `${e.name}?` : e.name,
+          '|',
+          '`',
+          e.type.names.join(' \\| '),
+          '`',
+          '|',
+          e.description ? e.description.replace(/\n/g, '') : e.description,
+          '|',
+          '\n',
+        ].join(' '));
+      }));
+
+      out.push('\n');
+    }
+
+    if (returns && returns.length) {
+      out.push(
+        '######',
+        ' ',
+        'Returns',
+        '\n',
+        '\n',
+      );
+
+      out.push(
+        '| Param | Description |',
+        '\n',
+        '| --- | --- |',
+        '\n',
+      );
+
+      out.push(...returns.map((e) => {
+        return ([
+          '|',
+          '`',
+          e.type.names.join(' \\| '),
+          '`',
+          '|',
+          e.description ? e.description.replace(/\n/g, '') : e.description,
+          '|',
+          '\n',
+        ].join(' '));
+      }));
+
+      out.push('\n');
+    }
+
+    if (examples && examples.length) {
+      out.push(
+        '######',
+        ' ',
+        'Example',
+        '\n',
+        '\n',
+      );
+
+      out.push(...examples.map(e => ([
+        '```js',
+        e,
+        '```',
+        '\n',
+      ].join('\n'))));
+    }
+  });
+
+  return out.join('');
+};
+
 const handleJSFile = async (docItem) => {
   const res = await jsdoc2md
-    .render({
+    .getTemplateData({
       files: path.join(sourceDirectory, docItem.path),
-      partial: hbsPartials,
     });
+  const data = renderMD(res);
 
-  fs.writeFileSync(path.join(destinationDirectory, `${docItem.name}.md`), res);
+  fs.writeFileSync(path.join(destinationDirectory, `${docItem.name}.md`), data);
 };
 
 async function main() {
@@ -52,3 +206,24 @@ async function main() {
 }
 
 main();
+
+/**
+ * Test code.
+ */
+// jsdoc2md
+//   .getTemplateData({
+//     files: path.join(__dirname, '../../../lib/program/tensor.js'),
+//     // partial: hbsPartials,
+//   })
+//   .then((res) => {
+//     fs.writeFileSync(path.join(__dirname, '../docs/TEST.md'), renderMD(res));
+//   });
+
+// jsdoc2md
+//   .render({
+//     files: path.join(__dirname, '../../../lib/program/tensor.js'),
+//     // partial: hbsPartials,
+//   })
+//   .then((res) => {
+//     fs.writeFileSync(path.join(__dirname, '../docs/TEST2.md'), res);
+//   });
