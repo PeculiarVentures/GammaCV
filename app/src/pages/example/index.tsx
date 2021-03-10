@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Slider, Select, Box, Button } from 'lib-react-components';
+import { Typography, Box, Button } from 'lib-react-components';
 import microFps from 'micro-fps';
 import PropTypes from 'prop-types';
 import * as gm from 'gammacv';
@@ -7,24 +7,7 @@ import { IntlContext } from 'lib-pintl';
 import LazyUpdate from '../../utils/lazy_update';
 import { getMaxAvailableSize } from '../../utils/ratio';
 import getExampleName from '../../utils/prepare_example_name';
-
-interface ISlideParamProps {
-  name: string;
-  type: number;
-  min: number;
-  max: number;
-  step: number;
-  default: number;
-}
-
-interface ISelectParamProps {
-  name: string;
-  type: number;
-  values: {
-    name: string;
-    value: string;
-  }[];
-}
+import { ParamsWrapper, ISlideParamProps, ISelectParamProps, IExampleParams } from './params';
 
 interface IExampleParam {
   name: string;
@@ -40,12 +23,6 @@ export interface IExamplePageProps {
     };
   };
   exampleName: string;
-}
-
-interface IExampleParams {
-  [key: string]: {
-    value: string | number;
-  };
 }
 
 interface IExamplePageState {
@@ -77,7 +54,6 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   constructor(props: IExamplePageProps, context: IContextType) {
     super(props);
 
-    this.initialState = this.getInitialState();
     this.state = {
       isPlaying: false,
       exampleInitialized: false,
@@ -133,7 +109,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     };
   }
 
-  getInitialState = () => {
+  getInitialState() {
     const result = {};
     const params = this.props.data.params;
 
@@ -171,17 +147,19 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   }
 
   componentWillUnmount() {
-    clearTimeout(this.timeout);
     window.removeEventListener('resize', this.onResize);
     if (!this.state.error) {
       this.stop();
     }
   }
 
-  onChangeParams() {
-    this.stop(false);
-    this.init(this.props);
-    this.start();
+  onChangeParams = (newParams: IExampleParams) => {
+    this.setState({ params: newParams }, () => {
+      this.prepareParams = this.handlePreparePreference();
+      this.stop(false);
+      this.init(this.props);
+      this.start();
+    });
   }
 
   onResize = () => {
@@ -215,42 +193,6 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
       width: 500,
       height: 384,
     };
-  }
-
-  getParamsName = () => {
-    const result = [];
-
-    // eslint-disable-next-line guard-for-in
-    for (const blockName in this.props.data.params) {
-      result.push(blockName);
-    }
-
-    return result;
-  }
-
-  getParams = () => {
-    const params = this.props.data.params;
-    const result = [];
-
-    // eslint-disable-next-line guard-for-in
-    for (const blockName in params) {
-      result.push(params[blockName]);
-    }
-
-    return result;
-  }
-
-  getParamName = (param: IExampleParam) => {
-    if (param.name) {
-      return param.name;
-    }
-
-    // eslint-disable-next-line guard-for-in
-    for (const blockName in this.props.data.params) {
-      return blockName;
-    }
-
-    return undefined;
   }
 
   init = (props: IExamplePageProps) => {
@@ -327,7 +269,6 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     return dark;
   }
 
-  timeout = null;
   timeoutRequestAnimation = null;
   initialState: IExampleParams;
   lazyUpdate: LazyUpdate;
@@ -343,33 +284,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   canvasRef: React.RefObject<HTMLCanvasElement> = React.createRef();
   refFps: React.RefObject<HTMLElement> = React.createRef();
 
-  trottleUpdateCanvas = () => {
-    clearTimeout(this.timeout);
-
-    this.timeout = setTimeout(() => {
-      this.prepareParams = this.handlePreparePreference();
-      this.onChangeParams();
-    }, 1000);
-  };
-
-  handleChangeState = (key: string, value: string | number) => {
-    this.setState({
-      params: {
-        ...this.state.params,
-        [key]: { value },
-      },
-    });
-
-    this.trottleUpdateCanvas();
-  }
-
-  handleResetParams = () => {
-    this.setState({ params: this.initialState });
-
-    this.trottleUpdateCanvas();
-  }
-
-  handlePreparePreference = () => {
+  handlePreparePreference() {
     const resultPreference = {};
     const params = this.props.data.params;
 
@@ -399,66 +314,9 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     }
   }
 
-  renderParam = (param: IExampleParam) => {
-    const result = [];
-    const stateElement = this.state.params;
-
-    for (const key in param) {
-      if (key !== 'name') {
-        const column = param[key];
-        const isSelect = !!column['values'];
-
-        if (!isSelect) {
-          result.push(
-            // eslint-disable-next-line react/jsx-filename-extension
-            <Box key={column['name']}>
-              <Box>{column['type'][0]}</Box>
-              <Typography>
-                {column['name']}
-              </Typography>
-              <Slider
-                value={+stateElement[key].value}
-                step={column['step']}
-                defaultValue={column['default']}
-                min={column['min']}
-                max={column['max']}
-                onChange={(_e, value) => this.handleChangeState(key, value)}
-              />
-              <Typography>
-                {stateElement[key].value}
-              </Typography>
-            </Box>,
-          );
-        }
-
-        if (isSelect) {
-          result.push(
-            <Box key={column['name']}>
-              <Box>{column['type'][0]}</Box>
-              <Typography>
-                {column['name']}
-              </Typography>
-              <Select
-                value={stateElement[key].value}
-                onChange={(event) => this.handleChangeState(key, event.target.value)}
-                defaultValue={column['values'][0]['value']}
-                options={column['values'].map(({ name, value }) => ({ label: name, value }))}
-              />
-            </Box>,
-          );
-        }
-      }
-    }
-
-    return result;
-  }
-
-
   render() {
-    const { exampleName } = this.props;
-    const { error, isPlaying } = this.state;
-    const listParams = this.getParams();
-    const isShowParams = !!listParams.length;
+    const { exampleName, data } = this.props;
+    const { error, isPlaying, params } = this.state;
 
     console.log(isPlaying, error);
 
@@ -493,32 +351,11 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
               Stop|Start
             </Button>
           </Box>
-          {isShowParams && (
-            <Box>
-              <div>
-                <div>Params</div>
-                <Button
-                  onClick={this.handleResetParams}
-                >
-                  reset
-                </Button>
-              </div>
-              {listParams.map((param) => {
-                const name = this.getParamName(param);
-
-                return (
-                  <Box key={name}>
-                    <div>
-                      <Typography>
-                        {name}
-                      </Typography>
-                    </div>
-                    {this.renderParam(param)}
-                  </Box>
-                );
-              })}
-            </Box>
-          )}
+          <ParamsWrapper
+            params={data.params}
+            initialState={params}
+            onChangeParams={this.onChangeParams}
+          />
         </div>
       );
     }
