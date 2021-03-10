@@ -31,11 +31,13 @@ interface IExampleParam {
   [key: string]: string | ISlideParamProps | ISelectParamProps;
 }
 export interface IExamplePageProps {
-  op?: (input: gm.InputType, params?: {}, context?: any) => gm.Operation,
-  tick?: (frame: any, params: {}) => void,
-  init?: Function,
-  params?: {
-    [key: string]: IExampleParam;
+  data: {
+    op?: (input: gm.InputType, params?: {}, context?: any) => gm.Operation,
+    tick?: (frame: any, params: {}) => void,
+    init?: Function,
+    params?: {
+      [key: string]: IExampleParam;
+    };
   };
   exampleName: string;
 }
@@ -54,6 +56,7 @@ interface IExamplePageState {
     height: number;
   };
   params: IExampleParams;
+  error: string;
 }
 
 interface IContextType {
@@ -80,6 +83,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
       exampleInitialized: false,
       canvas: this.getSize(context),
       params: this.getInitialState(),
+      error: '',
     };
 
     this.lazyUpdate = new LazyUpdate(500, this.onResizeEnd);
@@ -89,8 +93,12 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     this.frame = 0;
     this.loading = false;
 
-    const fpsTick = microFps((info) => { this.refFps.current.innerHTML = info.fps.toFixed(0); }, 3);
-    const tick = typeof props.tick === 'function' ? props.tick : this.tick;
+    const fpsTick = microFps((info) => {
+      if (this.refFps.current) {
+        this.refFps.current.innerHTML = info.fps.toFixed(0);
+      }
+    }, 3);
+    const tick = typeof props.data.tick === 'function' ? props.data.tick : this.tick;
 
     this.tick = () => {
       fpsTick();
@@ -107,7 +115,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
         && !this.checkRerender(this.imgInput.data)
       ) {
         this.loading = false;
-      } else if (!this.loading) {
+      } else if (!this.loading && this.canvasRef.current) {
         tick.apply(this, [this.frame, {
           canvas: this.canvasRef.current,
           params: this.prepareParams,
@@ -127,7 +135,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
 
   getInitialState = () => {
     const result = {};
-    const params = this.props.params;
+    const params = this.props.data.params;
 
     // eslint-disable-next-line guard-for-in
     for (const blockName in params) {
@@ -157,13 +165,23 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
 
   componentDidMount() {
     window.addEventListener('resize', this.onResize);
-    this.start();
+    if (!this.state.error) {
+      this.start();
+    }
   }
 
   componentWillUnmount() {
     clearTimeout(this.timeout);
     window.removeEventListener('resize', this.onResize);
-    this.stop();
+    if (!this.state.error) {
+      this.stop();
+    }
+  }
+
+  onChangeParams() {
+    this.stop(false);
+    this.init(this.props);
+    this.start();
   }
 
   onResize = () => {
@@ -203,7 +221,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     const result = [];
 
     // eslint-disable-next-line guard-for-in
-    for (const blockName in this.props.params) {
+    for (const blockName in this.props.data.params) {
       result.push(blockName);
     }
 
@@ -211,7 +229,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   }
 
   getParams = () => {
-    const params = this.props.params;
+    const params = this.props.data.params;
     const result = [];
 
     // eslint-disable-next-line guard-for-in
@@ -228,7 +246,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     }
 
     // eslint-disable-next-line guard-for-in
-    for (const blockName in this.props.params) {
+    for (const blockName in this.props.data.params) {
       return blockName;
     }
 
@@ -243,31 +261,37 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
       this.sess = new gm.Session();
       this.stream = new gm.CaptureVideo(width, height);
 
-      if (props.init) {
-        this.opContext = props.init(this.op, this.sess, this.prepareParams);
+      if (props.data.init) {
+        this.opContext = props.data.init(this.op, this.sess, this.prepareParams);
       }
 
-      this.op = props.op(this.imgInput, this.prepareParams, this.opContext);
+      this.op = props.data.op(this.imgInput, this.prepareParams, this.opContext);
 
       if (!(this.op instanceof gm.Operation)) {
-        throw new Error(`Error in ${props} example: function <op> must return Operation`);
+        throw new Error(`Error in ${props.exampleName} example: function <op> must return Operation`);
       }
 
       this.sess.init(this.op);
       this.outputTensor = gm.tensorFrom(this.op);
     } catch (err) {
-      console.log(err);
+      this.setState({ error: 'NotSupported' });
     }
   }
 
   tick(frame) {
     this.sess.runOp(this.op, frame, this.outputTensor);
 
-    gm.canvasFromTensor(this.canvasRef.current, this.outputTensor);
+    if (this.canvasRef.current) {
+      gm.canvasFromTensor(this.canvasRef.current, this.outputTensor);
+    }
   }
 
   start = () => {
-    this.stream.start();
+    this.stream.start().catch(() => {
+      this.stop();
+      this.setState({ error: 'PermissionDenied' });
+    });
+
 
     this.timeoutRequestAnimation = window.requestAnimationFrame(this.tick);
     this.setState({
@@ -301,12 +325,6 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     }
 
     return dark;
-  }
-
-  onChangeParams() { //eslint-disable-line
-    this.stop(false);
-    this.init(this.props);
-    this.start();
   }
 
   timeout = null;
@@ -353,7 +371,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
 
   handlePreparePreference = () => {
     const resultPreference = {};
-    const params = this.props.params;
+    const params = this.props.data.params;
 
     // eslint-disable-next-line guard-for-in
     for (const blockName in params) {
@@ -415,7 +433,6 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
 
         if (isSelect) {
           result.push(
-            // eslint-disable-next-line react/jsx-filename-extension
             <Box key={column['name']}>
               <Box>{column['type'][0]}</Box>
               <Typography>
@@ -439,65 +456,85 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
 
   render() {
     const { exampleName } = this.props;
+    const { error, isPlaying } = this.state;
     const listParams = this.getParams();
+    const isShowParams = !!listParams.length;
 
-    console.log(this.state.isPlaying);
+    console.log(isPlaying, error);
+
+    if (!error) {
+      return (
+        <div style={{ padding: '110px 0' }}>
+          <Box>
+            <div>
+              {getExampleName(exampleName)}
+            </div>
+            <div>
+              FPS: <span ref={this.refFps}>Inf.</span>
+            </div>
+            <div
+              // styles added to test resize
+              style={{
+                width: '50%',
+                margin: '0 auto',
+              }}
+            >
+              <canvas
+                // styles added to test resize
+                style={{ width: '100%' }}
+                ref={this.canvasRef}
+                width={this.state.canvas.width}
+                height={this.state.canvas.height}
+              />
+            </div>
+            <Button
+              onClick={this.handleStartStop}
+            >
+              Stop|Start
+            </Button>
+          </Box>
+          {isShowParams && (
+            <Box>
+              <div>
+                <div>Params</div>
+                <Button
+                  onClick={this.handleResetParams}
+                >
+                  reset
+                </Button>
+              </div>
+              {listParams.map((param) => {
+                const name = this.getParamName(param);
+
+                return (
+                  <Box key={name}>
+                    <div>
+                      <Typography>
+                        {name}
+                      </Typography>
+                    </div>
+                    {this.renderParam(param)}
+                  </Box>
+                );
+              })}
+            </Box>
+          )}
+        </div>
+      );
+    }
 
     return (
-      <div>
-        <Box>
-          <div>
-            {getExampleName(exampleName)}
-          </div>
-          <div>
-            FPS: <span ref={this.refFps}>Inf.</span>
-          </div>
-          <div
-            // styles added to test resize
-            style={{
-              width: '50%',
-              margin: '0 auto',
-            }}
+      <div style={{ padding: '110px 0' }}>
+        <div>
+          <Typography
+            type="h3"
+            mobileType="h4"
+            color="black"
+            align="center"
           >
-            <canvas
-              // styles added to test resize
-              style={{ width: '100%' }}
-              ref={this.canvasRef}
-              width={this.state.canvas.width}
-              height={this.state.canvas.height}
-            />
-          </div>
-          <Button
-            onClick={this.handleStartStop}
-          >
-            Stop|Start
-          </Button>
-        </Box>
-        <Box>
-          <div>
-            <div>Params</div>
-            <Button
-              onClick={this.handleResetParams}
-            >
-              reset
-            </Button>
-          </div>
-
-          {listParams.map((param) => {
-            const name = this.getParamName(param);
-
-            return (
-              <Box key={name}>
-                <div>
-                  <Typography>
-                    {name}
-                  </Typography>
-                </div>
-                {this.renderParam(param)}
-              </Box>
-            );
-          })}
-        </Box>
+            {error}
+          </Typography>
+        </div>
       </div>
     );
   }

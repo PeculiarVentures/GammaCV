@@ -21,20 +21,13 @@ const Example = (props) => {
 
   const renderX = () => {
     const ExamplePage = lazy(() => import('../../src/pages/example'));
-    const dataDefault = data['default']
-    const op = dataDefault['op'];
-    const tick = dataDefault['tick'];
-    const init = dataDefault['init'];
-    const params = dataDefault['params'];
+    const dataDefault = data['default'];
 
     return (
       <Suspense fallback={(<div>isLoading</div>)}>
         <DeviceProvider>
           <ExamplePage
-            op={op}
-            tick={tick}
-            init={init}
-            params={params}
+            data={dataDefault}
             exampleName={props.id}
           />
         </DeviceProvider>
