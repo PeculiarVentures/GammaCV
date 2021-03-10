@@ -28,7 +28,9 @@ export interface IExampleParams {
 interface IParamsProps {
   onChangeParams: (newParams: IExampleParams) => void;
   params?: {
-    [key: string]: string | ISlideParamProps | ISelectParamProps;
+    [key: string]:{
+      [key: string]: string | ISlideParamProps | ISelectParamProps;
+    }
   };
   initialState: {
     [key: string]: {

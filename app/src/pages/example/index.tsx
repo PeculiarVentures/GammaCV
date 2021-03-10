@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable guard-for-in */
 import React from 'react';
 import { Typography, Box, Button } from 'lib-react-components';
@@ -11,7 +12,7 @@ import getExampleName from '../../utils/prepare_example_name';
 import { ParamsWrapper, ISlideParamProps, ISelectParamProps, IExampleParams } from './params';
 
 interface IExampleParam {
-  name: string;
+  name?: string;
   [key: string]: string | ISlideParamProps | ISelectParamProps;
 }
 export interface IExamplePageProps {
