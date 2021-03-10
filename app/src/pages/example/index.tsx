@@ -344,7 +344,19 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
       },
     });
 
-    this.trottleUpdate();
+    const type = this.props.data.params[paramName][key]['type'];
+
+    if (type === 'constant') {
+      this.trottleUpdate();
+    } else {
+      for (const i in this.sess.operation) {
+        for (const k in this.sess.operation[i].uniform) {
+          if (k === key) {
+            this.sess.operation[i].uniform[key].set(value);
+          }
+        }
+      }
+    }
   }
 
   handleReset = () => {
