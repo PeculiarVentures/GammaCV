@@ -304,6 +304,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     if (isPlay) {
       this.stop();
     } else {
+      this.params = this.state.params;
       this.init(this.props);
       this.start();
     }
