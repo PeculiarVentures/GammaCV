@@ -1,113 +1,95 @@
 import React from 'react';
 import { Typography, Slider, Select, Box, Button } from 'lib-react-components';
 
-export interface ISlideParamProps {
-  name: string;
-  type: number;
-  min: number;
-  max: number;
-  step: number;
-  default: number;
-}
+// type TParamsElement = Record<string, ISlideParamProps | ISelectParamProps> & {
+//   name?: string;
+// }
+// type TParams = Record<string, TParamsElement>;
+// type TParamValueElement = Record<string, string | number>;
+// type TParamsValue = Record<string, TParamValueElement>;
 
-export interface ISelectParamProps {
-  name: string;
-  type: number;
-  values: {
-    name: string;
-    value: string;
-  }[];
-}
+export default class ParamsWrapper extends React.Component<IParamsWrapperProps> {
+  getParamName = (param: TParams) => {
+    const { params } = this.props;
 
-interface IParamsProps {
-  handleChangeState: (paramName: string, key: string, value: string | number) => void;
-  onReset: () => void;
-  params?: {
-    [key: string]: {
-      [key: string]: string | ISlideParamProps | ISelectParamProps;
-    }
-  };
-  paramsValue: {
-    [key: string]: any
-  };
-}
-
-export class ParamsWrapper extends React.Component<IParamsProps> {
-  componentWillUnmount() {
-    clearTimeout(this.timeout);
-  }
-
-  getParamName = (param: IParamsProps['params']) => {
     if (param.name) {
       return param.name;
     }
 
-    for (const blockName in this.props.params) {
-      return blockName;
-    }
+    const listParams = Object.keys(params);
 
-    return undefined;
+    return listParams[0];
   }
-
-  timeout = null;
 
   renderParam = (paramName: string) => {
     const result = [];
-    const param = this.props.params[paramName];
-    const values = this.props.paramsValue[paramName]
+    const { params, paramsValue, handleChangeState } = this.props;
+    const param = params[paramName];
+    const values = paramsValue[paramName];
+    const listParams = Object.keys(param);
 
-    for (const key in param) {
-      if (key !== 'name') {
-        const column = param[key];
-        const isSelect = !!column['values'];
-
-        if (!isSelect) {
-          result.push(
-            <Box key={column['name']}>
-              <Box>{column['type'][0]}</Box>
-              <Typography>
-                {column['name']}
-              </Typography>
-              <Slider
-                value={+values[key]}
-                step={column['step']}
-                defaultValue={column['default']}
-                min={column['min']}
-                max={column['max']}
-                onChange={(_e, value) => this.props.handleChangeState(paramName, key, value)}
-              />
-              <Typography>
-                {values[key]}
-              </Typography>
-            </Box>,
-          );
-        }
-
-        if (isSelect) {
-          result.push(
-            <Box key={column['name']}>
-              <Box>{column['type'][0]}</Box>
-              <Typography>
-                {column['name']}
-              </Typography>
-              <Select
-                value={values[key]}
-                onChange={(event) => this.props.handleChangeState(paramName, key, event.target.value)}
-                defaultValue={column['values'][0]['value']}
-                options={column['values'].map(({ name, value }) => ({ label: name, value }))}
-              />
-            </Box>,
-          );
-        }
+    listParams.forEach((key) => {
+      if (key === 'name') {
+        return null;
       }
-    }
+
+      const column = param[key];
+      const { name, type } = column;
+
+      if ('values' in column) {
+        const value = column.values;
+
+        result.push(
+          <Box key={name}>
+            <Box>{type[0]}</Box>
+            <Typography>
+              {name}
+            </Typography>
+            <Select
+              value={values[key]}
+              onChange={(event) => handleChangeState(paramName, key, event.target.value)}
+              defaultValue={value[0].value}
+              options={value.map(({ name, value }) => ({ label: name, value }))}
+            />
+          </Box>,
+        );
+      } else {
+        const {
+          step, min, max, default: defaultValue,
+        } = column;
+
+        result.push(
+          <Box key={name}>
+            <Box>{type[0]}</Box>
+            <Typography>
+              {name}
+            </Typography>
+            <Slider
+              value={+values[key]}
+              step={step}
+              defaultValue={defaultValue}
+              min={min}
+              max={max}
+              onChange={(_e, value) => handleChangeState(paramName, key, value)}
+            />
+            <Typography>
+              {values[key]}
+            </Typography>
+          </Box>,
+        );
+      }
+
+      return null;
+    });
 
     return result;
   }
 
   render() {
-    if (this.props.params) {
-      const listParams = Object.keys(this.props.params);
+    const { params } = this.props;
+
+    if (params) {
+      const listParams = Object.keys(params);
 
       return (
         <Box>
@@ -120,7 +102,7 @@ export class ParamsWrapper extends React.Component<IParamsProps> {
             </Button>
           </div>
           {listParams.map((paramName, i) => {
-            const name = this.getParamName(this.props.params);
+            const name = this.getParamName(params);
 
             return (
               <Box key={i}>

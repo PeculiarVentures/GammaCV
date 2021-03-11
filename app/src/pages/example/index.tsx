@@ -9,20 +9,14 @@ import { IntlContext } from 'lib-pintl';
 import LazyUpdate from '../../utils/lazy_update';
 import { getMaxAvailableSize } from '../../utils/ratio';
 import getExampleName from '../../utils/prepare_example_name';
-import { ParamsWrapper, ISlideParamProps, ISelectParamProps } from './params';
+import ParamsWrapper from './params';
 
-interface IExampleParam {
-  name?: string;
-  [key: string]: string | ISlideParamProps | ISelectParamProps;
-}
-export interface IExamplePageProps {
+interface IExamplePageProps {
   data: {
     op?: (input: gm.InputType, params?: {}, context?: any) => gm.Operation,
     tick?: (frame: any, params: {}) => void,
     init?: Function,
-    params?: {
-      [key: string]: IExampleParam;
-    };
+    params?: TParams;
   };
   exampleName: string;
 }
@@ -40,6 +34,7 @@ interface IExamplePageState {
     };
   };
   error: string;
+  isCameraAccess: boolean,
 }
 
 interface IContextType {
@@ -67,6 +62,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
       canvas: this.getSize(context),
       params: this.params,
       error: '',
+      isCameraAccess: false,
     };
 
     this.lazyUpdate = new LazyUpdate(500, this.onResizeEnd);
@@ -115,33 +111,12 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     };
   }
 
-  getInitialState() {
-    const result = {};
-    const params = this.props.data.params;
-
-    for (const blockName in params) {
-      const block = params[blockName];
-
-      for (const param in block) {
-        if (param !== 'name') {
-          const value = block[param]['default'];
-
-          if (typeof value === 'number') {
-            result[param] = {
-              value,
-            };
-          } else {
-            const selectValue = block[param]['values'][0].value;
-
-            result[param] = {
-              value: selectValue,
-            };
-          }
-        }
-      }
-    }
-
-    return result;
+  componentWillMount() {
+    navigator.getUserMedia(
+      { video: true },
+      () => this.setState({ isCameraAccess: true }),
+      () => this.setState({ error: 'PermissionDenied' }),
+    );
   }
 
   componentDidMount() {
@@ -239,7 +214,9 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     // start capturing a camera and run loop
     this.stream.start().catch(() => {
       this.stop();
-      this.setState({ error: 'PermissionDenied' });
+      this.setState({
+        error: 'PermissionDenied',
+      });
     });
 
 
@@ -293,6 +270,11 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   refFps: React.RefObject<HTMLElement> = React.createRef();
 
   handlePrepareParams() {
+    /**
+     * this method need to prepare incoming params from format
+     * { nameExample : { nameParam1: { name, type, min, max, step, default }, nameParam2... }}
+     * to format { nameExample: { nameParam1: value, nameParam2: value...} }
+     */
     const resultPreference = {};
     const params = this.props.data.params;
 
@@ -346,7 +328,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
       },
     });
 
-    const type = this.props.data.params[paramName][key]['type'];
+    const type = this.props.data.params[paramName][key].type;
 
     if (type === 'constant') {
       this.trottleUpdate();
@@ -369,9 +351,17 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
 
   render() {
     const { exampleName, data } = this.props;
-    const { error, isPlaying } = this.state;
+    const { error, isPlaying, isCameraAccess } = this.state;
 
     console.log(isPlaying, error);
+
+    if (!error && !isCameraAccess) {
+      return (
+        <div style={{ padding: '110px 0' }}>
+          Loading...
+        </div>
+      );
+    }
 
     if (!error) {
       return (
