@@ -57,10 +57,13 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
             </Typography>
             <div>
               <Select
+                bgType="fill"
+                color="light_grey"
+                textColor="dark"
                 value={valueParams[key]}
                 onChange={(event) => handleChangeState(paramName, key, event.target.value)}
                 defaultValue={values[0].value}
-                options={values.map(({ name, value }) => ({ label: name, value }))}
+                options={values.map(({ name: label, value }) => ({ label, value }))}
               />
             </div>
           </div>,
@@ -139,11 +142,6 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
                 {this.icons.reset}
               </div>
               Reset
-              {/* <Typography
-                type="b1"
-                color="grey"
-              >
-              </Typography> */}
             </Button>
           </Box>
           <div>

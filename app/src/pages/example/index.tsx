@@ -363,6 +363,22 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     }, this.onChangeParams);
   }
 
+  renderStartStopButton() {
+    const { isPlaying } = this.state;
+    const icon = isPlaying
+      ? <img src="/static/images/pause_icon.svg" alt="Pause icon" />
+      : <img src="/static/images/play_icon.svg" alt="Play icon" />;
+
+    return (
+      <Button
+        onClick={this.handleStartStop}
+        bgType="clear"
+      >
+        {icon}
+      </Button>
+    );
+  }
+
   render() {
     const { exampleName, data } = this.props;
     const { error, isPlaying, isCameraAccess } = this.state;
@@ -437,11 +453,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
               width={this.state.canvas.width}
               height={this.state.canvas.height}
             />
-            <Button
-              onClick={this.handleStartStop}
-            >
-              Stop|Start
-            </Button>
+            {this.renderStartStopButton()}
           </Box>
           <ParamsWrapper
             params={data.params}
