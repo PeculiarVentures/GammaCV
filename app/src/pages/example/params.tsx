@@ -1,13 +1,6 @@
 import React from 'react';
 import { Typography, Slider, Select, Box, Button } from 'lib-react-components';
 
-// type TParamsElement = Record<string, ISlideParamProps | ISelectParamProps> & {
-//   name?: string;
-// }
-// type TParams = Record<string, TParamsElement>;
-// type TParamValueElement = Record<string, string | number>;
-// type TParamsValue = Record<string, TParamValueElement>;
-
 export default class ParamsWrapper extends React.Component<IParamsWrapperProps> {
   getParamName = (param: TParams) => {
     const { params } = this.props;

@@ -330,6 +330,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
 
     const type = this.props.data.params[paramName][key].type;
 
+    // need to run trottle or live update param
     if (type === 'constant') {
       this.trottleUpdate();
     } else {
