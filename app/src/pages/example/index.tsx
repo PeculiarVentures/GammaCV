@@ -60,11 +60,12 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   constructor(props: IExamplePageProps, context: IContextType) {
     super(props);
 
+    this.params = this.handlePrepareParams();
     this.state = {
       isPlaying: false,
       exampleInitialized: false,
       canvas: this.getSize(context),
-      params: this.handlePrepareParams(),
+      params: this.params,
       error: '',
     };
 
@@ -99,7 +100,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
       } else if (!this.loading && this.canvasRef.current) {
         tick.apply(this, [this.frame, {
           canvas: this.canvasRef.current,
-          params: this.state.params,
+          params: this.params,
           operation: this.op,
           session: this.sess,
           input: this.imgInput,
@@ -158,6 +159,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   }
 
   onChangeParams = () => {
+    this.params = this.state.params;
     this.stop(false);
     this.init(this.props);
     this.start();
@@ -197,8 +199,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   }
 
   init = (props: IExamplePageProps) => {
-    const { canvas, params } = this.state;
-    const { width, height } = canvas;
+    const { width, height } = this.state.canvas;
 
     try {
       // initialize WebRTC stream and session for runing operations on GPU
@@ -207,10 +208,10 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
       this.stream = new gm.CaptureVideo(width, height);
 
       if (props.data.init) {
-        this.opContext = props.data.init(this.op, this.sess, params);
+        this.opContext = props.data.init(this.op, this.sess, this.params);
       }
 
-      this.op = props.data.op(this.imgInput, params, this.opContext);
+      this.op = props.data.op(this.imgInput, this.params, this.opContext);
 
       if (!(this.op instanceof gm.Operation)) {
         throw new Error(`Error in ${props.exampleName} example: function <op> must return Operation`);
@@ -287,6 +288,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   frame: number;
   opContext: Function;
   loading: boolean;
+  params;
   canvasRef: React.RefObject<HTMLCanvasElement> = React.createRef();
   refFps: React.RefObject<HTMLElement> = React.createRef();
 

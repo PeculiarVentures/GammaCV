@@ -1,10 +1,6 @@
 import React from 'react';
 import { Typography, Slider, Select, Box, Button } from 'lib-react-components';
 
-interface IExampleParam {
-  name?: string;
-  [key: string]: string | ISlideParamProps | ISelectParamProps;
-}
 export interface ISlideParamProps {
   name: string;
   type: number;
@@ -39,18 +35,6 @@ interface IParamsProps {
 export class ParamsWrapper extends React.Component<IParamsProps> {
   componentWillUnmount() {
     clearTimeout(this.timeout);
-  }
-
-  getParams = () => {
-    const params = this.props.params;
-    const result = [];
-
-    for (const blockName in params) {
-      result.push({ [blockName]: params[blockName] });
-    }
-
-    debugger;
-    return result;
   }
 
   getParamName = (param: IParamsProps['params']) => {
@@ -135,11 +119,11 @@ export class ParamsWrapper extends React.Component<IParamsProps> {
               reset
             </Button>
           </div>
-          {listParams.map((paramName) => {
+          {listParams.map((paramName, i) => {
             const name = this.getParamName(this.props.params);
 
             return (
-              <Box>
+              <Box key={i}>
                 <div>
                   <Typography>
                     {name}
