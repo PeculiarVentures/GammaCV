@@ -28,13 +28,9 @@ interface IExamplePageState {
     width: number;
     height: number;
   };
-  params: {
-    [key: string]: {
-      value: string | number;
-    };
-  };
+  params: TParamsValue;
   error: string;
-  isCameraAccess: boolean,
+  isCameraAccess: boolean;
 }
 
 interface IContextType {
@@ -265,7 +261,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   frame: number;
   opContext: Function;
   loading: boolean;
-  params;
+  params: TParamsValue;
   canvasRef: React.RefObject<HTMLCanvasElement> = React.createRef();
   refFps: React.RefObject<HTMLElement> = React.createRef();
 

@@ -23,9 +23,3 @@ type TParams = Record<string, TParamsElement>;
 type TParamValueElement = Record<string, string | number>;
 type TParamsValue = Record<string, TParamValueElement>;
 
-interface IParamsWrapperProps {
-  handleChangeState: (paramName: string, key: string, value: string | number) => void;
-  onReset: () => void;
-  params?: TParams,
-  paramsValue: TParamsValue,
-}

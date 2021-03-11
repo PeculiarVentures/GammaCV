@@ -1,6 +1,12 @@
 import React from 'react';
 import { Typography, Slider, Select, Box, Button } from 'lib-react-components';
 
+interface IParamsWrapperProps {
+  handleChangeState: (paramName: string, key: string, value: string | number) => void;
+  onReset: () => void;
+  params?: TParams,
+  paramsValue: TParamsValue,
+}
 export default class ParamsWrapper extends React.Component<IParamsWrapperProps> {
   getParamName = (param: TParams) => {
     const { params } = this.props;
