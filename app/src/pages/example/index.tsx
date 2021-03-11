@@ -130,7 +130,9 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   }
 
   onChangeParams = () => {
-    this.params = this.state.params;
+    const { params } = this.state;
+
+    this.params = params;
     this.stop(false);
     this.init(this.props);
     this.start();
@@ -170,7 +172,8 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   }
 
   init = (props: IExamplePageProps) => {
-    const { width, height } = this.state.canvas;
+    const { canvas } = this.state;
+    const { width, height } = canvas;
 
     try {
       // initialize WebRTC stream and session for runing operations on GPU
@@ -230,7 +233,10 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
 
   stop = (destroy = true) => {
     this.stream.stop();
-    if (destroy && this.state.isPlaying) {
+
+    const { isPlaying } = this.state;
+
+    if (destroy && isPlaying) {
       this.sess.destroy();
     }
     window.cancelAnimationFrame(this.timeoutRequestAnimation);
@@ -272,15 +278,20 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
      * to format { nameExample: { nameParam1: value, nameParam2: value...} }
      */
     const resultPreference = {};
-    const params = this.props.data.params;
+    const { data } = this.props;
+    const params = data.params;
 
     for (const blockName in params) {
-      for (const paramName in params[blockName]) {
+      const paramBlock = params[blockName];
+
+      for (const paramName in paramBlock) {
+        const nameBlock = paramBlock[paramName];
+
         if (paramName !== 'name') {
-          let paramValue = params[blockName][paramName]['default'];
+          let paramValue = nameBlock['default'];
 
           if (typeof paramValue !== 'number') {
-            paramValue = params[blockName][paramName]['values'][0]['value'];
+            paramValue = nameBlock['values'][0]['value'];
           }
 
           resultPreference[blockName] = {
@@ -295,12 +306,12 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   }
 
   handleStartStop = () => {
-    const isPlay = this.state.isPlaying;
+    const { isPlaying, params } = this.state;
 
-    if (isPlay) {
+    if (isPlaying) {
       this.stop();
     } else {
-      this.params = this.state.params;
+      this.params = params;
       this.init(this.props);
       this.start();
     }
@@ -315,17 +326,22 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   };
 
   handleChangeState = (paramName: string, key: string, value: string | number) => {
-    this.setState({
-      params: {
-        ...this.state.params,
-        [paramName]: {
-          ...this.state.params[paramName],
-          [key]: value,
+    this.setState((prevState) => {
+      const { params } = prevState;
+
+      return {
+        params: {
+          ...params,
+          [paramName]: {
+            ...params[paramName],
+            [key]: value,
+          },
         },
-      },
+      }
     });
 
-    const type = this.props.data.params[paramName][key].type;
+    const { data } = this.props;
+    const type = data.params[paramName][key].type;
 
     // need to run trottle or live update param
     if (type === 'constant') {
@@ -361,66 +377,66 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
       );
     }
 
-    if (!error) {
+    if (error) {
       return (
         <div style={{ padding: '110px 0' }}>
-          <Box>
-            <div>
-              {getExampleName(exampleName)}
-            </div>
-            <div>
-              FPS: <span ref={this.refFps}>Inf.</span>
-            </div>
-            <div
-              // styles added to test resize
-              style={{
-                width: '50%',
-                margin: '0 auto',
-              }}
+          <div>
+            <Typography
+              type="h3"
+              mobileType="h4"
+              color="black"
+              align="center"
             >
-              <canvas
-                // styles added to test resize
-                style={{ width: '100%' }}
-                ref={this.canvasRef}
-                width={this.state.canvas.width}
-                height={this.state.canvas.height}
-              />
-            </div>
+              {error}
+            </Typography>
             <Button
-              onClick={this.handleStartStop}
+              href={window.location.href}
+              size="large"
+              color="primary"
             >
-              Stop|Start
+              Try Again
             </Button>
-          </Box>
-          <ParamsWrapper
-            params={data.params}
-            onReset={this.handleReset}
-            handleChangeState={this.handleChangeState}
-            paramsValue={{ ...this.state.params }}
-          />
+          </div>
         </div>
       );
     }
 
     return (
       <div style={{ padding: '110px 0' }}>
-        <div>
-          <Typography
-            type="h3"
-            mobileType="h4"
-            color="black"
-            align="center"
+        <Box>
+          <div>
+            {getExampleName(exampleName)}
+          </div>
+          <div>
+            FPS: <span ref={this.refFps}>Inf.</span>
+          </div>
+          <div
+            // styles added to test resize
+            style={{
+              width: '50%',
+              margin: '0 auto',
+            }}
           >
-            {error}
-          </Typography>
+            <canvas
+              // styles added to test resize
+              style={{ width: '100%' }}
+              ref={this.canvasRef}
+              width={this.state.canvas.width}
+              height={this.state.canvas.height}
+            />
+          </div>
           <Button
-            href={window.location.href}
-            size="large"
-            color="primary"
+            onClick={this.handleStartStop}
           >
-            Try Again
+            Stop|Start
           </Button>
-        </div>
+        </Box>
+        <ParamsWrapper
+          params={data.params}
+          onReset={this.handleReset}
+          handleChangeState={this.handleChangeState}
+          paramsValue={{ ...this.state.params }}
+        />
       </div>
     );
   }

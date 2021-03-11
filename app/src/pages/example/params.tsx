@@ -24,7 +24,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
     const result = [];
     const { params, paramsValue, handleChangeState } = this.props;
     const param = params[paramName];
-    const values = paramsValue[paramName];
+    const valueParams = paramsValue[paramName];
     const listParams = Object.keys(param);
 
     listParams.forEach((key) => {
@@ -36,7 +36,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
       const { name, type } = column;
 
       if ('values' in column) {
-        const value = column.values;
+        const { values } = column;
 
         result.push(
           <Box key={name}>
@@ -45,10 +45,10 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
               {name}
             </Typography>
             <Select
-              value={values[key]}
+              value={valueParams[key]}
               onChange={(event) => handleChangeState(paramName, key, event.target.value)}
-              defaultValue={value[0].value}
-              options={value.map(({ name, value }) => ({ label: name, value }))}
+              defaultValue={values[0].value}
+              options={values.map(({ name, value }) => ({ label: name, value }))}
             />
           </Box>,
         );
@@ -64,7 +64,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
               {name}
             </Typography>
             <Slider
-              value={+values[key]}
+              value={+valueParams[key]}
               step={step}
               defaultValue={defaultValue}
               min={min}
@@ -72,7 +72,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
               onChange={(_e, value) => handleChangeState(paramName, key, value)}
             />
             <Typography>
-              {values[key]}
+              {valueParams[key]}
             </Typography>
           </Box>,
         );
