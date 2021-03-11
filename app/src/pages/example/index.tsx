@@ -403,14 +403,27 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
 
     return (
       <div style={{ padding: '110px 0' }}>
-        <Box>
-          <div>
+        <div>
+          <Typography
+            type="h3"
+            mobileType="h4"
+            color="black"
+          >
             {getExampleName(exampleName)}
-          </div>
-          <div>
-            FPS: <span ref={this.refFps}>Inf.</span>
-          </div>
-          <div
+          </Typography>
+          <Typography
+            type="h3"
+            mobileType="h4"
+            color="grey"
+          >
+            FPS: <span ref={this.refFps} />
+          </Typography>
+        </div>
+
+        <div>
+          <Box
+            borderRadius={8}
+            stroke="grey_2"
             // styles added to test resize
             style={{
               width: '50%',
@@ -424,19 +437,19 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
               width={this.state.canvas.width}
               height={this.state.canvas.height}
             />
-          </div>
-          <Button
-            onClick={this.handleStartStop}
-          >
-            Stop|Start
-          </Button>
-        </Box>
-        <ParamsWrapper
-          params={data.params}
-          onReset={this.handleReset}
-          handleChangeState={this.handleChangeState}
-          paramsValue={{ ...this.state.params }}
-        />
+            <Button
+              onClick={this.handleStartStop}
+            >
+              Stop|Start
+            </Button>
+          </Box>
+          <ParamsWrapper
+            params={data.params}
+            onReset={this.handleReset}
+            handleChangeState={this.handleChangeState}
+            paramsValue={{ ...this.state.params }}
+          />
+        </div>
       </div>
     );
   }

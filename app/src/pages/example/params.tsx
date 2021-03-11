@@ -8,7 +8,7 @@ interface IParamsWrapperProps {
   paramsValue: TParamsValue,
 }
 export default class ParamsWrapper extends React.Component<IParamsWrapperProps> {
-  getParamName = (param: TParams) => {
+  getParamName = (param: TParamsElement) => {
     const { params } = this.props;
 
     if (param.name) {
@@ -18,6 +18,12 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
     const listParams = Object.keys(params);
 
     return listParams[0];
+  }
+
+  icons = {
+    constant: <img src="/static/images/constant_icon.svg" alt="Constant icon" />,
+    uniform: <img src="/static/images/uniform_icon.svg" alt="Uniform icon" />,
+    reset: <img src="/static/images/reset_icon.svg" alt="reset icon" />,
   }
 
   renderParam = (paramName: string) => {
@@ -39,18 +45,25 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
         const { values } = column;
 
         result.push(
-          <Box key={name}>
-            <Box>{type[0]}</Box>
-            <Typography>
+          <div key={name}>
+            <div style={{ width: '19px' }}>
+              {this.icons[type]}
+            </div>
+            <Typography
+              type="b3"
+              color="dark"
+            >
               {name}
             </Typography>
-            <Select
-              value={valueParams[key]}
-              onChange={(event) => handleChangeState(paramName, key, event.target.value)}
-              defaultValue={values[0].value}
-              options={values.map(({ name, value }) => ({ label: name, value }))}
-            />
-          </Box>,
+            <div>
+              <Select
+                value={valueParams[key]}
+                onChange={(event) => handleChangeState(paramName, key, event.target.value)}
+                defaultValue={values[0].value}
+                options={values.map(({ name, value }) => ({ label: name, value }))}
+              />
+            </div>
+          </div>,
         );
       } else {
         const {
@@ -58,23 +71,35 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
         } = column;
 
         result.push(
-          <Box key={name}>
-            <Box>{type[0]}</Box>
-            <Typography>
+          <div key={name}>
+            <div style={{ width: '19px' }}>
+              {this.icons[type]}
+            </div>
+            <Typography
+              type="b3"
+              color="dark"
+            >
               {name}
             </Typography>
-            <Slider
-              value={+valueParams[key]}
-              step={step}
-              defaultValue={defaultValue}
-              min={min}
-              max={max}
-              onChange={(_e, value) => handleChangeState(paramName, key, value)}
-            />
-            <Typography>
+            <div>
+              <Slider
+                progressColor="dark_grey"
+                color="dark_grey"
+                value={+valueParams[key]}
+                step={step}
+                defaultValue={defaultValue}
+                min={min}
+                max={max}
+                onChange={(_e, value) => handleChangeState(paramName, key, value)}
+              />
+            </div>
+            <Typography
+              type="h5"
+              color="dark_grey"
+            >
               {valueParams[key]}
             </Typography>
-          </Box>,
+          </div>,
         );
       }
 
@@ -91,29 +116,57 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
       const listParams = Object.keys(params);
 
       return (
-        <Box>
-          <div>
-            <div>Params</div>
+        <Box
+          borderRadius={8}
+          stroke="grey_2"
+        >
+          <Box
+            stroke="grey_2"
+            strokeType="bottom"
+          >
+            <Typography
+              type="h4"
+            >
+              Params
+            </Typography>
             <Button
               onClick={this.props.onReset}
+              bgType="clear"
+              className="b1"
+              textColor="grey"
             >
-              reset
+              <div style={{ width: '15px', display: 'inline-block' }}>
+                {this.icons.reset}
+              </div>
+              Reset
+              {/* <Typography
+                type="b1"
+                color="grey"
+              >
+              </Typography> */}
             </Button>
-          </div>
-          {listParams.map((paramName, i) => {
-            const name = this.getParamName(params);
+          </Box>
+          <div>
+            {listParams.map((paramName, i) => {
+              const name = this.getParamName(params[paramName]);
 
-            return (
-              <Box key={i}>
-                <div>
-                  <Typography>
+              return (
+                <Box
+                  key={i}
+                  stroke="grey_2"
+                  strokeType="bottom"
+                >
+                  <Typography
+                    type="c1"
+                    color="grey"
+                  >
                     {name}
                   </Typography>
-                </div>
-                {this.renderParam(paramName)}
-              </Box>
-            );
-          })}
+                  {this.renderParam(paramName)}
+                </Box>
+              );
+            })}
+          </div>
         </Box>
       );
     }
