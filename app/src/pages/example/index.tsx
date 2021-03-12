@@ -8,7 +8,6 @@ import * as gm from 'gammacv';
 import { IntlContext } from 'lib-pintl';
 import LazyUpdate from '../../utils/lazy_update';
 import { getMaxAvailableSize } from '../../utils/ratio';
-import getExampleName from '../../utils/prepare_example_name';
 import ParamsWrapper from './params';
 
 interface IExamplePageProps {
@@ -425,7 +424,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
             mobileType="h4"
             color="black"
           >
-            {getExampleName(exampleName)}
+            {exampleName}
           </Typography>
           <Typography
             type="h3"
