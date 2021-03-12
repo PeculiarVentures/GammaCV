@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box } from 'lib-react-components';
 import Link from 'next/link';
 import PropTypes from 'prop-types';

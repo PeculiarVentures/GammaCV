@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box, Typography } from 'lib-react-components';
 import PropTypes from 'prop-types';
 import clx from 'classnames';
