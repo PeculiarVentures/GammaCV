@@ -99,8 +99,7 @@ export const DocsPage: React.FC<IDocsPageProps> = (props) => {
             />
           </div>
         </div>
-        <br/>
-        <br/>
+
         <Footer />
       </main>
     </>
