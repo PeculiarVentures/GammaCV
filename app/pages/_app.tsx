@@ -1,3 +1,4 @@
+import React from 'react';
 import Head from 'next/head';
 import { IntlWrapper } from 'lib-pintl';
 import { useRouter } from 'next/router';

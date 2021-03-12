@@ -5,7 +5,9 @@ class LazyUpdate {
   }
 
   delay: number;
+
   callback: Function;
+
   timeout = null;
 
   cancel() {

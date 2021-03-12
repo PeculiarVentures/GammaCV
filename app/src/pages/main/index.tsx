@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, Box } from 'lib-react-components';
 import s from './index.module.sass';

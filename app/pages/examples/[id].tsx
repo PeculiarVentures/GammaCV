@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DeviceProvider } from 'lib-react-components';
 import Head from 'next/head';
 

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Typography } from 'lib-react-components';
 import PropTypes from 'prop-types';
 import s from './404.module.sass';
