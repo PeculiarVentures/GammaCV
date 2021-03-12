@@ -2,7 +2,7 @@
 /* eslint-disable guard-for-in */
 // @ts-nocheck
 import React from 'react';
-import { Typography, Box, Button } from 'lib-react-components';
+import { Typography, Box, Button, CircularProgress } from 'lib-react-components';
 import clx from 'classnames';
 import microFps from 'micro-fps';
 import PropTypes from 'prop-types';
@@ -33,6 +33,7 @@ interface IExamplePageState {
   params: TParamsValue;
   error: string;
   isCameraAccess: boolean;
+  isLoading: boolean;
 }
 
 interface IContextType {
@@ -61,6 +62,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
       params: this.params,
       error: '',
       isCameraAccess: false,
+      isLoading: true,
     };
 
     this.lazyUpdate = new LazyUpdate(500, this.onResizeEnd);
@@ -90,6 +92,9 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
         this.loading
         && !this.checkRerender(this.imgInput.data)
       ) {
+        this.setState({
+          isLoading: false,
+        });
         this.loading = false;
       } else if (!this.loading && this.canvasRef.current) {
         tick.apply(this, [this.frame, {
@@ -110,11 +115,13 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
   }
 
   componentWillMount() {
-    navigator.getUserMedia(
-      { video: true },
-      () => this.setState({ isCameraAccess: true }),
-      () => this.setState({ error: 'PermissionDenied' }),
-    );
+    if (navigator.getUserMedia) {
+      navigator.getUserMedia(
+        { video: true },
+        () => this.setState({ isCameraAccess: true }),
+        () => this.setState({ error: 'PermissionDenied' }),
+      );
+    }
   }
 
   componentDidMount() {
@@ -228,6 +235,9 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
       !this.loading
       && this.checkRerender(this.stream.getImageBuffer('uint8'))
     ) {
+      this.setState({
+        isLoading: true,
+      });
       this.loading = true;
     }
   }
@@ -311,10 +321,10 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     const { isPlaying, params } = this.state;
 
     if (isPlaying) {
-      this.stop();
+      this.stop(false);
     } else {
       this.params = params;
-      this.init(this.props);
+      // this.init(this.props);
       this.start();
     }
   }
@@ -366,31 +376,6 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     }, this.onChangeParams);
   }
 
-  // renderError() {
-  //   // const icon = <img src="/static/images/Error_icon.svg" alt="Error icon" />;
-
-  //   <div style={{ padding: '110px 0' }}>
-  //     <div>
-  //       <Typography
-  //         type="h3"
-  //         mobileType="h4"
-  //         color="black"
-  //         align="center"
-  //       >
-  //         asdasd
-  //         </Typography>
-  //       <Button
-  //         href={window.location.href}
-  //         size="large"
-  //         color="primary"
-  //       >
-  //         Try Again
-  //         </Button>
-  //     </div>
-  //   </div>
-  // }
-
-
   renderStartStopButton() {
     const { isPlaying } = this.state;
     const icon = isPlaying
@@ -409,15 +394,17 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     );
   }
 
-
   render() {
     const { exampleName, data } = this.props;
-    const { error, isCameraAccess, isPlaying } = this.state;
+    const { error, isCameraAccess, isPlaying, isLoading } = this.state;
 
     if (!error && !isCameraAccess) {
       return (
-        <div style={{ padding: '110px 0' }}>
-          Loading...
+        <div className={s.root_example}>
+          <CircularProgress
+            size={100}
+            className={s.loading}
+          />
         </div>
       );
     }
@@ -426,20 +413,25 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
       const icon = <img src="/static/images/Error_icon.svg" alt="Error icon" />;
 
       return (
-        <div style={{ padding: '110px 0' }}>
-          <div>
-            <Typography
-              type="h3"
-              mobileType="h4"
-              color="black"
-              align="center"
-            >
-              asdasd
-            </Typography>
+        <div className={s.root_example}>
+          <div className={s.error_wrapper}>
+            <div className={s.error_icon}>
+              {icon}
+            </div>
+            <div className={s.error_text}>
+              <Typography
+                type="h3"
+                color="black"
+                align="center"
+              >
+                Sorry, looks like we don't have access to use your camera
+              </Typography>
+            </div>
             <Button
               href={window.location.href}
               size="large"
               color="primary"
+              className={s.error_button}
             >
               Try Again
             </Button>
@@ -476,6 +468,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
             <Box
               borderRadius={8}
               stroke="grey_2"
+              fill="light_grey"
               className={s.canvas_wrapper}
             >
               <canvas
@@ -484,6 +477,17 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
                 height={this.state.canvas.height}
                 className={s.canvas}
               />
+              <div
+                className={clx({
+                  [s.loading_wrapper]: true,
+                  [s.show_loading]: isLoading,
+                })}
+              >
+                <CircularProgress
+                  size={40}
+                  className={s.loading}
+                />
+              </div>
               <button
                 type="button"
                 onClick={this.handleStartStop}

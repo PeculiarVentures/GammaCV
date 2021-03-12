@@ -1,6 +1,6 @@
 .root_example
-  height: 100%
-  padding: 130px 70px 40px
+  height: 100vh
+  padding: 120px 70px 40px
   text-align: center
   &::before
     display: inline-block
@@ -40,6 +40,7 @@
   overflow: hidden
   width: 100%
   min-width: 400px
+  width: 700px
 
 .canvas
   width: 100%
@@ -57,6 +58,7 @@
   &:hover
     opacity: 0.9
 
+.loading_wrapper,
 .stop_play_button
   position: absolute
   background: transparent
@@ -72,3 +74,27 @@
 
 .stop_play_icon
   width: 100px
+
+.error
+  &_wrapper
+    max-width: 430px
+    padding: 0 30px
+    text-align: center
+    vertical-align: middle
+    display: inline-block
+  &_icon
+    width: 85px
+    margin: 0 auto 55px
+  &_text
+    max-width: 430px
+    margin-bottom: 55px
+  &_button
+    width: 190px
+
+.loading
+  text-align: center
+  vertical-align: middle
+  display: inline-block
+
+.show_loading
+  visibility: visible
