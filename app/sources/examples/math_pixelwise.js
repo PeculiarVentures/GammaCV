@@ -24,6 +24,7 @@ export default {
     if (params.MATH.type === 'sub') {
       pipeline = gm.sub(pipeline, context.prevFrame);
     }
+
     return pipeline;
   },
   tick(frame, {

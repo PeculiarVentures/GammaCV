@@ -1,37 +1,51 @@
 import { useState, useEffect } from 'react';
+import { DeviceProvider } from 'lib-react-components';
 import Head from 'next/head';
 
 const Example = (props) => {
-  const [data, setData] = useState({});
+  const { id } = props;
+  const [exampleData, setExampleData] = useState({});
+  const [examplePage, setExamplePage] = useState({});
 
-  useEffect(() => {
-    if (data) {
-      getData();
+  useEffect(async () => {
+    const example = (await import(`../../sources/examples/${id}.js`));
+    const page = (await import('../../src/pages/example'));
+
+    setExampleData(example);
+    setExamplePage(page);
+  }, [id]);
+
+  const isLoading = !exampleData['default'] || !examplePage['default'];
+
+  const renderContent = () => {
+    if (isLoading) {
+      return (
+        <h1>
+          Loading - {id}
+        </h1>
+      );
     }
-  }, []);
 
-  const getData = async () => {
-    const _data = (await import(`../../sources/examples/${props.id}.js`));
+    const ExamplePage = examplePage['default'];
 
-    setData(_data);
+    return (
+      <DeviceProvider>
+        <ExamplePage
+          data={exampleData['default']}
+          exampleName={id}
+        />
+      </DeviceProvider>
+    );
   };
-
-  const isLoading = !data['default'];
 
   return (
     <>
       <Head>
-        <title>{props.id} - GammaCV</title>
+        <title>
+          {id} - GammaCV
+        </title>
       </Head>
-      {isLoading ? (
-        <h1>
-          Loading - {props.id}
-        </h1>
-      ) : (
-        <h1>
-          Ready to use - {props.id}
-        </h1>
-      )}
+      {renderContent()}
     </>
   );
 };
