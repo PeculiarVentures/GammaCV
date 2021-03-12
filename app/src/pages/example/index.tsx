@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable guard-for-in */
+// @ts-nocheck
 import React from 'react';
 import { Typography, Box, Button } from 'lib-react-components';
 import microFps from 'micro-fps';
@@ -217,7 +218,6 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
       });
     });
 
-
     this.timeoutRequestAnimation = window.requestAnimationFrame(this.tick);
     this.setState({
       isPlaying: true,
@@ -336,7 +336,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
             [key]: value,
           },
         },
-      }
+      };
     });
 
     const { data } = this.props;
@@ -380,9 +380,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
 
   render() {
     const { exampleName, data } = this.props;
-    const { error, isPlaying, isCameraAccess } = this.state;
-
-    console.log(isPlaying, error);
+    const { error, isCameraAccess } = this.state;
 
     if (!error && !isCameraAccess) {
       return (

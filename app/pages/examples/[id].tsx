@@ -7,13 +7,17 @@ const Example = (props) => {
   const [exampleData, setExampleData] = useState({});
   const [examplePage, setExamplePage] = useState({});
 
-  useEffect(async () => {
+  useEffect(() => {
+    prepareData();
+  });
+
+  const prepareData = async () => {
     const example = (await import(`../../sources/examples/${id}.js`));
     const page = (await import('../../src/pages/example'));
 
     setExampleData(example);
     setExamplePage(page);
-  }, [id]);
+  };
 
   const isLoading = !exampleData['default'] || !examplePage['default'];
 
