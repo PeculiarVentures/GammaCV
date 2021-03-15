@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Typography, Slider, Select, Box, Button,
 } from 'lib-react-components';
+import s from './params.module.sass';
 
 interface IParamsWrapperProps {
   handleChangeState: (paramName: string, key: string, value: string | number) => void;
@@ -47,17 +48,18 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
         const { values } = column;
 
         result.push(
-          <div key={name}>
-            <div style={{ width: '19px' }}>
+          <div key={name} className={s.params_block_wrapper}>
+            <div className={s.params_block_icon}>
               {this.icons[type]}
             </div>
             <Typography
               type="b3"
               color="dark"
+              className={s.params_block_title}
             >
               {name}
             </Typography>
-            <div>
+            <div className={s.params_block_select}>
               <Select
                 bgType="fill"
                 color="light_grey"
@@ -76,17 +78,18 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
         } = column;
 
         result.push(
-          <div key={name}>
-            <div style={{ width: '19px' }}>
+          <div key={name} className={s.params_block_wrapper}>
+            <div className={s.params_block_icon}>
               {this.icons[type]}
             </div>
             <Typography
               type="b3"
               color="dark"
+              className={s.params_block_title}
             >
               {name}
             </Typography>
-            <div>
+            <div className={s.params_block_slider}>
               <Slider
                 progressColor="dark_grey"
                 color="dark_grey"
@@ -101,6 +104,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
             <Typography
               type="h5"
               color="dark_grey"
+              className={s.params_block_count}
             >
               {valueParams[key]}
             </Typography>
@@ -124,23 +128,27 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
         <Box
           borderRadius={8}
           stroke="grey_2"
+          className={s.controller_wrapper}
         >
           <Box
             stroke="grey_2"
             strokeType="bottom"
+            className={s.controller_header_wrapper}
           >
             <Typography
               type="h4"
+              className={s.controller_header_title}
             >
               Params
             </Typography>
             <Button
               onClick={onReset}
               bgType="clear"
-              className="b1"
               textColor="grey"
+              size="small"
+              className="b1"
             >
-              <div style={{ width: '15px', display: 'inline-block' }}>
+              <div className={s.reset_icon}>
                 {this.icons.reset}
               </div>
               Reset
@@ -155,10 +163,12 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
                   key={paramName}
                   stroke="grey_2"
                   strokeType="bottom"
+                  className={s.params_block}
                 >
                   <Typography
                     type="c1"
                     color="grey"
+                    className={s.params_title}
                   >
                     {name}
                   </Typography>

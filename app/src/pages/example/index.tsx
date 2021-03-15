@@ -1,14 +1,16 @@
 import React from 'react';
 import {
-  Typography, Box, Button,
+  Typography, Box, Button, CircularProgress,
 } from 'lib-react-components';
-import PropTypes from 'prop-types';
+import clx from 'classnames';
 import microFps from 'micro-fps';
+import PropTypes from 'prop-types';
 import * as gm from 'gammacv';
 import { IntlContext } from 'lib-pintl';
 import LazyUpdate from '../../utils/lazy_update';
 import { getMaxAvailableSize } from '../../utils/ratio';
 import ParamsWrapper from './params';
+import s from './index.module.sass';
 
 interface IExamplePageProps {
   data: {
@@ -30,6 +32,7 @@ interface IExamplePageState {
   params: TParamsValue;
   error: string;
   isCameraAccess: boolean;
+  isLoading: boolean;
 }
 
 interface IContextType {
@@ -84,6 +87,7 @@ export default class ExamplePage
       params: this.params,
       error: '',
       isCameraAccess: false,
+      isLoading: true,
     };
 
     this.lazyUpdate = new LazyUpdate(500, this.onResizeEnd);
@@ -115,6 +119,9 @@ export default class ExamplePage
         this.loading
         && !this.checkRerender(this.imgInput.data)
       ) {
+        this.setState({
+          isLoading: false,
+        });
         this.loading = false;
       } else if (!this.loading && this.canvasRef.current) {
         tick.apply(this, [this.frame, {
@@ -288,6 +295,9 @@ export default class ExamplePage
       !this.loading
       && this.checkRerender(this.stream.getImageBuffer('uint8'))
     ) {
+      this.setState({
+        isLoading: true,
+      });
       this.loading = true;
     }
   };
@@ -330,10 +340,10 @@ export default class ExamplePage
     const { isPlaying, params } = this.state;
 
     if (isPlaying) {
-      this.stop();
+      this.stop(false);
     } else {
       this.params = params;
-      this.init(this.props);
+      // this.init(this.props);
       this.start();
     }
   };
@@ -404,45 +414,57 @@ export default class ExamplePage
       : <img src="/static/images/play_icon.svg" alt="Play icon" />;
 
     return (
-      <Button
-        onClick={this.handleStartStop}
-        bgType="clear"
+      <span
+        ref={this.refStopStartButton}
+        className={s.stop_play_button}
       >
-        {icon}
-      </Button>
+        <div className={s.stop_play_icon}>
+          {icon}
+        </div>
+      </span>
     );
   }
 
   render() {
     const { exampleName, data } = this.props;
     const {
-      error, isCameraAccess, canvas, params,
+      error, isCameraAccess, canvas, params, isPlaying, isLoading,
     } = this.state;
 
     if (!error && !isCameraAccess) {
       return (
-        <div style={{ padding: '110px 0' }}>
-          Loading...
+        <div className={s.root_example}>
+          <CircularProgress
+            size={100}
+            className={s.loading}
+          />
         </div>
       );
     }
 
     if (error) {
+      const icon = <img src="/static/images/Error_icon.svg" alt="Error icon" />;
+
       return (
-        <div style={{ padding: '110px 0' }}>
-          <div>
-            <Typography
-              type="h3"
-              mobileType="h4"
-              color="black"
-              align="center"
-            >
-              {error}
-            </Typography>
+        <div className={s.root_example}>
+          <div className={s.error_wrapper}>
+            <div className={s.error_icon}>
+              {icon}
+            </div>
+            <div className={s.error_text}>
+              <Typography
+                type="h3"
+                color="black"
+                align="center"
+              >
+                Sorry, looks like we don&apos;t have access to use your camera
+              </Typography>
+            </div>
             <Button
               href={window.location.href}
               size="large"
               color="primary"
+              className={s.error_button}
             >
               Try Again
             </Button>
@@ -452,51 +474,72 @@ export default class ExamplePage
     }
 
     return (
-      <div style={{ padding: '110px 0' }}>
-        <div>
-          <Typography
-            type="h3"
-            mobileType="h4"
-            color="black"
-          >
-            {exampleName}
-          </Typography>
-          <Typography
-            type="h3"
-            mobileType="h4"
-            color="grey"
-          >
-            FPS:
-            {' '}
-            <span ref={this.refFps} />
-          </Typography>
-        </div>
-
-        <div>
-          <Box
-            borderRadius={8}
-            stroke="grey_2"
-            // styles added to test resize
-            style={{
-              width: '50%',
-              margin: '0 auto',
-            }}
-          >
-            <canvas
-              // styles added to test resize
-              style={{ width: '100%' }}
-              ref={this.canvasRef}
-              width={canvas.width}
-              height={canvas.height}
+      <div className={s.root_example}>
+        <div className={s.example_wrapper}>
+          <div className={s.top_title_wrapper}>
+            <Typography
+              type="h3"
+              mobileType="h4"
+              color="black"
+              className={s.top_title_text}
+            >
+              {exampleName}
+            </Typography>
+            <Typography
+              type="h3"
+              mobileType="h4"
+              color="grey"
+              className={clx({
+                [s.top_title_fps]: true,
+                [s.hidden_fps]: !isPlaying,
+              })}
+            >
+              FPS:
+              {' '}
+              <span ref={this.refFps} />
+            </Typography>
+          </div>
+          <div className={s.content_wrapper}>
+            <Box
+              borderRadius={8}
+              stroke="grey_2"
+              fill="light_grey"
+              className={s.canvas_wrapper}
+            >
+              <canvas
+                ref={this.canvasRef}
+                width={canvas.width}
+                height={canvas.height}
+                className={s.canvas}
+              />
+              <div
+                className={clx({
+                  [s.loading_wrapper]: true,
+                  [s.show_loading]: isLoading,
+                })}
+              >
+                <CircularProgress
+                  size={40}
+                  className={s.loading}
+                />
+              </div>
+              <button
+                type="button"
+                aria-label="Overlay"
+                onClick={this.handleStartStop}
+                onMouseEnter={() => { this.refStopStartButton.current.style.visibility = 'visible'; }}
+                onMouseLeave={() => { this.refStopStartButton.current.style.visibility = 'hidden'; }}
+                className={clx(s.canvas_overlay, 'fill_black')}
+              />
+              {this.renderStartStopButton()}
+            </Box>
+            <ParamsWrapper
+              params={data.params}
+              onReset={this.handleReset}
+              handleChangeState={this.handleChangeState}
+              paramsValue={{ ...params }}
             />
-            {this.renderStartStopButton()}
-          </Box>
-          <ParamsWrapper
-            params={data.params}
-            onReset={this.handleReset}
-            handleChangeState={this.handleChangeState}
-            paramsValue={{ ...params }}
-          />
+          </div>
         </div>
       </div>
     );
