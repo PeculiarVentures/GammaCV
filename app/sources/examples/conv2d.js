@@ -20,7 +20,7 @@ export default {
       kernel: {
         name: 'Kernel',
         type: 'constant',
-        values: Object.keys(gm.kernels).map(name => ({ name, value: name })),
+        values: Object.keys(gm.kernels).map((name) => ({ name, value: name })),
       },
       factor: {
         name: 'Factor',

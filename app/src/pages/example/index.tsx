@@ -45,7 +45,7 @@ interface IContextType {
 }
 
 export default class ExamplePage
-  extends React.Component<IExamplePageProps, IExamplePageState, IContextType> {
+  extends React.Component<IExamplePageProps, IExamplePageState> {
   timeout = null;
 
   timeoutRequestAnimation = null;
@@ -552,6 +552,12 @@ export default class ExamplePage
 }
 
 ExamplePage.contextTypes = {
-  intl: PropTypes.object,
-  device: PropTypes.object,
+  intl: PropTypes.shape({
+    getText: PropTypes.func,
+  }),
+  device: PropTypes.shape({
+    type: PropTypes.string,
+    width: PropTypes.number,
+    height: PropTypes.number,
+  }),
 };

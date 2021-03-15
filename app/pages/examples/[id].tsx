@@ -6,11 +6,6 @@ const Example = (props) => {
   const { id } = props;
   const [exampleData, setExampleData] = useState({});
   const [examplePage, setExamplePage] = useState({});
-
-  useEffect(() => {
-    prepareData();
-  });
-
   const prepareData = async () => {
     const example = (await import(`../../sources/examples/${id}.js`));
     const page = (await import('../../src/pages/example'));
@@ -19,23 +14,29 @@ const Example = (props) => {
     setExamplePage(page);
   };
 
-  const isLoading = !exampleData['default'] || !examplePage['default'];
+  useEffect(() => {
+    prepareData();
+  });
+
+  const isLoading = !exampleData.default || !examplePage.default;
 
   const renderContent = () => {
     if (isLoading) {
       return (
         <h1>
-          Loading - {id}
+          Loading -
+          {' '}
+          {id}
         </h1>
       );
     }
 
-    const ExamplePage = examplePage['default'];
+    const ExamplePage = examplePage.default;
 
     return (
       <DeviceProvider>
         <ExamplePage
-          data={exampleData['default']}
+          data={exampleData.default}
           exampleName={id}
         />
       </DeviceProvider>
@@ -46,7 +47,9 @@ const Example = (props) => {
     <>
       <Head>
         <title>
-          {id} - GammaCV
+          {id}
+          {' '}
+          - GammaCV
         </title>
       </Head>
       {renderContent()}

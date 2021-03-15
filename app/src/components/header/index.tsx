@@ -9,7 +9,7 @@ interface IHeaderProps {
   isMain?: boolean;
 }
 
-export const Header = (props: IHeaderProps, context) => {
+export const Header: React.FC<IHeaderProps> = (props: IHeaderProps, context) => {
   const { isMain } = props;
   const { intl } = context;
 
@@ -24,15 +24,15 @@ export const Header = (props: IHeaderProps, context) => {
       <Link
         href="/"
       >
-        <a className={s.logo}>
+        <span className={s.logo}>
           <img src="/static/images/logo.svg" alt="GammaCV Logo" />
-        </a>
+        </span>
       </Link>
 
       <div className={s.spacer} />
 
       <Link href="/docs/get_started">
-        <a
+        <span
           className={clx(
             s.nav_item,
             'text_white',
@@ -40,10 +40,10 @@ export const Header = (props: IHeaderProps, context) => {
           )}
         >
           {intl.getText('actions.docs')}
-        </a>
+        </span>
       </Link>
       <Link href="/examples">
-        <a
+        <span
           className={clx(
             s.nav_item,
             'text_white',
@@ -51,7 +51,7 @@ export const Header = (props: IHeaderProps, context) => {
           )}
         >
           {intl.getText('actions.examples')}
-        </a>
+        </span>
       </Link>
       <a
         href="https://github.com/PeculiarVentures/GammaCV"
@@ -69,6 +69,12 @@ export const Header = (props: IHeaderProps, context) => {
   );
 };
 
+Header.defaultProps = {
+  isMain: false,
+};
+
 Header.contextTypes = {
-  intl: PropTypes.object,
+  intl: PropTypes.shape({
+    getText: PropTypes.func,
+  }),
 };

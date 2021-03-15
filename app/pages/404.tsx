@@ -26,7 +26,9 @@ const NotFound = (_, context) => {
 };
 
 NotFound.contextTypes = {
-  intl: PropTypes.object,
+  intl: PropTypes.shape({
+    getText: PropTypes.func,
+  }),
 };
 
 export default NotFound;

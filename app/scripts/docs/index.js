@@ -1,14 +1,14 @@
-const fs = require('fs');
-const path = require('path');
-const jsdoc2md = require('jsdoc-to-markdown');
-const DOCS_CONFIG = require('../../sources/docs/config.json');
-const { checkDir } = require('./utils');
+import { copyFileSync, writeFileSync } from 'fs';
+import { getTemplateData } from 'jsdoc-to-markdown';
+import { join } from 'path';
+import { reduce } from '../../sources/docs/config.json';
+import { checkDir } from './utils';
 
-const sourceDirectory = path.join(__dirname, '../../sources/docs');
-const destinationDirectory = path.join(sourceDirectory, '_data');
+const sourceDirectory = join(__dirname, '../../sources/docs');
+const destinationDirectory = join(sourceDirectory, '_data');
 
 const handleMDFile = (docItem) => {
-  fs.copyFileSync(path.join(sourceDirectory, docItem.path), path.join(destinationDirectory, `${docItem.name}.md`));
+  copyFileSync(join(sourceDirectory, docItem.path), join(destinationDirectory, `${docItem.name}.md`));
 };
 
 const renderMD = (data) => {
@@ -30,15 +30,15 @@ const renderMD = (data) => {
 
     if (name) {
       if (kind === 'function') {
-        let _params = [];
-        let _returns = [];
+        let PARAMS = [];
+        let RETURNS = [];
 
         if (params) {
-          _params = params.map(p => (p.optional ? `${p.name}?` : p.name));
+          PARAMS = params.map((p) => (p.optional ? `${p.name}?` : p.name));
         }
 
         if (returns) {
-          _returns = returns.map(r => r.type.names.join(','));
+          RETURNS = returns.map((r) => r.type.names.join(','));
         }
 
         out.push(
@@ -46,13 +46,13 @@ const renderMD = (data) => {
           ' ',
           name,
           '(',
-          _params.join(', '),
+          PARAMS.join(', '),
           ')',
           ' ',
           '=>',
           ' ',
           '`',
-          _returns.join(', ') || 'void',
+          RETURNS.join(', ') || 'void',
           '`',
           '\n',
           '\n',
@@ -107,20 +107,18 @@ const renderMD = (data) => {
         '\n',
       );
 
-      out.push(...params.map((e) => {
-        return ([
-          '|',
-          e.optional ? `${e.name}?` : e.name,
-          '|',
-          '`',
-          e.type.names.join(' \\| '),
-          '`',
-          '|',
-          e.description ? e.description.replace(/\n/g, '') : e.description,
-          '|',
-          '\n',
-        ].join(' '));
-      }));
+      out.push(...params.map((e) => ([
+        '|',
+        e.optional ? `${e.name}?` : e.name,
+        '|',
+        '`',
+        e.type.names.join(' \\| '),
+        '`',
+        '|',
+        e.description ? e.description.replace(/\n/g, '') : e.description,
+        '|',
+        '\n',
+      ].join(' '))));
 
       out.push('\n');
     }
@@ -141,18 +139,16 @@ const renderMD = (data) => {
         '\n',
       );
 
-      out.push(...returns.map((e) => {
-        return ([
-          '|',
-          '`',
-          e.type.names.join(' \\| '),
-          '`',
-          '|',
-          e.description ? e.description.replace(/\n/g, '') : e.description,
-          '|',
-          '\n',
-        ].join(' '));
-      }));
+      out.push(...returns.map((e) => ([
+        '|',
+        '`',
+        e.type.names.join(' \\| '),
+        '`',
+        '|',
+        e.description ? e.description.replace(/\n/g, '') : e.description,
+        '|',
+        '\n',
+      ].join(' '))));
 
       out.push('\n');
     }
@@ -166,7 +162,7 @@ const renderMD = (data) => {
         '\n',
       );
 
-      out.push(...examples.map(e => ([
+      out.push(...examples.map((e) => ([
         '```js',
         e,
         '```',
@@ -179,19 +175,18 @@ const renderMD = (data) => {
 };
 
 const handleJSFile = async (docItem) => {
-  const res = await jsdoc2md
-    .getTemplateData({
-      files: path.join(sourceDirectory, docItem.path),
-    });
+  const res = await getTemplateData({
+    files: join(sourceDirectory, docItem.path),
+  });
   const data = renderMD(res);
 
-  fs.writeFileSync(path.join(destinationDirectory, `${docItem.name}.md`), data);
+  writeFileSync(join(destinationDirectory, `${docItem.name}.md`), data);
 };
 
 async function main() {
   await checkDir(destinationDirectory);
 
-  const items = DOCS_CONFIG.reduce((result, current) => result.concat(current.children), []);
+  const items = reduce((result, current) => result.concat(current.children), []);
 
   for (let i = 0; i < items.length; i += 1) {
     const item = items[i];

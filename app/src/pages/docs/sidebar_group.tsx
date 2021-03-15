@@ -9,7 +9,7 @@ interface ISidebarGroupProps {
 }
 
 export const SidebarGroup: React.FC<ISidebarGroupProps> = (props) => {
-  const { group }  = props;
+  const { group } = props;
 
   return (
     <li className={s.root}>
@@ -27,11 +27,11 @@ export const SidebarGroup: React.FC<ISidebarGroupProps> = (props) => {
             <Link
               href={`/docs/${doc.name}`}
             >
-              <a
+              <span
                 className={clx(s.link, 'text_black', 'b2')}
               >
                 {doc.name}
-              </a>
+              </span>
             </Link>
           </li>
         ))}

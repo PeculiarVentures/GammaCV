@@ -18,7 +18,7 @@ export default {
   }) {
     const outX = operation.shape[1];
     const outY = operation.shape[0];
-    const step = params.HOG.step;
+    const { step } = params.HOG;
     const halfStep = params.HOG.step / 2;
 
     session.runOp(operation, frame, output);
@@ -31,7 +31,7 @@ export default {
         let maxI = -Infinity;
 
         for (let j = 0; j < 9; j += 1) {
-          const y = ~~(j / 3);
+          const y = Math.floor(j / 3);
           const x = j - (y * 3);
           const I = output.get(dy * 3 + y, dx * 3 + x, 0);
 
@@ -44,7 +44,7 @@ export default {
         }
 
         for (let j = 0; j < 9; j += 1) {
-          const y = ~~(j / 3);
+          const y = Math.floor(j / 3);
           const x = j - (y * 3);
           const intencity = ((output.get(dy * 3 + y, dx * 3 + x, 0) - minI) / (maxI - minI));
           const theta = output.get(dy * 3 + y, dx * 3 + x, 1) + Math.PI / 20;

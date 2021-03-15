@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import Head from 'next/head';
 import { IntlWrapper } from 'lib-pintl';
@@ -36,4 +37,4 @@ export default function MyApp({ Component, pageProps }) {
       </IntlWrapper>
     </>
   );
-};
+}
