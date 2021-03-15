@@ -24,7 +24,7 @@ export const Header: React.FC<IHeaderProps> = (props: IHeaderProps, context) => 
       <Link
         href="/"
       >
-        <a href="/" className={s.logo}>
+        <a className={s.logo}>
           <img src="/static/images/logo.svg" alt="GammaCV Logo" />
         </a>
       </Link>
@@ -33,7 +33,6 @@ export const Header: React.FC<IHeaderProps> = (props: IHeaderProps, context) => 
 
       <Link href="/docs/get_started">
         <a
-          href="/docs"
           className={clx(
             s.nav_item,
             'text_white',
@@ -45,7 +44,6 @@ export const Header: React.FC<IHeaderProps> = (props: IHeaderProps, context) => 
       </Link>
       <Link href="/examples">
         <a
-          href="/examples"
           className={clx(
             s.nav_item,
             'text_white',

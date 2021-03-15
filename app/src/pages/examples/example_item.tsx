@@ -21,7 +21,7 @@ export const ExampleItem: React.FC<IExampleItemProps & React.HTMLAttributes<HTML
     <Link
       href={`/examples/${path}`}
     >
-      <span
+      <a
         style={style}
         className={s.root}
       >
@@ -37,7 +37,7 @@ export const ExampleItem: React.FC<IExampleItemProps & React.HTMLAttributes<HTML
         >
           {name}
         </Typography>
-      </span>
+      </a>
     </Link>
   );
 };
