@@ -1,5 +1,7 @@
 import React from 'react';
-import { Typography, Slider, Select, Box, Button } from 'lib-react-components';
+import {
+  Typography, Slider, Select, Box, Button,
+} from 'lib-react-components';
 
 interface IParamsWrapperProps {
   handleChangeState: (paramName: string, key: string, value: string | number) => void;
@@ -8,6 +10,12 @@ interface IParamsWrapperProps {
   paramsValue: TParamsValue,
 }
 export default class ParamsWrapper extends React.Component<IParamsWrapperProps> {
+  icons = {
+    constant: <img src="/static/images/constant_icon.svg" alt="Constant icon" />,
+    uniform: <img src="/static/images/uniform_icon.svg" alt="Uniform icon" />,
+    reset: <img src="/static/images/reset_icon.svg" alt="reset icon" />,
+  };
+
   getParamName = (param: TParamsElement) => {
     const { params } = this.props;
 
@@ -18,13 +26,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
     const listParams = Object.keys(params);
 
     return listParams[0];
-  }
-
-  icons = {
-    constant: <img src="/static/images/constant_icon.svg" alt="Constant icon" />,
-    uniform: <img src="/static/images/uniform_icon.svg" alt="Uniform icon" />,
-    reset: <img src="/static/images/reset_icon.svg" alt="reset icon" />,
-  }
+  };
 
   renderParam = (paramName: string) => {
     const result = [];
@@ -110,10 +112,10 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
     });
 
     return result;
-  }
+  };
 
   render() {
-    const { params } = this.props;
+    const { params, onReset } = this.props;
 
     if (params) {
       const listParams = Object.keys(params);
@@ -133,7 +135,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
               Params
             </Typography>
             <Button
-              onClick={this.props.onReset}
+              onClick={onReset}
               bgType="clear"
               className="b1"
               textColor="grey"
@@ -145,12 +147,12 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
             </Button>
           </Box>
           <div>
-            {listParams.map((paramName, i) => {
+            {listParams.map((paramName) => {
               const name = this.getParamName(params[paramName]);
 
               return (
                 <Box
-                  key={i}
+                  key={paramName}
                   stroke="grey_2"
                   strokeType="bottom"
                 >

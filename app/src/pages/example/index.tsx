@@ -1,10 +1,9 @@
-/* eslint-disable react/jsx-filename-extension */
-/* eslint-disable guard-for-in */
-// @ts-nocheck
 import React from 'react';
-import { Typography, Box, Button } from 'lib-react-components';
-import microFps from 'micro-fps';
+import {
+  Typography, Box, Button,
+} from 'lib-react-components';
 import PropTypes from 'prop-types';
+import microFps from 'micro-fps';
 import * as gm from 'gammacv';
 import { IntlContext } from 'lib-pintl';
 import LazyUpdate from '../../utils/lazy_update';
@@ -42,11 +41,37 @@ interface IContextType {
   };
 }
 
-export default class ExamplePage extends React.Component<IExamplePageProps, IExamplePageState> {
-  static contextTypes = {
-    intl: PropTypes.object,
-    device: PropTypes.object,
-  };
+export default class ExamplePage
+  extends React.Component<IExamplePageProps, IExamplePageState, IContextType> {
+  timeout = null;
+
+  timeoutRequestAnimation = null;
+
+  lazyUpdate: LazyUpdate;
+
+  stream: gm.CaptureVideo;
+
+  sess: gm.Session;
+
+  op: gm.Operation;
+
+  imgInput: gm.Tensor;
+
+  outputTensor: gm.Tensor<gm.TensorDataView>;
+
+  frame: number;
+
+  opContext: Function;
+
+  loading: boolean;
+
+  params: TParamsValue;
+
+  canvasRef: React.RefObject<HTMLCanvasElement> = React.createRef();
+
+  refFps: React.RefObject<HTMLElement> = React.createRef();
+
+  refStopStartButton: React.RefObject<HTMLButtonElement> = React.createRef();
 
   constructor(props: IExamplePageProps, context: IContextType) {
     super(props);
@@ -76,7 +101,9 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
 
     this.tick = () => {
       fpsTick();
-      if (!this.state.exampleInitialized) {
+      const { exampleInitialized } = this.state;
+
+      if (!exampleInitialized) {
         this.setState({
           exampleInitialized: true,
         });
@@ -107,40 +134,75 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     };
   }
 
-  componentWillMount() {
-    navigator.getUserMedia(
-      { video: true },
-      () => this.setState({ isCameraAccess: true }),
-      () => this.setState({ error: 'PermissionDenied' }),
-    );
+  UNSAFE_componentWillMount() {
+    if (navigator.getUserMedia) {
+      navigator.getUserMedia(
+        { video: true },
+        () => this.setState({ isCameraAccess: true }),
+        () => this.setState({ error: 'PermissionDenied' }),
+      );
+    }
   }
 
   componentDidMount() {
     window.addEventListener('resize', this.onResize);
-    if (!this.state.error) {
+    const { error } = this.state;
+
+    if (!error) {
       this.start();
     }
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.onResize);
-    if (!this.state.error) {
+    const { error } = this.state;
+
+    if (!error) {
       this.stop();
     }
   }
 
-  onChangeParams = () => {
-    const { params } = this.state;
+  handlePrepareParams() {
+    /**
+     * this method need to prepare incoming params from format
+     * { nameExample : { nameParam1: { name, type, min, max, step, default }, nameParam2... }}
+     * to format { nameExample: { nameParam1: value, nameParam2: value...} }
+     */
+    const resultPreference = {};
+    const { data } = this.props;
+    const { params } = data;
+    const blockNames = Object.keys(params);
 
-    this.params = params;
-    this.stop(false);
-    this.init(this.props);
-    this.start();
+    for (let i = 0; i < blockNames.length; i += 1) {
+      const blockName = blockNames[i];
+      const paramBlock = params[blockName];
+      const paramNames = Object.keys(paramBlock);
+
+      for (let j = 0; j < paramNames.length; j += 1) {
+        const paramName = paramNames[j];
+        const nameBlock = paramBlock[paramName];
+
+        if (paramName !== 'name') {
+          let paramValue: string | number = (nameBlock as ISlideParamProps).default;
+
+          if (typeof paramValue !== 'number') {
+            paramValue = (nameBlock as ISelectParamProps).values[0].value;
+          }
+
+          resultPreference[blockName] = {
+            ...resultPreference[blockName],
+            [paramName]: paramValue,
+          };
+        }
+      }
+    }
+
+    return resultPreference;
   }
 
   onResize = () => {
     this.lazyUpdate.activate();
-  }
+  };
 
   onResizeEnd = () => {
     this.stop(false);
@@ -148,7 +210,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
       this.init(this.props);
       this.start();
     });
-  }
+  };
 
   getSize = (context = this.context) => {
     if (context.device.type === 'mobile') {
@@ -160,8 +222,8 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
       );
 
       return {
-        width: ~~res.width,
-        height: ~~res.height,
+        width: Math.floor(res.width),
+        height: Math.floor(res.height),
       };
     }
 
@@ -169,7 +231,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
       width: 500,
       height: 384,
     };
-  }
+  };
 
   init = (props: IExamplePageProps) => {
     const { canvas } = this.state;
@@ -197,7 +259,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     } catch (err) {
       this.setState({ error: 'NotSupported' });
     }
-  }
+  };
 
   tick = (frame: number) => {
     // final run operation on GPU and then write result in to output tensor
@@ -207,7 +269,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
       // draw result into canvas
       gm.canvasFromTensor(this.canvasRef.current, this.outputTensor);
     }
-  }
+  };
 
   start = () => {
     // start capturing a camera and run loop
@@ -228,7 +290,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     ) {
       this.loading = true;
     }
-  }
+  };
 
   stop = (destroy = true) => {
     this.stream.stop();
@@ -253,56 +315,16 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     }
 
     return dark;
-  }
+  };
 
-  timeout = null;
-  timeoutRequestAnimation = null;
-  lazyUpdate: LazyUpdate;
-  stream: gm.CaptureVideo;
-  sess: gm.Session;
-  op: gm.Operation;
-  imgInput: gm.Tensor;
-  outputTensor: gm.Tensor<gm.TensorDataView>;
-  frame: number;
-  opContext: Function;
-  loading: boolean;
-  params: TParamsValue;
-  canvasRef: React.RefObject<HTMLCanvasElement> = React.createRef();
-  refFps: React.RefObject<HTMLElement> = React.createRef();
+  onChangeParams = () => {
+    const { params } = this.state;
 
-  handlePrepareParams() {
-    /**
-     * this method need to prepare incoming params from format
-     * { nameExample : { nameParam1: { name, type, min, max, step, default }, nameParam2... }}
-     * to format { nameExample: { nameParam1: value, nameParam2: value...} }
-     */
-    const resultPreference = {};
-    const { data } = this.props;
-    const params = data.params;
-
-    for (const blockName in params) {
-      const paramBlock = params[blockName];
-
-      for (const paramName in paramBlock) {
-        const nameBlock = paramBlock[paramName];
-
-        if (paramName !== 'name') {
-          let paramValue = nameBlock['default'];
-
-          if (typeof paramValue !== 'number') {
-            paramValue = nameBlock['values'][0]['value'];
-          }
-
-          resultPreference[blockName] = {
-            ...resultPreference[blockName],
-            [paramName]: paramValue,
-          };
-        }
-      }
-    }
-
-    return resultPreference;
-  }
+    this.params = params;
+    this.stop(false);
+    this.init(this.props);
+    this.start();
+  };
 
   handleStartStop = () => {
     const { isPlaying, params } = this.state;
@@ -314,7 +336,7 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
       this.init(this.props);
       this.start();
     }
-  }
+  };
 
   trottleUpdate = () => {
     clearTimeout(this.timeout);
@@ -340,27 +362,40 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
     });
 
     const { data } = this.props;
-    const type = data.params[paramName][key].type;
+    const { type } = data.params[paramName][key];
 
     // need to run trottle or live update param
     if (type === 'constant') {
       this.trottleUpdate();
     } else {
-      for (const i in this.sess.operation) {
-        for (const k in this.sess.operation[i].uniform) {
-          if (k === key) {
-            this.sess.operation[i].uniform[key].set(value);
+      const { params } = this.state;
+      const { operation } = this.sess as any;
+      const sessOperations = Object.keys(operation);
+
+      this.params = params;
+      for (let i = 0; i < sessOperations.length; i += 1) {
+        const sessOperationName = sessOperations[i];
+
+        if (operation[sessOperationName].uniform) {
+          const sessUniforms = Object.keys(operation[sessOperationName].uniform);
+
+          for (let j = 0; j < sessUniforms.length; j += 1) {
+            const sessUniformName = sessUniforms[j];
+
+            if (sessUniformName === key) {
+              operation[sessOperationName].uniform[sessUniformName].set(value);
+            }
           }
         }
       }
     }
-  }
+  };
 
   handleReset = () => {
     this.setState({
       params: this.handlePrepareParams(),
     }, this.onChangeParams);
-  }
+  };
 
   renderStartStopButton() {
     const { isPlaying } = this.state;
@@ -380,7 +415,9 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
 
   render() {
     const { exampleName, data } = this.props;
-    const { error, isCameraAccess } = this.state;
+    const {
+      error, isCameraAccess, canvas, params,
+    } = this.state;
 
     if (!error && !isCameraAccess) {
       return (
@@ -429,7 +466,9 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
             mobileType="h4"
             color="grey"
           >
-            FPS: <span ref={this.refFps} />
+            FPS:
+            {' '}
+            <span ref={this.refFps} />
           </Typography>
         </div>
 
@@ -447,8 +486,8 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
               // styles added to test resize
               style={{ width: '100%' }}
               ref={this.canvasRef}
-              width={this.state.canvas.width}
-              height={this.state.canvas.height}
+              width={canvas.width}
+              height={canvas.height}
             />
             {this.renderStartStopButton()}
           </Box>
@@ -456,10 +495,15 @@ export default class ExamplePage extends React.Component<IExamplePageProps, IExa
             params={data.params}
             onReset={this.handleReset}
             handleChangeState={this.handleChangeState}
-            paramsValue={{ ...this.state.params }}
+            paramsValue={{ ...params }}
           />
         </div>
       </div>
     );
   }
 }
+
+ExamplePage.contextTypes = {
+  intl: PropTypes.object,
+  device: PropTypes.object,
+};
