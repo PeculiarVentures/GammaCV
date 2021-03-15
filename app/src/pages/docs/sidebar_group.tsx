@@ -27,11 +27,12 @@ export const SidebarGroup: React.FC<ISidebarGroupProps> = (props) => {
             <Link
               href={`/docs/${doc.name}`}
             >
-              <span
+              <a
+                href={`/docs/${doc.name}`}
                 className={clx(s.link, 'text_black', 'b2')}
               >
                 {doc.name}
-              </span>
+              </a>
             </Link>
           </li>
         ))}

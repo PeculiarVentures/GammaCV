@@ -24,15 +24,16 @@ export const Header: React.FC<IHeaderProps> = (props: IHeaderProps, context) => 
       <Link
         href="/"
       >
-        <span className={s.logo}>
+        <a href="/" className={s.logo}>
           <img src="/static/images/logo.svg" alt="GammaCV Logo" />
-        </span>
+        </a>
       </Link>
 
       <div className={s.spacer} />
 
       <Link href="/docs/get_started">
-        <span
+        <a
+          href="/docs"
           className={clx(
             s.nav_item,
             'text_white',
@@ -40,10 +41,11 @@ export const Header: React.FC<IHeaderProps> = (props: IHeaderProps, context) => 
           )}
         >
           {intl.getText('actions.docs')}
-        </span>
+        </a>
       </Link>
       <Link href="/examples">
-        <span
+        <a
+          href="/examples"
           className={clx(
             s.nav_item,
             'text_white',
@@ -51,7 +53,7 @@ export const Header: React.FC<IHeaderProps> = (props: IHeaderProps, context) => 
           )}
         >
           {intl.getText('actions.examples')}
-        </span>
+        </a>
       </Link>
       <a
         href="https://github.com/PeculiarVentures/GammaCV"
