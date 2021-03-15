@@ -178,6 +178,11 @@ export default class ExamplePage
     const resultPreference = {};
     const { data } = this.props;
     const { params } = data;
+
+    if (!params) {
+      return resultPreference;
+    }
+
     const blockNames = Object.keys(params);
 
     for (let i = 0; i < blockNames.length; i += 1) {
