@@ -9,7 +9,7 @@ interface ISidebarGroupProps {
 }
 
 export const SidebarGroup: React.FC<ISidebarGroupProps> = (props) => {
-  const { group }  = props;
+  const { group } = props;
 
   return (
     <li className={s.root}>

@@ -1,6 +1,7 @@
 import React from 'react';
-import { Typography, Slider, Select, Box, Button } from 'lib-react-components';
-import clx from 'classnames';
+import {
+  Typography, Slider, Select, Box, Button,
+} from 'lib-react-components';
 import s from './params.module.sass';
 
 interface IParamsWrapperProps {
@@ -10,6 +11,12 @@ interface IParamsWrapperProps {
   paramsValue: TParamsValue,
 }
 export default class ParamsWrapper extends React.Component<IParamsWrapperProps> {
+  icons = {
+    constant: <img src="/static/images/constant_icon.svg" alt="Constant icon" />,
+    uniform: <img src="/static/images/uniform_icon.svg" alt="Uniform icon" />,
+    reset: <img src="/static/images/reset_icon.svg" alt="reset icon" />,
+  };
+
   getParamName = (param: TParamsElement) => {
     const { params } = this.props;
 
@@ -20,13 +27,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
     const listParams = Object.keys(params);
 
     return listParams[0];
-  }
-
-  icons = {
-    constant: <img src="/static/images/constant_icon.svg" alt="Constant icon" />,
-    uniform: <img src="/static/images/uniform_icon.svg" alt="Uniform icon" />,
-    reset: <img src="/static/images/reset_icon.svg" alt="reset icon" />,
-  }
+  };
 
   renderParam = (paramName: string) => {
     const result = [];
@@ -58,7 +59,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
             >
               {name}
             </Typography>
-            <div className={s.params_block_select} >
+            <div className={s.params_block_select}>
               <Select
                 bgType="fill"
                 color="light_grey"
@@ -88,7 +89,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
             >
               {name}
             </Typography>
-            <div className={s.params_block_slider} >
+            <div className={s.params_block_slider}>
               <Slider
                 progressColor="dark_grey"
                 color="dark_grey"
@@ -115,10 +116,10 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
     });
 
     return result;
-  }
+  };
 
   render() {
-    const { params } = this.props;
+    const { params, onReset } = this.props;
 
     if (params) {
       const listParams = Object.keys(params);
@@ -141,7 +142,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
               Params
             </Typography>
             <Button
-              onClick={this.props.onReset}
+              onClick={onReset}
               bgType="clear"
               textColor="grey"
               size="small"
@@ -153,13 +154,13 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
               Reset
             </Button>
           </Box>
-          <div className={s.params_wrapper}>
-            {listParams.map((paramName, i) => {
+          <div>
+            {listParams.map((paramName) => {
               const name = this.getParamName(params[paramName]);
 
               return (
                 <Box
-                  key={i}
+                  key={paramName}
                   stroke="grey_2"
                   strokeType="bottom"
                   className={s.params_block}

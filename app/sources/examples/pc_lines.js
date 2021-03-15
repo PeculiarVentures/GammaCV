@@ -24,7 +24,7 @@ export default {
     gm.canvasFromTensor(canvas, input);
 
     for (let i = 0; i < output.size / 4; i += 1) {
-      const y = ~~(i / output.shape[1]);
+      const y = Math.floor(i / output.shape[1]);
       const x = i - (y * output.shape[1]);
       const value = output.get(y, x, 0);
       const x0 = output.get(y, x, 1);

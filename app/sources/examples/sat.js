@@ -16,7 +16,7 @@ export default {
       output.get(output.shape[0] - 1, output.shape[1] - 1, 2),
     );
 
-    const data = output.data;
+    const { data } = output;
 
     for (let i = 0; i < output.size; i += 4) {
       data[i] /= max;

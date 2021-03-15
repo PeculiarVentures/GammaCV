@@ -9,7 +9,7 @@ interface IHeaderProps {
   isMain?: boolean;
 }
 
-export const Header = (props: IHeaderProps, context) => {
+export const Header: React.FC<IHeaderProps> = (props: IHeaderProps, context) => {
   const { isMain } = props;
   const { intl } = context;
 
@@ -69,6 +69,12 @@ export const Header = (props: IHeaderProps, context) => {
   );
 };
 
+Header.defaultProps = {
+  isMain: false,
+};
+
 Header.contextTypes = {
-  intl: PropTypes.object,
+  intl: PropTypes.shape({
+    getText: PropTypes.func,
+  }),
 };

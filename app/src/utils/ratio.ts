@@ -15,7 +15,7 @@
  * @param {Ratio} ratio
  * @param {number} h
  */
-export function width(ratio: number, h: number): number {
+export function getWidth(ratio: number, h: number): number {
   return ratio * h;
 }
 
@@ -23,7 +23,7 @@ export function width(ratio: number, h: number): number {
  * @param {Ratio} ratio
  * @param {number} w
  */
-export function height(ratio: number, w: number): number {
+export function getHeight(ratio: number, w: number): number {
   return w / ratio;
 }
 
@@ -36,18 +36,18 @@ export function height(ratio: number, w: number): number {
  */
 export function getMaxAvailableSize(ratio: number, maxWidth: number, maxHeight: number) {
   if (maxWidth) {
-    const _height = height(ratio, maxWidth);
+    const height = getHeight(ratio, maxWidth);
 
-    if (_height <= maxHeight) {
+    if (height <= maxHeight) {
       return {
+        height,
         width: maxWidth,
-        height: _height,
       };
     }
   }
 
   return {
-    width: width(ratio, maxHeight),
+    width: getWidth(ratio, maxHeight),
     height: maxHeight,
   };
 }
@@ -61,18 +61,18 @@ export function getMaxAvailableSize(ratio: number, maxWidth: number, maxHeight: 
  */
 export function getMinAvailableSize(ratio: number, minWidth: number, minHeight: number) {
   if (minWidth) {
-    const _height = height(ratio, minWidth);
+    const height = getHeight(ratio, minWidth);
 
-    if (_height > minHeight) {
+    if (height > minHeight) {
       return {
+        height,
         width: minHeight,
-        height: _height,
       };
     }
   }
 
   return {
-    width: width(ratio, minHeight),
+    width: getWidth(ratio, minHeight),
     height: minHeight,
   };
 }

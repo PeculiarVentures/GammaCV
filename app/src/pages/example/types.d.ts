@@ -18,8 +18,7 @@ interface ISelectParamProps {
 
 type TParamsElement = Record<string, ISlideParamProps | ISelectParamProps> & {
   name?: string;
-}
+};
 type TParams = Record<string, TParamsElement>;
 type TParamValueElement = Record<string, string | number>;
 type TParamsValue = Record<string, TParamValueElement>;
-
