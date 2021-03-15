@@ -1,14 +1,14 @@
-import { copyFileSync, writeFileSync } from 'fs';
-import { getTemplateData } from 'jsdoc-to-markdown';
-import { join } from 'path';
-import { reduce } from '../../sources/docs/config.json';
-import { checkDir } from './utils';
+const fs = require('fs');
+const path = require('path');
+const jsdoc2md = require('jsdoc-to-markdown');
+const DOCS_CONFIG = require('../../sources/docs/config.json');
+const { checkDir } = require('./utils');
 
-const sourceDirectory = join(__dirname, '../../sources/docs');
-const destinationDirectory = join(sourceDirectory, '_data');
+const sourceDirectory = path.join(__dirname, '../../sources/docs');
+const destinationDirectory = path.join(sourceDirectory, '_data');
 
 const handleMDFile = (docItem) => {
-  copyFileSync(join(sourceDirectory, docItem.path), join(destinationDirectory, `${docItem.name}.md`));
+  fs.copyFileSync(path.join(sourceDirectory, docItem.path), path.join(destinationDirectory, `${docItem.name}.md`));
 };
 
 const renderMD = (data) => {
@@ -175,18 +175,19 @@ const renderMD = (data) => {
 };
 
 const handleJSFile = async (docItem) => {
-  const res = await getTemplateData({
-    files: join(sourceDirectory, docItem.path),
-  });
+  const res = await jsdoc2md
+    .getTemplateData({
+      files: path.join(sourceDirectory, docItem.path),
+    });
   const data = renderMD(res);
 
-  writeFileSync(join(destinationDirectory, `${docItem.name}.md`), data);
+  fs.writeFileSync(path.join(destinationDirectory, `${docItem.name}.md`), data);
 };
 
 async function main() {
   await checkDir(destinationDirectory);
 
-  const items = reduce((result, current) => result.concat(current.children), []);
+  const items = DOCS_CONFIG.reduce((result, current) => result.concat(current.children), []);
 
   for (let i = 0; i < items.length; i += 1) {
     const item = items[i];
