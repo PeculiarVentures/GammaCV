@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 const fs = require('fs');
 const path = require('path');
 const jsdoc2md = require('jsdoc-to-markdown');
@@ -202,24 +203,3 @@ async function main() {
 }
 
 main();
-
-/**
- * Test code.
- */
-// jsdoc2md
-//   .getTemplateData({
-//     files: path.join(__dirname, '../../../lib/program/tensor.js'),
-//     // partial: hbsPartials,
-//   })
-//   .then((res) => {
-//     fs.writeFileSync(path.join(__dirname, '../docs/TEST.md'), renderMD(res));
-//   });
-
-// jsdoc2md
-//   .render({
-//     files: path.join(__dirname, '../../../lib/program/tensor.js'),
-//     // partial: hbsPartials,
-//   })
-//   .then((res) => {
-//     fs.writeFileSync(path.join(__dirname, '../docs/TEST2.md'), res);
-//   });

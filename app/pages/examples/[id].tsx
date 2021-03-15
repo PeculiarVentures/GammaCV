@@ -4,24 +4,23 @@ import Head from 'next/head';
 
 const Example = (props) => {
   const { id } = props;
-  const [exampleData, setExampleData] = useState({});
-  const [examplePage, setExamplePage] = useState({});
-  const prepareData = async () => {
-    const example = (await import(`../../sources/examples/${id}.js`));
-    const page = (await import('../../src/pages/example'));
-
-    setExampleData(example);
-    setExamplePage(page);
-  };
+  const [loading, setLoading] = useState(true);
+  const [examplePage, setExamplePage] = useState<typeof import('../../src/pages/example')>({} as any);
+  const [exampleData, setExampleData] = useState<{ default: any }>({} as any);
 
   useEffect(() => {
-    prepareData();
+    Promise.all([
+      import('../../src/pages/example'),
+      import(`../../sources/examples/${id}.js`),
+    ]).then((res) => {
+      setExamplePage(res[0]);
+      setExampleData(res[1]);
+      setLoading(false);
+    });
   });
 
-  const isLoading = !exampleData.default || !examplePage.default;
-
   const renderContent = () => {
-    if (isLoading) {
+    if (loading) {
       return (
         <h1>
           Loading -
