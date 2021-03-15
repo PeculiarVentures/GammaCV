@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TextField, Box } from 'lib-react-components';
 import { SidebarGroup } from './sidebar_group';
 import s from './sidebar.module.sass';
@@ -9,6 +9,15 @@ interface ISidebarProps {
 
 export const Sidebar: React.FC<ISidebarProps> = (props) => {
   const { config } = props;
+  const [searchValue, setSearchValue] = useState('');
+  let filteredConfig: IDocGroup[];
+
+  if (searchValue) {
+    filteredConfig = config.map((group) => ({
+      ...group,
+      children: group.children.filter((child) => child.name.toLowerCase().includes(searchValue.toLowerCase())),
+    }));
+  }
 
   return (
     <Box
@@ -24,10 +33,13 @@ export const Sidebar: React.FC<ISidebarProps> = (props) => {
         <TextField
           placeholder="Search"
           className={s.search_field}
+          onChange={(e) => {
+            setSearchValue(e.target.value);
+          }}
         />
       </div>
       <ul className={s.list}>
-        {config.map((group) => (
+        {(filteredConfig || config).map((group) => (
           <SidebarGroup
             key={group.name}
             group={group}

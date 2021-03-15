@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Typography, TextField, Box } from 'lib-react-components';
 import { GroupItem } from './group_item';
 import { ExampleItem } from './example_item';
@@ -10,10 +10,20 @@ interface IExamplesPageProps {
 
 export const ExamplesPage: React.FC<IExamplesPageProps> = (props) => {
   const { config } = props;
+  const [searchValue, setSearchValue] = useState('');
 
   const getExampleItemStyles = (index: number) => {
     return { animationDelay: `${index / 20}s` };
   };
+
+  let filteredConfig: IExampleGroup[];
+
+  if (searchValue) {
+    filteredConfig = config.map((group) => ({
+      ...group,
+      examples: group.examples.filter((example) => example.name.toLowerCase().includes(searchValue.toLowerCase())),
+    }));
+  }
 
   return (
     <div className={s.root}>
@@ -32,10 +42,13 @@ export const ExamplesPage: React.FC<IExamplesPageProps> = (props) => {
           <TextField
             placeholder="Search"
             className={s.search_field}
+            onChange={(e) => {
+              setSearchValue(e.target.value);
+            }}
           />
         </Box>
 
-        {config.map((group) => (
+        {(filteredConfig || config).map((group) => (
           <GroupItem
             key={group.key}
             name={group.name}
