@@ -18,9 +18,13 @@
 .list
   padding: 0 50px 60px
   list-style-type: none
-  height: calc(100% - 40px - 56px)
+  height: calc(100% - 125px)
   overflow: auto
   width: 100%
+
+@include tablet()
+  .root
+    width: 280px
 
 @include mobile()
   .root

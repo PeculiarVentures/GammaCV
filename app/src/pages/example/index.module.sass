@@ -15,7 +15,6 @@
   vertical-align: middle
   width: 100%
   max-width: 1200px
-  min-height: 615px
   font-size: 0
 
 .top_title
@@ -39,7 +38,6 @@
   position: relative
   overflow: hidden
   width: 100%
-  min-width: 400px
   width: 700px
 
 .canvas
@@ -98,3 +96,11 @@
 
 .show_loading
   visibility: visible
+
+@include tablet()
+  .root_example
+    &::before
+      height: initial
+
+  .canvas_wrapper
+    width: 550px

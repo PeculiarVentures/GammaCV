@@ -1,6 +1,6 @@
 .controller_wrapper
   width: 480px
-  min-width: 350px
+  min-width: 300px
   margin-left: 20px
 
 .controller_header
@@ -16,7 +16,7 @@
   width: 14px
   height: 14px
   margin-right: 5px
-  
+
 .params_title
   margin-bottom: 21px
 
@@ -41,4 +41,11 @@
   &_count
     margin-left: 15px
 
-  
+@include tablet()
+  .params_block
+    &_title
+      width: 78px
+    &_slider
+      width: calc(100% - 185px)
+    &_select
+      width: calc(100% - 140px)
