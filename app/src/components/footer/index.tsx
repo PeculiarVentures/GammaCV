@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import clx from 'classnames';
 import s from './index.module.sass';
 
-export const Footer = (props, context) => {
+export const Footer: React.FunctionComponent = (props, context) => {
   const { intl } = context;
 
   return (
@@ -31,7 +31,9 @@ export const Footer = (props, context) => {
           s.version
         }
       >
-        {intl.getText('footer.version')}: {process.env.LIB_VERSION}
+        {intl.getText('footer.version')}
+        :
+        {process.env.LIB_VERSION}
       </Typography>
       <a
         href="mailto:info@peculiarventures.com"
@@ -50,5 +52,7 @@ export const Footer = (props, context) => {
 };
 
 Footer.contextTypes = {
-  intl: PropTypes.object,
+  intl: PropTypes.shape({
+    getText: PropTypes.func,
+  }),
 };

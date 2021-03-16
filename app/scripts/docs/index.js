@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 const fs = require('fs');
 const path = require('path');
 const jsdoc2md = require('jsdoc-to-markdown');
@@ -30,15 +31,15 @@ const renderMD = (data) => {
 
     if (name) {
       if (kind === 'function') {
-        let _params = [];
-        let _returns = [];
+        let PARAMS = [];
+        let RETURNS = [];
 
         if (params) {
-          _params = params.map(p => (p.optional ? `${p.name}?` : p.name));
+          PARAMS = params.map((p) => (p.optional ? `${p.name}?` : p.name));
         }
 
         if (returns) {
-          _returns = returns.map(r => r.type.names.join(','));
+          RETURNS = returns.map((r) => r.type.names.join(','));
         }
 
         out.push(
@@ -46,13 +47,13 @@ const renderMD = (data) => {
           ' ',
           name,
           '(',
-          _params.join(', '),
+          PARAMS.join(', '),
           ')',
           ' ',
           '=>',
           ' ',
           '`',
-          _returns.join(', ') || 'void',
+          RETURNS.join(', ') || 'void',
           '`',
           '\n',
           '\n',
@@ -107,20 +108,18 @@ const renderMD = (data) => {
         '\n',
       );
 
-      out.push(...params.map((e) => {
-        return ([
-          '|',
-          e.optional ? `${e.name}?` : e.name,
-          '|',
-          '`',
-          e.type.names.join(' \\| '),
-          '`',
-          '|',
-          e.description ? e.description.replace(/\n/g, '') : e.description,
-          '|',
-          '\n',
-        ].join(' '));
-      }));
+      out.push(...params.map((e) => ([
+        '|',
+        e.optional ? `${e.name}?` : e.name,
+        '|',
+        '`',
+        e.type.names.join(' \\| '),
+        '`',
+        '|',
+        e.description ? e.description.replace(/\n/g, '') : e.description,
+        '|',
+        '\n',
+      ].join(' '))));
 
       out.push('\n');
     }
@@ -141,18 +140,16 @@ const renderMD = (data) => {
         '\n',
       );
 
-      out.push(...returns.map((e) => {
-        return ([
-          '|',
-          '`',
-          e.type.names.join(' \\| '),
-          '`',
-          '|',
-          e.description ? e.description.replace(/\n/g, '') : e.description,
-          '|',
-          '\n',
-        ].join(' '));
-      }));
+      out.push(...returns.map((e) => ([
+        '|',
+        '`',
+        e.type.names.join(' \\| '),
+        '`',
+        '|',
+        e.description ? e.description.replace(/\n/g, '') : e.description,
+        '|',
+        '\n',
+      ].join(' '))));
 
       out.push('\n');
     }
@@ -166,7 +163,7 @@ const renderMD = (data) => {
         '\n',
       );
 
-      out.push(...examples.map(e => ([
+      out.push(...examples.map((e) => ([
         '```js',
         e,
         '```',
@@ -206,24 +203,3 @@ async function main() {
 }
 
 main();
-
-/**
- * Test code.
- */
-// jsdoc2md
-//   .getTemplateData({
-//     files: path.join(__dirname, '../../../lib/program/tensor.js'),
-//     // partial: hbsPartials,
-//   })
-//   .then((res) => {
-//     fs.writeFileSync(path.join(__dirname, '../docs/TEST.md'), renderMD(res));
-//   });
-
-// jsdoc2md
-//   .render({
-//     files: path.join(__dirname, '../../../lib/program/tensor.js'),
-//     // partial: hbsPartials,
-//   })
-//   .then((res) => {
-//     fs.writeFileSync(path.join(__dirname, '../docs/TEST2.md'), res);
-//   });

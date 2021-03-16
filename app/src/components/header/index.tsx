@@ -92,7 +92,15 @@ export const Header = (props: IHeaderProps, context) => {
   );
 };
 
+Header.defaultProps = {
+  isMain: false,
+};
+
 Header.contextTypes = {
-  intl: PropTypes.object,
-  device: PropTypes.object,
+  device: PropTypes.shape({
+    getText: PropTypes.string,
+  }),
+  intl: PropTypes.shape({
+    getText: PropTypes.func,
+  }),
 };

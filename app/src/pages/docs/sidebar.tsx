@@ -16,7 +16,9 @@ export const Sidebar: React.FC<ISidebarProps> = (props) => {
   if (searchValue) {
     filteredConfig = config.map((group) => ({
       ...group,
-      children: group.children.filter((child) => child.name.toLowerCase().includes(searchValue.toLowerCase())),
+      children: group.children.filter(
+        (child) => child.name.toLowerCase().includes(searchValue.toLowerCase()),
+      ),
     }));
   }
 

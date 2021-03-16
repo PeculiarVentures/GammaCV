@@ -12,16 +12,16 @@ export const ExamplesPage: React.FC<IExamplesPageProps> = (props) => {
   const { config } = props;
   const [searchValue, setSearchValue] = useState('');
 
-  const getExampleItemStyles = (index: number) => {
-    return { animationDelay: `${index / 20}s` };
-  };
+  const getExampleItemStyles = (index: number) => ({ animationDelay: `${index / 20}s` });
 
   let filteredConfig: IExampleGroup[];
 
   if (searchValue) {
     filteredConfig = config.map((group) => ({
       ...group,
-      examples: group.examples.filter((example) => example.name.toLowerCase().includes(searchValue.toLowerCase())),
+      examples: group.examples.filter(
+        (example) => example.name.toLowerCase().includes(searchValue.toLowerCase()),
+      ),
     }));
   }
 

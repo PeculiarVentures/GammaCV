@@ -8,7 +8,11 @@ const Doc = (props) => {
   return (
     <>
       <Head>
-        <title>{id} - GammaCV</title>
+        <title>
+          {id}
+          {' '}
+          - GammaCV
+        </title>
       </Head>
 
       <DocsPage
