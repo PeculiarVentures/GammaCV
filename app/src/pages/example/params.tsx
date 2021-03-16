@@ -25,7 +25,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
   icons = {
     constant: <img src="/static/images/constant_icon.svg" alt="Constant icon" />,
     uniform: <img src="/static/images/uniform_icon.svg" alt="Uniform icon" />,
-    reset: <img src="/static/images/reset_icon.svg" alt="reset icon" />,
+    reset: <img src="/static/images/reset_icon.svg" alt="Reset icon" />,
   }
 
   renderParam = (paramName: string) => {
@@ -150,7 +150,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
               <div className={s.reset_icon}>
                 {this.icons.reset}
               </div>
-              Reset
+                Reset
             </Button>
           </Box>
           <div className={s.params_wrapper}>
