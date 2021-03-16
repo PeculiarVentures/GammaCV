@@ -1,6 +1,6 @@
 .root
   height: 80px
-  padding: 0 15px 0 30px
+  padding: 0 28px
   display: flex
   align-items: center
   z-index: 4
@@ -10,4 +10,18 @@
   flex: 1 1 auto
 
 .nav_item
-  padding: 0 15px
+  padding: 0 9px 0 15px
+
+@include mobile()
+  .spacer
+    display: none
+  .root
+    height: inherit
+    align-items: start
+    flex-direction: column
+    padding: 19px 20px 15px
+  .version
+    order: -1
+    margin-bottom: 15px
+  .nav_item
+    padding: 5px 0

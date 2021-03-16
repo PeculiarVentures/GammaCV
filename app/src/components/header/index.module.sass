@@ -1,6 +1,6 @@
 .root
   height: 80px
-  padding: 0 15px 0 30px
+  padding: 0 20px 0 30px
   display: flex
   align-items: center
   top: 0
@@ -12,11 +12,44 @@
     position: fixed
 
 .logo
-  width: 128px
+  width: 135px
   display: block
 
 .spacer
   flex: 1 1 auto
 
 .nav_item
-  padding: 0 15px
+  padding: 0 10px
+
+@include mobile()
+  .root
+    padding-bottom: 20px
+    &.m_not_main
+      padding-bottom: 0
+      height: 60px
+
+  .logo
+    order: 0
+    width: 25px
+    margin-right: 3px
+    img
+      display: inline
+      vertical-align: middle
+      height: 30px
+      width: 24px
+
+  .spacer
+    order: 1
+
+  .nav_item
+    padding: 10px 5px
+    &:nth-child(3)
+      order: 1
+      padding: 0
+    img
+      vertical-align: middle
+      margin-left: 10px
+      display: inline-block
+      object-fit: fill
+      width: 13px
+      height: 13px

@@ -19,7 +19,7 @@ $animTime: 7s
     opacity: .2
   100%
     opacity: .8
-  
+
 .preview
   position: relative
   padding: 180px 0 170px
@@ -57,13 +57,37 @@ $animTime: 7s
   &_list
     list-style-type: none
     display: flex
-    margin: 0 -3%
   &_item
     flex: 1
-    padding: 0 3%
+    margin-right: 7.5vw
+    &:last-child
+      margin-right: 0
   &_icon_container
     height: 40px
+    margin-bottom: 20px
   &_icon
     width: auto
   &_title
-    margin: 18px 0 22px
+    margin-bottom: 22px
+
+@include tablet()
+  .m_width
+    padding: 0 70px
+  .facts
+    padding: 100px 0 120px
+
+@include mobile()
+  .preview
+    padding: 148px 0 94px
+  .m_width
+    padding: 0 30px
+  .facts
+    padding: 93px 0
+    &_list
+      flex-direction: column
+    &_item
+      margin-right: 0
+      margin-bottom: 80px
+      &:last-child
+        margin-bottom: 0
+

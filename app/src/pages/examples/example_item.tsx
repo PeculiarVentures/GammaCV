@@ -24,7 +24,7 @@ export const ExampleItem: React.FC<IExampleItemProps & React.HTMLAttributes<HTML
           type="c1"
           color="grey"
         >
-          {type}
+          Video
         </Typography>
         <Typography
           type="b2"

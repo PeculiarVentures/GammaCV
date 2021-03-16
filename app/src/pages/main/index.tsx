@@ -88,4 +88,5 @@ export const MainPage = () => {
 
 MainPage.contextTypes = {
   intl: PropTypes.object,
+  device: PropTypes.object,
 };

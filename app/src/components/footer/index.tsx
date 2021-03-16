@@ -27,6 +27,9 @@ export const Footer = (props, context) => {
       <Typography
         type="b3"
         color="dark_grey"
+        className={
+          s.version
+        }
       >
         {intl.getText('footer.version')}: {process.env.LIB_VERSION}
       </Typography>
