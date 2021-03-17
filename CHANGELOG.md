@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+### Fixed
+- Typescript typings for VideoCapture.start return type
+
 ## [0.5.0] - 2021-02-26
 ### Added
 - Add support for WebWorker environment via OffscreenCanvas
