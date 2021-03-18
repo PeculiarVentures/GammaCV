@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { Typography, TextField, Box } from 'lib-react-components';
+import PropTypes from 'prop-types';
 import { GroupItem } from './group_item';
 import { ExampleItem } from './example_item';
 import s from './index.module.sass';
+import ExamplePage from '../example';
 
 interface IExamplesPageProps {
   config: IExampleGroup[];
 }
 
-export const ExamplesPage: React.FC<IExamplesPageProps> = (props) => {
+export const ExamplesPage: React.FC<IExamplesPageProps> = (props, context) => {
   const { config } = props;
+  const { intl } = context;
   const [searchValue, setSearchValue] = useState('');
 
   const getExampleItemStyles = (index: number) => ({ animationDelay: `${index / 20}s` });
@@ -37,10 +40,10 @@ export const ExamplesPage: React.FC<IExamplesPageProps> = (props) => {
           <Typography
             type="h3"
           >
-            Examples
+            {intl.getText('actions.examples')}
           </Typography>
           <TextField
-            placeholder="Search"
+            placeholder={intl.getText('actions.search')}
             className={s.search_field}
             onChange={(e) => {
               setSearchValue(e.target.value);
@@ -51,13 +54,13 @@ export const ExamplesPage: React.FC<IExamplesPageProps> = (props) => {
         {(filteredConfig || config).map((group) => (
           <GroupItem
             key={group.key}
-            name={group.name}
+            name={intl.getText(`examples.groups.${group.key}`)}
           >
             {group.examples.map((example, index) => (
               <ExampleItem
                 key={example.path}
-                name={example.name}
-                type={example.type}
+                name={intl.getText(`examples.operations.${example.path}`)}
+                type={intl.getText(`examples.type.${example.type}`)}
                 path={example.path}
                 style={getExampleItemStyles(index)}
               />
@@ -67,4 +70,10 @@ export const ExamplesPage: React.FC<IExamplesPageProps> = (props) => {
       </div>
     </div>
   );
+};
+
+ExamplesPage.contextTypes = {
+  intl: PropTypes.shape({
+    getText: PropTypes.func,
+  }),
 };
