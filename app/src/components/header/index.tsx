@@ -18,9 +18,7 @@ export const Header = (props: IHeaderProps, context) => {
     <Box
       tagType="header"
       fill={isMain ? undefined : 'black'}
-      className={clx(s.root, {
-        [s.m_not_main]: !isMain,
-      })}
+      className={s.root}
     >
       <Link
         href="/"
@@ -69,10 +67,6 @@ export const Header = (props: IHeaderProps, context) => {
       </a>
     </Box>
   );
-};
-
-Header.defaultProps = {
-  isMain: false,
 };
 
 Header.contextTypes = {

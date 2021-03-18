@@ -1,3 +1,5 @@
+@import ../../styles/_mixins
+
 .controller_wrapper
   width: 480px
   min-width: 300px
@@ -10,12 +12,17 @@
     align-items: center
     justify-content: space-between
 
-.reset_icon
-  display: inline-block
-  vertical-align: middle
-  width: 14px
-  height: 14px
-  margin-right: 5px
+.reset
+  padding: 0
+  &_icon
+    display: inline-block
+    vertical-align: middle
+    width: 14px
+    height: 14px
+    margin-right: 5px
+  &_text
+    display: inline-block
+    vertical-align: middle
 
 .params_title
   margin-bottom: 21px
@@ -45,12 +52,3 @@
     text-align: left
   &_count
     margin-left: 15px
-
-@include tablet()
-  .params_block
-    &_title
-      width: 78px
-    &_slider
-      width: calc(100% - 185px)
-    &_select
-      width: calc(100% - 140px)

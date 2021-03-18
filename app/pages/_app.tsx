@@ -5,6 +5,7 @@ import { IntlWrapper } from 'lib-pintl';
 import { useRouter } from 'next/router';
 import { Header, Footer } from '../src/components';
 import en from '../locales/en.json';
+import s from './_app.module.sass';
 import './reset.sass';
 
 export default function MyApp({ Component, pageProps }) {
@@ -26,15 +27,17 @@ export default function MyApp({ Component, pageProps }) {
 
         <noscript>You need to enable JavaScript to run this app.</noscript>
       </Head>
-      <IntlWrapper messages={en}>
-        <Header
-          isMain={isMain}
-        />
-        <Component {...pageProps} />
-        {showFooter && (
-          <Footer />
-        )}
-      </IntlWrapper>
+      <div className={s.main_wrapper}>
+        <IntlWrapper messages={en}>
+          <Header
+            isMain={isMain}
+          />
+          <Component {...pageProps} />
+          {showFooter && (
+            <Footer />
+          )}
+        </IntlWrapper>
+      </div>
     </>
   );
 }
