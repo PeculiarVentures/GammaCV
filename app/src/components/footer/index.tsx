@@ -9,8 +9,7 @@ export const Footer: React.FunctionComponent = (props, context) => {
 
   return (
     <Box
-      stroke="grey"
-      strokeOpacity={0.15}
+      stroke="light_grey"
       strokeType="top"
       className={s.root}
       fill="white"
@@ -32,8 +31,7 @@ export const Footer: React.FunctionComponent = (props, context) => {
         }
       >
         {intl.getText('footer.version')}
-        :
-        {process.env.LIB_VERSION}
+        : {process.env.LIB_VERSION}
       </Typography>
       <a
         href="mailto:info@peculiarventures.com"
