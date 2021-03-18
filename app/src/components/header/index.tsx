@@ -3,8 +3,6 @@ import { Box, Typography } from 'lib-react-components';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import clx from 'classnames';
-import { Sidebar } from '../../pages/docs/sidebar';
-import config from '../../../sources/docs/config.json'
 import s from './index.module.sass';
 
 interface IHeaderProps {
@@ -14,9 +12,7 @@ interface IHeaderProps {
 export const Header = (props: IHeaderProps, context) => {
   const [showSidebar, setShowSidebar] = React.useState(false);
   const { isMain } = props;
-  const { intl, device } = context;
-  const logo = device.type === 'mobile' ? 'mobile_logo.svg' : 'logo.svg';
-  const burgerIcon = showSidebar ? 'cross_icon.svg' : 'menu_icon.svg';
+  const { intl } = context;
 
   return (
     <Box
@@ -30,36 +26,23 @@ export const Header = (props: IHeaderProps, context) => {
         href="/"
       >
         <a className={s.logo}>
-          <img src={`/static/images/${logo}`} alt="GammaCV Logo" />
+          <img src="/static/images/logo.svg" alt="GammaCV Logo" />
         </a>
       </Link>
 
       <div className={s.spacer} />
 
-      {device.type === 'mobile' ? (
-        <Typography
-          type="b2"
-          color="white"
-          className={s.nav_item}
-          onClick={() => setShowSidebar(!showSidebar)}
+      <Link href="/docs/get_started" >
+        <a
+          className={clx(
+            s.nav_item,
+            'text_white',
+            'b2',
+          )}
         >
           {intl.getText('actions.docs')}
-          <img src={`/static/images/${burgerIcon}`} alt="Menu icon" />
-        </Typography>
-      ) :
-        (
-          <Link href="/docs/get_started" >
-            <a
-              className={clx(
-                s.nav_item,
-                'text_white',
-                'b2',
-              )}
-            >
-              {intl.getText('actions.docs')}
-            </a>
-          </Link>
-        )}
+        </a>
+      </Link>
 
       <Link href="/examples">
         <a
@@ -84,10 +67,6 @@ export const Header = (props: IHeaderProps, context) => {
       >
         {intl.getText('actions.github')}
       </a>
-
-      {device.type === 'mobile' && showSidebar && (
-        <Sidebar config={config} isMobile />
-      )}
     </Box>
   );
 };
@@ -97,9 +76,6 @@ Header.defaultProps = {
 };
 
 Header.contextTypes = {
-  device: PropTypes.shape({
-    getText: PropTypes.string,
-  }),
   intl: PropTypes.shape({
     getText: PropTypes.func,
   }),
