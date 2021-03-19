@@ -37,6 +37,7 @@ jobs:
       - restore_cache: *restore-node-modules-cache
       - attach_workspace: { at: "." }
       - run: npm run lint
+      - run: npm run lint --prefix app/
 
   test:
     docker: *docker-node-browsers

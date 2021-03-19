@@ -27,8 +27,14 @@
 .doc
   padding: 115px 150px 88px
   display: inline-block
+  &_code
+    padding: 0 7px
+    border-radius: 3px
+    display: inline-block
+
   pre,
-  p,
+  p
+    margin-bottom: 16px
   ul
     margin-bottom: 38px
 
@@ -44,6 +50,13 @@
     &:hover
       .anchor_link_style
         opacity: 1
+
+  pre + h2,
+  pre + h3,
+  pre + h4,
+  pre + h5,
+  h2 + h3
+    margin-top: 24px
 
   h6
     text-transform: uppercase
@@ -69,18 +82,16 @@
     &:nth-child(3)
       width: 60px
 
-  code
-    padding: 0 7px
-    border-radius: 3px
-    display: inline-block
-
   div
-    margin-bottom: -41px
+    >iframe
+      margin-bottom: -41px
 
   >:first-child
     margin-top: 0
   >:last-child
     margin-bottom: 0
+    > iframe
+      margin-bottom: 0
 
 @include tablet()
   .m_width

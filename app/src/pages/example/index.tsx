@@ -477,7 +477,7 @@ export default class ExamplePage
         </div>
       );
     }
-    
+
     return (
       <div className={s.root_example}>
         <div className={s.example_wrapper}>
