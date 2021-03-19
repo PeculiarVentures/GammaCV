@@ -9,7 +9,7 @@ interface IHeaderProps {
   isMain?: boolean;
 }
 
-export const Header: React.FC<IHeaderProps> = (props: IHeaderProps, context) => {
+export const Header: React.FC<IHeaderProps> = (props, context) => {
   const { isMain } = props;
   const { intl } = context;
 
@@ -42,6 +42,7 @@ export const Header: React.FC<IHeaderProps> = (props: IHeaderProps, context) => 
           {intl.getText('actions.docs')}
         </a>
       </Link>
+
       <Link href="/examples">
         <a
           className={clx(

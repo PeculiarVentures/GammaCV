@@ -9,8 +9,7 @@ export const Footer: React.FunctionComponent = (props, context) => {
 
   return (
     <Box
-      stroke="grey"
-      strokeOpacity={0.15}
+      stroke="light_grey"
       strokeType="top"
       className={s.root}
       fill="white"
@@ -27,9 +26,12 @@ export const Footer: React.FunctionComponent = (props, context) => {
       <Typography
         type="b3"
         color="dark_grey"
+        className={
+          s.version
+        }
       >
         {intl.getText('footer.version')}
-        :
+        :&nbsp;
         {process.env.LIB_VERSION}
       </Typography>
       <a

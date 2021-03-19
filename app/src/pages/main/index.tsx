@@ -43,7 +43,12 @@ export const MainPage = () => (
             type="b1"
             color="light_grey"
           >
-            We created GammaCV to make it easy to integrate Computer Vision in modern web applications. GammaCV was built with a similar architecture to TensorFlow, in particular, it also uses a data flow paradigm to create and run graphs on GPU, this enables the robust image processing and feature extraction capability of the library.
+            We created GammaCV to make it easy to integrate
+            Computer Vision in modern web applications.
+            GammaCV was built with a similar architecture to TensorFlow, in particular,
+            it also uses a data flow paradigm to create and run graphs on GPU,
+            this enables the robust image processing and
+            feature extraction capability of the library.
           </Typography>
         </div>
       </div>

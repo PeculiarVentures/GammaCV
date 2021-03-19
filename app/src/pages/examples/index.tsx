@@ -48,22 +48,24 @@ export const ExamplesPage: React.FC<IExamplesPageProps> = (props) => {
           />
         </Box>
 
-        {(filteredConfig || config).map((group) => (
-          <GroupItem
-            key={group.key}
-            name={group.name}
-          >
-            {group.examples.map((example, index) => (
-              <ExampleItem
-                key={example.path}
-                name={example.name}
-                type={example.type}
-                path={example.path}
-                style={getExampleItemStyles(index)}
-              />
-            ))}
-          </GroupItem>
-        ))}
+        <div className={s.items_wrapper}>
+          {(filteredConfig || config).map((group) => (
+            <GroupItem
+              key={group.key}
+              name={group.name}
+            >
+              {group.examples.map((example, index) => (
+                <ExampleItem
+                  key={example.path}
+                  name={example.name}
+                  type={example.type}
+                  path={example.path}
+                  style={getExampleItemStyles(index)}
+                />
+              ))}
+            </GroupItem>
+          ))}
+        </div>
       </div>
     </div>
   );
