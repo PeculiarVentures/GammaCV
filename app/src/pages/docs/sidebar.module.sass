@@ -6,6 +6,9 @@
   display: inline-block
   vertical-align: top
 
+.visible
+  visibility: visible
+
 .header
   padding: 25px 26px 56px 25px
 
@@ -25,3 +28,16 @@
 @include tablet()
   .root
     width: 280px
+
+@include mobile()
+  .root
+    width: 100%
+    position: fixed
+    left: 0
+    top: 60px
+    height: calc(100% - 60px)
+    padding: 60px 0 0
+
+  .list
+    padding: 0 40px 0
+    height: 100%

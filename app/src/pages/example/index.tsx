@@ -33,6 +33,7 @@ interface IExamplePageState {
   error: string;
   isCameraAccess: boolean;
   isLoading: boolean;
+  showParams: boolean;
 }
 
 interface IContextType {
@@ -88,6 +89,7 @@ export default class ExamplePage
       error: '',
       isCameraAccess: false,
       isLoading: true,
+      showParams: context.device.type !== 'mobile',
     };
 
     this.lazyUpdate = new LazyUpdate(500, this.onResizeEnd);
@@ -213,7 +215,12 @@ export default class ExamplePage
   }
 
   onResize = () => {
+    const { device } = this.context;
+
     this.lazyUpdate.activate();
+    this.setState({
+      showParams: device.type !== 'mobile',
+    });
   };
 
   onResizeEnd = () => {
@@ -433,8 +440,11 @@ export default class ExamplePage
   render() {
     const { exampleName, data } = this.props;
     const {
-      error, isCameraAccess, canvas, params, isPlaying, isLoading,
+      error, isCameraAccess, canvas, params, isPlaying, isLoading, showParams,
     } = this.state;
+    const { device } = this.context;
+    const isMobile = device.type === 'mobile';
+    const paramsIcon = <img src={`/static/images/${showParams ? 'cross' : 'params'}_icon.svg`} alt="Params icon" />;
 
     if (!error && !isCameraAccess) {
       return (
@@ -481,33 +491,35 @@ export default class ExamplePage
     return (
       <div className={s.root_example}>
         <div className={s.example_wrapper}>
-          <div className={s.top_title_wrapper}>
-            <Typography
-              type="h3"
-              mobileType="h4"
-              color="black"
-              className={s.top_title_text}
-            >
-              {exampleName}
-            </Typography>
-            <Typography
-              type="h3"
-              mobileType="h4"
-              color="grey"
-              className={clx({
-                [s.top_title_fps]: true,
-                [s.hidden_fps]: !isPlaying,
-              })}
-            >
-              FPS:
-              {' '}
-              <span ref={this.refFps} />
-            </Typography>
-          </div>
+          {!showParams && (
+            <div className={s.top_title_wrapper}>
+              <Typography
+                type="h3"
+                mobileType="h4"
+                color="black"
+                className={s.top_title_text}
+              >
+                {exampleName}
+              </Typography>
+              <Typography
+                type="h3"
+                mobileType="h4"
+                color="grey"
+                className={clx({
+                  [s.top_title_fps]: true,
+                  [s.hidden_fps]: !isPlaying,
+                })}
+              >
+                FPS:
+                {' '}
+                <span ref={this.refFps} />
+              </Typography>
+            </div>
+          )}
           <div className={s.content_wrapper}>
             <Box
-              borderRadius={8}
-              stroke="grey_2"
+              borderRadius={isMobile ? 0 : 8}
+              stroke={isMobile ? '' : 'grey_2'}
               fill="light_grey"
               className={s.canvas_wrapper}
             >
@@ -538,12 +550,29 @@ export default class ExamplePage
               />
               {this.renderStartStopButton()}
             </Box>
-            <ParamsWrapper
-              params={data.params}
-              onReset={this.handleReset}
-              handleChangeState={this.handleChangeState}
-              paramsValue={{ ...params }}
-            />
+            <Button
+              onClick={() => this.setState({ showParams: !showParams })}
+              bgType="clear"
+              size="small"
+              className={s.show_params}
+            >
+              <div className={s.show_params_icon}>
+                {paramsIcon}
+              </div>
+              <Typography type="b1" color="light_grey">
+                Params
+              </Typography>
+            </Button>
+            {showParams && (
+              <ParamsWrapper
+                params={data.params}
+                onReset={this.handleReset}
+                handleChangeState={this.handleChangeState}
+                paramsValue={{ ...params }}
+                isMobile={isMobile}
+              />
+            )}
+
           </div>
         </div>
       </div>
@@ -552,12 +581,10 @@ export default class ExamplePage
 }
 
 ExamplePage.contextTypes = {
-  intl: PropTypes.shape({
-    getText: PropTypes.func,
-  }),
   device: PropTypes.shape({
     type: PropTypes.string,
-    width: PropTypes.number,
-    height: PropTypes.number,
+  }),
+  intl: PropTypes.shape({
+    getText: PropTypes.func,
   }),
 };

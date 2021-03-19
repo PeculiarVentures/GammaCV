@@ -52,3 +52,24 @@
     text-align: left
   &_count
     margin-left: 15px
+
+@include mobile()
+  .controller_wrapper
+    position: absolute
+    left: 0
+    top: 0
+    width: 100%
+    height: 100%
+    margin-left: 0
+
+  .controller_header
+    &_wrapper
+      padding: 12px 30px 16px
+    &_title
+      color: white
+
+  .params_title
+    margin-bottom: 16px
+
+  .params_block
+    padding: 30px

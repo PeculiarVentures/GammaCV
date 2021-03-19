@@ -6,16 +6,18 @@ import s from './sidebar_group.module.sass';
 
 interface ISidebarGroupProps {
   group: IDocGroup;
+  hideSidebar: () => void;
+  isMobile: boolean;
 }
 
 export const SidebarGroup: React.FC<ISidebarGroupProps> = (props) => {
-  const { group } = props;
+  const { group, hideSidebar, isMobile } = props;
 
   return (
     <li className={s.root}>
       <Typography
         type="c1"
-        color="grey"
+        color={isMobile ? 'dark_grey' : 'grey'}
       >
         {group.name}
       </Typography>
@@ -27,14 +29,16 @@ export const SidebarGroup: React.FC<ISidebarGroupProps> = (props) => {
             <Link
               href={`/docs/${doc.name}`}
             >
-              <a
-                className={clx(
-                  s.link,
-                  'text_black',
-                  'b2',
-                )}
-              >
-                {doc.name}
+              <a>
+                <Typography
+                  type="b2"
+                  onClick={hideSidebar}
+                  className={clx(
+                    s.link,
+                    isMobile ? 'text_white' : 'text_black',
+                  )}>
+                  {doc.name}
+                </Typography>
               </a>
             </Link>
           </li>

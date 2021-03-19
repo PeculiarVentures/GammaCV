@@ -2,6 +2,7 @@
 import React from 'react';
 import { HighlightCode } from 'lib-react-components';
 import ReactMarkdown from 'react-markdown';
+import PropTypes from 'prop-types';
 import gfm from 'remark-gfm';
 import slug from 'remark-slug';
 import Link from 'next/link';
@@ -16,16 +17,19 @@ interface IDocsPageProps {
   id: string;
 }
 
-export const DocsPage: React.FC<IDocsPageProps> = (props) => {
+export const DocsPage: React.FC<IDocsPageProps> = (props, context) => {
   const { config, data, id } = props;
-
+  const { device } = context;
+  const isMobile = device.type === 'mobile';
   return (
     <main
       className={s.main}
     >
-      <Sidebar
-        config={config}
-      />
+      {!isMobile && (
+        <Sidebar
+          config={config}
+        />
+      )}
       <div className={s.m_width}>
         <div className={clx(s.doc, 'b1', 'text_black')}>
           <ReactMarkdown
@@ -83,7 +87,7 @@ export const DocsPage: React.FC<IDocsPageProps> = (props) => {
               },
               inlineCode: ({ children }) => {
                 return (
-                  <code className="fill_light_grey">
+                  <code className={clx("fill_light_grey", s.doc_code)}>
                     {children}
                   </code>
                 );
@@ -95,4 +99,13 @@ export const DocsPage: React.FC<IDocsPageProps> = (props) => {
       </div>
     </main>
   );
+};
+
+DocsPage.contextTypes = {
+  intl: PropTypes.shape({
+    getText: PropTypes.func,
+  }),
+  device: PropTypes.shape({
+    type: PropTypes.string,
+  }),
 };

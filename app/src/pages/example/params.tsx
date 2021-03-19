@@ -7,8 +7,9 @@ import s from './params.module.sass';
 interface IParamsWrapperProps {
   handleChangeState: (paramName: string, key: string, value: string | number) => void;
   onReset: () => void;
-  params?: TParams,
-  paramsValue: TParamsValue,
+  params?: TParams;
+  paramsValue: TParamsValue;
+  isMobile: boolean;
 }
 export default class ParamsWrapper extends React.Component<IParamsWrapperProps> {
   icons = {
@@ -31,7 +32,12 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
 
   renderParam = (paramName: string) => {
     const result = [];
-    const { params, paramsValue, handleChangeState } = this.props;
+    const {
+      params,
+      paramsValue,
+      handleChangeState,
+      isMobile,
+    } = this.props;
     const param = params[paramName];
     const valueParams = paramsValue[paramName];
     const listParams = Object.keys(param);
@@ -119,19 +125,21 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
   };
 
   render() {
-    const { params, onReset } = this.props;
+    const { params, onReset, isMobile } = this.props;
 
     if (params) {
       const listParams = Object.keys(params);
 
       return (
         <Box
-          borderRadius={8}
-          stroke="grey_2"
+          borderRadius={isMobile ? 0 : 8}
+          stroke={isMobile ? '' : 'grey_2'}
+          fill={isMobile ? 'black' : ''}
+          fillOpacity={isMobile ? 0.7 : 1}
           className={s.controller_wrapper}
         >
           <Box
-            stroke="grey_2"
+            stroke={isMobile ? 'dark_grey' : 'grey_2'}
             strokeType="bottom"
             className={s.controller_header_wrapper}
           >
@@ -162,7 +170,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
               return (
                 <Box
                   key={paramName}
-                  stroke="grey_2"
+                  stroke={isMobile ? '' : 'grey_2'}
                   strokeType="bottom"
                   className={s.params_block_section}
                 >

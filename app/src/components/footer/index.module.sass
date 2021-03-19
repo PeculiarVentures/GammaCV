@@ -13,3 +13,17 @@
 
 .nav_item
   padding: 0 9px 0 15px
+
+@include mobile()
+  .spacer
+    display: none
+  .root
+    height: inherit
+    align-items: start
+    flex-direction: column
+    padding: 19px 20px 15px
+  .version
+    order: -1
+    margin-bottom: 15px
+  .nav_item
+    padding: 5px 0

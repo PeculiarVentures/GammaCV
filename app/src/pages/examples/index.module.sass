@@ -3,7 +3,13 @@
 .root
   padding: 110px 0 40px
 .m_width
-  padding: 0 100px
+  padding-left: 100px
+  padding-right: 100px
+
+.items_wrapper
+  padding-top: 43px
+  div:last-child
+    margin-bottom: 0
 
 .header
   padding-bottom: 47px
@@ -20,7 +26,24 @@
     border-radius: 20px
     padding: 0 20px
     font-size: 14px
-    
+
 @include tablet()
   .m_width
-    padding: 0 70px
+    padding-left: 70px
+    padding-right: 70px
+
+@include mobile()
+  .root
+    padding: 110px 0 50px
+
+  .m_width
+    padding: 0 30px
+
+  .items_wrapper
+    padding-top: 25px
+
+  .header
+    flex-direction: column
+    align-items: start
+    padding-bottom: 30px
+    height: 164px

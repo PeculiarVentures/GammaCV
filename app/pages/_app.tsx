@@ -27,6 +27,7 @@ export default function MyApp({ Component, pageProps }) {
 
         <noscript>You need to enable JavaScript to run this app.</noscript>
       </Head>
+
       <div className={s.main_wrapper}>
         <IntlWrapper messages={en}>
           <Header
