@@ -9,7 +9,7 @@ interface IHeaderProps {
   isMain?: boolean;
 }
 
-export const Header = (props: IHeaderProps, context) => {
+export const Header: React.FC<IHeaderProps> = (props, context) => {
   const { isMain } = props;
   const { intl } = context;
 
