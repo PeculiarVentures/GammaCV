@@ -66,7 +66,7 @@ export const DocsPage: React.FC<IDocsPageProps> = (props) => {
                           aria-label="anchor"
                           className={s.anchor_link_style}
                         >
-                          <img src="/static/images/anchor.svg"/>
+                          <img src="/static/images/anchor.svg" />
                         </a>
                       </Link>
                       {children}
@@ -85,7 +85,7 @@ export const DocsPage: React.FC<IDocsPageProps> = (props) => {
                 },
                 inlineCode: ({ children }) => {
                   return (
-                    <code className="fill_light_grey">
+                    <code className={clx("fill_light_grey", s.doc_code)}>
                       {children}
                     </code>
                   );

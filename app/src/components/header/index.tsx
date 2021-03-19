@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography } from 'lib-react-components';
+import { Box } from 'lib-react-components';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import clx from 'classnames';
@@ -10,7 +10,6 @@ interface IHeaderProps {
 }
 
 export const Header = (props: IHeaderProps, context) => {
-  const [showSidebar, setShowSidebar] = React.useState(false);
   const { isMain } = props;
   const { intl } = context;
 
@@ -32,7 +31,7 @@ export const Header = (props: IHeaderProps, context) => {
 
       <div className={s.spacer} />
 
-      <Link href="/docs/get_started" >
+      <Link href="/docs/get_started">
         <a
           className={clx(
             s.nav_item,

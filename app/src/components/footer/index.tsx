@@ -31,7 +31,8 @@ export const Footer: React.FunctionComponent = (props, context) => {
         }
       >
         {intl.getText('footer.version')}
-        : {process.env.LIB_VERSION}
+        :&nbsp;
+        {process.env.LIB_VERSION}
       </Typography>
       <a
         href="mailto:info@peculiarventures.com"
