@@ -83,7 +83,7 @@ export const MainPage = (props, context) => {
       </div>
     </>
   );
-}
+};
 
 MainPage.contextTypes = {
   intl: PropTypes.shape({

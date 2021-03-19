@@ -5,33 +5,38 @@
 
 .controller_header
   &_wrapper
-    padding: 19px
+    padding: 20px 20px 18px
     display: flex
     align-items: center
     justify-content: space-between
 
-.reset_icon
-  display: inline-block
-  vertical-align: middle
-  width: 13px
-  height: 13px
-  margin-right: 5px
-
-.params_wrapper
-  padding: 20px
-
-.params_block
-  margin-bottom: 36px
+.reset
+  padding: 0
+  &_icon
+    display: inline-block
+    vertical-align: middle
+    width: 14px
+    height: 14px
+    margin-right: 5px
+  &_text
+    display: inline-block
+    vertical-align: middle
 
 .params_title
   margin-bottom: 21px
 
 .params_block
-  &_wrapper
+  padding: 20px
+  &_wrapper,
+  &_select_wrapper
     margin-bottom: 1px
     display: flex
     align-items: center
     margin-bottom: 14px
+  &_select_wrapper
+    margin-bottom: 36px
+  &_section
+    margin-bottom: 36px
   &_icon
     width: 22px
     margin-right: 10px
@@ -42,7 +47,6 @@
     width: calc(100% - 205px)
   &_select
     width: calc(100% - 160px)
+    text-align: left
   &_count
     margin-left: 15px
-
-  

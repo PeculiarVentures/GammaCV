@@ -1,35 +1,43 @@
 .main
-  padding-top: 170px
-  padding-left: 350px
+  padding: 80px 0 0 350px
 
 .m_width
-  padding: 0 150px 60px
+  padding: 115px 150px 88px
   max-width: 1200px
   width: 100%
-  min-height: calc(100vh - 170px - 80px)
+  min-height: calc(100vh - 80px - 80px)
 
 .anchor_link
   position: absolute
   margin-top: -100px
+  cursor: pointer
 
 .anchor_link_style
-  float: left
-  width: 16px
-  margin-left: -16px
+  display: inline-block
+  vertical-align: middle
+  width: 20px
+  margin-left: -20px
+  transform: translate(-50%, -10%)
   opacity: 0
 
 .doc
+  &_code
+    padding: 0 7px
+    border-radius: 3px
+    display: inline-block
+
   pre,
-  p,
-  ul
+  p
     margin-bottom: 16px
+  ul
+    margin-bottom: 38px
 
   h1,
   h2,
   h3,
   h4,
   h5
-    margin-top: 64px
+    margin-top: 62px
     margin-bottom: 16px
     font-weight: 600
     line-height: 1.25
@@ -37,10 +45,13 @@
       .anchor_link_style
         opacity: 1
 
+  h2 + h3
+    margin-top: 24px
+
   h6
     text-transform: uppercase
     font-weight: 400
-    margin-top: 24px
+    margin-top: 34px
     margin-bottom: 16px
 
   ul
@@ -63,3 +74,7 @@
 
   >:first-child
     margin-top: 0
+  >:last-child
+    margin-bottom: 0
+    > iframe
+      margin-bottom: 0

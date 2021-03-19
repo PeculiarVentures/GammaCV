@@ -14,7 +14,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
   icons = {
     constant: <img src="/static/images/constant_icon.svg" alt="Constant icon" />,
     uniform: <img src="/static/images/uniform_icon.svg" alt="Uniform icon" />,
-    reset: <img src="/static/images/reset_icon.svg" alt="reset icon" />,
+    reset: <img src="/static/images/reset_icon.svg" alt="Reset icon" />,
   };
 
   getParamName = (param: TParamsElement) => {
@@ -48,7 +48,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
         const { values } = column;
 
         result.push(
-          <div key={name} className={s.params_block_wrapper}>
+          <div key={name} className={s.params_block_select_wrapper}>
             <div className={s.params_block_icon}>
               {this.icons[type]}
             </div>
@@ -144,17 +144,18 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
             <Button
               onClick={onReset}
               bgType="clear"
-              textColor="grey"
               size="small"
-              className="b1"
+              className={s.reset}
             >
               <div className={s.reset_icon}>
                 {this.icons.reset}
               </div>
-              Reset
+              <Typography type="b1" color="grey" className={s.reset_text}>
+                Reset
+              </Typography>
             </Button>
           </Box>
-          <div>
+          <div className={s.params_block}>
             {listParams.map((paramName) => {
               const name = this.getParamName(params[paramName]);
 
@@ -163,7 +164,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
                   key={paramName}
                   stroke="grey_2"
                   strokeType="bottom"
-                  className={s.params_block}
+                  className={s.params_block_section}
                 >
                   <Typography
                     type="c1"
