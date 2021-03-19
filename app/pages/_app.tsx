@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import { IntlWrapper } from 'lib-pintl';
 import { useRouter } from 'next/router';
-import { Header, Footer } from '../src/components';
+import { Header, Footer, Sidebar } from '../src/components';
+import config from '../sources/docs/config.json';
 import en from '../locales/en.json';
 import s from './_app.module.sass';
 import './reset.sass';
@@ -12,6 +13,8 @@ export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const isMain = router.pathname === '/';
   const showFooter = router.pathname === '/' || router.pathname === '/examples';
+  const isDocs = router.pathname === '/docs/[id]';
+  const [showSidebar, setShowSidebar] = useState(isDocs);
 
   return (
     <>
@@ -32,6 +35,13 @@ export default function MyApp({ Component, pageProps }) {
         <IntlWrapper messages={en}>
           <Header
             isMain={isMain}
+            displaySidebar={(state) => setShowSidebar(state)}
+            showSidebar={showSidebar}
+          />
+          <Sidebar
+            config={config}
+            visible={showSidebar}
+            hideSidebar={() => setShowSidebar(false)}
           />
           <Component {...pageProps} />
           {showFooter && (

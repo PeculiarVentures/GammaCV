@@ -1,25 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Head from 'next/head';
-import { DeviceProvider } from 'lib-react-components';
 import { DocsPage } from '../../src/pages';
 
 const Doc = (props) => {
   const { id, config, data } = props;
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(false);
-  });
-
-  if (loading) {
-    return (
-      <h1>
-        Loading -
-        {' '}
-        {id}
-      </h1>
-    );
-  }
 
   return (
     <>
@@ -30,13 +14,11 @@ const Doc = (props) => {
           - GammaCV
         </title>
       </Head>
-      <DeviceProvider>
-        <DocsPage
-          config={config}
-          data={data}
-          id={id}
-        />
-      </DeviceProvider>
+      <DocsPage
+        config={config}
+        data={data}
+        id={id}
+      />
     </>
   );
 };

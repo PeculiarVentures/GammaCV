@@ -217,10 +217,10 @@ export default class ExamplePage
   onResize = () => {
     const { device } = this.context;
 
-    this.lazyUpdate.activate();
     this.setState({
       showParams: device.type !== 'mobile',
     });
+    this.lazyUpdate.activate();
   };
 
   onResizeEnd = () => {
@@ -444,7 +444,6 @@ export default class ExamplePage
     } = this.state;
     const { device } = this.context;
     const isMobile = device.type === 'mobile';
-    const paramsIcon = <img src={`/static/images/${showParams ? 'cross' : 'params'}_icon.svg`} alt="Params icon" />;
 
     if (!error && !isCameraAccess) {
       return (
@@ -550,19 +549,24 @@ export default class ExamplePage
               />
               {this.renderStartStopButton()}
             </Box>
-            <Button
-              onClick={() => this.setState({ showParams: !showParams })}
-              bgType="clear"
-              size="small"
-              className={s.show_params}
-            >
-              <div className={s.show_params_icon}>
-                {paramsIcon}
-              </div>
-              <Typography type="b1" color="light_grey">
-                Params
-              </Typography>
-            </Button>
+            {isMobile && (
+              <Button
+                onClick={() => this.setState({ showParams: !showParams })}
+                bgType="clear"
+                size="small"
+                className={s.show_params}
+              >
+                <div className={s.show_params_icon}>
+                  {showParams ? (
+                    <img src="/static/images/cross_icon.svg" alt="Cross icon" className={s.cross_icon} />) : (
+                    <img src="/static/images/params_icon.svg" alt="Params icon" className={s.params_icon} />
+                  )}
+                </div>
+                <Typography type="b1" color="light_grey">
+                  {showParams ? 'Close' : 'Params'}
+                </Typography>
+              </Button>
+            )}
             {showParams && (
               <ParamsWrapper
                 params={data.params}

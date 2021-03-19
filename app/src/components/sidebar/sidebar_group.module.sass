@@ -1,3 +1,5 @@
+@import ../../styles/_mixins
+
 .root
   width: 100%
   &:not(:first-child)
@@ -16,3 +18,10 @@
   &:hover,
   &:focus
     opacity: .6
+
+@include mobile()
+  .link
+    color: #fff
+
+  .group_name
+    color: #373d4d

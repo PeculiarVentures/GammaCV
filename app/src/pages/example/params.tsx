@@ -90,7 +90,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
             </div>
             <Typography
               type="b3"
-              color="dark"
+              color={isMobile ? 'white' : 'dark_grey'}
               className={s.params_block_title}
             >
               {name}
@@ -109,7 +109,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
             </div>
             <Typography
               type="h5"
-              color="dark_grey"
+              color={isMobile ? 'white' : 'dark_grey'}
               className={s.params_block_count}
             >
               {valueParams[key]}

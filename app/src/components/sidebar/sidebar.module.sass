@@ -3,8 +3,12 @@
 .root
   width: 350px
   height: 100%
-  display: inline-block
+  max-height: calc(100vh - 80px)
+  display: none
   vertical-align: top
+  &.visible
+    display: inline-block
+
 
 .visible
   visibility: visible
@@ -35,9 +39,14 @@
     position: fixed
     left: 0
     top: 60px
-    height: calc(100% - 60px)
-    padding: 60px 0 0
+    max-height: calc(100% - 60px)
+    background-color: #0d091a !important
+    z-index: 2
+
+  .header
+    display: none
 
   .list
-    padding: 0 40px 0
+    padding: 60px 40px 58px
     height: 100%
+    color: #0d091a !important

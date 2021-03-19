@@ -1,15 +1,11 @@
 @import ../../styles/_mixins
 
 .main
-  height: calc( 100vh - 80px )
-
-.m_width
   display: inline-block
-  max-width: 1200px
-  width: 100%
-  height: calc(100vh - 80px)
-  overflow: auto
   max-width: calc(100vw - 350px)
+  max-height: calc(100vh - 80px)
+  overflow-y: auto
+  width: 100%
 
 .anchor_link
   position: absolute
@@ -26,7 +22,6 @@
 
 .doc
   padding: 115px 150px 88px
-  display: inline-block
   &_code
     padding: 0 7px
     border-radius: 3px
@@ -94,7 +89,7 @@
       margin-bottom: 0
 
 @include tablet()
-  .m_width
+  .main
     max-width: calc(100% - 280px)
   .doc
     padding-left: 70px
@@ -103,11 +98,9 @@
 @include mobile()
   .main
     padding: 60px 0 0
-  
-  .m_width
     height: auto
     padding: 0
     max-width: none
-  
+
   .doc
     padding: 54px 30px 74px

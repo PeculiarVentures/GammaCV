@@ -38,7 +38,7 @@ export const ExamplesPage: React.FC<IExamplesPageProps> = (props) => {
           type="h3"
         >
           Examples
-          </Typography>
+        </Typography>
         <TextField
           placeholder="Search"
           className={s.search_field}
