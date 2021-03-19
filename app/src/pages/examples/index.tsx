@@ -54,7 +54,7 @@ export const ExamplesPage: React.FC<IExamplesPageProps> = (props, context) => {
         {(filteredConfig || config).map((group) => (
           <GroupItem
             key={group.key}
-            name={intl.getText(`examples.groups.${group.key}`)}
+            name={intl.getText(`examples.groups.${group.key}`).toUpperCase()}
           >
             {group.examples.map((example, index) => (
               <ExampleItem

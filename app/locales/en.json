@@ -35,14 +35,14 @@
   },
   "docs": {
     "groups": {
-      "basics": "BASICS",
-      "api": "API",
-      "image_processing": "IMAGE PROCESSING",
-      "morphology": "MORPHOLOGY",
-      "image_derivative": "IMAGE DERIVATIVE",
-      "feature_extraction": "FEATURE EXTRACTION",
-      "utils": "UTILS",
-      "math": "MATH"
+      "basics": "basics",
+      "api": "api",
+      "image_processing": "image processing",
+      "morphology": "morphology",
+      "image_derivative": "image derivative",
+      "feature_extraction": "feature extraction",
+      "utils": "utils",
+      "math": "math"
     },
     "operations": {
       "get_started": "Get Started",
@@ -86,10 +86,10 @@
       "video": "Video"
     },
     "groups": {
-      "morphology": "MORPHOLOGY",
-      "processing": "PROCESSING",
-      "feature_extraction": "FEATURE EXTRACTION",
-      "math": "MATH"
+      "morphology": "morphology",
+      "processing": "processing",
+      "feature_extraction": "feature extraction",
+      "math": "math"
     },
     "operations": {
       "erode": "Erosion",

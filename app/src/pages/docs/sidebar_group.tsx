@@ -19,7 +19,7 @@ export const SidebarGroup: React.FC<ISidebarGroupProps> = (props, context) => {
         type="c1"
         color="grey"
       >
-        {intl.getText(`docs.groups.${group.name}`)}
+        {intl.getText(`docs.groups.${group.name}`).toUpperCase()}
       </Typography>
       <ul className={s.list}>
         {group.children.map((doc) => (
