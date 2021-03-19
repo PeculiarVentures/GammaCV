@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { GroupItem } from './group_item';
 import { ExampleItem } from './example_item';
 import s from './index.module.sass';
-import ExamplePage from '../example';
 
 interface IExamplesPageProps {
   config: IExampleGroup[];
@@ -54,7 +53,7 @@ export const ExamplesPage: React.FC<IExamplesPageProps> = (props, context) => {
         {(filteredConfig || config).map((group) => (
           <GroupItem
             key={group.key}
-            name={intl.getText(`examples.groups.${group.key}`).toUpperCase()}
+            name={intl.getText(`examples.groups.${group.key}`)}
           >
             {group.examples.map((example, index) => (
               <ExampleItem
