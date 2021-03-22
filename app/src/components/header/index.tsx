@@ -11,7 +11,7 @@ interface IHeaderProps {
   showSidebar: boolean;
 }
 
-export const Header = (props: IHeaderProps, context) => {
+export const Header: React.FC<IHeaderProps> = (props: IHeaderProps, context) => {
   const { isMain, displaySidebar, showSidebar } = props;
   const { intl } = context;
   const burgerIcon = showSidebar ? 'cross_icon.svg' : 'menu_icon.svg';
