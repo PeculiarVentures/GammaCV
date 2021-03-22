@@ -473,7 +473,7 @@ export default class ExamplePage
                 color="black"
                 align="center"
               >
-                Sorry, looks like we don&apos;t have access to use your camera
+                {intl.getText('example.noAccess')}
               </Typography>
             </div>
             <Button
@@ -482,7 +482,7 @@ export default class ExamplePage
               color="primary"
               className={s.error_button}
             >
-              Try Again
+              {intl.getText('example.tryAgain')}
             </Button>
           </div>
         </div>

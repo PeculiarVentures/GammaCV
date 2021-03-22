@@ -11,8 +11,9 @@ interface ISidebarProps {
   visible: boolean;
 }
 
-export const Sidebar: React.FC<ISidebarProps> = (props) => {
+export const Sidebar: React.FC<ISidebarProps> = (props, context) => {
   const { config, visible, isDocs } = props;
+  const { intl } = context;
   const [searchValue, setSearchValue] = useState('');
   let filteredConfig: IDocGroup[];
 
@@ -40,7 +41,7 @@ export const Sidebar: React.FC<ISidebarProps> = (props) => {
     >
       <div className={s.header}>
         <TextField
-          placeholder="Search"
+          placeholder={intl.getText('actions.search')}
           className={s.search_field}
           onChange={(e) => {
             setSearchValue(e.target.value);
