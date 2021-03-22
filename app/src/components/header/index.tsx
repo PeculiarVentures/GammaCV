@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography } from 'lib-react-components';
+import { Box, Typography, Button } from 'lib-react-components';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import clx from 'classnames';
@@ -47,15 +47,19 @@ export const Header = (props: IHeaderProps, context) => {
           {intl.getText('actions.docs')}
         </a>
       </Link>
-      <Typography
-        type="b2"
-        color="white"
-        className={clx(s.nav_item)}
+      <Button
         onClick={() => displaySidebar(!showSidebar)}
+        bgType="clear"
+        className={clx(s.nav_item)}
       >
-        {intl.getText('actions.docs')}
-        <img src={`/static/images/${burgerIcon}`} alt="Menu icon" />
-      </Typography>
+        <Typography
+          type="b2"
+          color="white"
+        >
+          {intl.getText('actions.docs')}
+          <img src={`/static/images/${burgerIcon}`} alt="Menu icon" />
+        </Typography>
+      </Button>
       <Link href="/examples">
         <a
           className={clx(
