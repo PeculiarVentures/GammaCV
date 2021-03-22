@@ -1,3 +1,5 @@
+@import ../../styles/_mixins
+
 .root
   width: 350px
   height: calc(100% - 80px)
@@ -7,7 +9,7 @@
   left: 0
 
 .header
-  padding: 25px 26px 56px 25px
+  padding: 25px 25px 55px
 
 .search_field
   input
@@ -16,8 +18,15 @@
     font-size: 14px
 
 .list
-  padding: 0 50px 60px
+  padding: 0 48px 60px
   list-style-type: none
   height: calc(100% - 40px - 56px)
   overflow: auto
   width: 100%
+
+@include tablet()
+  .root
+    width: 280px
+  
+  .list
+    padding: 0 48px 60px

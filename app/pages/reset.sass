@@ -1,3 +1,5 @@
+@import ../src/styles/_mixins
+
 *
   margin: 0
   padding: 0
@@ -44,3 +46,7 @@ table
 img
   display: block
   width: 100%
+
+@include tablet()
+  #__next
+    min-width: 1024px

@@ -1,3 +1,5 @@
+@import ../../styles/_mixins
+
 .main
   padding: 80px 0 0 350px
 
@@ -78,3 +80,10 @@
     margin-bottom: 0
     > iframe
       margin-bottom: 0
+
+@include tablet()
+  .main
+    padding-left: 280px
+  
+  .m_width
+    padding: 115px 70px 88px
