@@ -489,7 +489,7 @@ export default class ExamplePage
               color="black"
               className={s.top_title_text}
             >
-              {intl.getText(`examples.operations.${exampleName}`)}
+              {intl.getText(`operations.${exampleName}`)}
             </Typography>
             <Typography
               type="h3"

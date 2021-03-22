@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Typography, Slider, Select, Box, Button,
 } from 'lib-react-components';
+import PropTypes from 'prop-types';
 import s from './params.module.sass';
 
 interface IParamsWrapperProps {
@@ -120,6 +121,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
 
   render() {
     const { params, onReset } = this.props;
+    const { intl } = this.context;
 
     if (params) {
       const listParams = Object.keys(params);
@@ -139,7 +141,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
               type="h4"
               className={s.controller_header_title}
             >
-              Params
+              {intl.getText('example.params')}
             </Typography>
             <Button
               onClick={onReset}
@@ -151,7 +153,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
                 {this.icons.reset}
               </div>
               <Typography type="b1" color="grey" className={s.reset_text}>
-                Reset
+                {intl.getText('example.reset')}
               </Typography>
             </Button>
           </Box>
@@ -185,3 +187,9 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
     return null;
   }
 }
+
+ParamsWrapper.contextTypes = {
+  intl: PropTypes.shape({
+    getText: PropTypes.func,
+  }),
+};
