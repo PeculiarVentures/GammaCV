@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Typography, TextField, Box } from 'lib-react-components';
+import PropTypes from 'prop-types';
 import { GroupItem } from './group_item';
 import { ExampleItem } from './example_item';
 import s from './index.module.sass';
@@ -8,8 +9,9 @@ interface IExamplesPageProps {
   config: IExampleGroup[];
 }
 
-export const ExamplesPage: React.FC<IExamplesPageProps> = (props) => {
+export const ExamplesPage: React.FC<IExamplesPageProps> = (props, context) => {
   const { config } = props;
+  const { intl } = context;
   const [searchValue, setSearchValue] = useState('');
 
   const getExampleItemStyles = (index: number) => ({ animationDelay: `${index / 20}s` });
@@ -37,10 +39,10 @@ export const ExamplesPage: React.FC<IExamplesPageProps> = (props) => {
           <Typography
             type="h3"
           >
-            Examples
+            {intl.getText('actions.examples')}
           </Typography>
           <TextField
-            placeholder="Search"
+            placeholder={intl.getText('actions.search')}
             className={s.search_field}
             onChange={(e) => {
               setSearchValue(e.target.value);
@@ -48,25 +50,29 @@ export const ExamplesPage: React.FC<IExamplesPageProps> = (props) => {
           />
         </Box>
 
-        <div className={s.items_wrapper}>
-          {(filteredConfig || config).map((group) => (
-            <GroupItem
-              key={group.key}
-              name={group.name}
-            >
-              {group.examples.map((example, index) => (
-                <ExampleItem
-                  key={example.path}
-                  name={example.name}
-                  type={example.type}
-                  path={example.path}
-                  style={getExampleItemStyles(index)}
-                />
-              ))}
-            </GroupItem>
-          ))}
-        </div>
+        {(filteredConfig || config).map((group) => (
+          <GroupItem
+            key={group.key}
+            name={intl.getText('groups', undefined, group.key)}
+          >
+            {group.examples.map((example, index) => (
+              <ExampleItem
+                key={example.path}
+                name={intl.getText('operations', undefined, example.path)}
+                type={intl.getText('type', undefined, example.type)}
+                path={example.path}
+                style={getExampleItemStyles(index)}
+              />
+            ))}
+          </GroupItem>
+        ))}
       </div>
     </div>
   );
+};
+
+ExamplesPage.contextTypes = {
+  intl: PropTypes.shape({
+    getText: PropTypes.func,
+  }),
 };

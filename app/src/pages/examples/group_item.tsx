@@ -15,6 +15,7 @@ export const GroupItem: React.FC<IGroupItemProps> = (props) => {
       <Typography
         type="c1"
         color="grey"
+        className={s.group_name}
       >
         {name}
       </Typography>

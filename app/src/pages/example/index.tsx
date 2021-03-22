@@ -435,6 +435,7 @@ export default class ExamplePage
     const {
       error, isCameraAccess, canvas, params, isPlaying, isLoading,
     } = this.state;
+    const { intl } = this.context;
 
     if (!error && !isCameraAccess) {
       return (
@@ -462,7 +463,7 @@ export default class ExamplePage
                 color="black"
                 align="center"
               >
-                Sorry, looks like we don&apos;t have access to use your camera
+                {intl.getText('example.noAccess')}
               </Typography>
             </div>
             <Button
@@ -471,7 +472,7 @@ export default class ExamplePage
               color="primary"
               className={s.error_button}
             >
-              Try Again
+              {intl.getText('example.tryAgain')}
             </Button>
           </div>
         </div>
@@ -488,7 +489,7 @@ export default class ExamplePage
               color="black"
               className={s.top_title_text}
             >
-              {exampleName}
+              {intl.getText('operations', undefined, exampleName)}
             </Typography>
             <Typography
               type="h3"

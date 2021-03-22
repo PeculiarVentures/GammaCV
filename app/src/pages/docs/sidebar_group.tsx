@@ -1,5 +1,6 @@
 import React from 'react';
 import { Typography } from 'lib-react-components';
+import PropTypes from 'prop-types';
 import Link from 'next/link';
 import clx from 'classnames';
 import s from './sidebar_group.module.sass';
@@ -8,16 +9,18 @@ interface ISidebarGroupProps {
   group: IDocGroup;
 }
 
-export const SidebarGroup: React.FC<ISidebarGroupProps> = (props) => {
+export const SidebarGroup: React.FC<ISidebarGroupProps> = (props, context) => {
   const { group } = props;
+  const { intl } = context;
 
   return (
     <li className={s.root}>
       <Typography
         type="c1"
         color="grey"
+        className={s.group_name}
       >
-        {group.name}
+        {intl.getText('groups', undefined, group.name)}
       </Typography>
       <ul className={s.list}>
         {group.children.map((doc) => (
@@ -34,7 +37,7 @@ export const SidebarGroup: React.FC<ISidebarGroupProps> = (props) => {
                   'b2',
                 )}
               >
-                {doc.name}
+                {intl.getText('operations', undefined, doc.name)}
               </a>
             </Link>
           </li>
@@ -42,4 +45,10 @@ export const SidebarGroup: React.FC<ISidebarGroupProps> = (props) => {
       </ul>
     </li>
   );
+};
+
+SidebarGroup.contextTypes = {
+  intl: PropTypes.shape({
+    getText: PropTypes.func,
+  }),
 };

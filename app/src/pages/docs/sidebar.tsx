@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Box } from 'lib-react-components';
+import PropTypes from 'prop-types';
 import { SidebarGroup } from './sidebar_group';
 import s from './sidebar.module.sass';
 
@@ -7,8 +8,9 @@ interface ISidebarProps {
   config: IDocGroup[];
 }
 
-export const Sidebar: React.FC<ISidebarProps> = (props) => {
+export const Sidebar: React.FC<ISidebarProps> = (props, context) => {
   const { config } = props;
+  const { intl } = context;
   const [searchValue, setSearchValue] = useState('');
   let filteredConfig: IDocGroup[];
 
@@ -33,7 +35,7 @@ export const Sidebar: React.FC<ISidebarProps> = (props) => {
     >
       <div className={s.header}>
         <TextField
-          placeholder="Search"
+          placeholder={intl.getText('actions.search')}
           className={s.search_field}
           onChange={(e) => {
             setSearchValue(e.target.value);
@@ -50,4 +52,10 @@ export const Sidebar: React.FC<ISidebarProps> = (props) => {
       </ul>
     </Box>
   );
+};
+
+Sidebar.contextTypes = {
+  intl: PropTypes.shape({
+    getText: PropTypes.func,
+  }),
 };
