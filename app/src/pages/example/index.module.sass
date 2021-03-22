@@ -80,11 +80,14 @@
 
 .error
   &_wrapper
+    position: absolute
+    width: 100%
     max-width: 430px
     padding: 0 30px
     text-align: center
-    vertical-align: middle
-    display: inline-block
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
   &_icon
     width: 85px
     margin: 0 auto 55px
@@ -115,6 +118,7 @@
   &_icon
     margin-right: 8px
     .params_icon
+      margin-top: -2px
       width: 20px
     .cross_icon
       margin-top: -5px

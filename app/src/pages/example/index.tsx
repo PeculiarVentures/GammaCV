@@ -81,6 +81,7 @@ export default class ExamplePage
     super(props);
 
     this.params = this.handlePrepareParams();
+
     this.state = {
       isPlaying: false,
       exampleInitialized: false,
@@ -261,7 +262,6 @@ export default class ExamplePage
       this.imgInput = new gm.Tensor('uint8', [height, width, 4]);
       this.sess = new gm.Session();
       this.stream = new gm.CaptureVideo(width, height);
-
       if (props.data.init) {
         this.opContext = props.data.init(this.op, this.sess, this.params);
       }
@@ -505,10 +505,12 @@ export default class ExamplePage
       );
     }
 
+    const showFps = isMobile ? !showParams : true;
+
     return (
       <div className={s.root_example}>
         <div className={s.example_wrapper}>
-          {!showParams && (
+          {showFps && (
             <div className={s.top_title_wrapper}>
               <Typography
                 type="h3"
@@ -577,7 +579,7 @@ export default class ExamplePage
                 <div className={s.show_params_icon}>
                   {showParams ? (
                     <img src="/static/images/cross_icon.svg" alt="Cross icon" className={s.cross_icon} />) : (
-                    <img src="/static/images/params_icon.svg" alt="Params icon" className={s.params_icon} />
+                      <img src="/static/images/params_icon.svg" alt="Params icon" className={s.params_icon} />
                   )}
                 </div>
                 <Typography type="b1" color="light_grey">
