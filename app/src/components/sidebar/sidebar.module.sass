@@ -6,8 +6,10 @@
   max-height: calc(100vh - 80px)
   display: none
   vertical-align: top
-  &.visible
+  &.docs_page
     display: inline-block
+  &.visible
+    display: none
 
 
 .visible
@@ -42,6 +44,11 @@
     max-height: calc(100% - 60px)
     background-color: #0d091a !important
     z-index: 2
+    border-style: none !important
+    &.docs_page
+      display: none
+    &.visible
+      display: block
 
   .header
     display: none

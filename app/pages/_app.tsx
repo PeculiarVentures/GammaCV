@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { IntlWrapper } from 'lib-pintl';
 import { useRouter } from 'next/router';
@@ -14,7 +14,17 @@ export default function MyApp({ Component, pageProps }) {
   const isMain = router.pathname === '/';
   const showFooter = router.pathname === '/' || router.pathname === '/examples';
   const isDocs = router.pathname === '/docs/[id]';
-  const [showSidebar, setShowSidebar] = useState(isDocs);
+  const [showSidebar, setShowSidebar] = useState(false);
+
+  useEffect(() => {
+    const hideSidebar = () => setShowSidebar(false);
+
+    router.events.on('routeChangeStart', hideSidebar);
+
+    return () => {
+      router.events.off('routeChangeStart', hideSidebar);
+    };
+  });
 
   return (
     <>
@@ -31,7 +41,7 @@ export default function MyApp({ Component, pageProps }) {
         <noscript>You need to enable JavaScript to run this app.</noscript>
       </Head>
 
-      <div className={s.main_wrapper}>
+      <div className={s.main_wrapper} style={{ overflow: showSidebar ? 'hidden' : 'auto' }}>
         <IntlWrapper messages={en}>
           <Header
             isMain={isMain}
@@ -41,7 +51,7 @@ export default function MyApp({ Component, pageProps }) {
           <Sidebar
             config={config}
             visible={showSidebar}
-            hideSidebar={() => setShowSidebar(false)}
+            isDocs={isDocs}
           />
           <Component {...pageProps} />
           {showFooter && (

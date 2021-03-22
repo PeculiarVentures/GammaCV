@@ -421,6 +421,7 @@ export default class ExamplePage
 
   renderStartStopButton() {
     const { isPlaying } = this.state;
+    const { device } = this.context;
     const icon = isPlaying
       ? <img src="/static/images/pause_icon.svg" alt="Pause icon" />
       : <img src="/static/images/play_icon.svg" alt="Play icon" />;
@@ -429,6 +430,7 @@ export default class ExamplePage
       <span
         ref={this.refStopStartButton}
         className={s.stop_play_button}
+        style={{ visibility: isPlaying && device.type === 'mobile' ? 'hidden' : 'visible' }}
       >
         <div className={s.stop_play_icon}>
           {icon}
@@ -442,7 +444,7 @@ export default class ExamplePage
     const {
       error, isCameraAccess, canvas, params, isPlaying, isLoading, showParams,
     } = this.state;
-    const { device } = this.context;
+    const { device, intl } = this.context;
     const isMobile = device.type === 'mobile';
 
     if (!error && !isCameraAccess) {
@@ -484,6 +486,22 @@ export default class ExamplePage
             </Button>
           </div>
         </div>
+      );
+    }
+
+    if (isMobile && device.height < device.width) {
+      return (
+        <Box
+          fill="primary"
+          className={s.to_portrait}
+        >
+          <Typography
+            type="h4"
+            color="light_grey"
+          >
+            {intl.getText('actions.toPortrait')}
+          </Typography>
+        </Box>
       );
     }
 

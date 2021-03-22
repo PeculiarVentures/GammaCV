@@ -69,6 +69,15 @@
 .stop_play_icon
   width: 100px
 
+.to_portrait
+  position: relative
+  width: 100vw
+  height: 100vh
+  z-index: 5
+  display: flex
+  align-items: center
+  justify-content: center
+
 .error
   &_wrapper
     max-width: 430px
@@ -108,6 +117,8 @@
     .params_icon
       width: 20px
     .cross_icon
+      margin-top: -5px
+      margin-left: -3px
       width: 15px
 
 @include tablet()
@@ -118,11 +129,16 @@
   .root_example
     padding: 60px 0 0
     position: relative
+    height: 100%
 
   .canvas_wrapper
     max-width: none
     border-width: 0
     height: calc( 100vh - 60px )
+
+  .canvas_overlay
+    &:hover
+      opacity: 0
 
   .top_title
     &_wrapper

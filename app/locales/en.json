@@ -3,7 +3,8 @@
     "docs": "Docs",
     "examples": "Examples",
     "github": "GitHub",
-    "getInTouch": "Get in touch"
+    "getInTouch": "Get in touch",
+    "toPortrait": "Turn on your device to portrait orientation"
   },
   "404": {
     "title": "Page not found"

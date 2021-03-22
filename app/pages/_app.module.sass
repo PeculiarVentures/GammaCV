@@ -6,4 +6,8 @@
 @include tablet()
   .main_wrapper
     min-width: 1024px
-    overflow: auto
+  
+@include mobile()
+  .main_wrapper
+    position: relative
+    z-index: 0

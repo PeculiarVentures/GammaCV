@@ -7,12 +7,12 @@ import s from './sidebar.module.sass';
 
 interface ISidebarProps {
   config: IDocGroup[];
-  hideSidebar?: () => void;
-  visible?: boolean;
+  isDocs: boolean;
+  visible: boolean;
 }
 
 export const Sidebar: React.FC<ISidebarProps> = (props) => {
-  const { config, hideSidebar, visible } = props;
+  const { config, visible, isDocs } = props;
   const [searchValue, setSearchValue] = useState('');
   let filteredConfig: IDocGroup[];
 
@@ -35,6 +35,7 @@ export const Sidebar: React.FC<ISidebarProps> = (props) => {
       strokeOpacity={0.15}
       className={clx(s.root, {
         [s.visible]: visible,
+        [s.docs_page]: isDocs,
       })}
     >
       <div className={s.header}>
@@ -51,7 +52,6 @@ export const Sidebar: React.FC<ISidebarProps> = (props) => {
           <SidebarGroup
             key={group.name}
             group={group}
-            hideSidebar={hideSidebar}
           />
         ))}
       </ul>
