@@ -2,7 +2,7 @@
   "actions": {
     "docs": "Docs",
     "examples": "Examples",
-    "github": "Github",
+    "github": "GitHub",
     "getInTouch": "Get in touch",
     "search": "Search"
   },
@@ -29,7 +29,7 @@
       },
       "cross_platform": {
         "title": "Cross Platform",
-        "text": "We did the work so you don\"t have to. All of the capabilities offered by GammaCV have been tested to work reliably in all modern browsers on desktop, mobiles and tablets."
+        "text": "We did the work so you don't have to. All of the capabilities offered by GammaCV have been tested to work reliably in all modern browsers on desktop, mobiles and tablets."
       }
     }
   },

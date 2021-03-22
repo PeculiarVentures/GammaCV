@@ -6,17 +6,16 @@
   max-height: calc(100vh - 80px)
   display: none
   vertical-align: top
+  position: fixed
+  left: 0
+  top: 80px
   &.docs_page
-    display: inline-block
+    display: block
   &.visible
     display: none
 
-
-.visible
-  visibility: visible
-
 .header
-  padding: 25px 26px 56px 25px
+  padding: 25px 25px 55px
 
 .search_field
   input
@@ -25,7 +24,7 @@
     font-size: 14px
 
 .list
-  padding: 0 50px 60px
+  padding: 0 48px 60px
   list-style-type: none
   height: calc(100% - 125px)
   overflow: auto

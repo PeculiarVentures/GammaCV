@@ -1,8 +1,14 @@
 @import ../../styles/_mixins
 
 .root_example
-  padding: 40px 70px 40px
+  height: 100vh
+  padding: 120px 70px 40px
   text-align: center
+  &::before
+    display: inline-block
+    vertical-align: middle
+    height: 100%
+    content: ""
 
 .example_wrapper
   position: relative

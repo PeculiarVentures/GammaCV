@@ -10,6 +10,7 @@ interface IParamsWrapperProps {
   onReset: () => void;
   params?: TParams;
   paramsValue: TParamsValue;
+  isParamsChanged: boolean;
   isMobile: boolean;
 }
 export default class ParamsWrapper extends React.Component<IParamsWrapperProps> {
@@ -127,7 +128,12 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
   };
 
   render() {
-    const { params, onReset, isMobile } = this.props;
+    const {
+      params,
+      onReset,
+      isMobile,
+      isParamsChanged,
+    } = this.props;
     const { intl } = this.context;
 
     if (params) {
@@ -157,6 +163,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
               bgType="clear"
               size="small"
               className={s.reset}
+              disabled={isParamsChanged}
             >
               <div className={s.reset_icon}>
                 {isMobile ? this.icons.resetMobile : this.icons.reset}

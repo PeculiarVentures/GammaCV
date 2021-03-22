@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import { Header, Footer, Sidebar } from '../src/components';
 import config from '../sources/docs/config.json';
 import en from '../locales/en.json';
-import s from './_app.module.sass';
 import './reset.sass';
 
 export default function MyApp({ Component, pageProps }) {
@@ -17,6 +16,9 @@ export default function MyApp({ Component, pageProps }) {
   const [showSidebar, setShowSidebar] = useState(false);
 
   useEffect(() => {
+    const wrapper = document.getElementById('__next');
+    wrapper.className = showSidebar && 'show_sidebar';
+
     const hideSidebar = () => setShowSidebar(false);
 
     router.events.on('routeChangeStart', hideSidebar);
@@ -41,24 +43,22 @@ export default function MyApp({ Component, pageProps }) {
         <noscript>You need to enable JavaScript to run this app.</noscript>
       </Head>
 
-      <div className={s.main_wrapper} style={{ overflow: showSidebar ? 'hidden' : 'auto' }}>
-        <IntlWrapper messages={en}>
-          <Header
-            isMain={isMain}
-            displaySidebar={(state) => setShowSidebar(state)}
-            showSidebar={showSidebar}
-          />
-          <Sidebar
-            config={config}
-            visible={showSidebar}
-            isDocs={isDocs}
-          />
-          <Component {...pageProps} />
-          {showFooter && (
-            <Footer />
-          )}
-        </IntlWrapper>
-      </div>
+      <IntlWrapper messages={en}>
+        <Header
+          isMain={isMain}
+          displaySidebar={(state) => setShowSidebar(state)}
+          showSidebar={showSidebar}
+        />
+        <Sidebar
+          config={config}
+          visible={showSidebar}
+          isDocs={isDocs}
+        />
+        <Component {...pageProps} />
+        {showFooter && (
+          <Footer />
+        )}
+      </IntlWrapper>
     </>
   );
 }

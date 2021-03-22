@@ -1,11 +1,13 @@
 @import ../../styles/_mixins
 
 .main
-  display: inline-block
-  max-width: calc(100vw - 350px)
-  max-height: calc(100vh - 80px)
-  overflow-y: auto
+  padding: 80px 0 0 350px
+
+.m_width
+  padding: 115px 150px 88px
+  max-width: 1200px
   width: 100%
+  min-height: calc(100vh - 80px - 80px)
 
 .anchor_link
   position: absolute
@@ -21,7 +23,6 @@
   opacity: 0
 
 .doc
-  padding: 115px 150px 88px
   &_code
     padding: 0 7px
     border-radius: 3px
@@ -87,5 +88,5 @@
     max-height: none
     max-width: none
 
-  .doc
+  .m_width
     padding: 54px 30px 74px

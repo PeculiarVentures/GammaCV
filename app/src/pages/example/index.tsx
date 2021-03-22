@@ -71,6 +71,8 @@ export default class ExamplePage
 
   params: TParamsValue;
 
+  defaultParams: TParamsValue;
+
   canvasRef: React.RefObject<HTMLCanvasElement> = React.createRef();
 
   refFps: React.RefObject<HTMLElement> = React.createRef();
@@ -80,7 +82,8 @@ export default class ExamplePage
   constructor(props: IExamplePageProps, context: IContextType) {
     super(props);
 
-    this.params = this.handlePrepareParams();
+    this.defaultParams = this.handlePrepareParams();
+    this.params = this.defaultParams;
 
     this.state = {
       isPlaying: false,
@@ -415,7 +418,7 @@ export default class ExamplePage
 
   handleReset = () => {
     this.setState({
-      params: this.handlePrepareParams(),
+      params: this.defaultParams,
     }, this.onChangeParams);
   };
 
@@ -518,7 +521,7 @@ export default class ExamplePage
                 color="black"
                 className={s.top_title_text}
               >
-                {exampleName}
+                {intl.getText('operations', undefined, exampleName)}
               </Typography>
               <Typography
                 type="h3"
@@ -578,8 +581,9 @@ export default class ExamplePage
               >
                 <div className={s.show_params_icon}>
                   {showParams ? (
-                    <img src="/static/images/cross_icon.svg" alt="Cross icon" className={s.cross_icon} />) : (
-                      <img src="/static/images/params_icon.svg" alt="Params icon" className={s.params_icon} />
+                    <img src="/static/images/cross_icon.svg" alt="Cross icon" className={s.cross_icon} />
+                  ) : (
+                    <img src="/static/images/params_icon.svg" alt="Params icon" className={s.params_icon} />
                   )}
                 </div>
                 <Typography type="b1" color="light_grey">
@@ -594,6 +598,7 @@ export default class ExamplePage
                 handleChangeState={this.handleChangeState}
                 paramsValue={{ ...params }}
                 isMobile={isMobile}
+                isParamsChanged={JSON.stringify(params) === JSON.stringify(this.defaultParams)}
               />
             )}
 

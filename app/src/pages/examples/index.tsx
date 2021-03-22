@@ -30,42 +30,45 @@ export const ExamplesPage: React.FC<IExamplesPageProps> = (props, context) => {
 
   return (
     <div className={s.root}>
-      <Box
-        className={clx(s.header, s.m_width)}
-        stroke="grey"
-        strokeOpacity={0.15}
-        strokeType="bottom"
-      >
-        <Typography
-          type="h3"
+      <div className={s.m_width}>
+        <Box
+          className={s.header}
+          stroke="grey"
+          strokeOpacity={0.15}
+          strokeType="bottom"
         >
-          {intl.getText('actions.examples')}
-        </Typography>
-        <TextField
-          placeholder={intl.getText('actions.search')}
-          className={s.search_field}
-          onChange={(e) => {
-            setSearchValue(e.target.value);
-          }}
-        />
-      </Box>
-
-      {(filteredConfig || config).map((group) => (
-        <GroupItem
-          key={group.key}
-          name={intl.getText('groups', undefined, group.key)}
-        >
-          {group.examples.map((example, index) => (
-            <ExampleItem
-              key={example.path}
-              name={intl.getText('operations', undefined, example.path)}
-              type={intl.getText('type', undefined, example.type)}
-              path={example.path}
-              style={getExampleItemStyles(index)}
-            />
+          <Typography
+            type="h3"
+          >
+            {intl.getText('actions.examples')}
+          </Typography>
+          <TextField
+            placeholder={intl.getText('actions.search')}
+            className={s.search_field}
+            onChange={(e) => {
+              setSearchValue(e.target.value);
+            }}
+          />
+        </Box>
+        <div className={s.items_wrapper}>
+          {(filteredConfig || config).map((group) => (
+            <GroupItem
+              key={group.key}
+              name={intl.getText('groups', undefined, group.key)}
+            >
+              {group.examples.map((example, index) => (
+                <ExampleItem
+                  key={example.path}
+                  name={intl.getText('operations', undefined, example.path)}
+                  type={intl.getText('type', undefined, example.type)}
+                  path={example.path}
+                  style={getExampleItemStyles(index)}
+                />
+              ))}
+            </GroupItem>
           ))}
-        </GroupItem>
-      ))}
+        </div>
+      </div>
     </div>
   );
 };
