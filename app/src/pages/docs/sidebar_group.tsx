@@ -20,7 +20,7 @@ export const SidebarGroup: React.FC<ISidebarGroupProps> = (props, context) => {
         color="grey"
         className={s.group_name}
       >
-        {intl.getText(`groups.${group.name}`)}
+        {intl.getText('groups', undefined, group.name)}
       </Typography>
       <ul className={s.list}>
         {group.children.map((doc) => (
@@ -37,7 +37,7 @@ export const SidebarGroup: React.FC<ISidebarGroupProps> = (props, context) => {
                   'b2',
                 )}
               >
-                {intl.getText(`operations.${doc.name}`)}
+                {intl.getText('operations', undefined, doc.name)}
               </a>
             </Link>
           </li>

@@ -15,7 +15,7 @@ const facts = [
     iconHeight: 27,
   },
   {
-    name: "cross_platform",
+    name: 'cross_platform',
     icon: '/static/images/cross_platform_icon.svg',
     iconHeight: 33,
   },
