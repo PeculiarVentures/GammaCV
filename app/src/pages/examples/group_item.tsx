@@ -17,7 +17,7 @@ export const GroupItem: React.FC<IGroupItemProps> = (props) => {
         color="grey"
         className={s.group_name}
       >
-        {name.toUpperCase()}
+        {name}
       </Typography>
       <div className={s.list}>
         {children}

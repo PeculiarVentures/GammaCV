@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Typography, TextField, Box } from 'lib-react-components';
-import clx from 'classnames';
 import PropTypes from 'prop-types';
 import { GroupItem } from './group_item';
 import { ExampleItem } from './example_item';

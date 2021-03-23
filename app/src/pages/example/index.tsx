@@ -612,10 +612,12 @@ export default class ExamplePage
 }
 
 ExamplePage.contextTypes = {
-  device: PropTypes.shape({
-    type: PropTypes.string,
-  }),
   intl: PropTypes.shape({
     getText: PropTypes.func,
+  }),
+  device: PropTypes.shape({
+    type: PropTypes.string,
+    width: PropTypes.number,
+    height: PropTypes.number,
   }),
 };
