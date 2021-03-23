@@ -57,6 +57,7 @@
     "resize": "Resize",
     "gaussian_blur": "Gaussian Blur",
     "norm": "Normalization",
+    "grayscale": "Grayscale",
     "color_segmentation": "Color Segmentation",
     "hsv_color": "HSV Color Converter",
     "threshold": "Threshold",

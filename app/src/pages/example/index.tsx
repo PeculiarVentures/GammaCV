@@ -34,6 +34,7 @@ interface IExamplePageState {
   isCameraAccess: boolean;
   isLoading: boolean;
   showParams: boolean;
+  isParamsChanged: boolean;
 }
 
 interface IContextType {
@@ -71,8 +72,6 @@ export default class ExamplePage
 
   params: TParamsValue;
 
-  defaultParams: TParamsValue;
-
   canvasRef: React.RefObject<HTMLCanvasElement> = React.createRef();
 
   refFps: React.RefObject<HTMLElement> = React.createRef();
@@ -82,8 +81,7 @@ export default class ExamplePage
   constructor(props: IExamplePageProps, context: IContextType) {
     super(props);
 
-    this.defaultParams = this.handlePrepareParams();
-    this.params = this.defaultParams;
+    this.params = this.handlePrepareParams();
 
     this.state = {
       isPlaying: false,
@@ -94,6 +92,7 @@ export default class ExamplePage
       isCameraAccess: false,
       isLoading: true,
       showParams: context.device.type !== 'mobile',
+      isParamsChanged: false,
     };
 
     this.lazyUpdate = new LazyUpdate(500, this.onResizeEnd);
@@ -236,12 +235,13 @@ export default class ExamplePage
   };
 
   getSize = (context = this.context) => {
-    if (context.device.type === 'mobile') {
-      const el = document.getElementById('__next');
+    const { device: { type, width, height } } = context;
+
+    if (type === 'mobile') {
       const res = getMaxAvailableSize(
-        el.offsetWidth / (el.offsetHeight - 60),
-        Math.min(el.offsetWidth, 600),
-        Math.min(el.offsetHeight, 600),
+        width / (height - 60),
+        Math.min(width, 600),
+        Math.min(height, 600),
       );
 
       return {
@@ -383,6 +383,7 @@ export default class ExamplePage
             [key]: value,
           },
         },
+        isParamsChanged: true,
       };
     });
 
@@ -418,7 +419,8 @@ export default class ExamplePage
 
   handleReset = () => {
     this.setState({
-      params: this.defaultParams,
+      params: this.handlePrepareParams(),
+      isParamsChanged: false,
     }, this.onChangeParams);
   };
 
@@ -445,7 +447,7 @@ export default class ExamplePage
   render() {
     const { exampleName, data } = this.props;
     const {
-      error, isCameraAccess, canvas, params, isPlaying, isLoading, showParams,
+      error, isCameraAccess, canvas, params, isPlaying, isLoading, showParams, isParamsChanged,
     } = this.state;
     const { device, intl } = this.context;
     const isMobile = device.type === 'mobile';
@@ -598,7 +600,7 @@ export default class ExamplePage
                 handleChangeState={this.handleChangeState}
                 paramsValue={{ ...params }}
                 isMobile={isMobile}
-                isParamsChanged={JSON.stringify(params) === JSON.stringify(this.defaultParams)}
+                isParamsChanged={isParamsChanged}
               />
             )}
 

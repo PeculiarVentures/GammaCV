@@ -163,7 +163,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
               bgType="clear"
               size="small"
               className={s.reset}
-              disabled={isParamsChanged}
+              disabled={!isParamsChanged}
             >
               <div className={s.reset_icon}>
                 {isMobile ? this.icons.resetMobile : this.icons.reset}

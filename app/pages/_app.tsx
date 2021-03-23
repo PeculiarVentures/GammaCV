@@ -16,8 +16,29 @@ export default function MyApp({ Component, pageProps }) {
   const [showSidebar, setShowSidebar] = useState(false);
 
   useEffect(() => {
-    const wrapper = document.getElementById('__next');
-    wrapper.className = showSidebar && 'show_sidebar';
+    const disableScroll = () => {
+      if (document.body.scrollHeight > window.innerHeight) {
+        document.body.style.marginTop = `-${window.pageYOffset}px`;
+        document.body.style.position = 'fixed';
+        document.body.style.overflowY = 'scroll';
+      }
+    };
+    const enableScroll = () => {
+      document.body.style.position = '';
+      document.body.style.overflowY = '';
+
+      if (document.body.style.marginTop) {
+        const scrollTop = -parseInt(document.body.style.marginTop, 10);
+        document.body.style.marginTop = '';
+        window.scrollTo(window.pageXOffset, scrollTop);
+      }
+    };
+
+    if (showSidebar) {
+      disableScroll();
+    } else {
+      enableScroll();
+    }
 
     const hideSidebar = () => setShowSidebar(false);
 
