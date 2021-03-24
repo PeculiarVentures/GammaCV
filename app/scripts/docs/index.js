@@ -110,11 +110,9 @@ const renderMD = (data) => {
 
       out.push(...params.map((e) => ([
         '|',
-        '**',
-        e.optional ? `${e.name}?` : e.name,
-        '**',
+        `**${e.optional ? `${e.name}?` : e.name}**`,
         '|',
-        e.type.names.join(' \\| '),
+        `<var>${e.type.names.join(' \\| ')}</var>`,
         '|',
         e.description ? e.description.replace(/\n/g, '') : e.description,
         '|',
