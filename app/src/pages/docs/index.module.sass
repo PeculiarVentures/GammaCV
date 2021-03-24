@@ -73,6 +73,18 @@
       width: 30%
     &:nth-child(3)
       width: 60px
+    var
+      line-height: 1.6
+      letter-spacing: .35px
+      font-size: 15px
+      color: #373d4d
+      font-style: normal
+    strong
+      line-height: 1.3
+      letter-spacing: .4px
+      font-size: 15px
+      color: #373d4d
+      font-weight: 600
 
   >:first-child
     margin-top: 0
@@ -89,4 +101,46 @@
     max-width: none
 
   .m_width
-    padding: 54px 30px 74px
+    padding: 30px 30px 74px
+
+  .anchor_link_style
+    display: none
+
+  .doc
+    h1:first-child
+      margin-top: 24px
+    h2:first-child
+      margin-bottom: 55px
+
+    h6
+      margin-bottom: 5px
+
+    tr
+      display: grid
+      grid-template-columns: .35fr .65fr
+      grid-template-rows: auto 1fr
+      border-top: 1px solid #f6f6f6
+      padding: 21px 0 30px
+      gap: 0 10px
+      grid-template-areas: "first third" "second third"
+      align-items: start
+      &:last-child
+        border-bottom: 1px solid #f6f6f6
+
+    td
+      width: auto !important
+      border-style: none
+      padding: 0
+      vertical-align: top
+      var
+        color: #cbcfd7
+      strong
+        display: inline-block
+        vertical-align: top
+      &:first-child
+        grid-area: first
+      &:nth-child(2)
+        grid-area: second
+      &:last-child
+        grid-area: third
+        margin-bottom: 16px

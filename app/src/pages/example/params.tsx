@@ -63,7 +63,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
             </div>
             <Typography
               type="b3"
-              color="dark"
+              color={isMobile ? 'white' : 'dark'}
               className={s.params_block_title}
             >
               {name}

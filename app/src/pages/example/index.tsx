@@ -574,7 +574,7 @@ export default class ExamplePage
               />
               {this.renderStartStopButton()}
             </Box>
-            {isMobile && (
+            {isMobile && data.params && (
               <Button
                 onClick={() => this.setState({ showParams: !showParams })}
                 bgType="clear"
