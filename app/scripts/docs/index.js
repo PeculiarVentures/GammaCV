@@ -110,11 +110,11 @@ const renderMD = (data) => {
 
       out.push(...params.map((e) => ([
         '|',
+        '**',
         e.optional ? `${e.name}?` : e.name,
+        '**',
         '|',
-        '`',
         e.type.names.join(' \\| '),
-        '`',
         '|',
         e.description ? e.description.replace(/\n/g, '') : e.description,
         '|',
@@ -142,9 +142,7 @@ const renderMD = (data) => {
 
       out.push(...returns.map((e) => ([
         '|',
-        '`',
         e.type.names.join(' \\| '),
-        '`',
         '|',
         e.description ? e.description.replace(/\n/g, '') : e.description,
         '|',
