@@ -1,4 +1,4 @@
-@import ../../styles/_mixins
+@import '../../styles/_mixins'
 
 .root
   width: 350px
@@ -9,10 +9,10 @@
   position: fixed
   left: 0
   top: 80px
-  &.docs_page
-    display: block
   &.visible
     display: none
+  &.docs_page
+    display: block
 
 .header
   padding: 25px 25px 55px
@@ -30,7 +30,7 @@
   overflow: auto
   width: 100%
 
-@include mobile()
+@include tabletMobile()
   .root
     width: 100%
     left: 0

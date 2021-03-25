@@ -1,4 +1,4 @@
-@import ../../styles/_mixins
+@import '../../styles/_mixins'
 
 $color1: #00D093
 $color2: #8F70FA
@@ -21,6 +21,9 @@ $animTime: 7s
     opacity: .2
   100%
     opacity: .8
+
+.root
+  min-height: calc( 100vh - 80px )
 
 .preview
   position: relative
@@ -72,11 +75,7 @@ $animTime: 7s
   &_title
     margin-bottom: 22px
 
-@include mobile()
-  .preview
-    padding: 168px 0 94px
-  .m_width
-    padding: 0 30px
+@include tabletMobile()
   .facts
     padding: 93px 0
     &_list
@@ -86,3 +85,13 @@ $animTime: 7s
       margin-bottom: 80px
       &:last-child
         margin-bottom: 0
+
+@include tablet()
+  .m_width
+    padding: 0 70px
+
+@include mobile()
+  .preview
+    padding: 168px 0 94px
+  .m_width
+    padding: 0 30px

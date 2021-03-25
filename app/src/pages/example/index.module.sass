@@ -1,4 +1,4 @@
-@import ../../styles/_mixins
+@import '../../styles/_mixins'
 
 .root_example
   height: 100vh
@@ -130,6 +130,13 @@
       margin-top: -5px
       margin-left: -3px
       width: 15px
+
+@include tablet()
+  .root_example
+    min-width: 1024px
+    padding-top: 60px
+  .canvas_wrapper
+    max-width: 515px
 
 @include mobile()
   .root_example

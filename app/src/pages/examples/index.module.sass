@@ -1,4 +1,4 @@
-@import ../../styles/_mixins
+@import '../../styles/_mixins'
 
 .root
   padding: 190px 0 83px
@@ -26,6 +26,10 @@
     border-radius: 20px
     padding: 0 20px
     font-size: 14px
+
+@include tablet()
+  .m_width
+    padding: 0 70px
 
 @include mobile()
   .root

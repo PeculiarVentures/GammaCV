@@ -1,4 +1,4 @@
-@import ../../styles/_mixins
+@import '../../styles/_mixins'
 
 .main
   padding: 80px 0 0 350px
@@ -93,13 +93,18 @@
     > iframe
       margin-bottom: 0
 
-@include mobile()
+@include tabletMobile()
   .main
     padding: 60px 0 0
     height: auto
     max-height: none
     max-width: none
 
+@include tablet()
+  .m_width
+    padding: 115px 70px 88px
+
+@include mobile()
   .m_width
     padding: 30px 30px 74px
 
