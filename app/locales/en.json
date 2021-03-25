@@ -92,7 +92,7 @@
     "math": "Basic"
   },
   "example": {
-    "noAccess": "Sorry, looks like we don&apos;t have access to use your camera",
+    "noAccess": "Sorry, looks like we don't have access to use your camera",
     "tryAgain": "Try Again",
     "params": "Params",
     "reset": "Reset",
