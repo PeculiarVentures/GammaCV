@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Box } from 'lib-react-components';
+import { TextField, Box, Typography } from 'lib-react-components';
 import PropTypes from 'prop-types';
 import { SidebarGroup } from './sidebar_group';
 import s from './sidebar.module.sass';
@@ -12,15 +12,25 @@ export const Sidebar: React.FC<ISidebarProps> = (props, context) => {
   const { config } = props;
   const { intl } = context;
   const [searchValue, setSearchValue] = useState('');
-  let filteredConfig: IDocGroup[];
+  let filteredConfig: IDocGroup[] = config;
 
   if (searchValue) {
-    filteredConfig = config.map((group) => ({
-      ...group,
-      children: group.children.filter(
-        (child) => child.name.toLowerCase().includes(searchValue.toLowerCase()),
-      ),
-    }));
+    filteredConfig = [];
+
+    config.forEach((group) => {
+      const newChildren = group.children.filter(({ name }) => {
+        const childName = intl.getText('operations', undefined, name);
+
+        return childName.toLowerCase().includes(searchValue.toLowerCase());
+      });
+
+      if (newChildren.length) {
+        filteredConfig.push({
+          ...group,
+          children: newChildren,
+        });
+      }
+    });
   }
 
   return (
@@ -43,12 +53,31 @@ export const Sidebar: React.FC<ISidebarProps> = (props, context) => {
         />
       </div>
       <ul className={s.list}>
-        {(filteredConfig || config).map((group) => (
+        {filteredConfig.length ? filteredConfig.map((group) => (
           <SidebarGroup
             key={group.name}
             group={group}
           />
-        ))}
+        )) : (
+          <div className={s.not_found_wrapper}>
+            <Typography
+              type="b3"
+              color="grey"
+              align="center"
+              className={s.not_found_text}
+            >
+              {searchValue}
+            </Typography>
+            <Typography
+              type="b3"
+              color="grey"
+              align="center"
+              className={s.not_found_text}
+            >
+              Not Found
+            </Typography>
+          </div>
+        )}
       </ul>
     </Box>
   );
