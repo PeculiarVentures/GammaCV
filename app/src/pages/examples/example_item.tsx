@@ -1,6 +1,7 @@
 import React from 'react';
 import { Typography } from 'lib-react-components';
 import Link from 'next/link';
+import { Highlight } from '../../components';
 import s from './example_item.module.sass';
 
 interface IExampleItemProps {
@@ -8,13 +9,14 @@ interface IExampleItemProps {
   type: string;
   path: string;
   style?: React.CSSProperties;
+  searchValue: string;
 }
 
 export const ExampleItem: React.FC<IExampleItemProps & React.HTMLAttributes<HTMLElement>> = (
   props,
 ) => {
   const {
-    name, type, path, style,
+    name, type, path, style, searchValue,
   } = props;
 
   return (
@@ -31,12 +33,12 @@ export const ExampleItem: React.FC<IExampleItemProps & React.HTMLAttributes<HTML
         >
           {type}
         </Typography>
-        <Typography
+        <Highlight
+          text={name}
+          searchValue={searchValue}
           type="b2"
           color="dark_grey"
-        >
-          {name}
-        </Typography>
+        />
       </a>
     </Link>
   );

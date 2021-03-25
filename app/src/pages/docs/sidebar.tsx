@@ -12,7 +12,7 @@ export const Sidebar: React.FC<ISidebarProps> = (props, context) => {
   const { config } = props;
   const { intl } = context;
   const [searchValue, setSearchValue] = useState('');
-  let filteredConfig: IDocGroup[];
+  let filteredConfig: IDocGroup[] = config;
 
   if (searchValue) {
     filteredConfig = config.map((group) => ({
@@ -47,6 +47,7 @@ export const Sidebar: React.FC<ISidebarProps> = (props, context) => {
           <SidebarGroup
             key={group.name}
             group={group}
+            searchValue={searchValue}
           />
         ))}
       </ul>

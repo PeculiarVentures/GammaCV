@@ -16,7 +16,7 @@ export const ExamplesPage: React.FC<IExamplesPageProps> = (props, context) => {
 
   const getExampleItemStyles = (index: number) => ({ animationDelay: `${index / 20}s` });
 
-  let filteredConfig: IExampleGroup[];
+  let filteredConfig: IExampleGroup[] = config;
 
   if (searchValue) {
     filteredConfig = config.map((group) => ({
@@ -50,22 +50,29 @@ export const ExamplesPage: React.FC<IExamplesPageProps> = (props, context) => {
           />
         </Box>
 
-        {(filteredConfig || config).map((group) => (
-          <GroupItem
-            key={group.key}
-            name={intl.getText('groups', undefined, group.key)}
-          >
-            {group.examples.map((example, index) => (
-              <ExampleItem
-                key={example.path}
-                name={intl.getText('operations', undefined, example.path)}
-                type={intl.getText('type', undefined, example.type)}
-                path={example.path}
-                style={getExampleItemStyles(index)}
-              />
-            ))}
-          </GroupItem>
-        ))}
+        <div className={s.items_wrapper}>
+          {filteredConfig.length ? filteredConfig.map((group) => (
+            <GroupItem
+              key={group.key}
+              name={group.name}
+            >
+              {group.examples.map((example, index) => (
+                <ExampleItem
+                  key={example.path}
+                  name={example.name}
+                  type={example.type}
+                  path={example.path}
+                  style={getExampleItemStyles(index)}
+                  searchValue={searchValue}
+                />
+              ))}
+            </GroupItem>
+          )) : (
+            <Typography type="h5" align="center" className={s.not_found}>
+              Nothing found
+            </Typography>
+          )}
+        </div>
       </div>
     </div>
   );
