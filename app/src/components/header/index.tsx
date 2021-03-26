@@ -39,7 +39,7 @@ export const Header: React.FC<IHeaderProps> = (props: IHeaderProps, context) => 
         <a
           className={clx(
             s.nav_item,
-            s.nav_item_link,
+            s.docs_link,
             'text_white',
             'b2',
           )}
@@ -50,7 +50,7 @@ export const Header: React.FC<IHeaderProps> = (props: IHeaderProps, context) => 
       <Button
         onClick={() => displaySidebar(!showSidebar)}
         bgType="clear"
-        className={clx(s.nav_item)}
+        className={clx(s.nav_item, s.display_docs)}
       >
         <Typography
           type="b2"

@@ -85,6 +85,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
         const {
           step, min, max, default: defaultValue,
         } = column;
+        const paramsColor = isMobile ? 'white' : 'dark_grey';
 
         result.push(
           <div key={name} className={s.params_block_wrapper}>
@@ -93,7 +94,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
             </div>
             <Typography
               type="b3"
-              color={isMobile ? 'white' : 'dark_grey'}
+              color={paramsColor}
               className={s.params_block_title}
             >
               {name}
@@ -112,7 +113,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
             </div>
             <Typography
               type="h5"
-              color={isMobile ? 'white' : 'dark_grey'}
+              color={paramsColor}
               className={s.params_block_count}
             >
               {valueParams[key]}
@@ -141,9 +142,9 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
 
       return (
         <Box
-          borderRadius={isMobile ? 0 : 8}
-          stroke={isMobile ? '' : 'grey_2'}
-          fill={isMobile ? 'black' : ''}
+          borderRadius={!isMobile && 8}
+          stroke={!isMobile && 'grey_2'}
+          fill={isMobile && 'black'}
           fillOpacity={isMobile ? 0.7 : 1}
           className={s.controller_wrapper}
         >
@@ -180,7 +181,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
               return (
                 <Box
                   key={paramName}
-                  stroke={isMobile ? '' : 'grey_2'}
+                  stroke={!isMobile && 'grey_2'}
                   strokeType="bottom"
                   className={s.params_block_section}
                 >

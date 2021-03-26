@@ -495,7 +495,9 @@ export default class ExamplePage
               color="primary"
               className={s.error_button}
             >
-              {intl.getText('example.tryAgain')}
+              {error === 'NotSupported'
+                ? intl.getText('example.tryAnother')
+                : intl.getText('example.tryAgain')}
             </Button>
           </div>
         </div>
@@ -550,8 +552,8 @@ export default class ExamplePage
           )}
           <div className={s.content_wrapper}>
             <Box
-              borderRadius={isMobile ? 0 : 8}
-              stroke={isMobile ? '' : 'grey_2'}
+              borderRadius={!isMobile && 8}
+              stroke={!isMobile && 'grey_2'}
               fill="light_grey"
               className={s.canvas_wrapper}
             >

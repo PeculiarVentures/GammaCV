@@ -35,7 +35,7 @@ export const Sidebar: React.FC<ISidebarProps> = (props, context) => {
       strokeType="right"
       strokeOpacity={0.15}
       className={clx(s.root, {
-        [s.visible]: visible,
+        [s.m_visible]: visible,
         [s.docs_page]: isDocs,
       })}
     >

@@ -9,8 +9,6 @@
   position: fixed
   left: 0
   top: 80px
-  &.visible
-    display: none
   &.docs_page
     display: block
 
@@ -36,18 +34,19 @@
     left: 0
     top: 60px
     max-height: calc(100% - 60px)
-    background-color: #0d091a !important
+    background-color: rgb(var(--black)) !important
     z-index: 5
     border-style: none !important
+    overflow: auto
     &.docs_page
       display: none
-    &.visible
+    &.m_visible
       display: block
 
   .header
     display: none
 
   .list
-    padding: 60px 40px 0
-    height: 100%
-    color: #0d091a !important
+    padding: 60px 40px 57px
+    height: auto
+    color: rgb(var(--black))
