@@ -78,7 +78,7 @@ export const ExamplesPage: React.FC<IExamplesPageProps> = (props, context) => {
             </GroupItem>
           )) : (
             <Typography type="h5" align="center" className={s.not_found}>
-              Nothing found
+              {intl.getText('actions.nothingFound')}
             </Typography>
           )}
         </div>

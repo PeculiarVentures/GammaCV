@@ -74,7 +74,7 @@ export const Sidebar: React.FC<ISidebarProps> = (props, context) => {
               align="center"
               className={s.not_found_text}
             >
-              Not Found
+              {intl.getText('actions.notFound')}
             </Typography>
           </div>
         )}

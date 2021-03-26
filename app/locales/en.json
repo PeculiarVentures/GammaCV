@@ -4,7 +4,9 @@
     "examples": "Examples",
     "github": "Github",
     "getInTouch": "Get in touch",
-    "search": "Search"
+    "search": "Search",
+    "notFound": "Not Found",
+    "nothingFound": "Nothing found"
   },
   "404": {
     "title": "Page not found"
