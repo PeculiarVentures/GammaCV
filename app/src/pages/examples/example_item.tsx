@@ -33,12 +33,15 @@ export const ExampleItem: React.FC<IExampleItemProps & React.HTMLAttributes<HTML
         >
           {type}
         </Typography>
-        <Highlight
-          text={name}
-          searchValue={searchValue}
+        <Typography
           type="b2"
           color="dark_grey"
-        />
+        >
+          <Highlight
+            text={name}
+            searchValue={searchValue}
+          />
+        </Typography>
       </a>
     </Link>
   );

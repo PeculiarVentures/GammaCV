@@ -55,6 +55,7 @@ export const ExamplesPage: React.FC<IExamplesPageProps> = (props, context) => {
               type={example.type}
               path={example.path}
               style={getExampleItemStyles(index)}
+              searchValue={searchValue}
             />
           ))}
         </GroupItem>
