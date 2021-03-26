@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Box } from 'lib-react-components';
+import { TextField, Box, Typography } from 'lib-react-components';
 import PropTypes from 'prop-types';
 import { SidebarGroup } from './sidebar_group';
 import s from './sidebar.module.sass';
@@ -12,16 +12,60 @@ export const Sidebar: React.FC<ISidebarProps> = (props, context) => {
   const { config } = props;
   const { intl } = context;
   const [searchValue, setSearchValue] = useState('');
-  let filteredConfig: IDocGroup[];
+  let filteredConfig: IDocGroup[] = config;
 
   if (searchValue) {
     filteredConfig = config.map((group) => ({
       ...group,
-      children: group.children.filter(
-        (child) => child.name.toLowerCase().includes(searchValue.toLowerCase()),
-      ),
+      children: group.children.filter((child) => {
+        const name = intl.getText('operations', undefined, child.name);
+
+        return name.toLowerCase().includes(searchValue.toLowerCase());
+      }),
     }));
   }
+
+  const renderEmptyCase = () => (
+    <div className={s.not_found_wrapper}>
+      <Typography
+        type="b3"
+        color="grey"
+        align="center"
+        className={s.not_found_text}
+      >
+        {searchValue}
+      </Typography>
+      <Typography
+        type="b3"
+        color="grey"
+        align="center"
+        className={s.not_found_text}
+      >
+        {intl.getText('actions.notFound')}
+      </Typography>
+    </div>
+  );
+
+  const renderMenu = () => {
+    let hasMenuItems = false;
+
+    const menu = filteredConfig.map((group) => {
+      if (group.children.length) {
+        hasMenuItems = true;
+      } else {
+        return null;
+      }
+
+      return (
+        <SidebarGroup
+          key={group.name}
+          group={group}
+        />
+      );
+    });
+
+    return hasMenuItems ? menu : null;
+  };
 
   return (
     <Box
@@ -43,12 +87,7 @@ export const Sidebar: React.FC<ISidebarProps> = (props, context) => {
         />
       </div>
       <ul className={s.list}>
-        {(filteredConfig || config).map((group) => (
-          <SidebarGroup
-            key={group.name}
-            group={group}
-          />
-        ))}
+        {renderMenu() || renderEmptyCase()}
       </ul>
     </Box>
   );
