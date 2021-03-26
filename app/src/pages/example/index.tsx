@@ -129,15 +129,19 @@ export default class ExamplePage
         });
         this.loading = false;
       } else if (!this.loading && this.canvasRef.current) {
-        tick.apply(this, [this.frame, {
-          canvas: this.canvasRef.current,
-          params: this.params,
-          operation: this.op,
-          session: this.sess,
-          input: this.imgInput,
-          output: this.outputTensor,
-          context: this.opContext,
-        }]);
+        try {
+          tick.apply(this, [this.frame, {
+            canvas: this.canvasRef.current,
+            params: this.params,
+            operation: this.op,
+            session: this.sess,
+            input: this.imgInput,
+            output: this.outputTensor,
+            context: this.opContext,
+          }]);
+        } catch (error) {
+          this.setState({ error: 'NotSupported' });
+        }
 
         this.frame += 1;
       }
@@ -295,25 +299,29 @@ export default class ExamplePage
 
   start = () => {
     // start capturing a camera and run loop
-    this.stream.start().catch(() => {
-      this.stop();
-      this.setState({
-        error: 'PermissionDenied',
+    try {
+      this.stream.start().catch(() => {
+        this.stop();
+        this.setState({
+          error: 'PermissionDenied',
+        });
       });
-    });
 
-    this.timeoutRequestAnimation = window.requestAnimationFrame(this.tick);
-    this.setState({
-      isPlaying: true,
-    });
-    if (
-      !this.loading
-      && this.checkRerender(this.stream.getImageBuffer('uint8'))
-    ) {
+      this.timeoutRequestAnimation = window.requestAnimationFrame(this.tick);
       this.setState({
-        isLoading: true,
+        isPlaying: true,
       });
-      this.loading = true;
+      if (
+        !this.loading
+        && this.checkRerender(this.stream.getImageBuffer('uint8'))
+      ) {
+        this.setState({
+          isLoading: true,
+        });
+        this.loading = true;
+      }
+    } catch (error) {
+      this.setState({ error: 'NotSupported' });
     }
   };
 
@@ -504,7 +512,7 @@ export default class ExamplePage
             type="h4"
             color="light_grey"
           >
-            {intl.getText('actions.toPortrait')}
+            {intl.getText('example.toPortrait')}
           </Typography>
         </Box>
       );
