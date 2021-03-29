@@ -3,14 +3,16 @@ import { Typography } from 'lib-react-components';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import clx from 'classnames';
+import { Highlight } from '../../components';
 import s from './sidebar_group.module.sass';
 
 interface ISidebarGroupProps {
   group: IDocGroup;
+  searchValue: string;
 }
 
 export const SidebarGroup: React.FC<ISidebarGroupProps> = (props, context) => {
-  const { group } = props;
+  const { group, searchValue } = props;
   const { intl } = context;
 
   return (
@@ -36,7 +38,10 @@ export const SidebarGroup: React.FC<ISidebarGroupProps> = (props, context) => {
                 'b2',
               )}
               >
-                {intl.getText('operations', undefined, doc.name)}
+                <Highlight
+                  text={intl.getText('operations', undefined, doc.name)}
+                  searchValue={searchValue}
+                />
               </a>
             </Link>
           </li>

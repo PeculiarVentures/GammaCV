@@ -21,11 +21,22 @@
     padding: 0 20px
     font-size: 14px
 
+.not_found
+  &_wrapper
+    padding: 0 48px
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+  &_text
+    margin-bottom: 5px
+
 .list
   padding: 0 48px 60px
   list-style-type: none
   height: calc(100% - 125px)
   overflow: auto
+  position: relative
   width: 100%
 
 @include tabletMobile()
