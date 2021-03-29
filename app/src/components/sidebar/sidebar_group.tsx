@@ -3,7 +3,7 @@ import { Typography } from 'lib-react-components';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import clx from 'classnames';
-import { Highlight } from '../../components';
+import { Highlight } from '../highlight';
 import s from './sidebar_group.module.sass';
 
 interface ISidebarGroupProps {
