@@ -11,7 +11,6 @@ import { Footer } from '../../components';
 import s from './index.module.sass';
 
 interface IDocsPageProps {
-  config: IDocGroup[];
   data: DocDataType;
   id: string;
 }
