@@ -75,7 +75,11 @@ $animTime: 7s
   &_title
     margin-bottom: 22px
 
-@include tabletMobile()
+@include tablet()
+  .m_width
+    padding: 0 70px
+    
+@media (max-width: 1024px)
   .facts
     padding: 93px 0
     &_list
@@ -85,10 +89,6 @@ $animTime: 7s
       margin-bottom: 80px
       &:last-child
         margin-bottom: 0
-
-@include tablet()
-  .m_width
-    padding: 0 70px
 
 @include mobile()
   .preview
