@@ -17,21 +17,10 @@ export default function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     const disableScroll = () => {
-      if (document.body.scrollHeight > window.innerHeight) {
-        document.body.style.marginTop = `-${window.pageYOffset}px`;
-        document.body.style.position = 'fixed';
-        document.body.style.overflowY = 'scroll';
-      }
+      document.body.style.overflow = 'hidden';
     };
     const enableScroll = () => {
-      document.body.style.position = '';
-      document.body.style.overflowY = '';
-
-      if (document.body.style.marginTop) {
-        const scrollTop = -parseInt(document.body.style.marginTop, 10);
-        document.body.style.marginTop = '';
-        window.scrollTo(window.pageXOffset, scrollTop);
-      }
+      document.body.style.overflow = 'visible';
     };
 
     if (showSidebar) {
