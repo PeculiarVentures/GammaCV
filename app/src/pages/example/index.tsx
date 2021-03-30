@@ -605,8 +605,8 @@ export default class ExamplePage
           )}
           <div className={s.content_wrapper}>
             <Box
-              borderRadius={!isMobile && 8}
-              stroke={!isMobile && 'grey_2'}
+              borderRadius={isMobile ? 0 : 8}
+              stroke={isMobile ? '' : 'grey_2'}
               fill="light_grey"
               className={s.canvas_wrapper}
             >
