@@ -1,17 +1,38 @@
 import React from 'react';
 import {
-  Typography, Box, Button, CircularProgress,
+  Typography,
+  Box,
+  Button,
+  CircularProgress,
 } from 'lib-react-components';
 import Link from 'next/link';
 import clx from 'classnames';
 import microFps from 'micro-fps';
 import PropTypes from 'prop-types';
 import * as gm from 'gammacv';
-import { IntlContext } from 'lib-pintl';
 import LazyUpdate from '../../utils/lazy_update';
 import { getMaxAvailableSize } from '../../utils/ratio';
 import ParamsWrapper from './params';
 import s from './index.module.sass';
+
+const getDeviceInfo = () => {
+  const { innerWidth, innerHeight } = window;
+  let type = 'desktop';
+
+  if (innerWidth <= 1024 && innerWidth > 768 && innerHeight > 375) {
+    type = 'tablet';
+  } else if (innerWidth <= 768 || (innerWidth <= 812 && innerHeight <= 375)) {
+    type = 'mobile';
+  }
+
+  return {
+    device: {
+      type,
+      width: innerWidth,
+      height: innerHeight,
+    },
+  };
+};
 
 interface IExamplePageProps {
   data: {
@@ -36,15 +57,6 @@ interface IExamplePageState {
   isLoading: boolean;
   showParams: boolean;
   isParamsChanged: boolean;
-}
-
-interface IContextType {
-  intl: IntlContext;
-  device: {
-    type: string;
-    width: number;
-    height: number;
-  };
 }
 
 export default class ExamplePage
@@ -79,20 +91,21 @@ export default class ExamplePage
 
   refStopStartButton: React.RefObject<HTMLButtonElement> = React.createRef();
 
-  constructor(props: IExamplePageProps, context: IContextType) {
+  constructor(props: IExamplePageProps) {
     super(props);
 
     this.params = this.handlePrepareParams();
+    const { device } = getDeviceInfo();
 
     this.state = {
       isPlaying: false,
       exampleInitialized: false,
-      canvas: this.getSize(context),
+      canvas: this.getSize(),
       params: this.params,
       error: '',
       isCameraAccess: false,
       isLoading: true,
-      showParams: context.device.type !== 'mobile',
+      showParams: device.type !== 'mobile',
       isParamsChanged: false,
     };
 
@@ -224,7 +237,7 @@ export default class ExamplePage
   }
 
   onResize = () => {
-    const { device } = this.context;
+    const { device } = getDeviceInfo();
 
     this.setState({
       showParams: device.type !== 'mobile',
@@ -240,8 +253,8 @@ export default class ExamplePage
     });
   };
 
-  getSize = (context = this.context) => {
-    const { device: { type, width, height } } = context;
+  getSize = () => {
+    const { device: { type, width, height } } = getDeviceInfo();
 
     if (type === 'mobile') {
       const res = getMaxAvailableSize(
@@ -436,7 +449,7 @@ export default class ExamplePage
 
   renderStartStopButton() {
     const { isPlaying } = this.state;
-    const { device } = this.context;
+    const { device } = getDeviceInfo();
     const icon = isPlaying
       ? <img src="/static/images/pause_icon.svg" alt="Pause icon" />
       : <img src="/static/images/play_icon.svg" alt="Play icon" />;
@@ -512,7 +525,8 @@ export default class ExamplePage
     const {
       error, isCameraAccess, canvas, params, isPlaying, isLoading, showParams, isParamsChanged,
     } = this.state;
-    const { device, intl } = this.context;
+    const { intl } = this.context;
+    const { device } = getDeviceInfo();
     const isMobile = device.type === 'mobile';
 
     if (!error && !isCameraAccess) {
@@ -665,10 +679,5 @@ export default class ExamplePage
 ExamplePage.contextTypes = {
   intl: PropTypes.shape({
     getText: PropTypes.func,
-  }),
-  device: PropTypes.shape({
-    type: PropTypes.string,
-    width: PropTypes.number,
-    height: PropTypes.number,
   }),
 };

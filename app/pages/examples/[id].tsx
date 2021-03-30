@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { DeviceProvider } from 'lib-react-components';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
 
@@ -35,12 +34,10 @@ const Example = (props, context) => {
     const ExamplePage = examplePage.default;
 
     return (
-      <DeviceProvider>
-        <ExamplePage
-          data={exampleData.default}
-          exampleName={id}
-        />
-      </DeviceProvider>
+      <ExamplePage
+        data={exampleData.default}
+        exampleName={id}
+      />
     );
   };
 
