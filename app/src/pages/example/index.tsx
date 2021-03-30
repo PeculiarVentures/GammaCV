@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Typography, Box, Button, CircularProgress,
 } from 'lib-react-components';
+import Link from 'next/link';
 import clx from 'classnames';
 import microFps from 'micro-fps';
 import PropTypes from 'prop-types';
@@ -140,6 +141,7 @@ export default class ExamplePage
             context: this.opContext,
           }]);
         } catch (error) {
+          this.stop();
           this.setState({ error: 'NotSupported' });
         }
 
@@ -300,12 +302,7 @@ export default class ExamplePage
   start = () => {
     // start capturing a camera and run loop
     try {
-      this.stream.start().catch(() => {
-        this.stop();
-        this.setState({
-          error: 'PermissionDenied',
-        });
-      });
+      this.stream.start();
 
       this.timeoutRequestAnimation = window.requestAnimationFrame(this.tick);
       this.setState({
@@ -321,12 +318,17 @@ export default class ExamplePage
         this.loading = true;
       }
     } catch (error) {
-      this.setState({ error: 'NotSupported' });
+      this.stop();
+      this.setState({
+        error: 'PermissionDenied',
+      });
     }
   };
 
   stop = (destroy = true) => {
-    this.stream.stop();
+    if (this.stream) {
+      this.stream.stop();
+    }
 
     const { isPlaying } = this.state;
 
@@ -452,6 +454,59 @@ export default class ExamplePage
     );
   }
 
+  renderNoAccessCase = () => {
+    const { intl } = this.context;
+
+    return (
+      <>
+        <div className={s.error_text}>
+          <Typography
+            type="h3"
+            color="black"
+            align="center"
+          >
+            {intl.getText('example.noAccess')}
+          </Typography>
+        </div>
+        <Button
+          href={window.location.href}
+          size="large"
+          color="primary"
+          className={s.error_button}
+        >
+          {intl.getText('example.tryAgain')}
+        </Button>
+      </>
+    );
+  };
+
+  renderNotSupportedCase = () => {
+    const { intl } = this.context;
+
+    return (
+      <>
+        <div className={s.error_text}>
+          <Typography
+            type="h3"
+            color="black"
+            align="center"
+          >
+            {intl.getText('example.dontSupport')}
+          </Typography>
+        </div>
+        <Link href="/examples">
+          <Button
+            size="large"
+            color="primary"
+            className={s.error_button}
+          >
+            {intl.getText('example.tryAnother')}
+          </Button>
+        </Link>
+      </>
+    );
+  };
+
   render() {
     const { exampleName, data } = this.props;
     const {
@@ -480,25 +535,9 @@ export default class ExamplePage
             <div className={s.error_icon}>
               {icon}
             </div>
-            <div className={s.error_text}>
-              <Typography
-                type="h3"
-                color="black"
-                align="center"
-              >
-                {intl.getText('example.noAccess')}
-              </Typography>
-            </div>
-            <Button
-              href={window.location.href}
-              size="large"
-              color="primary"
-              className={s.error_button}
-            >
-              {error === 'NotSupported'
-                ? intl.getText('example.tryAnother')
-                : intl.getText('example.tryAgain')}
-            </Button>
+            {error === 'NotSupported'
+              ? this.renderNotSupportedCase()
+              : this.renderNoAccessCase()}
           </div>
         </div>
       );
@@ -599,7 +638,9 @@ export default class ExamplePage
                   )}
                 </div>
                 <Typography type="b1" color="light_grey">
-                  {showParams ? 'Close' : 'Params'}
+                  {showParams
+                    ? intl.getText('example.close')
+                    : intl.getText('example.params')}
                 </Typography>
               </Button>
             )}

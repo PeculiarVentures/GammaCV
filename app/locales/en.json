@@ -97,7 +97,9 @@
     "noAccess": "Sorry, looks like we don't have access to use your camera",
     "tryAgain": "Try Again",
     "tryAnother": "Try another example",
+    "dontSupport": "Sorry, looks like your browser or device doesn’t support this example",
     "params": "Params",
+    "close": "Close",
     "reset": "Reset",
     "toPortrait": "Turn on your device to portrait orientation"
   }
