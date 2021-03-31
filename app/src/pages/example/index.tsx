@@ -449,7 +449,6 @@ export default class ExamplePage
 
   renderStartStopButton() {
     const { isPlaying } = this.state;
-    const { device } = getDeviceInfo();
     const icon = isPlaying
       ? <img src="/static/images/pause_icon.svg" alt="Pause icon" />
       : <img src="/static/images/play_icon.svg" alt="Play icon" />;
@@ -458,9 +457,12 @@ export default class ExamplePage
       <span
         ref={this.refStopStartButton}
         className={s.stop_play_button}
-        style={{ visibility: isPlaying && device.type === 'mobile' ? 'hidden' : 'visible' }}
       >
-        <div className={s.stop_play_icon}>
+        <div
+          className={clx(s.stop_play_icon, {
+            [s.m_visible]: !isPlaying,
+          })}
+        >
           {icon}
         </div>
       </span>
