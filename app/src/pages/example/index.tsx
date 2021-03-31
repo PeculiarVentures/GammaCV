@@ -12,27 +12,9 @@ import PropTypes from 'prop-types';
 import * as gm from 'gammacv';
 import LazyUpdate from '../../utils/lazy_update';
 import { getMaxAvailableSize } from '../../utils/ratio';
+import { getDeviceInfo, IDeviceInfo } from '../../utils/get_device_info';
 import ParamsWrapper from './params';
 import s from './index.module.sass';
-
-const getDeviceInfo = () => {
-  const { innerWidth, innerHeight } = window;
-  let type = 'desktop';
-
-  if (innerWidth <= 1024 && innerWidth > 768 && innerHeight > 375) {
-    type = 'tablet';
-  } else if (innerWidth <= 768 || (innerWidth <= 812 && innerHeight <= 375)) {
-    type = 'mobile';
-  }
-
-  return {
-    device: {
-      type,
-      width: innerWidth,
-      height: innerHeight,
-    },
-  };
-};
 
 interface IExamplePageProps {
   data: {
@@ -57,6 +39,7 @@ interface IExamplePageState {
   isLoading: boolean;
   showParams: boolean;
   isParamsChanged: boolean;
+  device: IDeviceInfo;
 }
 
 export default class ExamplePage
@@ -95,7 +78,7 @@ export default class ExamplePage
     super(props);
 
     this.params = this.handlePrepareParams();
-    const { device } = getDeviceInfo();
+    const device = getDeviceInfo();
 
     this.state = {
       isPlaying: false,
@@ -107,6 +90,7 @@ export default class ExamplePage
       isLoading: true,
       showParams: device.type !== 'mobile',
       isParamsChanged: false,
+      device,
     };
 
     this.lazyUpdate = new LazyUpdate(500, this.onResizeEnd);
@@ -241,18 +225,19 @@ export default class ExamplePage
   onResize = () => {
     const { error } = this.state;
 
-    if (!error) {
-      const { device } = getDeviceInfo();
+    const device = getDeviceInfo();
 
-      this.setState({
-        showParams: device.type !== 'mobile',
-      });
+    this.setState({
+      device,
+      showParams: device.type !== 'mobile',
+    });
+
+    if (!error) {
       this.lazyUpdate.activate();
     }
   };
 
   onResizeEnd = () => {
-
     this.stop(false);
     this.setState({ canvas: this.getSize() }, () => {
       this.init(this.props);
@@ -261,7 +246,7 @@ export default class ExamplePage
   };
 
   getSize = () => {
-    const { device: { type, width, height } } = getDeviceInfo();
+    const { type, width, height } = getDeviceInfo();
 
     if (type === 'mobile') {
       const res = getMaxAvailableSize(
@@ -532,10 +517,17 @@ export default class ExamplePage
   render() {
     const { exampleName, data } = this.props;
     const {
-      error, isCameraAccess, canvas, params, isPlaying, isLoading, showParams, isParamsChanged,
+      error,
+      isCameraAccess,
+      canvas,
+      params,
+      isPlaying,
+      isLoading,
+      showParams,
+      isParamsChanged,
+      device,
     } = this.state;
     const { intl } = this.context;
-    const { device } = getDeviceInfo();
     const isMobile = device.type === 'mobile';
 
     if (!error && !isCameraAccess) {
@@ -545,23 +537,6 @@ export default class ExamplePage
             size={100}
             className={s.loading}
           />
-        </div>
-      );
-    }
-
-    if (error) {
-      const icon = <img src="/static/images/Error_icon.svg" alt="Error icon" />;
-
-      return (
-        <div className={s.root_example}>
-          <div className={s.error_wrapper}>
-            <div className={s.error_icon}>
-              {icon}
-            </div>
-            {error === 'NotSupported'
-              ? this.renderNotSupportedCase()
-              : this.renderNoAccessCase()}
-          </div>
         </div>
       );
     }
@@ -579,6 +554,23 @@ export default class ExamplePage
             {intl.getText('example.toPortrait')}
           </Typography>
         </Box>
+      );
+    }
+
+    if (error) {
+      const icon = <img src="/static/images/Error_icon.svg" alt="Error icon" />;
+
+      return (
+        <div className={s.root_example}>
+          <div className={s.error_wrapper}>
+            <div className={s.error_icon}>
+              {icon}
+            </div>
+            {error === 'NotSupported'
+              ? this.renderNotSupportedCase()
+              : this.renderNoAccessCase()}
+          </div>
+        </div>
       );
     }
 
@@ -660,7 +652,7 @@ export default class ExamplePage
                     <img src="/static/images/params_icon.svg" alt="Params icon" className={s.params_icon} />
                   )}
                 </div>
-                <Typography type="b1" color="light_grey">
+                <Typography type="b1" color="light_grey" className={s.show_params_text}>
                   {showParams
                     ? intl.getText('example.close')
                     : intl.getText('example.params')}

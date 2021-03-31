@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
 import { TextField, Box, Typography } from 'lib-react-components';
 import PropTypes from 'prop-types';
-import clx from 'classnames';
 import { SidebarGroup } from './sidebar_group';
 import { useMediaQuery } from '../../utils/use_media_query';
 import s from './sidebar.module.sass';
 
 interface ISidebarProps {
   config: IDocGroup[];
-  isDocs: boolean;
-  visible: boolean;
 }
 
 export const Sidebar: React.FC<ISidebarProps> = (props, context) => {
-  const { config, visible, isDocs } = props;
+  const { config } = props;
   const { intl } = context;
   const [searchValue, setSearchValue] = useState('');
   const match = useMediaQuery('(max-width: 1024px)');
@@ -81,10 +78,7 @@ export const Sidebar: React.FC<ISidebarProps> = (props, context) => {
       stroke={match ? undefined : 'grey'}
       strokeType="right"
       strokeOpacity={0.15}
-      className={clx(s.root, {
-        [s.m_visible]: visible,
-        [s.docs_page]: isDocs,
-      })}
+      className={s.root}
     >
       <div className={s.header}>
         <TextField

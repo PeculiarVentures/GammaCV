@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { IntlWrapper } from 'lib-pintl';
 import { useRouter } from 'next/router';
 import { Header, Footer, Sidebar } from '../src/components';
+import { useMediaQuery } from '../src/utils/use_media_query';
 import config from '../sources/docs/config.json';
 import en from '../locales/en.json';
 import './reset.sass';
@@ -13,6 +14,7 @@ export default function MyApp({ Component, pageProps }) {
   const isMain = router.pathname === '/';
   const showFooter = router.pathname === '/' || router.pathname === '/examples';
   const isDocs = router.pathname === '/docs/[id]';
+  const match = useMediaQuery('(max-width: 1024px)');
   const [showSidebar, setShowSidebar] = useState(false);
 
   useEffect(() => {
@@ -59,11 +61,9 @@ export default function MyApp({ Component, pageProps }) {
           displaySidebar={(state) => setShowSidebar(state)}
           showSidebar={showSidebar}
         />
-        <Sidebar
-          config={config}
-          visible={showSidebar}
-          isDocs={isDocs}
-        />
+        {((!match && isDocs) || showSidebar) && (
+          <Sidebar config={config} />
+        )}
         <Component {...pageProps} />
         {showFooter && (
           <Footer />

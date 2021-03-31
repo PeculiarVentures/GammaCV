@@ -15,16 +15,16 @@
   width: 135px
   display: block
   &_mobile_img
-    display: none
+    display: inline
+    vertical-align: middle
+    height: 30px
+    width: 24px
 
 .spacer
   flex: 1 1 auto
 
 .nav_item
   padding: 0 10px
-
-.display_docs
-  display: none
 
 @media (max-width: 1024px)
   .root
@@ -35,13 +35,6 @@
     order: 0
     width: 25px
     margin-right: 3px
-    &_img
-      display: none
-    &_mobile_img
-      display: inline
-      vertical-align: middle
-      height: 30px
-      width: 24px
 
   .spacer
     order: 1
@@ -49,12 +42,8 @@
   .nav_item
     padding: 10px 5px
 
-  .docs_link
-    display: none
-
   .display_docs
     box-shadow: none !important
-    display: block
     order: 1
     padding: 0
     border-style: none

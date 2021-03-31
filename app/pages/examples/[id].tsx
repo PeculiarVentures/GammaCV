@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
+import { CircularProgress } from 'lib-react-components';
 
 const Example = (props, context) => {
   const { id } = props;
@@ -23,11 +24,16 @@ const Example = (props, context) => {
   const renderContent = () => {
     if (loading) {
       return (
-        <h1>
-          Loading -
-          {' '}
-          {id}
-        </h1>
+        <CircularProgress
+          size={100}
+          style={{
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+
       );
     }
 
