@@ -166,12 +166,14 @@ export default class ExamplePage
   }
 
   UNSAFE_componentWillMount() {
-    if (navigator.getUserMedia) {
+    try {
       navigator.getUserMedia(
         { video: true },
         () => this.setState({ isCameraAccess: true }),
         () => this.setState({ error: 'PermissionDenied' }),
       );
+    } catch (error) {
+      this.setState({ error: 'PermissionDenied' });
     }
   }
 
@@ -237,15 +239,20 @@ export default class ExamplePage
   }
 
   onResize = () => {
-    const { device } = getDeviceInfo();
+    const { error } = this.state;
 
-    this.setState({
-      showParams: device.type !== 'mobile',
-    });
-    this.lazyUpdate.activate();
+    if (!error) {
+      const { device } = getDeviceInfo();
+
+      this.setState({
+        showParams: device.type !== 'mobile',
+      });
+      this.lazyUpdate.activate();
+    }
   };
 
   onResizeEnd = () => {
+
     this.stop(false);
     this.setState({ canvas: this.getSize() }, () => {
       this.init(this.props);

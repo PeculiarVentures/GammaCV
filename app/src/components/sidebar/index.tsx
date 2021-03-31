@@ -3,6 +3,7 @@ import { TextField, Box, Typography } from 'lib-react-components';
 import PropTypes from 'prop-types';
 import clx from 'classnames';
 import { SidebarGroup } from './sidebar_group';
+import { useMediaQuery } from '../../utils/use_media_query';
 import s from './sidebar.module.sass';
 
 interface ISidebarProps {
@@ -15,6 +16,7 @@ export const Sidebar: React.FC<ISidebarProps> = (props, context) => {
   const { config, visible, isDocs } = props;
   const { intl } = context;
   const [searchValue, setSearchValue] = useState('');
+  const match = useMediaQuery('(max-width: 1024px)');
   let filteredConfig: IDocGroup[] = config;
 
   if (searchValue) {
@@ -74,9 +76,9 @@ export const Sidebar: React.FC<ISidebarProps> = (props, context) => {
   return (
     <Box
       tagType="nav"
-      fill="light_grey"
-      fillOpacity={0.5}
-      stroke="grey"
+      fill={match ? 'black' : 'light_grey'}
+      fillOpacity={match ? 1 : 0.5}
+      stroke={match ? undefined : 'grey'}
       strokeType="right"
       strokeOpacity={0.15}
       className={clx(s.root, {
