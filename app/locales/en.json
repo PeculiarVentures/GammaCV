@@ -53,7 +53,7 @@
   "operations": {
     "erode": "Erosion",
     "dilate": "Dilation",
-    "morphology_ex": "MorphTransform",
+    "morphology_ex": "Extended Morphology",
     "downsample": "Downsample",
     "upsample": "Upsample",
     "resize": "Resize",
