@@ -3,11 +3,35 @@ import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { IntlWrapper } from 'lib-pintl';
 import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
 import { Header, Footer, Sidebar } from '../src/components';
 import { useMediaQuery } from '../src/utils/use_media_query';
 import config from '../sources/docs/config.json';
 import en from '../locales/en.json';
 import './reset.sass';
+
+class UserMediaProvider extends React.Component<{ match: boolean }> {
+  getChildContext() {
+    const { match } = this.props;
+
+    return { match };
+  }
+
+  render() {
+    const { children } = this.props;
+    return children;
+  }
+}
+
+UserMediaProvider.childContextTypes = {
+  match: PropTypes.bool,
+};
+
+// const childContextTypes = {
+//   match: PropTypes.bool,
+// };
+
+// Object.assign(UserMediaProvider, { childContextTypes });
 
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -54,20 +78,21 @@ export default function MyApp({ Component, pageProps }) {
 
         <noscript>You need to enable JavaScript to run this app.</noscript>
       </Head>
-
       <IntlWrapper messages={en}>
-        <Header
-          isMain={isMain}
-          displaySidebar={(state) => setShowSidebar(state)}
-          showSidebar={showSidebar}
-        />
-        {((!match && isDocs) || showSidebar) && (
-          <Sidebar config={config} />
-        )}
-        <Component {...pageProps} />
-        {showFooter && (
-          <Footer />
-        )}
+        <UserMediaProvider match={match}>
+          <Header
+            isMain={isMain}
+            displaySidebar={(state) => setShowSidebar(state)}
+            showSidebar={showSidebar}
+          />
+          {((!match && isDocs) || showSidebar) && (
+            <Sidebar config={config} />
+          )}
+          <Component {...pageProps} />
+          {showFooter && (
+            <Footer />
+          )}
+        </UserMediaProvider>
       </IntlWrapper>
     </>
   );

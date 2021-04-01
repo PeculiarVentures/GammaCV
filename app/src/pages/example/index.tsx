@@ -527,7 +527,7 @@ export default class ExamplePage
       isParamsChanged,
       device,
     } = this.state;
-    const { intl } = this.context;
+    const { intl, match } = this.context;
     const isMobile = device.type === 'mobile';
 
     if (!error && !isCameraAccess) {
@@ -582,16 +582,14 @@ export default class ExamplePage
           {showFps && (
             <div className={s.top_title_wrapper}>
               <Typography
-                type="h3"
-                mobileType="h4"
+                type={match ? 'h4' : 'h3'}
                 color="black"
                 className={s.top_title_text}
               >
                 {intl.getText('operations', undefined, exampleName)}
               </Typography>
               <Typography
-                type="h3"
-                mobileType="h4"
+                type={match ? 'h4' : 'h3'}
                 color="grey"
                 className={clx({
                   [s.top_title_fps]: true,
@@ -681,4 +679,5 @@ ExamplePage.contextTypes = {
   intl: PropTypes.shape({
     getText: PropTypes.func,
   }),
+  match: PropTypes.bool,
 };

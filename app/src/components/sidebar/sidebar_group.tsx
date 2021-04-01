@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import clx from 'classnames';
 import { Highlight } from '../highlight';
-import { useMediaQuery } from '../../utils/use_media_query';
 import s from './sidebar_group.module.sass';
 
 interface ISidebarGroupProps {
@@ -14,8 +13,7 @@ interface ISidebarGroupProps {
 
 export const SidebarGroup: React.FC<ISidebarGroupProps> = (props, context) => {
   const { group, searchValue } = props;
-  const { intl } = context;
-  const match = useMediaQuery('(max-width: 1024px)');
+  const { intl, match } = context;
 
   return (
     <li className={s.root}>
@@ -59,4 +57,5 @@ SidebarGroup.contextTypes = {
   intl: PropTypes.shape({
     getText: PropTypes.func,
   }),
+  match: PropTypes.bool,
 };

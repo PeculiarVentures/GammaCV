@@ -3,7 +3,6 @@ import { Box, Typography, Button } from 'lib-react-components';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import clx from 'classnames';
-import { useMediaQuery } from '../../utils/use_media_query';
 import s from './index.module.sass';
 
 interface IHeaderProps {
@@ -14,8 +13,7 @@ interface IHeaderProps {
 
 export const Header: React.FC<IHeaderProps> = (props: IHeaderProps, context) => {
   const { isMain, displaySidebar, showSidebar } = props;
-  const { intl } = context;
-  const match = useMediaQuery('(max-width: 1024px)');
+  const { intl, match } = context;
   const burgerIcon = showSidebar ? 'cross_icon.svg' : 'menu_icon.svg';
 
   const renderDocsLink = () => (
@@ -106,4 +104,5 @@ Header.contextTypes = {
   intl: PropTypes.shape({
     getText: PropTypes.func,
   }),
+  match: PropTypes.bool,
 };
