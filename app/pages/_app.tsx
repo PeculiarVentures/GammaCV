@@ -1,9 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { IntlWrapper } from 'lib-pintl';
 import { useRouter } from 'next/router';
-import { Header, Footer } from '../src/components';
+import { Header, Footer, Sidebar } from '../src/components';
+import { useMediaQuery } from '../src/utils/use_media_query';
+import config from '../sources/docs/config.json';
 import en from '../locales/en.json';
 import './reset.sass';
 
@@ -11,6 +13,32 @@ export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const isMain = router.pathname === '/';
   const showFooter = router.pathname === '/' || router.pathname === '/examples';
+  const isDocs = router.pathname === '/docs/[id]';
+  const match = useMediaQuery('(max-width: 1024px)');
+  const [showSidebar, setShowSidebar] = useState(false);
+
+  useEffect(() => {
+    const disableScroll = () => {
+      document.body.style.overflow = 'hidden';
+    };
+    const enableScroll = () => {
+      document.body.style.overflow = 'visible';
+    };
+
+    if (showSidebar) {
+      disableScroll();
+    } else {
+      enableScroll();
+    }
+
+    const hideSidebar = () => setShowSidebar(false);
+
+    router.events.on('routeChangeStart', hideSidebar);
+
+    return () => {
+      router.events.off('routeChangeStart', hideSidebar);
+    };
+  });
 
   return (
     <>
@@ -26,10 +54,16 @@ export default function MyApp({ Component, pageProps }) {
 
         <noscript>You need to enable JavaScript to run this app.</noscript>
       </Head>
+
       <IntlWrapper messages={en}>
         <Header
           isMain={isMain}
+          displaySidebar={(state) => setShowSidebar(state)}
+          showSidebar={showSidebar}
         />
+        {((!match && isDocs) || showSidebar) && (
+          <Sidebar config={config} />
+        )}
         <Component {...pageProps} />
         {showFooter && (
           <Footer />

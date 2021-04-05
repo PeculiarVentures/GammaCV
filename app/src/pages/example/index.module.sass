@@ -1,3 +1,5 @@
+@import '../../styles/_mixins'
+
 .root_example
   height: 100vh
   padding: 120px 70px 40px
@@ -15,7 +17,6 @@
   vertical-align: middle
   width: 100%
   max-width: 1200px
-  min-height: 615px
   font-size: 0
 
 .top_title
@@ -39,8 +40,7 @@
   position: relative
   overflow: hidden
   width: 100%
-  min-width: 400px
-  width: 700px
+  max-width: 700px
 
 .canvas
   width: 100%
@@ -75,13 +75,25 @@
 .stop_play_icon
   width: 100px
 
+.to_portrait
+  position: relative
+  width: 100vw
+  height: 100vh
+  z-index: 5
+  display: flex
+  align-items: center
+  justify-content: center
+
 .error
   &_wrapper
+    position: absolute
+    width: 100%
     max-width: 430px
     padding: 0 30px
     text-align: center
-    vertical-align: middle
-    display: inline-block
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
   &_icon
     width: 85px
     margin: 0 auto 55px
@@ -89,12 +101,70 @@
     max-width: 430px
     margin-bottom: 55px
   &_button
-    width: 190px
+    min-width: 190px
 
 .loading
-  text-align: center
-  vertical-align: middle
-  display: inline-block
+  position: absolute
+  left: 50%
+  top: 50%
+  transform: translate(-50%,-50%)
 
 .show_loading
   visibility: visible
+
+.show_params
+  position: absolute
+  border-style: none
+  padding: 0
+  bottom: 32px
+  left: 30px
+  z-index: 1
+  &_icon,
+  &_text
+    display: inline-block
+    vertical-align: middle
+  &_icon
+    margin-right: 9px
+    .params_icon
+      margin-top: 1px
+      width: 20px
+    .cross_icon
+      margin-right: 1px
+      width: 11px
+
+@include tablet()
+  .root_example
+    min-width: 1024px
+    padding-top: 60px
+  .canvas_wrapper
+    max-width: 515px
+
+@include mobile()
+  .root_example
+    padding: 60px 0 0
+    position: relative
+
+  .canvas_wrapper
+    max-width: none
+    border-width: 0
+    height: calc( 100vh - 60px )
+
+  .stop_play_icon
+    visibility: hidden
+
+  .m_visible
+    visibility: visible
+
+  .canvas_overlay
+    &:hover
+      opacity: 0
+
+  .top_title
+    &_wrapper
+      position: absolute
+      top: 20px
+      left: 25px
+      margin-bottom: 0
+      z-index: 1
+    &_text
+      color: rgb(var(--light_grey))

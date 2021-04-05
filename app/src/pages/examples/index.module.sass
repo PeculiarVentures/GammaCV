@@ -1,8 +1,13 @@
+@import '../../styles/_mixins'
+
 .root
   padding: 190px 0 40px
   min-height: calc(100vh - 80px)
 .m_width
   padding: 0 100px
+
+.items_wrapper
+  padding-top: 43px
 
 .header
   padding-bottom: 47px
@@ -17,8 +22,29 @@
   margin-top: 50px
 
 .search_field
-  width: 300px
+  max-width: 300px
+  width: 100%
   input
     border-radius: 20px
     padding: 0 20px
     font-size: 14px
+
+@include tablet()
+  .m_width
+    padding: 0 70px
+
+@include mobile()
+  .root
+    padding: 110px 0 50px
+
+  .m_width
+    padding: 0 30px
+
+  .items_wrapper
+    padding-top: 25px
+
+  .header
+    flex-direction: column
+    align-items: start
+    padding-bottom: 30px
+    height: 164px

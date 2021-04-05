@@ -3,7 +3,8 @@ import { Typography } from 'lib-react-components';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import clx from 'classnames';
-import { Highlight } from '../../components';
+import { Highlight } from '../highlight';
+import { useMediaQuery } from '../../utils/use_media_query';
 import s from './sidebar_group.module.sass';
 
 interface ISidebarGroupProps {
@@ -14,12 +15,13 @@ interface ISidebarGroupProps {
 export const SidebarGroup: React.FC<ISidebarGroupProps> = (props, context) => {
   const { group, searchValue } = props;
   const { intl } = context;
+  const match = useMediaQuery('(max-width: 1024px)');
 
   return (
     <li className={s.root}>
       <Typography
         type="c1"
-        color="grey"
+        color={match ? 'dark_grey' : 'grey'}
         className={s.group_name}
       >
         {intl.getText('groups', undefined, group.name)}
@@ -33,11 +35,12 @@ export const SidebarGroup: React.FC<ISidebarGroupProps> = (props, context) => {
               href={`/docs/${doc.name}`}
             >
               <a
-                className={clx(
-                  s.link,
-                  'text_black',
-                  'b2',
-                )}
+                className={clx({
+                  [s.link]: true,
+                  b2: true,
+                  text_black: !match,
+                  text_white: match,
+                })}
               >
                 <Highlight
                   text={intl.getText('operations', undefined, doc.name)}

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { DeviceProvider } from 'lib-react-components';
 import Head from 'next/head';
+import PropTypes from 'prop-types';
+import { CircularProgress } from 'lib-react-components';
 
-const Example = (props) => {
+const Example = (props, context) => {
   const { id } = props;
+  const { intl } = context;
   const [loading, setLoading] = useState(true);
   const [examplePage, setExamplePage] = useState<typeof import('../../src/pages/example')>({} as any);
   const [exampleData, setExampleData] = useState<{ default: any }>({} as any);
@@ -22,23 +24,26 @@ const Example = (props) => {
   const renderContent = () => {
     if (loading) {
       return (
-        <h1>
-          Loading -
-          {' '}
-          {id}
-        </h1>
+        <CircularProgress
+          size={40}
+          style={{
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+
       );
     }
 
     const ExamplePage = examplePage.default;
 
     return (
-      <DeviceProvider>
-        <ExamplePage
-          data={exampleData.default}
-          exampleName={id}
-        />
-      </DeviceProvider>
+      <ExamplePage
+        data={exampleData.default}
+        exampleName={id}
+      />
     );
   };
 
@@ -46,7 +51,7 @@ const Example = (props) => {
     <>
       <Head>
         <title>
-          {id}
+          {intl.getText('operations', undefined, id)}
           {' '}
           - GammaCV
         </title>
@@ -77,5 +82,11 @@ export async function getStaticProps(context) {
     },
   };
 }
+
+Example.contextTypes = {
+  intl: PropTypes.shape({
+    getText: PropTypes.func,
+  }),
+};
 
 export default Example;

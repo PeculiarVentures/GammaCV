@@ -1,14 +1,18 @@
 import React from 'react';
 import {
-  Typography, Box, Button, CircularProgress,
+  Typography,
+  Box,
+  Button,
+  CircularProgress,
 } from 'lib-react-components';
+import Link from 'next/link';
 import clx from 'classnames';
 import microFps from 'micro-fps';
 import PropTypes from 'prop-types';
 import * as gm from 'gammacv';
-import { IntlContext } from 'lib-pintl';
 import LazyUpdate from '../../utils/lazy_update';
 import { getMaxAvailableSize } from '../../utils/ratio';
+import { getDeviceInfo, IDeviceInfo } from '../../utils/get_device_info';
 import ParamsWrapper from './params';
 import s from './index.module.sass';
 
@@ -33,15 +37,9 @@ interface IExamplePageState {
   error: string;
   isCameraAccess: boolean;
   isLoading: boolean;
-}
-
-interface IContextType {
-  intl: IntlContext;
-  device: {
-    type: string;
-    width: number;
-    height: number;
-  };
+  showParams: boolean;
+  isParamsChanged: boolean;
+  device: IDeviceInfo;
 }
 
 export default class ExamplePage
@@ -76,18 +74,23 @@ export default class ExamplePage
 
   refStopStartButton: React.RefObject<HTMLButtonElement> = React.createRef();
 
-  constructor(props: IExamplePageProps, context: IContextType) {
+  constructor(props: IExamplePageProps) {
     super(props);
 
     this.params = this.handlePrepareParams();
+    const device = getDeviceInfo();
+
     this.state = {
       isPlaying: false,
       exampleInitialized: false,
-      canvas: this.getSize(context),
+      canvas: this.getSize(),
       params: this.params,
       error: '',
       isCameraAccess: false,
       isLoading: true,
+      showParams: device.type !== 'mobile',
+      isParamsChanged: false,
+      device,
     };
 
     this.lazyUpdate = new LazyUpdate(500, this.onResizeEnd);
@@ -124,15 +127,20 @@ export default class ExamplePage
         });
         this.loading = false;
       } else if (!this.loading && this.canvasRef.current) {
-        tick.apply(this, [this.frame, {
-          canvas: this.canvasRef.current,
-          params: this.params,
-          operation: this.op,
-          session: this.sess,
-          input: this.imgInput,
-          output: this.outputTensor,
-          context: this.opContext,
-        }]);
+        try {
+          tick.apply(this, [this.frame, {
+            canvas: this.canvasRef.current,
+            params: this.params,
+            operation: this.op,
+            session: this.sess,
+            input: this.imgInput,
+            output: this.outputTensor,
+            context: this.opContext,
+          }]);
+        } catch (error) {
+          this.stop();
+          this.setState({ error: 'NotSupported' });
+        }
 
         this.frame += 1;
       }
@@ -142,12 +150,14 @@ export default class ExamplePage
   }
 
   UNSAFE_componentWillMount() {
-    if (navigator.getUserMedia) {
+    try {
       navigator.getUserMedia(
         { video: true },
         () => this.setState({ isCameraAccess: true }),
         () => this.setState({ error: 'PermissionDenied' }),
       );
+    } catch (error) {
+      this.setState({ error: 'PermissionDenied' });
     }
   }
 
@@ -213,7 +223,18 @@ export default class ExamplePage
   }
 
   onResize = () => {
-    this.lazyUpdate.activate();
+    const { error } = this.state;
+
+    const device = getDeviceInfo();
+
+    this.setState({
+      device,
+      showParams: device.type !== 'mobile',
+    });
+
+    if (!error) {
+      this.lazyUpdate.activate();
+    }
   };
 
   onResizeEnd = () => {
@@ -224,13 +245,14 @@ export default class ExamplePage
     });
   };
 
-  getSize = (context = this.context) => {
-    if (context.device.type === 'mobile') {
-      const el = document.getElementById('__next');
+  getSize = () => {
+    const { type, width, height } = getDeviceInfo();
+
+    if (type === 'mobile') {
       const res = getMaxAvailableSize(
-        el.offsetWidth / (el.offsetHeight - 60),
-        Math.min(el.offsetWidth, 600),
-        Math.min(el.offsetHeight, 600),
+        width / (height - 60),
+        Math.min(width, 600),
+        Math.min(height, 600),
       );
 
       return {
@@ -254,7 +276,6 @@ export default class ExamplePage
       this.imgInput = new gm.Tensor('uint8', [height, width, 4]);
       this.sess = new gm.Session();
       this.stream = new gm.CaptureVideo(width, height);
-
       if (props.data.init) {
         this.opContext = props.data.init(this.op, this.sess, this.params);
       }
@@ -285,30 +306,34 @@ export default class ExamplePage
 
   start = () => {
     // start capturing a camera and run loop
-    this.stream.start().catch(() => {
+    try {
+      this.stream.start();
+
+      this.timeoutRequestAnimation = window.requestAnimationFrame(this.tick);
+      this.setState({
+        isPlaying: true,
+      });
+      if (
+        !this.loading
+        && this.checkRerender(this.stream.getImageBuffer('uint8'))
+      ) {
+        this.setState({
+          isLoading: true,
+        });
+        this.loading = true;
+      }
+    } catch (error) {
       this.stop();
       this.setState({
         error: 'PermissionDenied',
       });
-    });
-
-    this.timeoutRequestAnimation = window.requestAnimationFrame(this.tick);
-    this.setState({
-      isPlaying: true,
-    });
-    if (
-      !this.loading
-      && this.checkRerender(this.stream.getImageBuffer('uint8'))
-    ) {
-      this.setState({
-        isLoading: true,
-      });
-      this.loading = true;
     }
   };
 
   stop = (destroy = true) => {
-    this.stream.stop();
+    if (this.stream) {
+      this.stream.stop();
+    }
 
     const { isPlaying } = this.state;
 
@@ -373,6 +398,7 @@ export default class ExamplePage
             [key]: value,
           },
         },
+        isParamsChanged: true,
       };
     });
 
@@ -409,6 +435,7 @@ export default class ExamplePage
   handleReset = () => {
     this.setState({
       params: this.handlePrepareParams(),
+      isParamsChanged: false,
     }, this.onChangeParams);
   };
 
@@ -423,28 +450,110 @@ export default class ExamplePage
         ref={this.refStopStartButton}
         className={s.stop_play_button}
       >
-        <div className={s.stop_play_icon}>
+        <div
+          className={clx(s.stop_play_icon, {
+            [s.m_visible]: !isPlaying,
+          })}
+        >
           {icon}
         </div>
       </span>
     );
   }
 
+  renderNoAccessCase = () => {
+    const { intl } = this.context;
+
+    return (
+      <>
+        <div className={s.error_text}>
+          <Typography
+            type="h3"
+            color="black"
+            align="center"
+          >
+            {intl.getText('example.noAccess')}
+          </Typography>
+        </div>
+        <Button
+          href={window.location.href}
+          size="large"
+          color="primary"
+          className={s.error_button}
+        >
+          {intl.getText('example.tryAgain')}
+        </Button>
+      </>
+    );
+  };
+
+  renderNotSupportedCase = () => {
+    const { intl } = this.context;
+
+    return (
+      <>
+        <div className={s.error_text}>
+          <Typography
+            type="h3"
+            color="black"
+            align="center"
+          >
+            {intl.getText('example.dontSupport')}
+          </Typography>
+        </div>
+        <Link href="/examples">
+          <Button
+            size="large"
+            color="primary"
+            className={s.error_button}
+          >
+            {intl.getText('example.tryAnother')}
+          </Button>
+        </Link>
+      </>
+    );
+  };
+
   render() {
     const { exampleName, data } = this.props;
     const {
-      error, isCameraAccess, canvas, params, isPlaying, isLoading,
+      error,
+      isCameraAccess,
+      canvas,
+      params,
+      isPlaying,
+      isLoading,
+      showParams,
+      isParamsChanged,
+      device,
     } = this.state;
     const { intl } = this.context;
+    const isMobile = device.type === 'mobile';
 
     if (!error && !isCameraAccess) {
       return (
         <div className={s.root_example}>
           <CircularProgress
-            size={100}
+            size={40}
             className={s.loading}
           />
         </div>
+      );
+    }
+
+    if (isMobile && device.height < device.width) {
+      return (
+        <Box
+          fill="primary"
+          className={s.to_portrait}
+        >
+          <Typography
+            type="h4"
+            color="light_grey"
+          >
+            {intl.getText('example.toPortrait')}
+          </Typography>
+        </Box>
       );
     }
 
@@ -457,58 +566,48 @@ export default class ExamplePage
             <div className={s.error_icon}>
               {icon}
             </div>
-            <div className={s.error_text}>
-              <Typography
-                type="h3"
-                color="black"
-                align="center"
-              >
-                {intl.getText('example.noAccess')}
-              </Typography>
-            </div>
-            <Button
-              href={window.location.href}
-              size="large"
-              color="primary"
-              className={s.error_button}
-            >
-              {intl.getText('example.tryAgain')}
-            </Button>
+            {error === 'NotSupported'
+              ? this.renderNotSupportedCase()
+              : this.renderNoAccessCase()}
           </div>
         </div>
       );
     }
 
+    const showFps = isMobile ? !showParams : true;
+
     return (
       <div className={s.root_example}>
         <div className={s.example_wrapper}>
-          <div className={s.top_title_wrapper}>
-            <Typography
-              type="h3"
-              mobileType="h4"
-              color="black"
-              className={s.top_title_text}
-            >
-              {intl.getText('operations', undefined, exampleName)}
-            </Typography>
-            <Typography
-              type="h3"
-              mobileType="h4"
-              color="grey"
-              className={clx({
-                [s.top_title_fps]: true,
-                [s.hidden_fps]: !isPlaying,
-              })}
-            >
-              FPS:
-              {' '}
-              <span ref={this.refFps} />
-            </Typography>
-          </div>
+          {showFps && (
+            <div className={s.top_title_wrapper}>
+              <Typography
+                type="h3"
+                mobileType="h4"
+                color="black"
+                className={s.top_title_text}
+              >
+                {intl.getText('operations', undefined, exampleName)}
+              </Typography>
+              <Typography
+                type="h3"
+                mobileType="h4"
+                color="grey"
+                className={clx({
+                  [s.top_title_fps]: true,
+                  [s.hidden_fps]: !isPlaying,
+                })}
+              >
+                FPS:
+                {' '}
+                <span ref={this.refFps} />
+              </Typography>
+            </div>
+          )}
           <div className={s.content_wrapper}>
             <Box
-              borderRadius={8}
-              stroke="grey_2"
+              borderRadius={isMobile ? 0 : 8}
+              stroke={isMobile ? '' : 'grey_2'}
               fill="light_grey"
               className={s.canvas_wrapper}
             >
@@ -539,12 +638,38 @@ export default class ExamplePage
               />
               {this.renderStartStopButton()}
             </Box>
-            <ParamsWrapper
-              params={data.params}
-              onReset={this.handleReset}
-              handleChangeState={this.handleChangeState}
-              paramsValue={{ ...params }}
-            />
+            {isMobile && data.params && (
+              <Button
+                onClick={() => this.setState({ showParams: !showParams })}
+                bgType="clear"
+                size="small"
+                className={s.show_params}
+              >
+                <div className={s.show_params_icon}>
+                  {showParams ? (
+                    <img src="/static/images/cross_icon.svg" alt="Cross icon" className={s.cross_icon} />
+                  ) : (
+                    <img src="/static/images/params_icon.svg" alt="Params icon" className={s.params_icon} />
+                  )}
+                </div>
+                <Typography type="b1" color="light_grey" className={s.show_params_text}>
+                  {showParams
+                    ? intl.getText('example.close')
+                    : intl.getText('example.params')}
+                </Typography>
+              </Button>
+            )}
+            {showParams && (
+              <ParamsWrapper
+                params={data.params}
+                onReset={this.handleReset}
+                handleChangeState={this.handleChangeState}
+                paramsValue={{ ...params }}
+                isMobile={isMobile}
+                isParamsChanged={isParamsChanged}
+              />
+            )}
+
           </div>
         </div>
       </div>
@@ -555,10 +680,5 @@ export default class ExamplePage
 ExamplePage.contextTypes = {
   intl: PropTypes.shape({
     getText: PropTypes.func,
-  }),
-  device: PropTypes.shape({
-    type: PropTypes.string,
-    width: PropTypes.number,
-    height: PropTypes.number,
   }),
 };

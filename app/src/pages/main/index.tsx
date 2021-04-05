@@ -25,7 +25,7 @@ export const MainPage = (props, context) => {
   const { intl } = context;
 
   return (
-    <>
+    <main className={s.root}>
       <Box
         className={s.preview}
         fill="black"
@@ -81,7 +81,7 @@ export const MainPage = (props, context) => {
           </ul>
         </div>
       </div>
-    </>
+    </main>
   );
 };
 

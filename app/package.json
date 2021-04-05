@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rimraf .next out",
     "dev": "next",
-    "start": "next start",
+    "serve": "next start",
     "build": "next build && next export",
     "build:theme": "node scripts/theme",
     "build:docs": "node scripts/docs",

@@ -8,14 +8,17 @@ import s from './params.module.sass';
 interface IParamsWrapperProps {
   handleChangeState: (paramName: string, key: string, value: string | number) => void;
   onReset: () => void;
-  params?: TParams,
-  paramsValue: TParamsValue,
+  params?: TParams;
+  paramsValue: TParamsValue;
+  isParamsChanged: boolean;
+  isMobile: boolean;
 }
 export default class ParamsWrapper extends React.Component<IParamsWrapperProps> {
   icons = {
     constant: <img src="/static/images/constant_icon.svg" alt="Constant icon" />,
     uniform: <img src="/static/images/uniform_icon.svg" alt="Uniform icon" />,
     reset: <img src="/static/images/reset_icon.svg" alt="Reset icon" />,
+    resetMobile: <img src="/static/images/reset_icon_mobile.svg" alt="Reset icon" />,
   };
 
   getParamName = (param: TParamsElement) => {
@@ -32,7 +35,12 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
 
   renderParam = (paramName: string) => {
     const result = [];
-    const { params, paramsValue, handleChangeState } = this.props;
+    const {
+      params,
+      paramsValue,
+      handleChangeState,
+      isMobile,
+    } = this.props;
     const param = params[paramName];
     const valueParams = paramsValue[paramName];
     const listParams = Object.keys(param);
@@ -55,7 +63,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
             </div>
             <Typography
               type="b3"
-              color="dark"
+              color={isMobile ? 'white' : 'dark'}
               className={s.params_block_title}
             >
               {name}
@@ -77,6 +85,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
         const {
           step, min, max, default: defaultValue,
         } = column;
+        const paramsColor = isMobile ? 'white' : 'dark_grey';
 
         result.push(
           <div key={name} className={s.params_block_wrapper}>
@@ -85,7 +94,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
             </div>
             <Typography
               type="b3"
-              color="dark"
+              color={paramsColor}
               className={s.params_block_title}
             >
               {name}
@@ -104,7 +113,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
             </div>
             <Typography
               type="h5"
-              color="dark_grey"
+              color={paramsColor}
               className={s.params_block_count}
             >
               {valueParams[key]}
@@ -120,7 +129,12 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
   };
 
   render() {
-    const { params, onReset } = this.props;
+    const {
+      params,
+      onReset,
+      isMobile,
+      isParamsChanged,
+    } = this.props;
     const { intl } = this.context;
 
     if (params) {
@@ -128,12 +142,14 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
 
       return (
         <Box
-          borderRadius={8}
-          stroke="grey_2"
+          borderRadius={isMobile ? 0 : 8}
+          stroke={isMobile ? '' : 'grey_2'}
+          fill={isMobile ? 'black' : ''}
+          fillOpacity={isMobile ? 0.7 : 1}
           className={s.controller_wrapper}
         >
           <Box
-            stroke="grey_2"
+            stroke={isMobile ? 'dark_grey' : 'grey_2'}
             strokeType="bottom"
             className={s.controller_header_wrapper}
           >
@@ -148,9 +164,10 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
               bgType="clear"
               size="small"
               className={s.reset}
+              disabled={!isParamsChanged}
             >
               <div className={s.reset_icon}>
-                {this.icons.reset}
+                {isMobile ? this.icons.resetMobile : this.icons.reset}
               </div>
               <Typography type="b1" color="grey" className={s.reset_text}>
                 {intl.getText('example.reset')}
@@ -164,7 +181,7 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
               return (
                 <Box
                   key={paramName}
-                  stroke="grey_2"
+                  stroke={isMobile ? '' : 'grey_2'}
                   strokeType="bottom"
                   className={s.params_block_section}
                 >

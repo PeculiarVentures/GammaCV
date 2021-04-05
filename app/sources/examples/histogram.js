@@ -27,16 +27,16 @@ export default {
     pathG.moveTo(0, canvas.height);
     pathB.moveTo(0, canvas.height);
     const size = canvas.width * canvas.height;
-    const k = 1 / (size * canvas.height * 10);
+    const k = (1 / size) * canvas.height * 10;
 
     for (let x = 0; x < 256; x += 1) {
       const vr = output.get(0, x, 0) * k;
       const vg = output.get(0, x, 1) * k;
       const vb = output.get(0, x, 2) * k;
 
-      pathR.lineTo(x / (255 * canvas.width, canvas.height) - vr);
-      pathG.lineTo(x / (255 * canvas.width, canvas.height) - vg);
-      pathB.lineTo(x / (255 * canvas.width, canvas.height) - vb);
+      pathR.lineTo((x / 255) * canvas.width, canvas.height - vr);
+      pathG.lineTo((x / 255) * canvas.width, canvas.height - vg);
+      pathB.lineTo((x / 255) * canvas.width, canvas.height - vb);
     }
 
     pathR.lineTo(canvas.width, canvas.height);
