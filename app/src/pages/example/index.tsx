@@ -534,7 +534,7 @@ export default class ExamplePage
       return (
         <div className={s.root_example}>
           <CircularProgress
-            size={100}
+            size={40}
             className={s.loading}
           />
         </div>

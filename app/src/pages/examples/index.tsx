@@ -51,7 +51,7 @@ export const ExamplesPage: React.FC<IExamplesPageProps> = (props, context) => {
           {group.examples.map((example, index) => (
             <ExampleItem
               key={example.path}
-              name={example.name}
+              name={intl.getText('operations', undefined, example.path)}
               type={example.type}
               path={example.path}
               style={getExampleItemStyles(index)}

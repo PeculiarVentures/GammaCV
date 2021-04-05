@@ -1,3 +1,5 @@
+@import '../../styles/_mixins'
+
 .root
   width: 350px
   height: 100%
@@ -33,6 +35,10 @@
   overflow: auto
   position: relative
   width: 100%
+
+@include tablet()
+  .root
+    width: 280px
 
 @media (max-width: 1024px)
   .root

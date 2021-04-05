@@ -25,7 +25,7 @@ const Example = (props, context) => {
     if (loading) {
       return (
         <CircularProgress
-          size={100}
+          size={40}
           style={{
             position: 'absolute',
             left: '50%',
