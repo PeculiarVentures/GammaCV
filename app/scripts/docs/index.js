@@ -14,6 +14,7 @@ const handleMDFile = (docItem) => {
 
 const renderMD = (data) => {
   const out = [];
+  let hasMethods = false;
 
   data.forEach((item) => {
     const {
@@ -29,7 +30,7 @@ const renderMD = (data) => {
       return;
     }
 
-    if (name) {
+    if (name && name !== 'module.exports') {
       if (kind === 'function') {
         let PARAMS = [];
         let RETURNS = [];
@@ -42,17 +43,26 @@ const renderMD = (data) => {
           RETURNS = returns.map((r) => r.type.names.join(','));
         }
 
+        if (!hasMethods) {
+          hasMethods = true;
+          out.push(
+            '######',
+            ' Methods',
+            '\n',
+            '\n',
+          );
+        }
+
         out.push(
-          '###',
+          '####',
           ' ',
           name,
           '(',
           PARAMS.join(', '),
           ')',
           ' ',
-          '=>',
+          '`=>',
           ' ',
-          '`',
           RETURNS.join(', ') || 'void',
           '`',
           '\n',
@@ -112,7 +122,7 @@ const renderMD = (data) => {
         '|',
         `**${e.optional ? `${e.name}?` : e.name}**`,
         '|',
-        `<var>${e.type.names.join(' \\| ')}</var>`,
+        `<var>${e.type.names.join(' \\| ').replace('<', '\\<')}</var>`,
         '|',
         e.description ? e.description.replace(/\n/g, '') : e.description,
         '|',
@@ -140,7 +150,7 @@ const renderMD = (data) => {
 
       out.push(...returns.map((e) => ([
         '|',
-        e.type.names.join(' \\| '),
+        e.type.names.join(' \\| ').replace('<', '\\<'),
         '|',
         e.description ? e.description.replace(/\n/g, '') : e.description,
         '|',

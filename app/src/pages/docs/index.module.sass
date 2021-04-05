@@ -38,6 +38,10 @@
     span
       white-space: nowrap
 
+  pre + h2,
+  pre + h3
+    margin-top: 24px
+
   h1,
   h2,
   h3,
@@ -57,11 +61,6 @@
       padding: 0
       color: rgb(var(--grey))
 
-  h3
-    font-weight: 700
-    line-height: 1.6
-    font-size: 16px
-
   h1:first-child
     margin-top: 24px
 
@@ -75,6 +74,9 @@
 
   h2 + h3
     margin-top: 24px
+
+  h4
+    font-weight: 700
 
   h6
     text-transform: uppercase
@@ -102,6 +104,7 @@
     &:nth-child(2)
       width: 30%
     &:nth-child(3)
+      font-size: 16px
       width: 60px
       color: rgb(var(--black))
     var
