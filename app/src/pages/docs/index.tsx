@@ -38,7 +38,8 @@ export const DocsPage: React.FC<IDocsPageProps> = (props) => {
                 );
               },
               heading: ({ level, children, node }) => {
-                const { value: idProp } = node.children.find(({ type }) => type === 'text');
+                const { value, children: childs } = node.children.find(({ type }) => type === 'text' || type === 'strong');
+                const idProp = value ? value : childs[0].value;
 
                 if (level === 6) {
                   return (
@@ -51,10 +52,10 @@ export const DocsPage: React.FC<IDocsPageProps> = (props) => {
 
                 return React.createElement(`h${level}`, {}, (
                   <>
-                    <a className={s.anchor_link} id={idProp.trim()}></a>
+                    <a className={s.anchor_link} id={idProp.replace(/ /g,'')}></a>
                     <Link
                       href={{
-                        hash: idProp.trim(),
+                        hash: idProp.replace(/ /g,''),
                         pathname: '/docs/[id]',
                         query: { id },
                       }}
