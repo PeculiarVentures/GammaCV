@@ -15,6 +15,7 @@ const handleMDFile = (docItem) => {
 const renderMD = (data) => {
   const out = [];
   let hasMethods = false;
+  let classRef = '';
 
   data.forEach((item) => {
     const {
@@ -24,23 +25,32 @@ const renderMD = (data) => {
       returns,
       examples,
       description,
+      comment,
+      longname,
     } = item;
 
-    if (kind === 'class') {
+    if (!comment) {
       return;
     }
 
-    if (name && name !== 'module.exports') {
-      if (kind === 'function') {
+    if (name && !name.includes('exports')) {
+      if (kind === 'function' || name !== longname) {
         let PARAMS = [];
-        let RETURNS = [];
+        let RETURNS = '<span>void</span>';
 
         if (params) {
           PARAMS = params.map((p) => (p.optional ? `${p.name}?` : p.name));
         }
 
         if (returns) {
-          RETURNS = returns.map((r) => r.type.names.join(','));
+          RETURNS = returns.reduce((r, el) => {
+            let returnValue = r;
+
+            returnValue += `<span>${el.type.names.join(' \\| ').replace('<', '\\<')}</span>`;
+            returnValue += el.description ? `<span> (${el.description})</span>` : '';
+
+            return returnValue;
+          }, '');
         }
 
         if (!hasMethods) {
@@ -56,23 +66,25 @@ const renderMD = (data) => {
         out.push(
           '####',
           ' ',
-          name,
+          comment.includes('@static') ? '<span>Static </span>' : '',
+          '**',
+          longname,
           '(',
           PARAMS.join(', '),
-          ')',
+          ')**',
           ' ',
-          '`=>',
-          ' ',
-          RETURNS.join(', ') || 'void',
-          '`',
+          '<span>=> </span>',
+          RETURNS,
           '\n',
           '\n',
         );
-      } else if (kind === 'constructor') {
+      } else if (kind === 'class') {
+        classRef = name;
+
         out.push(
           '##',
           ' ',
-          '`Class`',
+          '<span>Class</span>',
           ' ',
           name,
           '\n',
@@ -132,34 +144,6 @@ const renderMD = (data) => {
       out.push('\n');
     }
 
-    if (returns && returns.length) {
-      out.push(
-        '######',
-        ' ',
-        'Returns',
-        '\n',
-        '\n',
-      );
-
-      out.push(
-        '| Param | Description |',
-        '\n',
-        '| --- | --- |',
-        '\n',
-      );
-
-      out.push(...returns.map((e) => ([
-        '|',
-        e.type.names.join(' \\| ').replace('<', '\\<'),
-        '|',
-        e.description ? e.description.replace(/\n/g, '') : e.description,
-        '|',
-        '\n',
-      ].join(' '))));
-
-      out.push('\n');
-    }
-
     if (examples && examples.length) {
       out.push(
         '######',
@@ -178,17 +162,28 @@ const renderMD = (data) => {
     }
   });
 
-  return out.join('');
+  return { md: out.join(''), classRef };
 };
 
 const handleJSFile = async (docItem) => {
   const res = await jsdoc2md
-    .getTemplateData({
+    .getJsdocData({
       files: path.join(sourceDirectory, docItem.path),
     });
-  const data = renderMD(res);
+  const { md, classRef } = renderMD(res);
 
-  fs.writeFileSync(path.join(destinationDirectory, `${docItem.name}.md`), data);
+  fs.writeFileSync(path.join(destinationDirectory, `${docItem.name}.md`), md);
+
+  if (classRef) {
+    const classRefsPath = path.join(destinationDirectory, 'classRefs.json');
+    const classRefs = await fs.promises.readFile(classRefsPath)
+      .then((data) => JSON.parse(data))
+      .catch(() => ({}));
+
+    classRefs[classRef] = docItem.name;
+
+    fs.writeFileSync(classRefsPath, JSON.stringify(classRefs));
+  }
 };
 
 async function main() {

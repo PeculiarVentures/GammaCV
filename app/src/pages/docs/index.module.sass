@@ -54,11 +54,9 @@
     &:hover
       .anchor_link_style
         opacity: 1
-    code
+    span
       font: inherit
       font-weight: inherit
-      background: none
-      padding: 0
       color: rgb(var(--grey))
 
   h1:first-child
@@ -69,7 +67,7 @@
     margin-bottom: 55px
     font-weight: 700
     line-height: 1.4
-    code
+    span
       margin-right: 3px
 
   h2 + h3
@@ -82,9 +80,17 @@
     text-transform: uppercase
     font-weight: 400
     margin-top: 34px
-    margin-bottom: 16px
+    margin-bottom: 15px
+    &.description
+      margin-top: 20px
+      margin-bottom: 16px
     & + p
       margin-top: -11px
+      &:first-of-type + .params
+        margin-top: 96px
+      &:first-of-type + .methods
+        margin-top: 91px
+        margin-bottom: 68px
 
   ul
     list-style-position: inside
@@ -92,6 +98,8 @@
   table
     width: 100%
     border-collapse: collapse
+    & + .methods
+      margin-top: 75px
 
   td
     padding: 20px 10px 20px 0
@@ -142,16 +150,25 @@
   .doc
     h2:first-child
       font-size: 22px
-      code
+      span
         display: block
         font-size: 16px
         font-weight: 400
         margin-bottom: 6px
 
-    h6
+    .description
       margin-bottom: 5px
       & + p
         margin-top: 0
+
+    h4
+      & > span:nth-child(3)
+        font-weight: 400
+        display: block
+        margin-bottom: 7px
+      & > strong
+        display: block
+        margin-bottom: 5px
 
     tr
       display: grid

@@ -13,10 +13,11 @@ import s from './index.module.sass';
 interface IDocsPageProps {
   data: DocDataType;
   id: string;
+  classRefs: Record<string, string>,
 }
 
 export const DocsPage: React.FC<IDocsPageProps> = (props) => {
-  const { data, id } = props;
+  const { data, id, classRefs } = props;
 
   return (
     <main
@@ -37,20 +38,23 @@ export const DocsPage: React.FC<IDocsPageProps> = (props) => {
                 );
               },
               heading: ({ level, children, node }) => {
+                const { value: idProp } = node.children.find(({ type }) => type === 'text');
+
                 if (level === 6) {
                   return (
-                    <h6 className="text_grey c1" children={children} />
+                    <h6
+                      className={clx('text_grey', 'c1', s[idProp.toLowerCase()])}
+                      children={children}
+                    />
                   );
                 }
 
-                const { id: idProp } = node.data;
-
                 return React.createElement(`h${level}`, {}, (
                   <>
-                    <a className={s.anchor_link} id={idProp}></a>
+                    <a className={s.anchor_link} id={idProp.trim()}></a>
                     <Link
                       href={{
-                        hash: idProp,
+                        hash: idProp.trim(),
                         pathname: '/docs/[id]',
                         query: { id },
                       }}
@@ -84,6 +88,22 @@ export const DocsPage: React.FC<IDocsPageProps> = (props) => {
                   </code>
                 );
               },
+              text: ({ children }) => {
+                if (classRefs[children]) {
+                  return (
+                    <Link href={{
+                      hash: children,
+                      pathname: `/docs/${classRefs[children]}`,
+                    }}>
+                      <a className="text_primary">
+                        {children}
+                      </a>
+                    </Link>
+                  );
+                }
+
+                return children;
+              }
             }}
           />
         </div>

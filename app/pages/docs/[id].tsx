@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { DocsPage } from '../../src/pages';
 
 const Doc = (props, context) => {
-  const { id, data } = props;
+  const { id, data, classRefs } = props;
   const { intl } = context;
 
   return (
@@ -19,6 +19,7 @@ const Doc = (props, context) => {
       <DocsPage
         data={data}
         id={id}
+        classRefs={classRefs}
       />
     </>
   );
@@ -40,11 +41,13 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   const data = (await import(`../../sources/docs/_data/${context.params.id}.md`)).default;
+  const classRefs = (await import('../../sources/docs/_data/classRefs.json')).default;
 
   return {
     props: {
       id: context.params.id,
       data,
+      classRefs,
     },
   };
 }
