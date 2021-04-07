@@ -1,104 +1,105 @@
 /* eslint-disable no-await-in-loop */
 const fs = require('fs');
 const path = require('path');
-const jsdoc2md = require('jsdoc-to-markdown');
 const DOCS_CONFIG = require('../../sources/docs/config.json');
 const { checkDir } = require('./utils');
+const { parseJsDocFile } = require('./parseJsDoc');
 
 const sourceDirectory = path.join(__dirname, '../../sources/docs');
 const destinationDirectory = path.join(sourceDirectory, '_data');
+
+const appendLink = (text, docsIds) => {
+  const docId = docsIds.find((d) => text.includes(d.name));
+
+  if (docId) {
+    return text.replace(docId.name, `[${docId.name}](/docs/${docId.id}#${docId.name})`);
+  }
+
+  return text;
+};
 
 const handleMDFile = (docItem) => {
   fs.copyFileSync(path.join(sourceDirectory, docItem.path), path.join(destinationDirectory, `${docItem.name}.md`));
 };
 
-const renderMD = (data) => {
+const renderMD = (data, docsIds, isClassMethod = false) => {
   const out = [];
-  let hasMethods = false;
-  let classRef = '';
 
   data.forEach((item) => {
     const {
       name,
-      kind,
+      type,
       params,
       returns,
       examples,
       description,
-      comment,
-      longname,
+      methods,
+      isStatic,
     } = item;
 
-    if (!comment) {
-      return;
-    }
+    if (type === 'function') {
+      let PARAMS = [];
+      let RETURNS = '<span>void</span>';
 
-    if (name && !name.includes('exports')) {
-      if (kind === 'function' || name !== longname) {
-        let PARAMS = [];
-        let RETURNS = '<span>void</span>';
+      if (params) {
+        PARAMS = params.map((p) => (p.optional ? `${p.name}?` : p.name));
+      }
 
-        if (params) {
-          PARAMS = params.map((p) => (p.optional ? `${p.name}?` : p.name));
-        }
+      if (returns && returns.length) {
+        RETURNS = returns.reduce((r, el) => {
+          let returnValue = r;
 
-        if (returns) {
-          RETURNS = returns.reduce((r, el) => {
-            let returnValue = r;
+          returnValue += `<span>${appendLink(el.type, docsIds)}</span>`;
+          returnValue += el.description ? `<span> (${el.description})</span>` : '';
 
-            returnValue += `<span>${el.type.names.join(' \\| ').replace('<', '\\<')}</span>`;
-            returnValue += el.description ? `<span> (${el.description})</span>` : '';
+          return returnValue;
+        }, '');
+      }
 
-            return returnValue;
-          }, '');
-        }
-
-        if (!hasMethods) {
-          hasMethods = true;
-          out.push(
-            '######',
-            ' Methods',
-            '\n',
-            '\n',
-          );
-        }
-
+      if (isClassMethod) {
         out.push(
           '####',
           ' ',
-          comment.includes('@static') ? '<span>Static </span>' : '',
-          '**',
-          longname,
-          '(',
-          PARAMS.join(', '),
-          ')**',
-          ' ',
-          '<span>=> </span>',
-          RETURNS,
-          '\n',
-          '\n',
-        );
-      } else if (kind === 'class') {
-        classRef = name;
-
-        out.push(
-          '##',
-          ' ',
-          '<span>Class</span>',
-          ' ',
-          name,
-          '\n',
-          '\n',
+          isStatic ? '<span>Static </span>' : '',
         );
       } else {
         out.push(
           '##',
           ' ',
-          name,
-          '\n',
-          '\n',
+          '<span>Function </span>',
         );
       }
+
+      out.push(
+        '**',
+        name,
+        '(',
+        PARAMS.join(', '),
+        ')**',
+        ' ',
+        '<span>=> </span>',
+        RETURNS,
+        '\n',
+        '\n',
+      );
+    } else if (type === 'class') {
+      out.push(
+        '##',
+        ' ',
+        '<span>Class</span>',
+        ' ',
+        name,
+        '\n',
+        '\n',
+      );
+    } else {
+      out.push(
+        '##',
+        ' ',
+        name,
+        '\n',
+        '\n',
+      );
     }
 
     if (description) {
@@ -134,7 +135,7 @@ const renderMD = (data) => {
         '|',
         `**${e.optional ? `${e.name}?` : e.name}**`,
         '|',
-        `<var>${e.type.names.join(' \\| ').replace('<', '\\<')}</var>`,
+        `<var>${appendLink(e.type, docsIds)}</var>`,
         '|',
         e.description ? e.description.replace(/\n/g, '') : e.description,
         '|',
@@ -160,36 +161,28 @@ const renderMD = (data) => {
         '\n',
       ].join('\n'))));
     }
+
+    if (methods) {
+      out.push(
+        '######',
+        ' Methods',
+        '\n',
+        '\n',
+      );
+
+      out.push(renderMD(methods, docsIds, true).md);
+    }
   });
 
-  return { md: out.join(''), classRef };
-};
-
-const handleJSFile = async (docItem) => {
-  const res = await jsdoc2md
-    .getJsdocData({
-      files: path.join(sourceDirectory, docItem.path),
-    });
-  const { md, classRef } = renderMD(res);
-
-  fs.writeFileSync(path.join(destinationDirectory, `${docItem.name}.md`), md);
-
-  if (classRef) {
-    const classRefsPath = path.join(destinationDirectory, 'classRefs.json');
-    const classRefs = await fs.promises.readFile(classRefsPath)
-      .then((data) => JSON.parse(data))
-      .catch(() => ({}));
-
-    classRefs[classRef] = docItem.name;
-
-    fs.writeFileSync(classRefsPath, JSON.stringify(classRefs));
-  }
+  return { md: out.join('') };
 };
 
 async function main() {
   await checkDir(destinationDirectory);
 
   const items = DOCS_CONFIG.reduce((result, current) => result.concat(current.children), []);
+  const parsedDocs = [];
+  const docsIds = [];
 
   for (let i = 0; i < items.length; i += 1) {
     const item = items[i];
@@ -198,8 +191,17 @@ async function main() {
     if (isMD) {
       handleMDFile(item);
     } else {
-      await handleJSFile(item);
+      const res = await parseJsDocFile(item.path, item.name);
+
+      parsedDocs.push(res);
+      docsIds.push({ id: res[0].id, name: res[0].name });
     }
+  }
+
+  for (let i = 0; i < parsedDocs.length; i += 1) {
+    const { md } = renderMD(parsedDocs[i], docsIds);
+
+    fs.writeFileSync(path.join(destinationDirectory, `${docsIds[i].id}.md`), md);
   }
 }
 

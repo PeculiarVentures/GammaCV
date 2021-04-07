@@ -13,11 +13,10 @@ import s from './index.module.sass';
 interface IDocsPageProps {
   data: DocDataType;
   id: string;
-  classRefs: Record<string, string>,
 }
 
 export const DocsPage: React.FC<IDocsPageProps> = (props) => {
-  const { data, id, classRefs } = props;
+  const { data, id } = props;
 
   return (
     <main
@@ -89,22 +88,6 @@ export const DocsPage: React.FC<IDocsPageProps> = (props) => {
                   </code>
                 );
               },
-              text: ({ children }) => {
-                if (classRefs[children]) {
-                  return (
-                    <Link href={{
-                      hash: children,
-                      pathname: `/docs/${classRefs[children]}`,
-                    }}>
-                      <a className="text_primary">
-                        {children}
-                      </a>
-                    </Link>
-                  );
-                }
-
-                return children;
-              }
             }}
           />
         </div>
