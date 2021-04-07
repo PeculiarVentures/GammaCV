@@ -8,7 +8,7 @@ const destinationDirectory = path.join(sourceDirectory, '_data');
 const processParams = (params) => {
   if (params) {
     return params.map((e) => {
-      e.type = e.type.names.join(' \\| ').replace('<', '\\<');
+      e.type = e.type.names.join(' | ');
 
       return e;
     });
@@ -65,7 +65,7 @@ const parseJsDocFile = async (filePath, fileName) => {
         case 'function': {
           parsedJsDoc[0].methods.push({
             ...baseProperties,
-            isStatic: scope === 'static',
+            scope,
             returns: parsedReturns,
             examples,
             type: 'function',
@@ -75,7 +75,7 @@ const parseJsDocFile = async (filePath, fileName) => {
         case 'member': {
           parsedJsDoc[0].methods.push({
             ...baseProperties,
-            isStatic: false,
+            scope,
             returns: parsedReturns,
             name: longname,
             type: 'function',

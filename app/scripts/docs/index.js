@@ -18,6 +18,16 @@ const appendLink = (text, docsIds) => {
   return text;
 };
 
+const textToEscaped = (text, sympolsToEscape) => {
+  let escapedText = text;
+
+  sympolsToEscape.forEach((symbol) => {
+    escapedText = escapedText.replace(symbol, `\\${symbol}`);
+  });
+
+  return escapedText;
+};
+
 const handleMDFile = (docItem) => {
   fs.copyFileSync(path.join(sourceDirectory, docItem.path), path.join(destinationDirectory, `${docItem.name}.md`));
 };
@@ -34,7 +44,7 @@ const renderMD = (data, docsIds, isClassMethod = false) => {
       examples,
       description,
       methods,
-      isStatic,
+      scope,
     } = item;
 
     if (type === 'function') {
@@ -60,7 +70,7 @@ const renderMD = (data, docsIds, isClassMethod = false) => {
         out.push(
           '####',
           ' ',
-          isStatic ? '<span>Static </span>' : '',
+          scope === 'static' ? '<span>Static </span>' : '',
         );
       } else {
         out.push(
@@ -71,14 +81,13 @@ const renderMD = (data, docsIds, isClassMethod = false) => {
       }
 
       out.push(
-        '**',
         name,
         '(',
         PARAMS.join(', '),
-        ')**',
+        ')',
         ' ',
         '<span>=> ',
-        RETURNS,
+        textToEscaped(RETURNS, ['|', '<']),
         '</span>',
         '\n',
         '\n',
@@ -136,7 +145,7 @@ const renderMD = (data, docsIds, isClassMethod = false) => {
         '|',
         `**${e.optional ? `${e.name}?` : e.name}**`,
         '|',
-        `<var>${appendLink(e.type, docsIds)}</var>`,
+        `<var>${textToEscaped(appendLink(e.type, docsIds), ['|', '<'])}</var>`,
         '|',
         e.description ? e.description.replace(/\n/g, '') : e.description,
         '|',
