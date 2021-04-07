@@ -151,11 +151,9 @@ export default class ExamplePage
 
   UNSAFE_componentWillMount() {
     try {
-      navigator.getUserMedia(
-        { video: true },
-        () => this.setState({ isCameraAccess: true }),
-        () => this.setState({ error: 'PermissionDenied' }),
-      );
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(() => this.setState({ isCameraAccess: true }))
+        .catch(() => this.setState({ error: 'PermissionDenied' }));
     } catch (error) {
       this.setState({ error: 'PermissionDenied' });
     }

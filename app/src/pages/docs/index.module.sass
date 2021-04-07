@@ -63,14 +63,6 @@
   h1:first-child
     margin-top: 24px
 
-  h2:first-child
-    margin-top: 3px
-    margin-bottom: 55px
-    font-weight: 700
-    line-height: 1.4
-    span
-      margin-right: 3px
-
   h2 + h3
     margin-top: 24px
 
@@ -92,6 +84,16 @@
       &:first-of-type + .methods
         margin-top: 91px
         margin-bottom: 68px
+
+  h2
+    &:first-child
+      margin-top: 3px
+      font-weight: 700
+      line-height: 1.4
+    span
+      margin-right: 3px
+    & + .description
+      margin-top: 55px
 
   ul
     list-style-position: inside
@@ -157,7 +159,7 @@
         font-weight: 400
         margin-bottom: 6px
 
-    .description
+    h6.description
       margin-bottom: 5px
       & + p
         margin-top: 0

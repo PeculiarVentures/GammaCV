@@ -39,18 +39,18 @@ const renderMD = (data, docsIds, isClassMethod = false) => {
 
     if (type === 'function') {
       let PARAMS = [];
-      let RETURNS = '<span>void</span>';
+      let RETURNS = 'void';
 
       if (params) {
         PARAMS = params.map((p) => (p.optional ? `${p.name}?` : p.name));
       }
 
-      if (returns && returns.length) {
+      if (returns) {
         RETURNS = returns.reduce((r, el) => {
           let returnValue = r;
 
-          returnValue += `<span>${appendLink(el.type, docsIds)}</span>`;
-          returnValue += el.description ? `<span> (${el.description})</span>` : '';
+          returnValue += appendLink(el.type, docsIds);
+          returnValue += el.description ? ` (${el.description})` : '';
 
           return returnValue;
         }, '');
@@ -77,8 +77,9 @@ const renderMD = (data, docsIds, isClassMethod = false) => {
         PARAMS.join(', '),
         ')**',
         ' ',
-        '<span>=> </span>',
+        '<span>=> ',
         RETURNS,
+        '</span>',
         '\n',
         '\n',
       );
