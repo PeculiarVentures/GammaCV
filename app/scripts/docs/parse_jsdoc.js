@@ -1,9 +1,4 @@
-const fs = require('fs');
-const path = require('path');
 const jsdoc2md = require('jsdoc-to-markdown');
-
-const sourceDirectory = path.join(__dirname, '../../sources/docs');
-const destinationDirectory = path.join(sourceDirectory, '_data');
 
 const processParams = (params) => {
   if (params) {
@@ -17,10 +12,10 @@ const processParams = (params) => {
   return undefined;
 };
 
-const parseJsDocFile = async (filePath, fileName) => {
+const parseJsDoc = async (filePath, fileName) => {
   const res = await jsdoc2md
     .getTemplateData({
-      files: path.join(sourceDirectory, filePath),
+      files: filePath,
     });
   const parsedJsDoc = [];
 
@@ -90,11 +85,9 @@ const parseJsDocFile = async (filePath, fileName) => {
     }
   });
 
-  fs.writeFileSync(path.join(destinationDirectory, `${fileName}.json`), JSON.stringify(parsedJsDoc));
-
   return parsedJsDoc;
 };
 
 module.exports = {
-  parseJsDocFile,
+  parseJsDoc,
 };
