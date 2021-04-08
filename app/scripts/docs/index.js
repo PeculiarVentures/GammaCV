@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const DOCS_CONFIG = require('../../sources/docs/config.json');
 const { checkDir } = require('./utils');
-const { parseJsDocFile } = require('./parseJsDoc');
+const { parseJsDoc } = require('./parse_jsdoc');
 
 const sourceDirectory = path.join(__dirname, '../../sources/docs');
 const destinationDirectory = path.join(sourceDirectory, '_data');
@@ -197,11 +197,12 @@ async function main() {
   for (let i = 0; i < items.length; i += 1) {
     const item = items[i];
     const isMD = /\.md$/.test(item.path);
+    const itemPath = path.join(sourceDirectory, item.path);
 
     if (isMD) {
       handleMDFile(item);
     } else {
-      const res = await parseJsDocFile(item.path, item.name);
+      const res = await parseJsDoc(itemPath, item.name);
 
       parsedDocs.push(res);
       docsIds.push({ id: res[0].id, name: res[0].name });
