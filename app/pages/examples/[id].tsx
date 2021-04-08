@@ -47,14 +47,15 @@ const Example = (props, context) => {
     );
   };
 
+  const TITLE = `${intl.getText('operations', undefined, id)} - GammaCV`;
   return (
     <>
       <Head>
         <title>
-          {intl.getText('operations', undefined, id)}
-          {' '}
-          - GammaCV
+          {TITLE}
         </title>
+        <meta property="twitter:title" content={TITLE} />
+        <meta property="og:title" content={TITLE} />
       </Head>
       {renderContent()}
     </>
