@@ -9,6 +9,9 @@ import config from '../sources/docs/config.json';
 import en from '../locales/en.json';
 import './reset.sass';
 
+const TITLE = 'GammaCV';
+const DESCRIPTION = 'GammaCV is a WebGL accelerated Computer Vision library for modern web applications.';
+
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const isMain = router.pathname === '/';
@@ -40,8 +43,6 @@ export default function MyApp({ Component, pageProps }) {
     };
   });
 
-  const TITLE = 'GammaCV';
-  const DESCRIPTION = 'GammaCV is a WebGL accelerated Computer Vision library for modern web applications.';
   return (
     <>
       <Head>
@@ -49,17 +50,16 @@ export default function MyApp({ Component, pageProps }) {
         <title>
           {TITLE}
         </title>
-        <meta property="og:title" content={TITLE} />
         <meta name="description" content={DESCRIPTION} />
-        <meta property="og:description" content={DESCRIPTION} />
-        <meta property="og:description" content={DESCRIPTION} />
         <meta name="Keywords" content="computer vision, WebGL, javascript" />
 
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta property="twitter:description" content={DESCRIPTION} />
-        <meta property="twitter:title" content={TITLE} />
-
+        <meta property="og:title" content={TITLE} />
+        <meta property="og:description" content={DESCRIPTION} />
         <meta property="og:image" content="/static/images/share_image.png" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={TITLE} />
+        <meta name="twitter:description" content={DESCRIPTION} />
 
         <link rel="icon" href="/static/manifest/favicon.ico" />
         <link rel="apple-touch-icon" href="/static/manifest/apple-touch-icon.png" />

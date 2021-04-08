@@ -14,7 +14,7 @@ const Doc = (props, context) => {
         <title>
           {TITLE}
         </title>
-        <meta property="twitter:title" content={TITLE} />
+        <meta name="twitter:title" content={TITLE} />
         <meta property="og:title" content={TITLE} />
       </Head>
       <DocsPage
