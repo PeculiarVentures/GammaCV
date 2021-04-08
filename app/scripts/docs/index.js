@@ -46,12 +46,12 @@ const renderMDParamsTable = (params, docsIds) => {
   const paramsColumns = params.map((e) => {
     const name = e.optional ? `${e.name}?` : e.name;
     const type = textToEscaped(appendLink(e.type, docsIds), ['|', '<']);
-    const description = e.description ? e.description.replace(/\n/g, '') : '';
+    const description = e.description ? e.description.replace(/\n/g, '<br />') : '';
 
     return `|**${name}**|<var>${type}</var>|${description}|`;
   }).join('\n');
 
-  return `${renderMDHeading('Params', 6)}| Param | Type | Description |\n| --- | --- | --- |\n${paramsColumns}`;
+  return `${renderMDHeading('Params', 6)}| Param | Type | Description |\n| --- | --- | --- |\n${paramsColumns}\n\n`;
 };
 
 const renderMDFunctionHeadingPostfix = (params, returns, docsIds) => {
@@ -76,6 +76,19 @@ const renderMDFunctionHeadingPostfix = (params, returns, docsIds) => {
   return `(${PARAMS}) <span>=> ${textToEscaped(RETURNS, ['|', '<'])}</span>`;
 };
 
+const renderMDHeadingGroup = (name, type, scope, postfix) => {
+  switch (type) {
+    case 'class':
+      return renderMDHeading(name, 2, '<span>Class</span>');
+    case 'function':
+      return renderMDHeading(name, 2, '<span>Function </span>', postfix);
+    case 'method':
+      return renderMDHeading(name, 4, scope === 'static' ? '<span>Static</span> ' : '', postfix);
+    default:
+      return renderMDHeading(name, 2);
+  }
+};
+
 const renderMD = (data, docsIds = false) => {
   const out = [];
 
@@ -91,19 +104,9 @@ const renderMD = (data, docsIds = false) => {
       scope,
     } = item;
 
-    if (type === 'function') {
-      const functionPostfix = renderMDFunctionHeadingPostfix(params, returns, docsIds);
+    const functionPostfix = renderMDFunctionHeadingPostfix(params, returns, docsIds);
 
-      out.push(renderMDHeading(name, 2, '<span>Function </span>', functionPostfix));
-    } else if (type === 'method') {
-      const functionPostfix = renderMDFunctionHeadingPostfix(params, returns, docsIds);
-
-      out.push(renderMDHeading(name, 4, scope === 'static' ? '<span>Static</span> ' : '', functionPostfix));
-    } else if (type === 'class') {
-      out.push(renderMDHeading(name, 2, '<span>Class</span>'));
-    } else {
-      out.push(renderMDHeading(name, 2));
-    }
+    out.push(renderMDHeadingGroup(name, type, scope, functionPostfix));
 
     if (description) {
       out.push(renderMDDescription(description));
