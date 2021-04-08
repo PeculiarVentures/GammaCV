@@ -32,14 +32,14 @@ const handleMDFile = (docItem) => {
   fs.copyFileSync(path.join(sourceDirectory, docItem.path), path.join(destinationDirectory, `${docItem.name}.md`));
 };
 
-const renderMDHeading = (title, level = 2, prefix, postfix = '') => `${'#'.repeat(level)} ${prefix ? `${prefix} ` : ''}${title}${postfix ? ` ${postfix}` : ''}\n`;
+const renderMDHeading = (title, level = 2, prefix, postfix = '') => `${'#'.repeat(level)} ${prefix ? `${prefix} ` : ''}${title}${postfix ? ` ${postfix}` : ''}\n\n`;
 
-const renderMDDescription = (description) => `${renderMDHeading('Description', 6)}${description}\n`;
+const renderMDDescription = (description) => `${renderMDHeading('Description', 6)}${description}\n\n`;
 
 const renderMDExamples = (examples) => {
   const parsedExample = examples.map((e) => `\`\`\`js\n${e}\n\`\`\``).join('\n');
 
-  return `${renderMDHeading('Example', 6)}${parsedExample}\n`;
+  return `${renderMDHeading('Example', 6)}${parsedExample}\n\n`;
 };
 
 const renderMDParamsTable = (params, docsIds) => {
@@ -51,13 +51,7 @@ const renderMDParamsTable = (params, docsIds) => {
     return `|**${name}**|<var>${type}</var>|${description}|`;
   }).join('\n');
 
-  return `
-  ${renderMDHeading('Params', 6)}
-  | Param | Type | Description |
-  | --- | --- | --- |
-  ${paramsColumns}
-  
-  `;
+  return `${renderMDHeading('Params', 6)}| Param | Type | Description |\n| --- | --- | --- |\n${paramsColumns}`;
 };
 
 const renderMDFunctionHeadingPostfix = (params, returns, docsIds) => {
@@ -79,7 +73,7 @@ const renderMDFunctionHeadingPostfix = (params, returns, docsIds) => {
     }, '');
   }
 
-  return `(${PARAMS}) <span>=> ${textToEscaped(RETURNS, ['|', '<'])}</span>\n`;
+  return `(${PARAMS}) <span>=> ${textToEscaped(RETURNS, ['|', '<'])}</span>`;
 };
 
 const renderMD = (data, docsIds = false) => {
