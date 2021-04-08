@@ -20,6 +20,7 @@ const parseJsDoc = async (filePath, fileName) => {
   const parsedJsDoc = [];
 
   res.sort((a, b) => a.order - b.order);
+
   const isClass = res[0].kind === 'class';
 
   res.forEach((data) => {

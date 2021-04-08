@@ -59,7 +59,19 @@ const renderMDFunctionHeadingPostfix = (params, returns, docsIds) => {
   let RETURNS = 'void';
 
   if (params) {
-    PARAMS = params.map((p) => (p.optional ? `${p.name}?` : p.name)).join(', ');
+    PARAMS = params.map((p) => {
+      let paramName = p.name;
+
+      if (p.variable) {
+        paramName = `...${paramName}`;
+      }
+
+      if (p.optional) {
+        paramName = `${p.name}?`;
+      }
+
+      return paramName;
+    }).join(', ');
   }
 
   if (returns) {
