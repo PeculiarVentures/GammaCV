@@ -63,7 +63,7 @@ const parseJsDoc = async (filePath, fileName) => {
             scope,
             returns: parsedReturns,
             examples,
-            type: 'function',
+            type: 'method',
           });
           break;
         }
@@ -73,7 +73,7 @@ const parseJsDoc = async (filePath, fileName) => {
             scope,
             returns: parsedReturns,
             name: longname,
-            type: 'function',
+            type: 'method',
           });
           break;
         }
