@@ -32,6 +32,10 @@ const handleMDFile = (docItem) => {
   fs.copyFileSync(path.join(sourceDirectory, docItem.path), path.join(destinationDirectory, `${docItem.name}.md`));
 };
 
+const renderMDHeading = (title, level = 2, prefix, postfix = '') => `${'#'.repeat(level)} ${prefix ? `${prefix} ` : ''}${title}${postfix ? ` ${postfix}` : ''}
+
+`;
+
 const renderMD = (data, docsIds, isClassMethod = false) => {
   const out = [];
 
@@ -70,7 +74,7 @@ const renderMD = (data, docsIds, isClassMethod = false) => {
         out.push(
           '####',
           ' ',
-          scope === 'static' ? '<span>Static </span>' : '',
+          scope === 'static' ? '<span>Static</span> ' : '',
         );
       } else {
         out.push(
@@ -93,32 +97,14 @@ const renderMD = (data, docsIds, isClassMethod = false) => {
         '\n',
       );
     } else if (type === 'class') {
-      out.push(
-        '##',
-        ' ',
-        '<span>Class</span>',
-        ' ',
-        name,
-        '\n',
-        '\n',
-      );
+      out.push(renderMDHeading(name, 2, '<span>Class</span>'));
     } else {
-      out.push(
-        '##',
-        ' ',
-        name,
-        '\n',
-        '\n',
-      );
+      out.push(renderMDHeading(name, 2));
     }
 
     if (description) {
+      out.push(renderMDHeading('Description', 6));
       out.push(
-        '######',
-        ' ',
-        'Description',
-        '\n',
-        '\n',
         description,
         '\n',
         '\n',
@@ -126,13 +112,7 @@ const renderMD = (data, docsIds, isClassMethod = false) => {
     }
 
     if (params && params.length) {
-      out.push(
-        '######',
-        ' ',
-        'Params',
-        '\n',
-        '\n',
-      );
+      out.push(renderMDHeading('Params', 6));
 
       out.push(
         '| Param | Type | Description |',
@@ -156,14 +136,7 @@ const renderMD = (data, docsIds, isClassMethod = false) => {
     }
 
     if (examples && examples.length) {
-      out.push(
-        '######',
-        ' ',
-        'Example',
-        '\n',
-        '\n',
-      );
-
+      out.push(renderMDHeading('Example', 6));
       out.push(...examples.map((e) => ([
         '```js',
         e,
@@ -173,18 +146,12 @@ const renderMD = (data, docsIds, isClassMethod = false) => {
     }
 
     if (methods) {
-      out.push(
-        '######',
-        ' Methods',
-        '\n',
-        '\n',
-      );
-
-      out.push(renderMD(methods, docsIds, true).md);
+      out.push(renderMDHeading('Methods', 6));
+      out.push(renderMD(methods, docsIds, true));
     }
   });
 
-  return { md: out.join('') };
+  return out.join('');
 };
 
 async function main() {
@@ -209,10 +176,25 @@ async function main() {
   }
 
   for (let i = 0; i < parsedDocs.length; i += 1) {
-    const { md } = renderMD(parsedDocs[i], docsIds);
+    const md = renderMD(parsedDocs[i], docsIds);
 
     fs.writeFileSync(path.join(destinationDirectory, `${docsIds[i].id}.md`), md);
   }
 }
 
 main();
+
+// (async () => {
+//   const item = {
+//     "name": "tensor",
+//     "path": "../../../lib/program/tensor.js"
+//   };
+//   // const item = {
+//   //   "name": "adaptive_threshold",
+//   //   "path": "../../../lib/ops/adaptive_threshold/index.js"
+//   // };
+//   const res = await parseJsDocFile(item.path, item.name);
+//   const md = renderMD(res, []);
+
+//   console.log(md);
+// })();
