@@ -580,16 +580,14 @@ export default class ExamplePage
           {showFps && (
             <div className={s.top_title_wrapper}>
               <Typography
-                type="h3"
-                mobileType="h4"
+                type={isMobile ? 'h4' : 'h3'}
                 color="black"
                 className={s.top_title_text}
               >
                 {intl.getText('operations', undefined, exampleName)}
               </Typography>
               <Typography
-                type="h3"
-                mobileType="h4"
+                type={isMobile ? 'h4' : 'h3'}
                 color="grey"
                 className={clx({
                   [s.top_title_fps]: true,
