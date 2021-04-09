@@ -5,10 +5,15 @@ import { ExamplesPage } from '../src/pages';
 const Examples = (props) => {
   const { config } = props;
 
+  const TITLE = 'Examples - GammaCV';
   return (
     <>
       <Head>
-        <title>Examples - GammaCV</title>
+        <title>
+          {TITLE}
+        </title>
+        <meta name="twitter:title" content={TITLE} />
+        <meta property="og:title" content={TITLE} />
       </Head>
 
       <ExamplesPage
