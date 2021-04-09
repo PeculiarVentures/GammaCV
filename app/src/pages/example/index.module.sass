@@ -142,12 +142,14 @@
 @include mobile()
   .root_example
     padding: 60px 0 0
-    position: relative
+    height: 100%
+    &::before
+      height: auto
 
   .canvas_wrapper
     max-width: none
     border-width: 0
-    height: calc( 100vh - 60px )
+    height: auto
 
   .stop_play_icon
     visibility: hidden
