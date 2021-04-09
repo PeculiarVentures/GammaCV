@@ -55,11 +55,12 @@ export default function MyApp({ Component, pageProps }) {
 
         <meta property="og:title" content={TITLE} />
         <meta property="og:description" content={DESCRIPTION} />
-        <meta property="og:image" content="/static/images/share_image.png" />
+        <meta property="og:image" content="https://gammacv.com/static/images/share_image.png" />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={TITLE} />
         <meta name="twitter:description" content={DESCRIPTION} />
+        <meta name="twitter:image" content="https://gammacv.com/static/images/share_image.png" />
 
         <link rel="icon" href="/static/manifest/favicon.ico" />
         <link rel="apple-touch-icon" href="/static/manifest/apple-touch-icon.png" />
