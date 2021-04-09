@@ -5,7 +5,6 @@ import {
   Button,
   CircularProgress,
 } from 'lib-react-components';
-import { IntlContext } from 'lib-pintl';
 import Link from 'next/link';
 import clx from 'classnames';
 import microFps from 'micro-fps';
