@@ -1,6 +1,9 @@
 const pkg = require('../package.json');
 
 module.exports = {
+  future: {
+    webpack5: true,
+  },
   env: {
     LIB_VERSION: pkg.version,
   },
