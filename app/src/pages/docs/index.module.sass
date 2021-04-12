@@ -4,7 +4,7 @@
   padding: 80px 0 0 350px
 
 .m_width
-  padding: 91px 150px 88px
+  padding: 94px 150px 88px
   max-width: 1200px
   width: 100%
   min-height: calc(100vh - 80px - 80px)
@@ -38,11 +38,6 @@
     span
       white-space: nowrap
 
-  p + pre
-    & + h2,
-    & + h3
-      margin-top: 24px
-
   h1,
   h2,
   h3,
@@ -60,8 +55,12 @@
       font-weight: inherit
       color: rgb(var(--grey))
 
-  h1:first-child
-    margin-top: 24px
+  h1
+    &:first-child
+      margin-top: 21px
+    ~ h2
+      margin-top: 62px
+      margin-bottom: 16px
 
   h2 + h3
     margin-top: 24px
@@ -74,26 +73,26 @@
     font-weight: 400
     margin-top: 34px
     margin-bottom: 15px
-    &.description
-      margin-top: 20px
-      margin-bottom: 16px
-    & + p
-      margin-top: -11px
-      &:first-of-type + .params
-        margin-top: 96px
-      &:first-of-type + .methods
-        margin-top: 91px
-        margin-bottom: 68px
+    &:nth-of-type(2)
+      margin-top: 96px
+    &:nth-of-type(3)
+      margin-top: 75px
+
+  .methods
+    margin-bottom: 68px
+
+  .description
+    margin-top: 20px
+    margin-bottom: 5px
 
   h2
+    margin-top: 75px
+    margin-bottom: 55px
     &:first-child
-      margin-top: 3px
       font-weight: 700
       line-height: 1.4
     span
       margin-right: 3px
-    & + .description
-      margin-top: 55px
 
   ul
     list-style-position: inside
@@ -101,8 +100,6 @@
   table
     width: 100%
     border-collapse: collapse
-    & + .methods
-      margin-top: 75px
 
   td
     padding: 20px 10px 20px 0
@@ -135,7 +132,7 @@
     padding-left: 280px
 
   .m_width
-    padding: 91px 70px 88px
+    padding: 94px 70px 88px
 
 @media (max-width: 1024px)
   .main
@@ -145,7 +142,7 @@
     max-width: none
 
   .m_width
-    padding: 30px 30px 74px
+    padding: 33px 30px 74px
 
   .anchor_link_style
     display: none
@@ -158,11 +155,6 @@
         font-size: 16px
         font-weight: 400
         margin-bottom: 6px
-
-    h6.description
-      margin-bottom: 5px
-      & + p
-        margin-top: 0
 
     h4
       & > span
