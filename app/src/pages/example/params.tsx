@@ -149,8 +149,9 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
           className={s.controller_wrapper}
         >
           <Box
-            stroke={isMobile ? 'dark_grey' : 'grey_2'}
+            stroke={isMobile ? 'light_grey' : 'grey_2'}
             strokeType="bottom"
+            strokeOpacity={isMobile ? 0.19 : 1}
             className={s.controller_header_wrapper}
           >
             <Typography

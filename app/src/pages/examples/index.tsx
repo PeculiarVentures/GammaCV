@@ -52,7 +52,7 @@ export const ExamplesPage: React.FC<IExamplesPageProps> = (props, context) => {
             <ExampleItem
               key={example.path}
               name={intl.getText('operations', undefined, example.path)}
-              type={example.type}
+              type={intl.getText('type', undefined, example.type)}
               path={example.path}
               style={getExampleItemStyles(index)}
               searchValue={searchValue}
