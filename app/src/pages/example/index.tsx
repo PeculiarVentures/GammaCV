@@ -604,7 +604,7 @@ export default class ExamplePage
             <Box
               borderRadius={isMobile ? 0 : 8}
               stroke={isMobile ? '' : 'grey_2'}
-              fill="light_grey"
+              fill={isMobile ? '' : 'light_grey'}
               className={s.canvas_wrapper}
             >
               <canvas
