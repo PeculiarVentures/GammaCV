@@ -71,7 +71,7 @@ const parseJsDoc = async (filePath, fileName) => {
         case 'member': {
           parsedJsDoc[0].methods.push({
             ...baseProperties,
-            scope,
+            scope: 'global',
             returns: parsedReturns,
             name: longname,
             type: 'method',

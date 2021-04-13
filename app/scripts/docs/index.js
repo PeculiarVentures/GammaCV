@@ -18,10 +18,10 @@ const appendLink = (text, docsIds) => {
   return text;
 };
 
-const textToEscaped = (text, sympolsToEscape) => {
+const textToEscaped = (text, symbolsToEscape) => {
   let escapedText = text;
 
-  sympolsToEscape.forEach((symbol) => {
+  symbolsToEscape.forEach((symbol) => {
     escapedText = escapedText.replace(symbol, `\\${symbol}`);
   });
 
@@ -34,12 +34,12 @@ const handleMDFile = (docItem) => {
 
 const renderMDHeading = (title, level = 2, prefix, postfix = '') => `${'#'.repeat(level)} ${prefix ? `${prefix} ` : ''}${title}${postfix ? ` ${postfix}` : ''}\n\n`;
 
-const renderMDDescription = (description) => `${renderMDHeading('Description', 6)}${description}\n\n`;
+const renderMDParagraph = (text) => `${text}\n\n`;
 
 const renderMDExamples = (examples) => {
   const parsedExample = examples.map((e) => `\`\`\`js\n${e}\n\`\`\``).join('\n');
 
-  return `${renderMDHeading('Example', 6)}${parsedExample}\n\n`;
+  return renderMDParagraph(parsedExample);
 };
 
 const renderMDParamsTable = (params, docsIds) => {
@@ -51,7 +51,7 @@ const renderMDParamsTable = (params, docsIds) => {
     return `|**${name}**|<var>${type}</var>|${description}|`;
   }).join('\n');
 
-  return `${renderMDHeading('Params', 6)}| Param | Type | Description |\n| --- | --- | --- |\n${paramsColumns}\n\n`;
+  return `| Param | Type | Description |\n| --- | --- | --- |\n${paramsColumns}\n\n`;
 };
 
 const renderMDFunctionHeadingPostfix = (params, returns, docsIds) => {
@@ -88,20 +88,51 @@ const renderMDFunctionHeadingPostfix = (params, returns, docsIds) => {
   return `(${PARAMS}) <span>=> ${textToEscaped(RETURNS, ['|', '<'])}</span>`;
 };
 
-const renderMDHeadingGroup = (name, type, scope, postfix) => {
+const renderMDHeadingGroup = (name, type, postfix) => {
   switch (type) {
     case 'class':
       return renderMDHeading(name, 2, '<span>Class</span>');
     case 'function':
       return renderMDHeading(name, 2, '<span>Function </span>', postfix);
-    case 'method':
-      return renderMDHeading(name, 4, scope === 'static' ? '<span>Static</span> ' : '', postfix);
     default:
       return renderMDHeading(name, 2);
   }
 };
 
-const renderMD = (data, docsIds = false) => {
+const renderMDMethods = (methods, docsIds) => {
+  const methodsMD = [];
+
+  methods.forEach((method) => {
+    const {
+      name,
+      params,
+      returns,
+      examples,
+      description,
+      scope,
+    } = method;
+    const methodPostfix = renderMDFunctionHeadingPostfix(params, returns, docsIds);
+    const methodPrefix = scope === 'static' ? '<span>Static</span> ' : '';
+
+    methodsMD.push(renderMDHeading(name, 4, methodPrefix, methodPostfix));
+
+    if (description) {
+      methodsMD.push(renderMDParagraph(description));
+    }
+
+    if (params && params.length) {
+      methodsMD.push(renderMDParamsTable(params, docsIds));
+    }
+
+    if (examples && examples.length) {
+      methodsMD.push(renderMDExamples(examples));
+    }
+  });
+
+  return methodsMD.join('');
+};
+
+const renderMD = (data, docsIds) => {
   const out = [];
 
   data.forEach((item) => {
@@ -113,28 +144,30 @@ const renderMD = (data, docsIds = false) => {
       examples,
       description,
       methods,
-      scope,
     } = item;
 
     const functionPostfix = renderMDFunctionHeadingPostfix(params, returns, docsIds);
 
-    out.push(renderMDHeadingGroup(name, type, scope, functionPostfix));
+    out.push(renderMDHeadingGroup(name, type, functionPostfix));
 
     if (description) {
-      out.push(renderMDDescription(description));
+      out.push(renderMDHeading('Description', 6));
+      out.push(renderMDParagraph(description));
     }
 
     if (params && params.length) {
+      out.push(renderMDHeading('Params', 6));
       out.push(renderMDParamsTable(params, docsIds));
     }
 
     if (examples && examples.length) {
+      out.push(renderMDHeading('Example', 6));
       out.push(renderMDExamples(examples));
     }
 
     if (methods) {
       out.push(renderMDHeading('Methods', 6));
-      out.push(renderMD(methods, docsIds));
+      out.push(renderMDMethods(methods, docsIds));
     }
   });
 
