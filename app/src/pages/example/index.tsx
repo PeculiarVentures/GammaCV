@@ -460,13 +460,15 @@ export default class ExamplePage
   }
 
   renderNoAccessCase = () => {
+    const { device } = this.state;
     const { intl } = this.context;
+    const isMobile = device.type === 'mobile';
 
     return (
       <>
         <div className={s.error_text}>
           <Typography
-            type="h3"
+            type={isMobile ? 'h4' : 'h3'}
             color="black"
             align="center"
           >
@@ -486,13 +488,15 @@ export default class ExamplePage
   };
 
   renderNotSupportedCase = () => {
+    const { device } = this.state;
     const { intl } = this.context;
+    const isMobile = device.type === 'mobile';
 
     return (
       <>
         <div className={s.error_text}>
           <Typography
-            type="h3"
+            type={isMobile ? 'h4' : 'h3'}
             color="black"
             align="center"
           >
