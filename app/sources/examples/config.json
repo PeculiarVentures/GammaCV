@@ -111,6 +111,11 @@
       },
       {
         "type": "video",
+        "name": "Stroke Width Transform",
+        "path": "swt"
+      },
+      {
+        "type": "video",
         "name": "Extract Histogram",
         "path": "histogram"
       }
