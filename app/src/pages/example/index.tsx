@@ -305,7 +305,12 @@ export default class ExamplePage
   start = () => {
     // start capturing a camera and run loop
     try {
-      this.stream.start();
+      this.stream.start().catch(() => {
+        this.stop();
+        this.setState({
+          error: 'PermissionDenied',
+        });
+      });
 
       this.timeoutRequestAnimation = window.requestAnimationFrame(this.tick);
       this.setState({
@@ -371,7 +376,6 @@ export default class ExamplePage
       this.stop(false);
     } else {
       this.params = params;
-      // this.init(this.props);
       this.start();
     }
   };
