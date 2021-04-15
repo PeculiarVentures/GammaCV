@@ -26,21 +26,21 @@ export default {
 
     const newLine = line;
     // visualize strokes
-    for (let i = 0; i < output.size / 4; i += 1) {
-      const y = Math.floor(i / output.shape[0]);
-      const x = i - (y * output.shape[0]);
-      const sx = x;
-      const sy = y;
-      const tx = output.get(y, x, 2);
-      const ty = output.get(y, x, 3);
+    for (let x = 0; x < output.shape[1]; x += 1) {
+      for (let y = 0; y < output.shape[0]; y += 1) {
+        const sx = x;
+        const sy = y;
+        const tx = output.get(y, x, 2);
+        const ty = output.get(y, x, 3);
 
-      newLine.x1 = sx;
-      newLine.y1 = sy;
-      newLine.x2 = tx;
-      newLine.y2 = ty;
+        newLine.x1 = sx;
+        newLine.y1 = sy;
+        newLine.x2 = tx;
+        newLine.y2 = ty;
 
-      if (tx !== 0 && ty !== 0) {
-        gm.canvasDrawLine(canvas, newLine);
+        if (tx !== 0 && ty !== 0) {
+          gm.canvasDrawLine(canvas, newLine);
+        }
       }
     }
   },
