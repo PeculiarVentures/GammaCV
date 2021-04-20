@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[132],{1132:function(e,s,t){"use strict";t.r(s);var u=t(6243);s.default={op:function(e,s){var t=e;return t=u.se(t),t=u.Ig(t,s.COLORSEGMENTATION.clusters)},params:{COLORSEGMENTATION:{name:"COLOR SEGMENTATION",clusters:{name:"Num Clusters",type:"constant",min:2,max:255,step:1,default:3}}}}}}]);

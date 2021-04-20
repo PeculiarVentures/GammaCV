@@ -1,0 +1,1 @@
+{"pageProps":{"id":"minmax","data":"## MinMax\n\n###### Description\n\nExtract min and max for given image\n\n###### Params\n\n| Param | Type | Description |\n| --- | --- | --- |\n|**tSrc**|<var>[Tensor](/docs/tensor#Tensor)</var>|Input image|\n|**layers**|<var>number</var>|Number of layers for a parallel reduction|\n\n"},"__N_SSG":true}

@@ -1,1 +1,0 @@
-(self.webpackChunkapp=self.webpackChunkapp||[]).push([[8409],{8409:(a,e,t)=>{"use strict";t.r(e),t.d(e,{default:()=>p});var n=t(2346);const p={op:function(a,e){var t=a;return n.Gq(t,[e.ERODE.w,e.ERODE.h])},params:{ERODE:{name:"EROSION",w:{name:"W",type:"constant",min:1,max:20,step:1,default:10},h:{name:"H",type:"constant",min:1,max:20,step:1,default:10}}}}}}]);

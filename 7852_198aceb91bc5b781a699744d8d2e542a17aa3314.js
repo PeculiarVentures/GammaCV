@@ -1,1 +1,0 @@
-(self.webpackChunkapp=self.webpackChunkapp||[]).push([[7852],{7852:(a,e,t)=>{"use strict";t.r(e),t.d(e,{default:()=>p});var n=t(2346);const p={op:function(a,e){var t=a;return n.lE(t,[e.DILATE.w,e.DILATE.h])},params:{DILATE:{name:"DILATION",w:{name:"W",type:"constant",min:1,max:20,step:1,default:10},h:{name:"H",type:"constant",min:1,max:20,step:1,default:10}}}}}}]);
