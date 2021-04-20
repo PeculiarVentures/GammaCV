@@ -1,0 +1,57 @@
+@import '../../styles/_mixins'
+
+.root
+  width: 350px
+  height: 100%
+  max-height: calc(100vh - 80px)
+  vertical-align: top
+  position: fixed
+  left: 0
+  top: 80px
+
+.header
+  padding: 25px 25px 55px
+
+.search_field
+  input
+    border-radius: 20px
+    padding: 0 20px
+    font-size: 14px
+
+.not_found
+  &_wrapper
+    padding: 0 48px
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+  &_text
+    margin-bottom: 5px
+
+.list
+  padding: 0 48px 60px
+  list-style-type: none
+  height: calc(100% - 125px)
+  overflow: auto
+  position: relative
+  width: 100%
+
+@include tablet()
+  .root
+    width: 280px
+
+@media (max-width: 1024px)
+  .root
+    width: 100%
+    left: 0
+    top: 60px
+    max-height: calc(100% - 60px)
+    z-index: 5
+    overflow: auto
+
+  .header
+    display: none
+
+  .list
+    padding: 60px 40px 57px
+    height: auto

@@ -1,0 +1,27 @@
+.root
+  border: 1px solid rgba(214,219,222,.15)
+  box-shadow: 0 4px 10px 0 rgb(64 72 79 / 10%)
+  border-radius: 8px
+  transition: box-shadow .3s, transform .3s
+  padding: 20px
+  background: #fff
+  white-space: nowrap
+  overflow: hidden
+  -ms-text-overflow: ellipsis
+  text-overflow: ellipsis
+  display: flex
+  flex-direction: column
+  justify-content: center
+  animation: opacity 0.4s cubic-bezier(0,1.85,1,1.07) forwards
+  opacity: 0
+  &:hover,
+  &:focus
+    transform: scale(1.05)
+    box-shadow: 0 4px 30px 0 rgb(64 72 79 / 15%)
+    z-index: 1
+
+@keyframes opacity
+  0%
+    opacity: 0
+  100%
+    opacity: 1

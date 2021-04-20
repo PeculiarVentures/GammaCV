@@ -1,0 +1,85 @@
+@import '../../styles/_mixins'
+
+.controller_wrapper
+  width: 480px
+  min-width: 300px
+  margin-left: 20px
+
+.controller_header
+  &_wrapper
+    padding: 20px 20px 18px
+    display: flex
+    align-items: center
+    justify-content: space-between
+
+.reset
+  padding: 0
+  box-shadow: none !important
+  &_icon
+    display: inline-block
+    vertical-align: middle
+    width: 14px
+    height: 14px
+    margin-right: 5px
+  &_text
+    display: inline-block
+    vertical-align: middle
+
+.params_title
+  margin-bottom: 21px
+
+.params_block
+  padding: 20px
+  &_wrapper,
+  &_select_wrapper
+    margin-bottom: 1px
+    display: flex
+    align-items: center
+    margin-bottom: 14px
+  &_select_wrapper
+    margin-bottom: 36px
+  &_section
+    margin-bottom: 36px
+  &_icon
+    width: 22px
+    margin-right: 10px
+  &_title
+    margin-right: 20px
+    width: 98px
+  &_slider
+    width: calc(100% - 205px)
+  &_select
+    width: calc(100% - 160px)
+    text-align: left
+  &_count
+    margin-left: 15px
+
+@include mobile()
+  .controller_wrapper
+    position: absolute
+    left: 0
+    top: 0
+    width: 100%
+    height: 100%
+    margin-left: 0
+
+  .controller_header
+    &_wrapper
+      padding: 12px 30px 16px
+    &_title
+      color: rgb(var(--white))
+
+  .params_title
+    margin-bottom: 16px
+
+  .params_block
+    padding: 30px
+
+  .reset
+    border-style: none
+    padding-top: 1px
+    &_icon
+      margin-right: 4px
+      width: 16px
+    &_text
+      padding-top: 1px

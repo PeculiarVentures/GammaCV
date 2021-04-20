@@ -1,0 +1,205 @@
+@import '../../styles/_mixins'
+
+.main
+  padding: 80px 0 0 350px
+
+.m_width
+  padding: 94px 150px 88px
+  max-width: 1200px
+  width: 100%
+  min-height: calc(100vh - 80px - 80px)
+
+.anchor_link
+  position: absolute
+  margin-top: -100px
+  cursor: pointer
+
+.anchor_link_style
+  display: inline-block
+  vertical-align: middle
+  width: 20px
+  margin-left: -20px
+  transform: translate(-50%, -10%)
+  opacity: 0
+
+.doc
+  margin-bottom: 75px
+  &_code
+    padding: 0 7px
+    border-radius: 3px
+    display: inline-block
+
+  pre,
+  p
+    margin-bottom: 16px
+  ul
+    margin-bottom: 38px
+
+  code[class*=language-]
+    span
+      white-space: nowrap
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5
+    margin-top: 62px
+    margin-bottom: 16px
+    font-weight: 600
+    line-height: 1.25
+    &:hover
+      .anchor_link_style
+        opacity: 1
+    span
+      font: inherit
+      font-weight: inherit
+      color: rgb(var(--grey))
+
+  h1
+    &:first-child
+      margin-top: 21px
+    ~ h2
+      margin-top: 62px
+      margin-bottom: 16px
+      font-weight: 600
+      line-height: 1.25
+
+  h2 + h3
+    margin-top: 24px
+
+  h4
+    font-weight: 700
+
+  h6
+    text-transform: uppercase
+    font-weight: 400
+    margin-top: 34px
+    margin-bottom: 15px
+
+  .params
+    margin-top: 96px
+    + table
+      margin-top: 15px
+
+  .methods
+    margin-top: 91px
+    margin-bottom: 68px
+
+  .description
+    margin-top: 55px
+    margin-bottom: 5px
+
+  .example
+    margin-top: 65px
+    margin-bottom: 5px
+
+  h2
+    margin-top: 75px
+    margin-bottom: 55px
+    font-weight: 700
+    line-height: 1.4
+    span
+      margin-right: 3px
+
+  ul
+    list-style-position: inside
+
+  table
+    width: 100%
+    border-collapse: collapse
+    margin: 50px 0 65px
+
+  td
+    padding: 20px 10px 20px 0
+    border-top: 1px solid #f6f6f6
+    border-bottom: 1px solid #f6f6f6
+    width: 20%
+    vertical-align: top
+    color: rgb(var(--dark_grey))
+    font-size: 15px
+    &:nth-child(2)
+      width: 30%
+    &:nth-child(3)
+      font-size: 16px
+      width: 60px
+      color: rgb(var(--black))
+    var
+      font-style: normal
+    strong
+      font-weight: 600
+
+  >:first-child
+    margin-top: 0
+  >:last-child,
+  &:last-of-type
+    margin-bottom: 0
+    > iframe
+      margin-bottom: 0
+
+@include tablet()
+  .main
+    padding-left: 280px
+
+  .m_width
+    padding: 94px 70px 88px
+
+@media (max-width: 1024px)
+  .main
+    padding: 60px 0 0
+    height: auto
+    max-height: none
+    max-width: none
+
+  .m_width
+    padding: 33px 30px 74px
+
+  .anchor_link_style
+    display: none
+
+  .doc
+    h2:first-child
+      font-size: 22px
+      span
+        display: block
+        font-size: 16px
+        font-weight: 400
+        margin-bottom: 6px
+
+    h4
+      & > span
+        display: block
+        margin-bottom: 7px
+        margin-top: 5px
+    
+    table
+      margin-bottom: 50px
+
+    tr
+      display: grid
+      grid-template-columns: .35fr .65fr
+      grid-template-rows: auto 1fr
+      border-top: 1px solid #f6f6f6
+      padding: 21px 0 30px
+      gap: 0 10px
+      grid-template-areas: "first third" "second third"
+      align-items: start
+      &:last-child
+        border-bottom: 1px solid #f6f6f6
+
+    td
+      width: auto !important
+      border-style: none
+      padding: 0
+      vertical-align: top
+      var
+        color: rgb(var(--grey))
+      strong
+        display: inline-block
+        vertical-align: top
+      &:first-child
+        grid-area: first
+      &:nth-child(2)
+        grid-area: second
+      &:last-child
+        grid-area: third

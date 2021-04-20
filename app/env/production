@@ -1,5 +1,0 @@
-NODE_ENV=production
-URL=http://localhost
-PORT=3000
-ROLLBAR_API_KEY=
-GOOGLE_ANALYTICS=

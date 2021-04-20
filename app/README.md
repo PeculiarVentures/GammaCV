@@ -1,29 +1,29 @@
-# GammaCV Sample Application
+# GammaCV Docs
 
-#### Run development
-```bash
-npm run development
+### Setup
+
 ```
-Visit [http://localhost:3000](http://localhost:3000)
-
-#### Run production
-```bash
-npm run production
-```
-Visit [http://localhost:3000](http://localhost:3000)
-
-### Build and deploy to gh-pages
-```bash
-npm run deploy
+npm install
 ```
 
-#### Run linter
-```bash
-npm run lint
+### Start development mode
+
+```
+npm run dev
 ```
 
-#### Run tests
-```bash
-npm run test
+This starts your Next.js app’s "development server" (more on this later) on port **3000**.
+
+Let’s check to see if it’s working. Open http://localhost:3000 from your browser.
+
+### Build the application for production usage
+
 ```
-For running tests in WebStorm add a Extra Mocha options `--compilers js:babel-core/register`
+npm run build
+```
+
+### Start a production server
+
+```
+npm run start
+```

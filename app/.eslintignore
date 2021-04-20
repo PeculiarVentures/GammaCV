@@ -1,1 +1,2 @@
-**/src/assets/static
+node_modules
+out

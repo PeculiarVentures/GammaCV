@@ -1,3 +1,11 @@
+/**
+ * @license MIT
+ * @author Arkadiy Pilguk(apilguk@gmail.com)
+ * @author Mihail Zachepilo(mihailzachepilo@gmail.com)
+ * Copyright 2018-2021 Peculiar Ventures.
+ * All rights reserved.
+ */
+
 /* io */
 
 export function initDrawable(canvas: HTMLCanvasElement, output: Tensor, updater?: () => void): void
@@ -8,7 +16,7 @@ export function putImageData(canvas: HTMLCanvasElement, imageData: ImageData, x?
 
 export class CaptureVideo {
   constructor(width: number, height: number);
-  start(deviceID?: string, exactFacingMode?: string): void;
+  start(deviceID?: string, exactFacingMode?: string): Promise<void>;
   stop(): void;
   getImageBuffer(type: 'uint8' | 'float32' | Tensor): Float32Array | Uint8Array | Tensor | ImageData
   getImageBufferTo(dtype: 'uint8' | 'float32' | Tensor, ctx?: CanvasRenderingContext2D, width?: number, height?: number, x?: number, y?: number, w?: number, h?: number, to?: Tensor): void
@@ -301,6 +309,6 @@ type InputType = Tensor | Operation | MediaInput;
 type MediaInputType = HTMLVideoElement | HTMLCanvasElement;
 
 /**
- * Array of positive integers, that describe n-dimensional shape, should cotain n elements
+ * Array of positive integers, that describe n-dimensional shape, should contain n elements
  */
 type Shape = number[];
