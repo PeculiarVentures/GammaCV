@@ -1,0 +1,56 @@
+.root
+  height: 80px
+  padding: 0 20px 0 30px
+  display: flex
+  align-items: center
+  top: 0
+  left: 0
+  width: 100%
+  position: relative
+  z-index: 5
+  &.m_not_main
+    position: fixed
+
+.logo
+  width: 135px
+  display: block
+  &_mobile_img
+    display: inline
+    vertical-align: middle
+    height: 30px
+    width: 24px
+
+.spacer
+  flex: 1 1 auto
+
+.nav_item
+  padding: 0 10px
+
+@media (max-width: 1024px)
+  .root
+    padding-bottom: 0
+    height: 60px
+
+  .logo
+    order: 0
+    width: 25px
+    margin-right: 3px
+
+  .spacer
+    order: 1
+
+  .nav_item
+    padding: 10px 5px
+
+  .display_docs
+    box-shadow: none !important
+    order: 1
+    padding: 0
+    border-style: none
+    img
+      vertical-align: middle
+      margin-top: -2px
+      margin-left: 10px
+      display: inline-block
+      object-fit: none
+      width: 13px

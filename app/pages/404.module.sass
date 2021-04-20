@@ -1,0 +1,16 @@
+@import ../src/styles/_mixins
+
+.root
+  height: 100vh
+  display: flex
+  flex-direction: column
+  justify-content: center
+  padding: 80px 70px 40px
+
+.title
+  margin-top: -25px
+  margin-bottom: 15px
+
+@include mobile()
+  .root
+    padding-top: 60px

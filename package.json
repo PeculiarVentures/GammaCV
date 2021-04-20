@@ -13,12 +13,7 @@
     "test": "NODE_ENV=test SINGLE_RUN=true babel-node ./node_modules/.bin/karma start",
     "test-server": "NODE_ENV=test babel-node ./node_modules/.bin/karma start",
     "test-crossbrowser": "NODE_ENV=test babel-node ./node_modules/.bin/karma start ./scripts/karma_all.conf.js",
-    "lint": "./node_modules/.bin/eslint --ext .js lib/ test/",
-    "prelint": "cd app && npm run lint",
-    "development": "cd app && npm run development",
-    "production": "cd app && npm run production",
-    "docs": "cd app && npm run docs",
-    "deploy:gh-pages": "cd app && npm run deploy:gh-pages"
+    "lint": "./node_modules/.bin/eslint --ext .js lib/ test/"
   },
   "repository": {
     "type": "git",

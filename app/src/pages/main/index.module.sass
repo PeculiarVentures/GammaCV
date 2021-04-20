@@ -1,0 +1,97 @@
+@import '../../styles/_mixins'
+
+$color1: #00D093
+$color2: #8F70FA
+$color3: #FF6788
+$threewidth: 300%
+$animTime: 7s
+
+@keyframes pulse-opacity
+  0%
+    opacity: .2
+  50%
+    opacity: .8
+  100%
+    opacity: .2
+
+@keyframes reverse-pulse-opacity
+  0%
+    opacity: .8
+  50%
+    opacity: .2
+  100%
+    opacity: .8
+
+.root
+  min-height: calc( 100vh - 80px )
+
+.preview
+  position: relative
+  padding: 180px 0 170px
+  margin-top: -80px
+  &:before
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    content: ''
+    background-image: -webkit-radial-gradient(center $threewidth, rgba($color2, .9) 10%, rgba($color3, .6) $threewidth/4)
+    animation: reverse-pulse-opacity $animTime linear infinite
+  &:after
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    content: ''
+    background-image: linear-gradient(to bottom right, rgba($color1, .8), rgba($color3, .3))
+    animation: pulse-opacity $animTime linear infinite
+  &_content
+    max-width: 770px
+    position: relative
+    z-index: 1
+  &_title
+    margin-bottom: 40px
+
+.m_width
+  padding: 0 200px
+
+.facts
+  padding: 100px 0 125px
+  &_list
+    list-style-type: none
+    display: flex
+  &_item
+    flex: 1
+    margin-right: 7.5vw
+    &:last-child
+      margin-right: 0
+  &_icon_container
+    height: 40px
+    margin-bottom: 20px
+  &_icon
+    width: auto
+  &_title
+    margin-bottom: 22px
+
+@include tablet()
+  .m_width
+    padding: 0 70px
+    
+@media (max-width: 1024px)
+  .facts
+    padding: 93px 0
+    &_list
+      flex-direction: column
+    &_item
+      margin-right: 0
+      margin-bottom: 80px
+      &:last-child
+        margin-bottom: 0
+
+@include mobile()
+  .preview
+    padding: 168px 0 94px
+  .m_width
+    padding: 0 30px

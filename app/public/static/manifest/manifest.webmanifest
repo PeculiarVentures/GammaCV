@@ -1,0 +1,7 @@
+{
+  "name": "GammaCV",
+  "icons": [
+    { "src": "/static/manifest/192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/static/manifest/512.png", "type": "image/png", "sizes": "512x512" }
+  ]
+}

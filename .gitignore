@@ -6,7 +6,10 @@ dst/
 *.log
 compiled_env.json
 *.sketch
-dist/
-dist-es6/
-app/_data
 .backup
+dist
+
+# App
+_data
+.next
+out

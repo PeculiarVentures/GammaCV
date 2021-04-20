@@ -1,0 +1,25 @@
+.root
+  width: 100%
+  &:not(:first-child)
+    margin-top: 35px
+
+.group_name
+  text-transform: uppercase
+
+.list
+  margin-top: 5px
+  list-style-type: none
+  width: 100%
+
+.link
+  display: block
+  width: 100%
+  line-height: 30px
+  transition: opacity 300ms
+  &:hover,
+  &:focus
+    opacity: .6
+
+@media (max-width: 1024px)
+  .list
+    margin-top: 4px
