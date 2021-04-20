@@ -1,9 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [0.5.1] - 2021-04-20
 ### Fixed
 - Typescript typings for VideoCapture.start return type
+### Changed
+- Enhanced typings & some docs examples
 
 ## [0.5.0] - 2021-02-26
 ### Added
