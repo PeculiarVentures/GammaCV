@@ -19,6 +19,7 @@ export default function MyApp({ Component, pageProps }) {
   const isDocs = router.pathname === '/docs/[id]';
   const match = useMediaQuery('(max-width: 1024px)');
   const [showSidebar, setShowSidebar] = useState(false);
+  const sidebarVisible = match ? showSidebar : isDocs;
 
   useEffect(() => {
     const disableScroll = () => {
@@ -75,9 +76,7 @@ export default function MyApp({ Component, pageProps }) {
           displaySidebar={(state) => setShowSidebar(state)}
           showSidebar={showSidebar}
         />
-        {((!match && isDocs) || showSidebar) && (
-          <Sidebar config={config} />
-        )}
+        <Sidebar config={config} visible={sidebarVisible} />
         <Component {...pageProps} />
         {showFooter && (
           <Footer />

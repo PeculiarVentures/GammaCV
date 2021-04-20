@@ -7,10 +7,11 @@ import s from './sidebar.module.sass';
 
 interface ISidebarProps {
   config: IDocGroup[];
+  visible: boolean;
 }
 
 export const Sidebar: React.FC<ISidebarProps> = (props, context) => {
-  const { config } = props;
+  const { config, visible } = props;
   const { intl } = context;
   const [searchValue, setSearchValue] = useState('');
   const match = useMediaQuery('(max-width: 1024px)');
@@ -79,6 +80,9 @@ export const Sidebar: React.FC<ISidebarProps> = (props, context) => {
       strokeType="right"
       strokeOpacity={0.15}
       className={s.root}
+      style={{
+        visibility: visible ? 'visible' : 'hidden',
+      }}
     >
       <div className={s.header}>
         <TextField
