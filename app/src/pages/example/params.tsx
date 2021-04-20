@@ -21,6 +21,12 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
     resetMobile: <img src="/static/images/reset_icon_mobile.svg" alt="Reset icon" />,
   };
 
+  static contextTypes = {
+    intl: PropTypes.shape({
+      getText: PropTypes.func,
+    }),
+  };
+
   getParamName = (param: TParamsElement) => {
     const { params } = this.props;
 
@@ -205,10 +211,3 @@ export default class ParamsWrapper extends React.Component<IParamsWrapperProps> 
     return null;
   }
 }
-
-// @ts-ignore
-ParamsWrapper.contextTypes = {
-  intl: PropTypes.shape({
-    getText: PropTypes.func,
-  }),
-};

@@ -18,7 +18,7 @@ function Analytics() {
               dataLayer.push(arguments);
             }
             gtag('js', new Date());
-            gtag('config', ${process.env.GOOGLE_ANALYTICS});
+            gtag('config', '${process.env.GOOGLE_ANALYTICS}');
           `,
         }}
       />
@@ -33,7 +33,7 @@ function Rollbar() {
         dangerouslySetInnerHTML={{
           __html: `
             var _rollbarConfig = {
-              accessToken: ${process.env.ROLLBAR_API_KEY},
+              accessToken: '${process.env.ROLLBAR_API_KEY}',
               captureUncaught: true,
               captureUnhandledRejections: true,
               payload: {

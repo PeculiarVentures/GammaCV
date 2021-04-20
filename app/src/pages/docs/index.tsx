@@ -17,6 +17,61 @@ interface IDocsPageProps {
 
 export const DocsPage: React.FC<IDocsPageProps> = (props) => {
   const { data, id } = props;
+  const renderers = {
+    code: ({ value, language }) => (
+      <HighlightCode lang={language}>
+        {value}
+      </HighlightCode>
+    ),
+    heading: ({ level, children, node }) => {
+      const { value, children: childs } = node.children.find(({ type }) => type === 'text' || type === 'strong');
+      const idProp = value ? value : childs[0].value;
+
+      if (level === 6) {
+        return (
+          <h6
+            className={clx('text_grey', 'c1', s[idProp.toLowerCase()])}
+            children={children}
+          />
+        );
+      }
+
+      return React.createElement(`h${level}`, {}, (
+        <>
+          <a className={s.anchor_link} id={idProp.replace(/ /g, '')}></a>
+          <Link
+            href={{
+              hash: idProp.replace(/ /g, ''),
+              pathname: '/docs/[id]',
+              query: { id },
+            }}
+          >
+            <a
+              aria-hidden={true}
+              aria-label="anchor"
+              className={s.anchor_link_style}
+            >
+              <img src="/static/images/anchor.svg" />
+            </a>
+          </Link>
+          {children}
+        </>
+      ));
+    },
+    tableHead: () => null,
+    link: ({ href, children }) => (
+      <Link href={href}>
+        <a className="text_primary">
+          {children}
+        </a>
+      </Link>
+    ),
+    inlineCode: ({ children }) => (
+      <code className={clx("fill_light_grey", s.doc_code)}>
+        {children}
+      </code>
+    ),
+  };
 
   return (
     <main
@@ -28,67 +83,7 @@ export const DocsPage: React.FC<IDocsPageProps> = (props) => {
             allowDangerousHtml
             children={data}
             plugins={[gfm, slug]}
-            renderers={{
-              code: ({ value, language }) => {
-                return (
-                  <HighlightCode lang={language}>
-                    {value}
-                  </HighlightCode>
-                );
-              },
-              heading: ({ level, children, node }) => {
-                const { value, children: childs } = node.children.find(({ type }) => type === 'text' || type === 'strong');
-                const idProp = value ? value : childs[0].value;
-
-                if (level === 6) {
-                  return (
-                    <h6
-                      className={clx('text_grey', 'c1', s[idProp.toLowerCase()])}
-                      children={children}
-                    />
-                  );
-                }
-
-                return React.createElement(`h${level}`, {}, (
-                  <>
-                    <a className={s.anchor_link} id={idProp.replace(/ /g,'')}></a>
-                    <Link
-                      href={{
-                        hash: idProp.replace(/ /g,''),
-                        pathname: '/docs/[id]',
-                        query: { id },
-                      }}
-                    >
-                      <a
-                        aria-hidden={true}
-                        aria-label="anchor"
-                        className={s.anchor_link_style}
-                      >
-                        <img src="/static/images/anchor.svg" />
-                      </a>
-                    </Link>
-                    {children}
-                  </>
-                ));
-              },
-              tableHead: () => null,
-              link: ({ href, children }) => {
-                return (
-                  <Link href={href}>
-                    <a className="text_primary">
-                      {children}
-                    </a>
-                  </Link>
-                );
-              },
-              inlineCode: ({ children }) => {
-                return (
-                  <code className={clx("fill_light_grey", s.doc_code)}>
-                    {children}
-                  </code>
-                );
-              },
-            }}
+            renderers={renderers}
           />
         </div>
       </div>

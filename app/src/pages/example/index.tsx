@@ -74,6 +74,12 @@ export default class ExamplePage
 
   refStopStartButton: React.RefObject<HTMLButtonElement> = React.createRef();
 
+  static contextTypes = {
+    intl: PropTypes.shape({
+      getText: PropTypes.func,
+    }),
+  };
+
   constructor(props: IExamplePageProps) {
     super(props);
 
@@ -120,7 +126,7 @@ export default class ExamplePage
 
       if (
         this.loading
-        && !this.checkRerender(this.imgInput.data)
+        && !this.checkRerender(this.imgInput.data as Uint8Array)
       ) {
         this.setState({
           isLoading: false,
@@ -318,7 +324,7 @@ export default class ExamplePage
       });
       if (
         !this.loading
-        && this.checkRerender(this.stream.getImageBuffer('uint8'))
+        && this.checkRerender(this.stream.getImageBuffer('uint8') as Uint8Array)
       ) {
         this.setState({
           isLoading: true,
@@ -348,7 +354,7 @@ export default class ExamplePage
     this.setState({ isPlaying: false });
   };
 
-  checkRerender = (arr: any) => {
+  checkRerender = (arr: Uint8Array) => {
     let dark = true;
 
     for (let i = 0; i < arr.length; i += 16) {
@@ -680,10 +686,3 @@ export default class ExamplePage
     );
   }
 }
-
-// @ts-ignore
-ExamplePage.contextTypes = {
-  intl: PropTypes.shape({
-    getText: PropTypes.func,
-  }),
-};
