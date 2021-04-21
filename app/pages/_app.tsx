@@ -75,9 +75,7 @@ export default function MyApp({ Component, pageProps }) {
           displaySidebar={(state) => setShowSidebar(state)}
           showSidebar={showSidebar}
         />
-        {((!match && isDocs) || showSidebar) && (
-          <Sidebar config={config} />
-        )}
+        <Sidebar config={config} visible={(!match && isDocs) || showSidebar} />
         <Component {...pageProps} />
         {showFooter && (
           <Footer />
