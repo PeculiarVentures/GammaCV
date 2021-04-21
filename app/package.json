@@ -12,7 +12,7 @@
     "build:docs": "node scripts/docs",
     "predev": "npm run build:docs",
     "prebuild": "npm run build:docs && npm run clean",
-    "deploy:gh-pages": "gh-pages -d out",
+    "deploy:gh-pages": "gh-pages --dotfiles -d out",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "keywords": [],
