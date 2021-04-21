@@ -7,6 +7,11 @@ interface IHighlightProps {
 
 export const Highlight: React.FC<IHighlightProps> = (props) => {
   const { text, searchValue } = props;
+
+  if (!searchValue) {
+    return <>{text}</>;
+  }
+
   const chunks = text.split(new RegExp(`(${searchValue})`, 'gi'));
 
   return (
