@@ -57,9 +57,9 @@ const Example = (props, context) => {
         </title>
         <meta name="twitter:title" content={TITLE} />
         <meta property="og:title" content={TITLE} />
-        <meta name="description" content={TITLE + description} />
-        <meta property="og:description" content={TITLE + description} />
-        <meta name="twitter:description" content={TITLE + description} />
+        <meta name="description" content={`${TITLE} ${description}`} />
+        <meta property="og:description" content={`${TITLE} ${description}`} />
+        <meta name="twitter:description" content={`${TITLE} ${description}`} />
       </Head>
       {renderContent()}
     </>
@@ -92,13 +92,12 @@ export async function getStaticProps(context) {
           description = example.description;
         }
       });
-      return;
     }
   });
 
   if (!description) {
     const doc = (await import(`../../sources/docs/_data/${id}.md`)).default;
-    description = doc.match(/(?<=(^###### Description).*\n)(.|\n)[^#]*(?=\n\n#)/gm)[0];
+    [description] = doc.match(/(?<=(^###### Description).*\n)(.|\n)[^#]*(?=\n\n#)/gm);
   }
 
   return {
