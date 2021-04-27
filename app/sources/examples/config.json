@@ -102,7 +102,8 @@
       {
         "type": "video",
         "name": "PCLinest",
-        "path": "pc_lines"
+        "path": "pc_lines",
+        "description": "Implementation of Hough transform algorithm in parallel line space, also known as PC Lines."
       },
       {
         "type": "video",

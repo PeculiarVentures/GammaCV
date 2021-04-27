@@ -57,9 +57,13 @@ const Example = (props, context) => {
         </title>
         <meta name="twitter:title" content={TITLE} />
         <meta property="og:title" content={TITLE} />
-        <meta name="description" content={`${TITLE} ${description}`} />
-        <meta property="og:description" content={`${TITLE} ${description}`} />
-        <meta name="twitter:description" content={`${TITLE} ${description}`} />
+        {description && (
+          <>
+            <meta name="description" content={`${TITLE} ${description}`} />
+            <meta property="og:description" content={`${TITLE} ${description}`} />
+            <meta name="twitter:description" content={`${TITLE} ${description}`} />
+          </>
+        )}
       </Head>
       {renderContent()}
     </>
@@ -89,15 +93,19 @@ export async function getStaticProps(context) {
     if (!description) {
       group.examples.forEach((example) => {
         if (example.path === id) {
-          description = example.description;
+          description = example.description || '';
         }
       });
     }
   });
 
   if (!description) {
-    const doc = (await import(`../../sources/docs/_data/${id}.md`)).default;
-    [description] = doc.match(/(?<=(^###### Description).*\n)(.|\n)[^#]*(?=\n\n#)/gm);
+    try {
+      const doc = (await import(`../../sources/docs/_data/${id}.md`)).default;
+      [description] = doc.match(/(?<=(^###### Description).*\n)(.|\n)[^#]*(?=\n\n#)/gm);
+    } catch (error) {
+      console.log(`No description found for ${id}'. Description will be default ath this page`);
+    }
   }
 
   return {
