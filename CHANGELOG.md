@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.5.2] - 2021-05-13
+### Fixed
+- Fix import-time crash on environments without Canvas and OffscreenCanvas support
+
 ## [0.5.1] - 2021-04-20
 ### Fixed
 - Typescript typings for VideoCapture.start return type
