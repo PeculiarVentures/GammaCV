@@ -55,13 +55,13 @@ const Example = (props, context) => {
         <title>
           {TITLE}
         </title>
-        <meta name="twitter:title" content={TITLE} />
-        <meta property="og:title" content={TITLE} />
+        <meta name="twitter:title" content={TITLE} key="twitter:title" />
+        <meta property="og:title" content={TITLE} key="og:title" />
         {description && (
           <>
-            <meta name="description" content={description} />
-            <meta property="og:description" content={description} />
-            <meta name="twitter:description" content={description} />
+            <meta name="description" content={description} key="description" />
+            <meta property="og:description" content={description} key="og:description" />
+            <meta name="twitter:description" content={description} key="twitter:description" />
           </>
         )}
       </Head>
