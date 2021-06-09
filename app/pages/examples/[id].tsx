@@ -59,9 +59,9 @@ const Example = (props, context) => {
         <meta property="og:title" content={TITLE} />
         {description && (
           <>
-            <meta name="description" content={`${TITLE} ${description}`} />
-            <meta property="og:description" content={`${TITLE} ${description}`} />
-            <meta name="twitter:description" content={`${TITLE} ${description}`} />
+            <meta name="description" content={description} />
+            <meta property="og:description" content={description} />
+            <meta name="twitter:description" content={description} />
           </>
         )}
       </Head>
@@ -104,7 +104,7 @@ export async function getStaticProps(context) {
       const doc = (await import(`../../sources/docs/_data/${id}.md`)).default;
       [description] = doc.match(/(?<=(^###### Description).*\n)(.|\n)[^#]*(?=\n\n#)/gm);
     } catch (error) {
-      console.log(`No description found for ${id}'. Description will be default ath this page`);
+      console.log(`No description found for ${id}'. Description will be default at this page`);
     }
   }
 

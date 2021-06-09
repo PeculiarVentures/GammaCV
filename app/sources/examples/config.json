@@ -16,7 +16,8 @@
       {
         "type": "video",
         "name": "Extended Morphology",
-        "path": "morphology_ex"
+        "path": "morphology_ex",
+        "description": "Image processing often requires form approximation, detecting structure, and remove imperfections of original data. Morphological Operations could help reach these goals, and GammaCV makes it possible to use GPU computational power in browser with gm.morphologyEx op which supports the next morphological operations: open, close, gradient, tophat, blackhat."
       }
     ]
   },
@@ -58,7 +59,8 @@
       {
         "type": "video",
         "name": "Histogram Equalization",
-        "path": "histogram_equalization"
+        "path": "histogram_equalization",
+        "description": "Equalize the histogram of an image or other data with a gm.histogramEqualization operation."
       },
       {
         "type": "video",
@@ -108,7 +110,8 @@
       {
         "type": "video",
         "name": "Extract Mean and Std",
-        "path": "extract_mean_std"
+        "path": "extract_mean_std",
+        "description": "Extracting a mean and standard deviation from a data is computational expensive problem for large data. GammaCV makes it possible to compute mean and std from data in browser via GPU power with a gm.meanStd operation."
       },
       {
         "type": "video",
@@ -118,7 +121,8 @@
       {
         "type": "video",
         "name": "Extract Histogram",
-        "path": "histogram"
+        "path": "histogram",
+        "description": "Extracting a histogram from an image or other data is a computational expensive problem especially for large data. GammaCV makes it possible to extract histogram from data (image) in the browser via GPU power with a gm.histogram operation."
       }
     ]
   },
@@ -139,12 +143,14 @@
       {
         "type": "video",
         "name": "Tensor Scalar",
-        "path": "math_tensor_scalar"
+        "path": "math_tensor_scalar",
+        "description": "GammaCV makes it possible to operate on an image or other data with scalars and simple math operations, like subScalar, addScalar, divScalar, multScalar."
       },
       {
         "type": "video",
         "name": "Pixelwise Math",
-        "path": "math_pixelwise"
+        "path": "math_pixelwise",
+        "description": "Image processing or massive data manipulation problems may require simple math operations with 2 operands. There are several GammaCV operations that make it possible to be powered by GPU using WebGL in the browser: gm.sub, gm.add, gm.div, gm.mult. These chainable operations could help in achieving image diff (via Sub op), parallel (like a SIMD) numbers manipulation."
       }
     ]
   }
