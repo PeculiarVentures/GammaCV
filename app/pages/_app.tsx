@@ -51,17 +51,17 @@ export default function MyApp({ Component, pageProps }) {
         <title>
           {TITLE}
         </title>
-        <meta name="description" content={DESCRIPTION} />
-        <meta name="Keywords" content="computer vision, WebGL, javascript" />
+        <meta name="description" content={DESCRIPTION} key="description" />
+        <meta name="Keywords" content="computer vision, WebGL, javascript" key="Keywords" />
 
-        <meta property="og:title" content={TITLE} />
-        <meta property="og:description" content={DESCRIPTION} />
-        <meta property="og:image" content="https://gammacv.com/static/images/share_image.png" />
+        <meta property="og:title" content={TITLE} key="og:title" />
+        <meta property="og:description" content={DESCRIPTION} key="og:description" />
+        <meta property="og:image" content="https://gammacv.com/static/images/share_image.png" key="og:image" />
 
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={TITLE} />
-        <meta name="twitter:description" content={DESCRIPTION} />
-        <meta name="twitter:image" content="https://gammacv.com/static/images/share_image.png" />
+        <meta name="twitter:card" content="summary_large_image" key="twitter:card" />
+        <meta name="twitter:title" content={TITLE} key="twitter:title" />
+        <meta name="twitter:description" content={DESCRIPTION} key="twitter:description" />
+        <meta name="twitter:image" content="https://gammacv.com/static/images/share_image.png" key="twitter:image" />
 
         <link rel="icon" href="/static/manifest/favicon.ico" />
         <link rel="apple-touch-icon" href="/static/manifest/apple-touch-icon.png" />

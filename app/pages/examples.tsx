@@ -12,8 +12,8 @@ const Examples = (props) => {
         <title>
           {TITLE}
         </title>
-        <meta name="twitter:title" content={TITLE} />
-        <meta property="og:title" content={TITLE} />
+        <meta name="twitter:title" content={TITLE} key="twitter:title" />
+        <meta property="og:title" content={TITLE} key="og:title" />
       </Head>
 
       <ExamplesPage
