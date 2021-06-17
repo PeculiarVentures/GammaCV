@@ -1,0 +1,1 @@
+{"pageProps":{"id":"sobel_operator","description":" Calculating image gradient and magnitude by applying of [Sobel Operator](https://en.wikipedia.org/wiki/Sobel_operator).  Output description:    0 - GX    1 - GY    2 - Magnitude"},"__N_SSG":true}

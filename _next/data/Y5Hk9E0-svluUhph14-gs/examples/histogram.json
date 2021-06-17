@@ -1,0 +1,1 @@
+{"pageProps":{"id":"histogram","description":"Extracting a histogram from an image or other data is a computational expensive problem especially for large data. GammaCV makes it possible to extract histogram from data (image) in the browser via GPU power with a gm.histogram operation."},"__N_SSG":true}

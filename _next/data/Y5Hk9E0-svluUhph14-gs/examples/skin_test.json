@@ -1,0 +1,1 @@
+{"pageProps":{"id":"skin_test","description":" To enhance face/human detection we need an ability to test image for color that match skin  color. This operation returns exact the same size image with fully red pixels  rgba(255, 0, 0, 1) for pixels that match skin color and black rgba(0, 0, 0, 1) otherwise."},"__N_SSG":true}

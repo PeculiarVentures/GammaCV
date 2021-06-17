@@ -1,0 +1,1 @@
+{"pageProps":{"id":"adaptive_threshold","description":" Applies an adaptive threshold to the input image,  threshold will be applied to the given channel.  [Original paper](https://www.researchgate.net/publication/220494200_Adaptive_Thresholding_using_the_Integral_Image)"},"__N_SSG":true}

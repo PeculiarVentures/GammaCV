@@ -1,0 +1,1 @@
+{"pageProps":{"id":"extract_mean_std","description":"Extracting a mean and standard deviation from a data is computational expensive problem for large data. GammaCV makes it possible to compute mean and std from data in browser via GPU power with a gm.meanStd operation."},"__N_SSG":true}

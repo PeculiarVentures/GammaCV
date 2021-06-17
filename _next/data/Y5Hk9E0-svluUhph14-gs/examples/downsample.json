@@ -1,0 +1,1 @@
+{"pageProps":{"id":"downsample","description":" Performance is always important, but some algorithms are very expensive to apply  to large picture sizes. To accommodate for this in Computer Vision we often need  reduce an original image to a smaller size before we apply a given algorithm."},"__N_SSG":true}

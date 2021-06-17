@@ -1,0 +1,1 @@
+{"pageProps":{"id":"hog","description":" This operation allows to extract Histogram of Oriented Gradients features.  Currently availiable two types:    - `visualize`: will return 9 bin histogram for each segment    - `max`: will return angle with maximum intencity in histogram"},"__N_SSG":true}
