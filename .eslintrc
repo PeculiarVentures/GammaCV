@@ -1,5 +1,4 @@
 {
-  "parser": "babel-eslint",
   "env": {
     "browser": true,
     "es6": true,
@@ -9,12 +8,15 @@
     "ecmaVersion": 6,
     "sourceType": "module",
     "ecmaFeatures": {
+      "project": "./tsconfig.json",
       "generators": true,
       "modules": true,
       "objectLiteralDuplicateProperties": true
     }
   },
-  "extends": "airbnb",
+  "extends": [
+    "airbnb-typescript"
+  ],
   "rules": {
     "no-underscore-dangle": 0,
     "import/extensions": 0,

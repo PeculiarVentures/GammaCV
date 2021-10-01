@@ -253,7 +253,7 @@ export class Operation {
   constructor(name: string)
   public shape: Shape
   run(sess: Session, ctx?: number, isRecalculated?: boolean): void
-  init(gl: WebGLObject): void
+  init(gl: WebGLObject (WebGLRenderingContext)): void
   assignInput(name: string, input: InputType): void
   destroy(): void
   clone(): Operation
