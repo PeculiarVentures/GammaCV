@@ -8,6 +8,7 @@
 
 import { sortPoints, angleBetweenLines, transformPoint } from './utils';
 import Line from './line';
+import type Tensor from '../program/tensor';
 
 /**
  * Rect data has the next view:
@@ -59,14 +60,14 @@ export default class Rect {
   static NUM_ELEMENTS: number;
   static BYTES_PER_ELEMENT: number;
 
-  // TODO: should be and getter
+  // TODO: should be an getter
   public data: Float32Array | Uint8Array | Uint16Array | Uint32Array | Uint8ClampedArray
 
   /**
    * @param {ArrayBuffer|Array|number} [a] - Source buffer to link, array to create from, or x value
    * @param {number} [b] - buffer's offset or y value
    */
-  constructor(...args: number[]) {
+  constructor(...args: any[]) {
     if (args[0] instanceof ArrayBuffer) {
       this.data = new Float32Array(args[0], args[1], Rect.NUM_ELEMENTS);
     } else if (Array.isArray(args[0])) {
@@ -148,12 +149,13 @@ export default class Rect {
     return this;
   }
 
-  fromLines(l1: Line, l2: Line, l3: Line, l4L: Line) {
+  // TODO: types conflict
+  fromLines(l1: Line, l2: Line, l3: Line, l4: Line) {
     const sorted = sortPoints([
-      Line.Intersection(l1, l2),
-      Line.Intersection(l2, l3),
-      Line.Intersection(l3, l4),
-      Line.Intersection(l4, l1),
+      (Line.Intersection(l1, l2) as number[]),
+      (Line.Intersection(l2, l3) as number[]),
+      (Line.Intersection(l3, l4) as number[]),
+      (Line.Intersection(l4, l1) as number[]),
     ]);
 
     if (

@@ -90,13 +90,16 @@ function getMinAvailableSize(r: number, minWidth: number, minHeight: number) {
   };
 }
 
+type TCanvasElement = HTMLCanvasElement | OffscreenCanvas;
+type TCanvasRenderingContext = CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D;
+
 export default class CaptureVideo {
   started: boolean;
   video: HTMLVideoElement;
-  canvas: HTMLCanvasElement;
-  canvasCtx: CanvasRenderingContext2D;
-  sourceCanvas: HTMLCanvasElement;
-  sourceCanvasCtx: CanvasRenderingContext2D;
+  canvas: TCanvasElement;
+  canvasCtx: TCanvasRenderingContext;
+  sourceCanvas: TCanvasElement;
+  sourceCanvasCtx: TCanvasRenderingContext;
   width: number;
   height: number;
   sourceWidth: number;
@@ -288,7 +291,7 @@ export default class CaptureVideo {
     }
   }
 
-  drawImage(ctx: CanvasRenderingContext2D, w: number, h: number, ow: number, oh: number) {
+  drawImage(ctx: TCanvasRenderingContext, w: number, h: number, ow: number, oh: number) {
     ctx.drawImage(
       this.video,
       (ow - w) / -2,
@@ -301,7 +304,7 @@ export default class CaptureVideo {
   getImageBuffer(
     // TODO: types are strange
     type: 'uint8' | 'float32' | 'uint8c' | Tensor,
-    ctx: CanvasRenderingContext2D = this.canvasCtx,
+    ctx: TCanvasRenderingContext = this.canvasCtx,
     width: number = this.width,
     height: number = this.height,
     x: number = 0,
@@ -338,7 +341,7 @@ export default class CaptureVideo {
 
   getImageBufferTo(
     _type: 'uint8' | 'float32' | Tensor,
-    ctx: CanvasRenderingContext2D = this.canvasCtx,
+    ctx: TCanvasRenderingContext = this.canvasCtx,
     width: number = this.width,
     height: number = this.height,
     x: number = 0,

@@ -6,7 +6,8 @@
  * All rights reserved.
  */
 
-import type { TLine } from './line';
+import type Rect from './rect';
+import type Tensor from '../program/tensor';
 
 
 // TODO: canvas doesn't used
@@ -66,7 +67,7 @@ export function angleBetweenLines(line1: number[], line2: number[]) {
 }
 
 // TODO: need a way to import Tensor only as interface
-export function transformPoint(px: number, py: number, transformation: any) {
+export function transformPoint(px: number, py: number, transformation: Tensor) {
   const m = transformation;
   let xs = 0.0;
   let ys = 0.0;
@@ -135,7 +136,7 @@ export function generateTransformMatrix(rect: Rect, dstBounds: [number, number],
  * @param dst_y3
  */
 function perspective_4point_transform(
-  dst: number, src_x0: number, src_y0: number, dst_x0: number, dst_y0: number,
+  dst: Tensor, src_x0: number, src_y0: number, dst_x0: number, dst_y0: number,
   src_x1: number, src_y1: number, dst_x1: number, dst_y1: number,
   src_x2: number, src_y2: number, dst_x2: number, dst_y2: number,
   src_x3: number, src_y3: number, dst_x3: number, dst_y3: number,

@@ -52,7 +52,7 @@ export default class Line {
   }
 
   // TODO: maybe also must be getter
-  public data: number[];
+  public data: Float32Array;
   static BYTES_PER_ELEMENT: number;
 
   // TODO: missed description for other params
