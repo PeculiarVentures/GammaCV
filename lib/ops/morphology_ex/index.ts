@@ -11,7 +11,6 @@ import dilate from '../dilate';
 import { sub } from '../math';
 import type Tensor from '../../program/tensor';
 import type Operation from '../../program/operation';
-import type MediaInput from '../../program/media_input';
 
 /**
  * @name MorphTransform
@@ -24,10 +23,10 @@ import type MediaInput from '../../program/media_input';
  */
 
 export default (
-  tSrc: Tensor | Operation | MediaInput,
+  tSrc: Tensor | Operation,
   type = 'open',
   kernelSize = [2, 2],
-  tKernel = false,
+  tKernel?: Tensor | Operation,
 ) => {
   switch (type) {
     case 'open':

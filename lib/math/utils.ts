@@ -11,6 +11,7 @@ import type Tensor from '../program/tensor';
 
 
 // TODO: canvas doesn't used
+// @ts-ignore
 export function sortPoints(points: number[][], canvas?: HTMLCanvasElement) { // eslint-disable-line
   // How it works?
   const center = [0, 0];

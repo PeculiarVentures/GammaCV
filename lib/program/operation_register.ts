@@ -21,6 +21,7 @@ export default class RegisterOperation {
   op: Operation;
   private preCompile: Function;
   // TODO: never used
+  // @ts-ignore
   private postCompile: Function;
   chunks: any[];
 

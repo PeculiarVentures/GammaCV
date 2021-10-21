@@ -1,8 +1,9 @@
-import resolve from 'rollup-plugin-node-resolve';
 import glsl from 'rollup-plugin-glsl';
 import { terser } from 'rollup-plugin-terser';
-import json from 'rollup-plugin-json';
-import babel from 'rollup-plugin-babel';
+import resolve from '@rollup/plugin-node-resolve';
+import json from '@rollup/plugin-json';
+import babel from '@rollup/plugin-babel';
+import typescript from '@rollup/plugin-typescript';
 import { version } from './package.json';
 
 const banner = `/**
@@ -52,6 +53,7 @@ function getConfig(
       glsl({
         include: 'lib/**/*.glsl',
       }),
+      typescript({ tsconfig: './tsconfig.json' }),
       ...plugins,
     ],
     output: [
@@ -68,31 +70,55 @@ function getConfig(
 
 export default [
   getConfig(
-    'index.js',
+    'index.ts',
     [babel()],
     'dist',
     'index',
     FORMATS.UMD,
   ),
   getConfig(
-    'index.js',
+    'index.ts',
     [babel(), terser(terserOptions)],
     'dist',
     'index.min',
     FORMATS.UMD,
   ),
   getConfig(
-    'index.js',
+    'index.ts',
     [],
     'dist',
     'index.es',
     FORMATS.ES,
   ),
   getConfig(
-    'index.js',
+    'index.ts',
     [terser(terserOptions)],
     'dist',
     'index.es.min',
     FORMATS.ES,
   ),
+  // {
+  //   input: 'lib/index.ts',
+  //   plugins: [
+  //     resolve({
+  //       jsnext: true,
+  //       main: true,
+  //     }),
+  //     json(),
+  //     glsl({
+  //       include: 'lib/**/*.glsl',
+  //     }),
+  //     typescript(),
+  //     dts(),
+  //   ],
+  //   output: [
+  //     {
+  //       file: 'dist/index.d.ts',
+  //       format: FORMATS.ES,
+  //       name: 'GammaCV',
+  //       banner,
+  //       footer: '',
+  //     },
+  //   ],
+  // }
 ];

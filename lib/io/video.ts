@@ -140,6 +140,7 @@ export default class CaptureVideo {
     }
 
     return getStream
+      // @ts-ignore
       .then((stream) => {
         if (stream) {
           const tracks = stream.getTracks();
@@ -318,7 +319,7 @@ export default class CaptureVideo {
     const imgData = ctx.getImageData(x, y, w, h);
 
     if (type instanceof Tensor) {
-      type.data.set(imgData.data);
+      (type.data as Uint8Array).set(imgData.data);
 
       return type;
     }
@@ -359,7 +360,7 @@ export default class CaptureVideo {
     );
     const imgData = ctx.getImageData(x, y, w, h);
 
-    to.data = imgData.data.buffer;
+    to.data = (imgData.data.buffer as Uint8Array);
   }
 
   getSourceImageBuffer(

@@ -10,8 +10,10 @@
       "dom",
       "es2017"
     ],
-    "module": "es2015",
-    "moduleResolution": "node",
+    "module": "esnext",
+    "moduleResolution": "Node",
+    "declarationDir": ".",
+    "emitDeclarationOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
@@ -21,12 +23,13 @@
     "removeComments": false,
     "sourceMap": true,
     "stripInternal": true,
-    "target": "es5"
+    "target": "ESNext"
   },
   "exclude": [
     "node_modules"
   ],
   "include": [
-    "lib"
+    "lib",
+    "lib/global.d.ts",
   ],
 }

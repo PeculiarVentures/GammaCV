@@ -99,7 +99,7 @@ export default class Operation extends GraphNode {
       }
 
       if (utils.isMediaInput(input)) {
-        texture.set((input as MediaInput).media);
+        texture.set((input as MediaInput).media as HTMLCanvasElement);
       }
     }
 

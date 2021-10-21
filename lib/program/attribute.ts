@@ -14,6 +14,7 @@ export default class GLBuffer {
   private location: number;
   private ctx: WebGLBuffer;
   // TODO: do we need it?
+  // @ts-ignore
   private empty: ArrayBuffer;
   private size: number;
 

@@ -13,11 +13,13 @@ export default class TypedPool<T> {
   dataStore: ArrayBuffer;
 
   constructor(Type: new () => T, poolSize: number) {
+    // @ts-ignore
     this.dataStore = new ArrayBuffer(poolSize * Type.BYTES_PER_ELEMENT);
     this.data = new Array(poolSize);
     this.size = poolSize;
 
     for (let i = 0; i < poolSize; i += 1) {
+      // @ts-ignore
       this.data[i] = new Type(this.dataStore, i * Type.BYTES_PER_ELEMENT);
     }
 
@@ -30,6 +32,7 @@ export default class TypedPool<T> {
 
   push(type: T) {
     if (this.length < this.size) {
+      // @ts-ignore
       this.data[this.length].data.set(type.data);
       this.length += 1;
     } else {
@@ -45,11 +48,12 @@ export default class TypedPool<T> {
     return this.data[i];
   }
 
-  release(clear: boolean) {
+  release(clear?: boolean) {
     this.length = 0;
 
     if (clear) {
       for (let i = 0; i < this.size; i += 1) {
+        // @ts-ignore
         this.data[i].clear();
       }
     }

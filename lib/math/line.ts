@@ -60,8 +60,12 @@ export default class Line {
    * @param {ArrayBuffer|Array|number} [a] - Source buffer to link, array to create from, or x value
    * @param {number} [b] - buffer's offset or y value
    */
-  constructor(a: ArrayBuffer | number[] | number, b: number, c: number, d: number, x: number, y: number) {
-    if (a instanceof ArrayBuffer) {
+  constructor()
+  constructor(a?: number[])
+  constructor(a?: ArrayBuffer)
+  constructor(a?: number | number[] | ArrayBuffer, b?: number, c?: number, d?: number, x?: number, y?: number)
+  constructor(a?: number | number[] | ArrayBuffer, b?: number, c?: number, d?: number, x?: number, y?: number) {
+     if (a instanceof ArrayBuffer) {
       this.data = new Float32Array(a, b, 8);
     } else if (Array.isArray(a)) {
       if (a.length < 8) {
@@ -89,6 +93,8 @@ export default class Line {
     this.data[7] = 0;
   }
 
+  // TODO h is never used
+  // @ts-ignore
   fromParallelCoords(x: number, y: number, w: number, h: number, maxDistance: number, maxAngles: number) {
     const x1 = 0;
     const x2 = w;

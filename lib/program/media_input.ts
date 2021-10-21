@@ -9,12 +9,12 @@ export default class MediaInput extends GraphNode {
   lastCtx: number;
   cache: boolean;
 
-  media: HTMLVideoElement | HTMLCanvasElement;
+  media: HTMLVideoElement | HTMLCanvasElement | OffscreenCanvas;
 
   public shape: number[];
 
   // TODO: HTMLVideoElement | HTMLCanvasElement -> MediaInputType
-  constructor(media: HTMLVideoElement | HTMLCanvasElement, shape: number[]) {
+  constructor(media: HTMLVideoElement | HTMLCanvasElement | OffscreenCanvas, shape: number[]) {
     super('MediaInput');
 
     this.dtype = 'uint8';
@@ -26,7 +26,7 @@ export default class MediaInput extends GraphNode {
     this.assignMedia(media, shape);
   }
 
-  assignMedia(media?: HTMLVideoElement | HTMLCanvasElement, shape?: number[]) {
+  assignMedia(media?: HTMLVideoElement | HTMLCanvasElement | OffscreenCanvas, shape?: number[]) {
     if (media) {
       utils.assert(
         utils.isVideoElement(media) || utils.isCanvasElement(media),

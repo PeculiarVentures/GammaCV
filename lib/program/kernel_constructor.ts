@@ -69,9 +69,8 @@ function constructHeading(op: Operation) {
   for (let i = 0; i < constantsKeys.length; i += 1) {
     const key = constantsKeys[i];
     let preparedValue = op.constant[key];
-    const valueType = typeof preparedValue;
 
-    if (valueType === 'number' && preparedValue % 1 === 0) {
+    if (typeof preparedValue === 'number' && preparedValue % 1 === 0) {
       preparedValue = preparedValue.toFixed(1);
     }
 

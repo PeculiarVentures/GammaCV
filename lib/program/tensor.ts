@@ -20,6 +20,7 @@ class Tensor<T extends TensorDataView = TensorDataView> extends GraphNode {
   size: number;
   stride: number[];
   offset: number;
+  // TODO: looks like data must be type `T`
   data: TensorDataView;
   empty: TensorDataView;
   uint8View: Uint8Array;

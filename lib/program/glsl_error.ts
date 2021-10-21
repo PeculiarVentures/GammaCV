@@ -99,7 +99,7 @@ export default function processError(kernel: string, kernelName: string, error: 
     console.group(`Error: An error occurred compiling the shader ${kernelName}: ${stats.errCount} ERRORS, ${stats.warnCount} WARNINGS`);
     console.log(prepared.firstError);
     console.groupCollapsed('Show more');
-    console.log(prepared.fullText, ...prepared.fullTextStyle);
+    console.log(prepared.fullText, ...(prepared.fullTextStyle as string[]));
     console.groupEnd();
     console.groupEnd();
   } catch (err) {
