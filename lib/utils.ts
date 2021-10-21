@@ -8,6 +8,8 @@
 
 import * as gm from '.';
 import { Tensor } from '.';
+import type Operation from './program/operation';
+import type MediaInput from './program/media_input';
 
 const AVAILABLE_GLSL_CHUNKS = ['pickCurrentValue', 'pickValue', 'float'];
 
@@ -17,7 +19,7 @@ export const assert = (expression: any, msg: string) => {
   }
 };
 
-export const assertShapesAreEqual = (a: Tensor, b: Tensor) => {
+export const assertShapesAreEqual = (a: Tensor | Operation | MediaInput, b: Tensor | Operation | MediaInput) => {
   if (a.shape.length !== b.shape.length) {
     return false;
   }

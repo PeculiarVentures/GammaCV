@@ -26,7 +26,7 @@ export default class Operation extends GraphNode {
   // TODO: need access modifier
   input: Record<string, Tensor | Operation | HTMLVideoElement | HTMLCanvasElement | MediaInput>;
   uniform: Record<string, any>;
-  constant: Record<string, any>;
+  constant: Record<string, string | number | boolean>;
   chunks: any[];
   inputKeys: any[];
   isInitialized: boolean;
@@ -41,6 +41,7 @@ export default class Operation extends GraphNode {
   vertexShader: WebGLShader;
   fragmentShader: WebGLShader;
   attributes: Record<string, GLAttribute>;
+  centroids: Tensor;
   public sequence: string[];
 
   constructor(name: string) {

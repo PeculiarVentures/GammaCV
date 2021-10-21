@@ -82,7 +82,7 @@ export default class RegisterOperation {
     return this;
   }
 
-  Constant(name: string, value: number | string) {
+  Constant(name: string, value: number | string | boolean) {
     // TODO: error message missed
     utils.assert(utils.isValidGLSLVariableName(name), '');
     this.op.constant[name] = value;
