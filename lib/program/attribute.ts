@@ -46,7 +46,7 @@ export default class GLBuffer {
     }
   }
 
-  // TODO: hack.Method doesn't need arguments...
+  // TODO: hack. Method doesn't need arguments...
   bind(_ctx: WebGLBuffer) {
     const gl = this.gl;
 

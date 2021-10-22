@@ -6,8 +6,10 @@
  * All rights reserved.
  */
 
-// TODO: need a way to import Tensor only as interface
-export function initDrawable(canvas: HTMLCanvasElement, output: any, updater?: () => void) {
+import type Tensor from '../program/tensor';
+
+// TODO: can be only `Tensor` or `InputType`
+export function initDrawable(canvas: HTMLCanvasElement, output: Tensor, updater?: () => void) {
   let flag = false;
 
   canvas.onmousedown = () => { flag = true; };
@@ -47,9 +49,9 @@ export function initMouseTracking(
  * @param {boolean} rgba
  * @return {ImageData}
  */
-// TODO: need a way to import Tensor only as interface
+// TODO: can be only `Tensor` or `InputType`
 export function toImageData(
-  img: any,
+  img: Tensor,
   rgba: boolean = false,
   transposed: boolean = false,
 ) {

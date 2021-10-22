@@ -1,0 +1,96 @@
+└─ GammaCV
+   ├─ lib
+   │  ├─ io
+   │  │  ├─ canvas_utils.ts
+   │  │  │  ├─ line 11: TODO : can be only `Tensor` or `InputType`
+   │  │  │  └─ line 52: TODO : can be only `Tensor` or `InputType`
+   │  │  └─ video.ts
+   │  │     ├─ line 9: TODO : need to discuss what should we do with specs deprecated properties
+   │  │     ├─ line 305: TODO : types are strange
+   │  │     └─ line 306: TODO : types are strange
+   │  ├─ math
+   │  │  ├─ line.ts
+   │  │  │  ├─ line 54: TODO : maybe also must be getter
+   │  │  │  ├─ line 58: TODO : missed description for other params
+   │  │  │  ├─ line 84: TODO : ts conflict
+   │  │  │  ├─ line 96: TODO h is never used
+   │  │  │  ├─ line 209: TODO : mismatch with types - in types it should return Rect
+   │  │  │  └─ line 222: TODO : HACK, need to discuss
+   │  │  ├─ rect.ts
+   │  │  │  ├─ line 59: TODO : hack
+   │  │  │  ├─ line 63: TODO : should be an getter
+   │  │  │  └─ line 152: TODO : types conflict
+   │  │  └─ utils.ts
+   │  │     ├─ line 13: TODO : canvas doesn't used
+   │  │     ├─ line 56: TODO : conflict between types and code
+   │  │     ├─ line 70: TODO : can be only `Tensor` or `InputType`
+   │  │     ├─ line 117: TODO : can be only `Tensor` or `InputType`
+   │  │     ├─ line 269: TODO : can be only `Tensor` or `InputType`
+   │  │     └─ line 283: TODO : can be only `Tensor` or `InputType`
+   │  ├─ ops
+   │  │  ├─ histogram
+   │  │  │  ├─ index copy.js
+   │  │  │  │  └─ line 55: TODO : Probably we should refactor arguments priority and add assertation for them
+   │  │  │  ├─ index.js
+   │  │  │  │  └─ line 55: TODO : Probably we should refactor arguments priority and add assertation for them
+   │  │  │  └─ index.ts
+   │  │  │     └─ line 58: TODO : Probably we should refactor arguments priority and add assertation for them
+   │  │  └─ math
+   │  │     └─ index.ts
+   │  │        └─ line 56: TODO : Can MediaInput be an input of math operations?
+   │  └─ program
+   │     ├─ glsl
+   │     │  └─ pick_value.ts
+   │     │     └─ line 12: TODO : a lot of `as Operation` in a reason of not defined `shape` property
+   │     ├─ attribute.ts
+   │     │  ├─ line 16: TODO : do we need it?
+   │     │  ├─ line 39: TODO : method bind doesn't need arguments...
+   │     │  ├─ line 40: TODO : method bind doesn't need arguments...
+   │     │  ├─ line 48: TODO : hack.Method doesn't need arguments...
+   │     │  ├─ line 49: TODO : hack.Method doesn't need arguments...
+   │     │  ├─ line 73: TODO : Types mismatch!
+   │     │  ├─ line 74: TODO : Types mismatch!
+   │     │  ├─ line 79: TODO : Types mismatch!
+   │     │  └─ line 80: TODO : Types mismatch!
+   │     ├─ graph_node.ts
+   │     │  └─ line 11: TODO : need access modifier
+   │     ├─ kernel_constructor.js
+   │     │  └─ line 13: TODO : Need to move it to kind of program_utils
+   │     ├─ kernel_constructor.ts
+   │     │  ├─ line 14: TODO : Need to move it to kind of program_utils
+   │     │  ├─ line 106: TODO : hack
+   │     │  └─ line 107: TODO : hack
+   │     ├─ media_input.ts
+   │     │  ├─ line 5: TODO : need access modifier
+   │     │  ├─ line 16: TODO : HTMLVideoElement | HTMLCanvasElement -> MediaInputType
+   │     │  └─ line 44: TODO : do we need to change it if no arguments passed?
+   │     ├─ operation.ts
+   │     │  ├─ line 22: TODO : hack
+   │     │  ├─ line 26: TODO : need access modifier
+   │     │  └─ line 91: TODO : hack. Looks like opName can be `undefined`
+   │     ├─ operation_register.ts
+   │     │  ├─ line 19: TODO : need access modifier
+   │     │  ├─ line 23: TODO : never used
+   │     │  ├─ line 67: TODO : error message missed
+   │     │  ├─ line 69: TODO : hack
+   │     │  ├─ line 87: TODO : error message missed
+   │     │  └─ line 125: TODO : error message missed
+   │     ├─ session.ts
+   │     │  └─ line 220: TODO : readPixels doesn't work with type `number[]`
+   │     ├─ tensor.ts
+   │     │  ├─ line 23: TODO : looks like data must be type `T`
+   │     │  ├─ line 29: TODO : HACK looks like need to move description here
+   │     │  ├─ line 166: TODO : hack
+   │     │  └─ line 335: TODO : ALERT! HACK! new Array(data) return [data] instead of [...data]! Is it correct?
+   │     ├─ tensor_utils.ts
+   │     │  ├─ line 24: TODO : cast changed form `false` to optional value. types mismatch
+   │     │  ├─ line 44: TODO : changed from `if (to.data.set) {
+   │     │  └─ line 167: TODO : confused. should use same args as for flipTensor?
+   │     ├─ texture.ts
+   │     │  ├─ line 19: TODO : used only in `delete` method. Maybe doesn't needed?
+   │     │  └─ line 89: TODO : texImage2D doesn't work with type `number[]`
+   │     └─ uniform.ts
+   │        └─ line 22: TODO : HACK!!! Need to update function! value must be `number | number[]`
+   └─ test
+      └─ operation.spec.js
+         └─ line 86: TODO : More concretic needed

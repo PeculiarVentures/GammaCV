@@ -67,7 +67,7 @@ export function angleBetweenLines(line1: number[], line2: number[]) {
   return Math.acos(d / Math.sqrt(l2));
 }
 
-// TODO: need a way to import Tensor only as interface
+// TODO: can be only `Tensor` or `InputType`
 export function transformPoint(px: number, py: number, transformation: Tensor) {
   const m = transformation;
   let xs = 0.0;
@@ -101,8 +101,6 @@ export function transformPoint(px: number, py: number, transformation: Tensor) {
  * @param {Array} dstBounds
  * @param {Tensor} transformMatrix
  */
-// TODO: need a way to import Tensor only as interface
-// TODO: need a way to import Rect only as interface
 export function generateTransformMatrix(rect: Rect, dstBounds: [number, number], transformMatrix: Tensor, pad: number = 0) {
   perspective_4point_transform(
     transformMatrix,
@@ -116,6 +114,7 @@ export function generateTransformMatrix(rect: Rect, dstBounds: [number, number],
   return transformMatrix;
 }
 
+// TODO: can be only `Tensor` or `InputType`
 /**
  * Get perspective transformation matrix
  * @param {Tensor} dst
@@ -267,7 +266,7 @@ function perspective_4point_transform(
     mat[8] = -Hl6 * t50 - Hl7 * (t44 * t15) + t47 * t15;
   }
 }
-// TODO: need a way to import Tensor only as interface
+// TODO: can be only `Tensor` or `InputType`
 export function calcIntegralSum(img: Tensor, x: number, y: number, w: number, h: number) {
   const yb = (y - 1) * img.stride[0];
   const yhb = (y + h) * img.stride[0];
@@ -281,7 +280,7 @@ export function calcIntegralSum(img: Tensor, x: number, y: number, w: number, h:
 
   return (a - b - c) + d;
 }
-// TODO: need a way to import Tensor only as interface
+// TODO: can be only `Tensor` or `InputType`
 export function calcHAARFeature(img: Tensor, feature: number[][], size: number, dx: number, dy: number, dStep: number) {
   let sum = 0;
   const sizeK = size / dStep;

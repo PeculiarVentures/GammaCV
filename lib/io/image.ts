@@ -5,7 +5,7 @@
  * Copyright 2018 Peculiar Ventures and Pentatonica.
  * All rights reserved.
  */
-// TODO: need a way to import Tensor as interface
+
 import Tensor from '../program/tensor';
 import { getCanvas, getImage } from '../utils';
 export default function imageTensorFromURL(
