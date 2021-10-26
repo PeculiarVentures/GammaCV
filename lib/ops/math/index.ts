@@ -18,6 +18,7 @@ import kernelMultScalar from './mult_scalar.glsl';
 import kernelDivScalar from './div_scalar.glsl';
 import type Tensor from '../../program/tensor';
 import type Operation from '../../program/operation';
+import type MediaInput from '../../program/media_input';
 
 const pixelwiseMathOpValidation = (name: String, tA: any, tB: any) => {
   utils.assert(
@@ -53,8 +54,6 @@ const scalarMathOpValidation = (name: String, tA: any, scalar: any) => {
   );
 };
 
-// TODO: Can MediaInput be an input of math operations? 
-
 /**
  * @name Basic
  * @description
@@ -71,7 +70,7 @@ const scalarMathOpValidation = (name: String, tA: any, scalar: any) => {
  * @param {Tensor} tB - The second input
  */
 
-export const sub = (tA: Tensor | Operation, tB: Tensor | Operation) => {
+export const sub = (tA: Tensor | Operation | MediaInput, tB: Tensor | Operation) => {
   const name = 'Sub';
 
   pixelwiseMathOpValidation(name, tA, tB);
@@ -88,7 +87,7 @@ export const sub = (tA: Tensor | Operation, tB: Tensor | Operation) => {
 /**
  * @name Add
  * @description
- *  Pixel-wise sum A + B
+ *  Pixel - wise sum A + B
  * @example
  *  gm.add(A, B);
  * @param {Tensor} tA - The first input
@@ -245,6 +244,7 @@ export const multScalar = (tA: Tensor | Operation, scalar: number) => {
   scalarMathOpValidation(name, tA, scalar);
 
   return new RegisterOperation(name)
+    // TODO: WFT?! If you go into `Input` method you will see that `tA` must be `DType` instead of Tensor! Something wrong
     .Input('tA', tA)
     .Output(tA.dtype)
     .Uniform('uScalar', 'float', scalar)

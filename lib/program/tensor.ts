@@ -26,7 +26,7 @@ class Tensor<T extends TensorDataView = TensorDataView> extends GraphNode {
   uint8View: Uint8Array;
 
   // methods defined in other methods
-  // TODO: HACK looks like need to move description here
+  // TODO: HACK. Looks like need to move description here
   get(..._args: number[]): number {
     return 0;
   }
@@ -332,7 +332,7 @@ class Tensor<T extends TensorDataView = TensorDataView> extends GraphNode {
       case 'uint8c':
         return new Uint8ClampedArray(data);
       case 'array':
-        // TODO: ALERT! HACK! new Array(data) return [data] instead of [...data]! Is it correct?
+        // TODO: ALERT! HACK! new Array(data) return [data] instead of [...data]! Is it correct? need to return [...data]
         return new Array(data) as any;
       default:
         throw new Error(`Unknown type: ${dtype}.`);

@@ -13,7 +13,7 @@ export default class GLBuffer {
   private dtype: string;
   private location: number;
   private ctx: WebGLBuffer;
-  // TODO: do we need it?
+  // TODO: do we need it? Never used
   // @ts-ignore
   private empty: ArrayBuffer;
   private size: number;
@@ -37,8 +37,7 @@ export default class GLBuffer {
   set(data: number[]) {
     const gl = this.gl;
 
-    // TODO: method bind doesn't need arguments...
-    this.bind(this.ctx);
+    this.bind();
     if (this.dtype === 'int') {
       gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(data), gl.STATIC_DRAW);
     } else {
@@ -46,8 +45,7 @@ export default class GLBuffer {
     }
   }
 
-  // TODO: hack. Method doesn't need arguments...
-  bind(_ctx: WebGLBuffer) {
+  bind() {
     const gl = this.gl;
 
     if (this.dtype === 'int') {
@@ -71,14 +69,12 @@ export default class GLBuffer {
 
   disable() {
     const gl = this.gl;
-    // TODO: Types mismatch!
-    gl.disableVertexAttribArray((this.ctx as number));
+    gl.disableVertexAttribArray(this.location);
   }
 
   enable() {
     const gl = this.gl;
-    // TODO: Types mismatch!
-    gl.enableVertexAttribArray((this.ctx as number));
+    gl.enableVertexAttribArray(this.location);
   }
 
   delete() {

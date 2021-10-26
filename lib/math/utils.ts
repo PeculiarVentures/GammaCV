@@ -67,7 +67,6 @@ export function angleBetweenLines(line1: number[], line2: number[]) {
   return Math.acos(d / Math.sqrt(l2));
 }
 
-// TODO: can be only `Tensor` or `InputType`
 export function transformPoint(px: number, py: number, transformation: Tensor) {
   const m = transformation;
   let xs = 0.0;
@@ -114,7 +113,6 @@ export function generateTransformMatrix(rect: Rect, dstBounds: [number, number],
   return transformMatrix;
 }
 
-// TODO: can be only `Tensor` or `InputType`
 /**
  * Get perspective transformation matrix
  * @param {Tensor} dst
@@ -266,7 +264,7 @@ function perspective_4point_transform(
     mat[8] = -Hl6 * t50 - Hl7 * (t44 * t15) + t47 * t15;
   }
 }
-// TODO: can be only `Tensor` or `InputType`
+
 export function calcIntegralSum(img: Tensor, x: number, y: number, w: number, h: number) {
   const yb = (y - 1) * img.stride[0];
   const yhb = (y + h) * img.stride[0];
@@ -280,7 +278,7 @@ export function calcIntegralSum(img: Tensor, x: number, y: number, w: number, h:
 
   return (a - b - c) + d;
 }
-// TODO: can be only `Tensor` or `InputType`
+
 export function calcHAARFeature(img: Tensor, feature: number[][], size: number, dx: number, dy: number, dStep: number) {
   let sum = 0;
   const sizeK = size / dStep;

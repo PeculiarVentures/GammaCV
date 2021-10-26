@@ -35,6 +35,18 @@ export default {
         loader: 'raw-loader',
         exclude: /node_modules/,
       },
+      {
+        test: /\.ts$/,
+        use: {
+          loader: 'awesome-typescript-loader',
+          options: {
+            silent: true,
+            useCache: true,
+            forceIsolatedModules: true,
+            configFileName: path.resolve(__dirname, '../tsconfig.json'),
+          },
+        },
+      },
     ],
   },
 };

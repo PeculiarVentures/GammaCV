@@ -8,7 +8,6 @@
 
 import type Tensor from '../program/tensor';
 
-// TODO: can be only `Tensor` or `InputType`
 export function initDrawable(canvas: HTMLCanvasElement, output: Tensor, updater?: () => void) {
   let flag = false;
 
@@ -49,7 +48,6 @@ export function initMouseTracking(
  * @param {boolean} rgba
  * @return {ImageData}
  */
-// TODO: can be only `Tensor` or `InputType`
 export function toImageData(
   img: Tensor,
   rgba: boolean = false,
@@ -126,9 +124,3 @@ export function putImageData(
 
   return canvas.getContext('2d').putImageData(imageData, x, y, dx, dy, dw, dh);
 }
-
-/**
- * @param {HTMLCanvasElement} canvas
- * @param {Tensor} img
- * @param {boolean} rgba
- */

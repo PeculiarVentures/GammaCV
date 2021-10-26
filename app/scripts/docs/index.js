@@ -37,7 +37,7 @@ const renderMDHeading = (title, level = 2, prefix, postfix = '') => `${'#'.repea
 const renderMDParagraph = (text) => `${text}\n\n`;
 
 const renderMDExamples = (examples) => {
-  const parsedExample = examples.map((e) => `\`\`\`js\n${e}\n\`\`\``).join('\n');
+  const parsedExample = examples.map((e) => `\`\`\`ts\n${e}\n\`\`\``).join('\n');
 
   return renderMDParagraph(parsedExample);
 };

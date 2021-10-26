@@ -21,15 +21,15 @@
     "children": [
       {
         "name": "tensor",
-        "path": "../../../lib/program/tensor.js"
+        "path": "../../../lib/program/tensor.ts"
       },
       {
         "name": "session",
-        "path": "../../../lib/program/session.js"
+        "path": "../../../lib/program/session.ts"
       },
       {
         "name": "glsl_chunks",
-        "path": "../../../lib/program/glsl/chunks/index.js"
+        "path": "../../../lib/program/glsl/chunks/index.ts"
       }
     ]
   },
@@ -38,51 +38,51 @@
     "children": [
       {
         "name": "downsample",
-        "path": "../../../lib/ops/downsample/index.js"
+        "path": "../../../lib/ops/downsample/index.ts"
       },
       {
         "name": "upsample",
-        "path": "../../../lib/ops/upsample/index.js"
+        "path": "../../../lib/ops/upsample/index.ts"
       },
       {
         "name": "resize",
-        "path": "../../../lib/ops/resize/index.js"
+        "path": "../../../lib/ops/resize/index.ts"
       },
       {
         "name": "gaussian_blur",
-        "path": "../../../lib/ops/gaussian_blur/index.js"
+        "path": "../../../lib/ops/gaussian_blur/index.ts"
       },
       {
         "name": "grayscale",
-        "path": "../../../lib/ops/grayscale/index.js"
+        "path": "../../../lib/ops/grayscale/index.ts"
       },
       {
         "name": "norm",
-        "path": "../../../lib/ops/norm/index.js"
+        "path": "../../../lib/ops/norm/index.ts"
       },
       {
         "name": "color_segmentation",
-        "path": "../../../lib/ops/color_segmentation/index.js"
+        "path": "../../../lib/ops/color_segmentation/index.ts"
       },
       {
         "name": "hsv_color",
-        "path": "../../../lib/ops/hsv_color/index.js"
+        "path": "../../../lib/ops/hsv_color/index.ts"
       },
       {
         "name": "threshold",
-        "path": "../../../lib/ops/threshold/index.js"
+        "path": "../../../lib/ops/threshold/index.ts"
       },
       {
         "name": "adaptive_threshold",
-        "path": "../../../lib/ops/adaptive_threshold/index.js"
+        "path": "../../../lib/ops/adaptive_threshold/index.ts"
       },
       {
         "name": "conv2d",
-        "path": "../../../lib/ops/conv2d/index.js"
+        "path": "../../../lib/ops/conv2d/index.ts"
       },
       {
         "name": "sat",
-        "path": "../../../lib/ops/sat/index.js"
+        "path": "../../../lib/ops/sat/index.ts"
       }
     ]
   },
@@ -91,15 +91,15 @@
     "children": [
       {
         "name": "erode",
-        "path": "../../../lib/ops/erode/index.js"
+        "path": "../../../lib/ops/erode/index.ts"
       },
       {
         "name": "dilate",
-        "path": "../../../lib/ops/dilate/index.js"
+        "path": "../../../lib/ops/dilate/index.ts"
       },
       {
         "name": "morphology_ex",
-        "path": "../../../lib/ops/morphology_ex/index.js"
+        "path": "../../../lib/ops/morphology_ex/index.ts"
       }
     ]
   },
@@ -108,7 +108,7 @@
     "children": [
       {
         "name": "sobel_operator",
-        "path": "../../../lib/ops/sobel_operator/index.js"
+        "path": "../../../lib/ops/sobel_operator/index.ts"
       }
     ]
   },
@@ -117,27 +117,27 @@
     "children": [
       {
         "name": "hog",
-        "path": "../../../lib/ops/hog/index.js"
+        "path": "../../../lib/ops/hog/index.ts"
       },
       {
         "name": "canny_edges",
-        "path": "../../../lib/ops/canny_edges/index.js"
+        "path": "../../../lib/ops/canny_edges/index.ts"
       },
       {
         "name": "skin_test",
-        "path": "../../../lib/ops/skin_test/index.js"
+        "path": "../../../lib/ops/skin_test/index.ts"
       },
       {
         "name": "motion_detect",
-        "path": "../../../lib/ops/motion_detect/index.js"
+        "path": "../../../lib/ops/motion_detect/index.ts"
       },
       {
         "name": "swt",
-        "path": "../../../lib/ops/swt/index.js"
+        "path": "../../../lib/ops/swt/index.ts"
       },
       {
         "name": "pclines",
-        "path": "../../../lib/ops/pclines/index.js"
+        "path": "../../../lib/ops/pclines/index.ts"
       }
     ]
   },
@@ -146,23 +146,23 @@
     "children": [
       {
         "name": "mean_std",
-        "path": "../../../lib/ops/mean_std/index.js"
+        "path": "../../../lib/ops/mean_std/index.ts"
       },
       {
         "name": "minmax",
-        "path": "../../../lib/ops/minmax/index.js"
+        "path": "../../../lib/ops/minmax/index.ts"
       },
       {
         "name": "sliding_window",
-        "path": "../../../lib/ops/sliding_window/index.js"
+        "path": "../../../lib/ops/sliding_window/index.ts"
       },
       {
         "name": "concat",
-        "path": "../../../lib/ops/concat/index.js"
+        "path": "../../../lib/ops/concat/index.ts"
       },
       {
         "name": "cast",
-        "path": "../../../lib/ops/cast/index.js"
+        "path": "../../../lib/ops/cast/index.ts"
       }
     ]
   },
@@ -171,7 +171,7 @@
     "children": [
       {
         "name": "math",
-        "path": "../../../lib/ops/math/index.js"
+        "path": "../../../lib/ops/math/index.ts"
       }
     ]
   }

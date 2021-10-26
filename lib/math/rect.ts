@@ -60,7 +60,7 @@ export default class Rect {
   static NUM_ELEMENTS: number;
   static BYTES_PER_ELEMENT: number;
 
-  // TODO: should be an getter
+  // TODO: should be an getter?
   public data: Float32Array | Uint8Array | Uint16Array | Uint32Array | Uint8ClampedArray
 
   /**
@@ -149,7 +149,7 @@ export default class Rect {
     return this;
   }
 
-  // TODO: types conflict
+  // TODO: types conflict. WTF  Intersection returns `false`???
   fromLines(l1: Line, l2: Line, l3: Line, l4: Line) {
     const sorted = sortPoints([
       (Line.Intersection(l1, l2) as number[]),

@@ -9,7 +9,7 @@
     "serve": "next start",
     "build": "next build && next export",
     "build:theme": "node scripts/theme",
-    "build:docs": "node scripts/docs",
+    "build:docs": "node --trace-warnings scripts/docs",
     "predev": "npm run build:docs",
     "prebuild": "npm run build:docs && npm run clean",
     "deploy:gh-pages": "gh-pages --dotfiles -d out",

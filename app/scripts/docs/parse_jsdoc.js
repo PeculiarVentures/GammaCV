@@ -13,10 +13,15 @@ const processParams = (params) => {
 };
 
 const parseJsDoc = async (filePath, fileName) => {
+  console.log('filePath');
+  console.log(filePath);
   const res = await jsdoc2md
     .getTemplateData({
       files: filePath,
     });
+
+  console.log('res');
+  console.log(res);
   const parsedJsDoc = [];
 
   res.sort((a, b) => a.order - b.order);

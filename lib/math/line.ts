@@ -55,7 +55,6 @@ export default class Line {
   public data: Float32Array;
   static BYTES_PER_ELEMENT: number;
 
-  // TODO: missed description for other params
   /**
    * @param {ArrayBuffer|Array|number} [a] - Source buffer to link, array to create from, or x value
    * @param {number} [b] - buffer's offset or y value
@@ -81,7 +80,6 @@ export default class Line {
     }
   }
 
-  // TODO: ts conflict
   set(a: number, b: number, c: number, d: number, x: number, y: number) {
     this.data[0] = a;
     this.data[1] = b;
@@ -217,7 +215,3 @@ export default class Line {
 }
 
 Line.BYTES_PER_ELEMENT = 36;
-
-
-// TODO: HACK, need to discuss
-export type TLine = Line;

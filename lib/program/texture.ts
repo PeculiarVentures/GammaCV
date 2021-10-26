@@ -16,8 +16,7 @@ export default class GPUTexture {
   gl: WebGLRenderingContext;
   ctx: WebGLTexture;
   shape: number[];
-  // TODO: used only in `delete` method. Maybe doesn't needed?
-  program: any;
+  program: WebGLProgram;
 
   constructor(dtype: DType, gl: WebGLRenderingContext, unit: number, shape: number[]) {
     if (dtype === 'float32' || dtype === 'uint8') {

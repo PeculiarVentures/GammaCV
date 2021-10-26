@@ -11,6 +11,7 @@ module.exports = function makeConfig(config) {
     },
     files: [
       './test/**/*.spec.js',
+      './lib/**/*.ts',
     ],
     plugins: [
       'karma-mocha',

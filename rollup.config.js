@@ -97,28 +97,4 @@ export default [
     'index.es.min',
     FORMATS.ES,
   ),
-  // {
-  //   input: 'lib/index.ts',
-  //   plugins: [
-  //     resolve({
-  //       jsnext: true,
-  //       main: true,
-  //     }),
-  //     json(),
-  //     glsl({
-  //       include: 'lib/**/*.glsl',
-  //     }),
-  //     typescript(),
-  //     dts(),
-  //   ],
-  //   output: [
-  //     {
-  //       file: 'dist/index.d.ts',
-  //       format: FORMATS.ES,
-  //       name: 'GammaCV',
-  //       banner,
-  //       footer: '',
-  //     },
-  //   ],
-  // }
 ];

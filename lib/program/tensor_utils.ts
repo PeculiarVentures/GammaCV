@@ -21,7 +21,6 @@ export function range(n: number) {
   return result;
 }
 
-// TODO: cast changed form `false` to optional value. types mismatch
 export function tensorFrom(input: Operation | Tensor | MediaInput, cast?: DType) {
   let out = null;
 
@@ -42,7 +41,7 @@ export function tensorFrom(input: Operation | Tensor | MediaInput, cast?: DType)
 
 export function tensorClone(from: Tensor, to: Tensor) {
   // TODO: changed from `if (to.data.set) {
-  if ('set' in to.data) {
+  if ('set' in to.data && to.data.set) {
     to.data.set(from.data);
   } else {
     for (let i = 0; i < to.size; i += 1) {
