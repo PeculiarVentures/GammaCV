@@ -17,11 +17,12 @@ import type Tensor from './tensor';
  * This is a runtime which allows you to run computational graphs on different backends
  */
 class Session {
-  canvas: HTMLCanvasElement | OffscreenCanvas;
-  operation: Record<string, Operation>;
-  texture: Record<string, GLTexture>;
-  textureCount: number;
-  gl: WebGLRenderingContext;
+  private canvas: HTMLCanvasElement | OffscreenCanvas;
+  private operation: Record<string, Operation>;
+  private textureCount: number;
+  private gl: WebGLRenderingContext;
+
+  public texture: Record<string, GLTexture>;
 
   constructor() {
     this.canvas = utils.getCanvas();
@@ -34,7 +35,7 @@ class Session {
     this.textureCount = 0;
   }
 
-  initWebGL(canvas: HTMLCanvasElement | OffscreenCanvas, opts?: WebGLContextAttributes) {
+  private initWebGL(canvas: HTMLCanvasElement | OffscreenCanvas, opts?: WebGLContextAttributes) {
     this.canvas = canvas;
     const gl = this.canvas.getContext('webgl', opts);
 
@@ -58,7 +59,7 @@ class Session {
    * @description Intialize operations for session
    * @param {Operation} node - operation chain to be used in session
    */
-  init(node: Operation) {
+  public init(node: Operation) {
     // Make sure we trying to initialize true Operation
     utils.assert(
       !!node,
@@ -84,7 +85,7 @@ class Session {
     this.update();
   }
 
-  update() {
+  private update() {
     const gl = this.gl;
     const opKeys = Object.keys(this.operation);
 
@@ -127,7 +128,7 @@ class Session {
    *    will use cached result
    * @param {Tensor | HTMLCanvasElement} [output] - if passed, the output is put into it.
    */
-  runOp(op: Operation, ctx: number, output?: Tensor | HTMLCanvasElement) {
+  public runOp(op: Operation, ctx: number, output?: Tensor | HTMLCanvasElement) {
     const sequence = op.sequence;
     let isRecalculated = false;
 
@@ -173,7 +174,7 @@ class Session {
    * @description Destroy all initialized operations,
    * textures and other data connected to this session.
    */
-  destroy() {
+  public destroy() {
     const glLoseContext = this.gl.getExtension('WEBGL_lose_context');
     const textures = Object.keys(this.texture);
     const operations = Object.keys(this.operation);
@@ -201,7 +202,7 @@ class Session {
     this.textureCount = 0;
   }
 
-  readToTensor(tensor: Tensor) {
+  private readToTensor(tensor: Tensor) {
     const gl = this.gl;
     const height = tensor.shape[0];
     let width = tensor.shape[1];
@@ -229,7 +230,7 @@ class Session {
     );
   }
 
-  readToCanvas(canvas: HTMLCanvasElement, shape: number[]) {
+  private readToCanvas(canvas: HTMLCanvasElement, shape: number[]) {
     const ctx = canvas.getContext('2d');
 
     canvas.width = shape[1];

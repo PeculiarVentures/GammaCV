@@ -12,7 +12,6 @@ import type MediaInput from './program/media_input';
 
  declare global {
   type TensorDataView =
-    number[] |
     Float32Array |
     Float64Array |
     Uint8Array |
@@ -32,8 +31,7 @@ import type MediaInput from './program/media_input';
     'int32' |
     'float32' |
     'float64' |
-    'uint8c' |
-    'array';
+    'uint8c';
 
   type InputType = Tensor | Operation | MediaInput;
   type MediaInputType = HTMLVideoElement | HTMLCanvasElement;

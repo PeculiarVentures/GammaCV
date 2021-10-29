@@ -76,8 +76,8 @@ export const sub = (tA: Tensor | Operation | MediaInput, tB: Tensor | Operation)
   pixelwiseMathOpValidation(name, tA, tB);
 
   return new RegisterOperation(name)
-    .Input('tA', tA)
-    .Input('tB', tB)
+    .Input('tA', tA.dtype)
+    .Input('tB', tB.dtype)
     .Output(tA.dtype)
     .LoadChunk('pickValue')
     .GLSLKernel(kernelSub)
@@ -100,8 +100,8 @@ export const add = (tA: Tensor | Operation, tB: Tensor | Operation) => {
   pixelwiseMathOpValidation(name, tA, tB);
 
   return new RegisterOperation(name)
-    .Input('tA', tA)
-    .Input('tB', tB)
+    .Input('tA', tA.dtype)
+    .Input('tB', tB.dtype)
     .Output(tA.dtype)
     .LoadChunk('pickValue')
     .GLSLKernel(kernelAdd)
@@ -124,8 +124,8 @@ export const div = (tA: Tensor | Operation, tB: Tensor | Operation) => {
   pixelwiseMathOpValidation(name, tA, tB);
 
   return new RegisterOperation(name)
-    .Input('tA', tA)
-    .Input('tB', tB)
+    .Input('tA', tA.dtype)
+    .Input('tB', tB.dtype)
     .Output(tA.dtype)
     .LoadChunk('pickValue')
     .GLSLKernel(kernelDiv)
@@ -148,8 +148,8 @@ export const mult = (tA: Tensor | Operation, tB: Tensor | Operation) => {
   pixelwiseMathOpValidation(name, tA, tB);
 
   return new RegisterOperation(name)
-    .Input('tA', tA)
-    .Input('tB', tB)
+    .Input('tA', tA.dtype)
+    .Input('tB', tB.dtype)
     .Output(tA.dtype)
     .LoadChunk('pickValue')
     .GLSLKernel(kernelMult)
@@ -172,7 +172,7 @@ export const subScalar = (tA: Tensor | Operation, scalar: number) => {
   scalarMathOpValidation(name, tA, scalar);
 
   return new RegisterOperation(name)
-    .Input('tA', tA)
+    .Input('tA', tA.dtype)
     .Output(tA.dtype)
     .Uniform('uScalar', 'float', scalar)
     .LoadChunk('pickValue')
@@ -196,7 +196,7 @@ export const addScalar = (tA: Tensor | Operation, scalar: number) => {
   scalarMathOpValidation(name, tA, scalar);
 
   return new RegisterOperation(name)
-    .Input('tA', tA)
+    .Input('tA', tA.dtype)
     .Output(tA.dtype)
     .Uniform('uScalar', 'float', scalar)
     .LoadChunk('pickValue')
@@ -220,7 +220,7 @@ export const divScalar = (tA: Tensor | Operation, scalar: number) => {
   scalarMathOpValidation(name, tA, scalar);
 
   return new RegisterOperation(name)
-    .Input('tA', tA)
+    .Input('tA', tA.dtype)
     .Output(tA.dtype)
     .Uniform('uScalar', 'float', scalar)
     .LoadChunk('pickValue')
@@ -244,8 +244,7 @@ export const multScalar = (tA: Tensor | Operation, scalar: number) => {
   scalarMathOpValidation(name, tA, scalar);
 
   return new RegisterOperation(name)
-    // TODO: WFT?! If you go into `Input` method you will see that `tA` must be `DType` instead of Tensor! Something wrong
-    .Input('tA', tA)
+    .Input('tA', tA.dtype)
     .Output(tA.dtype)
     .Uniform('uScalar', 'float', scalar)
     .LoadChunk('pickValue')

@@ -2,18 +2,19 @@ import GraphNode from './graph_node';
 import * as utils from '../utils';
 
 export default class MediaInput extends GraphNode {
-  // TODO: need access modifier
-  dtype: DType;
-  inputKeys: any[];
-  isInitialized:  boolean;
-  lastCtx: number;
-  cache: boolean;
-
-  media: HTMLVideoElement | HTMLCanvasElement | OffscreenCanvas;
-
+  // TODO: unused. Need to check 
+  public inputKeys: any[];
+  // TODO: unused. Need to check 
+  public lastCtx: number;
+  // TODO: unused. Need to check 
+  public cache: boolean;
+  
+  
+  public dtype: DType;
+  public media: HTMLVideoElement | HTMLCanvasElement | OffscreenCanvas;
+  public isInitialized:  boolean;
   public shape: number[];
 
-  // TODO: HTMLVideoElement | HTMLCanvasElement -> MediaInputType
   constructor(media: HTMLVideoElement | HTMLCanvasElement | OffscreenCanvas, shape: number[]) {
     super('MediaInput');
 
@@ -26,7 +27,7 @@ export default class MediaInput extends GraphNode {
     this.assignMedia(media, shape);
   }
 
-  assignMedia(media?: HTMLVideoElement | HTMLCanvasElement | OffscreenCanvas, shape?: number[]) {
+  public assignMedia(media: HTMLVideoElement | HTMLCanvasElement | OffscreenCanvas, shape: number[]) {
     if (media) {
       utils.assert(
         utils.isVideoElement(media) || utils.isCanvasElement(media),
@@ -41,7 +42,6 @@ export default class MediaInput extends GraphNode {
       );
     }
 
-    // TODO: do we need to change it if no arguments passed?
     this.media = media;
     this.shape = shape;
   }

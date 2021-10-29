@@ -13,9 +13,6 @@ export default class GLBuffer {
   private dtype: string;
   private location: number;
   private ctx: WebGLBuffer;
-  // TODO: do we need it? Never used
-  // @ts-ignore
-  private empty: ArrayBuffer;
   private size: number;
 
   constructor(gl: WebGLRenderingContext, program: WebGLProgram, name: string, dtype: string) {
@@ -25,7 +22,6 @@ export default class GLBuffer {
     this.dtype = dtype;
     this.location = gl.getAttribLocation(this.program, this.name);
     this.ctx = gl.createBuffer();
-    this.empty = new ArrayBuffer(1);
     if (dtype === 'float' || dtype === 'int') {
       this.size = 1;
     } else {

@@ -10,28 +10,41 @@ import { range, tensorClone } from './tensor_utils';
 import GraphNode from './graph_node';
 import * as utils from '../utils';
 import ENV from './environment';
+// look into Dynamo DB provider in hancock
+type DTypeMapper = {
+  'uint8': Uint8Array;
+  'uint16': Uint16Array;
+  'uint32': Uint32Array;
+  'int8': Int8Array;
+  'int16': Int16Array;
+  'int32': Int32Array;
+  'float32': Float32Array;
+  'float64': Float64Array;
+  'uint8c': Uint8ClampedArray;
+};
 
 /**
  * N Dimensional data view, that helps create, store, manipulate data.
  */
-class Tensor<T extends TensorDataView = TensorDataView> extends GraphNode {
-  dtype: DType;
-  shape: number[];
-  size: number;
-  stride: number[];
-  offset: number;
+// class Tensor<T extends TensorDataView = TensorDataView> extends GraphNode {
+class Tensor<T extends DType = DType> extends GraphNode {
+  public dtype: DType;
+  public shape: number[];
+  public size: number;
+  public stride: number[];
+  public offset: number;
   // TODO: looks like data must be type `T`
-  data: TensorDataView;
-  empty: TensorDataView;
-  uint8View: Uint8Array;
+  private empty: DTypeMapper[T];
+  public data: DTypeMapper[T];
+  public uint8View: Uint8Array;
 
   // methods defined in other methods
   // TODO: HACK. Looks like need to move description here
-  get(..._args: number[]): number {
+  public get(..._args: number[]): number {
     return 0;
   }
-  set(..._args: number[]) {}
-  index(..._args: number[]): number {
+  public set(..._args: number[]) {}
+  public index(..._args: number[]): number {
     return 0;
   }
 
@@ -42,7 +55,7 @@ class Tensor<T extends TensorDataView = TensorDataView> extends GraphNode {
    * @param {Array.<number>} [stride] - custom mapping from plain to NDArray
    * @param {number} [offset] - number of data elements to skip
    */
-  constructor(dtype: DType, shape: number[], data?: T, stride?: number[], offset = 0) {
+  constructor(dtype: T, shape: number[], data?: DTypeMapper[T], stride?: number[], offset = 0) {
     super('Tensor');
     this.dtype = dtype;
     this.shape = shape || [data.length];
@@ -69,11 +82,11 @@ class Tensor<T extends TensorDataView = TensorDataView> extends GraphNode {
     }
 
     if (!ENV.SUPPORTS_FLOAT_TEXTURES && dtype === 'float32') {
-      this.uint8View = new Uint8Array((this.data as Float32Array).buffer);
+      this.uint8View = new Uint8Array(this.data.buffer);
     }
   }
 
-  _compileJITMethods() {
+  private _compileJITMethods() {
     const indices = range(this.shape.length);
     const argsStr = indices.map(i => `i${i}`).join(',');
     const indexStr = `${this.offset}+${indices.map(i => `${this.stride[i]}*i${i}`).join('+')}`;
@@ -128,7 +141,7 @@ class Tensor<T extends TensorDataView = TensorDataView> extends GraphNode {
     this.index = new Function(`return function get(${argsStr}, v) { return ${indexStr}; }`)(); // eslint-disable-line
   }
 
-  _defineStride(shape: number[]) {
+  private _defineStride(shape: number[]) {
     const d = shape.length;
     const stride = new Array(d);
 
@@ -145,7 +158,7 @@ class Tensor<T extends TensorDataView = TensorDataView> extends GraphNode {
    * @param {TypedArray|Array} data
    * @returns {Tensor} self
    */
-  assign(data: TensorDataView) {
+  public assign(data: TensorDataView) {
     const nextDtype = Tensor.DefineType(data);
     const nextLength = data.length;
 
@@ -161,10 +174,10 @@ class Tensor<T extends TensorDataView = TensorDataView> extends GraphNode {
    * @description Write zeros into tensor's data
    * @return {Tensor} self
    */
-  release() {
+  public release() {
     if (this.empty) {
       // TODO: hack
-      (this.data as Uint8Array).set(this.empty);
+      this.data.set(this.empty);
     } else {
       this.data = Tensor.Malloc(this.dtype, this.size);
     }
@@ -172,7 +185,7 @@ class Tensor<T extends TensorDataView = TensorDataView> extends GraphNode {
     return this;
   }
 
-  relese() {
+  public relese() {
     utils.deprecationWarning('Tensor: relese');
     this.release();
 
@@ -182,7 +195,7 @@ class Tensor<T extends TensorDataView = TensorDataView> extends GraphNode {
   /**
    * @return {Tensor} a shallow copy, new instance
    */
-  clone() {
+  public clone() {
     const result = new Tensor(this.dtype, this.shape, undefined, this.stride, this.offset);
 
     tensorClone(this, result);
@@ -236,7 +249,7 @@ class Tensor<T extends TensorDataView = TensorDataView> extends GraphNode {
    * @param {number} size
    * @return {Tensor}
    */
-  static Malloc(dtype: DType, size: number) {
+  static Malloc<K extends keyof DTypeMapper >(dtype: K, size: number): DTypeMapper[K] {
     switch (dtype) {
       case 'uint8':
         return new Uint8Array(size);
@@ -256,8 +269,6 @@ class Tensor<T extends TensorDataView = TensorDataView> extends GraphNode {
         return new Float64Array(size);
       case 'uint8c':
         return new Uint8ClampedArray(size);
-      case 'array':
-        return new Array(size);
       default:
         throw new Error(`Tensor: Unexpected type: ${dtype}.`);
     }
@@ -293,8 +304,6 @@ class Tensor<T extends TensorDataView = TensorDataView> extends GraphNode {
         return 'float64';
       case '[object Uint8ClampedArray]':
         return 'uint8c';
-      case '[object Array]':
-        return 'array';
       default:
         throw new Error(`Tensor: Unknown dtype: ${str}.`);
     }
@@ -331,9 +340,6 @@ class Tensor<T extends TensorDataView = TensorDataView> extends GraphNode {
         return new Float64Array(data);
       case 'uint8c':
         return new Uint8ClampedArray(data);
-      case 'array':
-        // TODO: ALERT! HACK! new Array(data) return [data] instead of [...data]! Is it correct? need to return [...data]
-        return new Array(data) as any;
       default:
         throw new Error(`Unknown type: ${dtype}.`);
     }

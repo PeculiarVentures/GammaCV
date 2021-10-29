@@ -6,13 +6,13 @@
  * All rights reserved.
  */
 
-// TODO: need to discuss what should we do with specs deprecated properties
+// TODO: create an issue that need to remove deprecated API
  declare const navigator: Navigator & {
   getUserMedia: (constraints?: MediaStreamConstraints, successCallback?: (stream: MediaStream) => void) => void;
-  webkitGetUserMedia: (constraints?: MediaStreamConstraints, successCallback?: (stream: MediaStream) => void) => void;
-  mozGetUserMedia: (constraints?: MediaStreamConstraints, successCallback?: (stream: MediaStream) => void) => void;
-  msGetUserMedia: (constraints?: MediaStreamConstraints, successCallback?: (stream: MediaStream) => void) => void;
-  oGetUserMedia: (constraints?: MediaStreamConstraints, successCallback?: (stream: MediaStream) => void) => void;
+  webkitGetUserMedia?: (constraints?: MediaStreamConstraints, successCallback?: (stream: MediaStream) => void) => void;
+  mozGetUserMedia?: (constraints?: MediaStreamConstraints, successCallback?: (stream: MediaStream) => void) => void;
+  msGetUserMedia?: (constraints?: MediaStreamConstraints, successCallback?: (stream: MediaStream) => void) => void;
+  oGetUserMedia?: (constraints?: MediaStreamConstraints, successCallback?: (stream: MediaStream) => void) => void;
 }
 
  declare const window: Window & {
@@ -303,7 +303,6 @@ export default class CaptureVideo {
   }
 
   getImageBuffer(
-    // TODO: types are strange
     type: 'uint8' | 'float32' | 'uint8c' | Tensor,
     ctx: TCanvasRenderingContext = this.canvasCtx,
     width: number = this.width,

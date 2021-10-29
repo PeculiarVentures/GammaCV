@@ -52,17 +52,17 @@ export const assertOffsetCanvas = () => {
 export const isValidShape = (shape: any) => Array.isArray(shape)
   && shape.length > 0
   && !shape.some(n => n % 1 !== 0);
-export const isOperation = (op: any) => op instanceof gm.Operation;
-export const isMediaInput = (op: any) => op instanceof gm.MediaInput;
-export const isTensor = (tensor: any) => tensor instanceof gm.Tensor;
-export const isVideoElement = (input: any) => {
+export const isOperation = (op: any): op is gm.Operation => op instanceof gm.Operation;
+export const isMediaInput = (op: any): op is gm.MediaInput => op instanceof gm.MediaInput;
+export const isTensor = (tensor: any): tensor is gm.Tensor  => tensor instanceof gm.Tensor;
+export const isVideoElement = (input: any): input is HTMLVideoElement => {
   if (typeof HTMLVideoElement === 'function') {
     return input instanceof HTMLVideoElement;
   }
 
   return false;
 };
-export const isCanvasElement = (input: any) => {
+export const isCanvasElement = (input: any): input is HTMLCanvasElement => {
   if (typeof HTMLCanvasElement === 'function') {
     return input instanceof HTMLCanvasElement;
   }

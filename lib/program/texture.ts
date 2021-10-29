@@ -64,24 +64,24 @@ export default class GPUTexture {
     );
   }
 
-  set(tensor: Tensor | HTMLCanvasElement | HTMLVideoElement = null) {
+  set(src: Tensor | HTMLCanvasElement | HTMLVideoElement = null) {
     const gl = this.gl;
 
     if (
-      utils.isVideoElement(tensor) || utils.isCanvasElement(tensor)
+      utils.isVideoElement(src) || utils.isCanvasElement(src)
     ) {
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, (tensor as TexImageSource));
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, src);
     } else {
-      let width = (tensor as Tensor).shape[1];
+      let width = src.shape[1];
       let type = gl.UNSIGNED_BYTE;
-      let data = (tensor as Tensor).data;
+      let data = src.data;
 
-      if ((tensor as Tensor).dtype === 'float32') {
+      if (src.dtype === 'float32') {
         if (ENV.SUPPORTS_FLOAT_TEXTURES) {
           type = gl.FLOAT;
         } else {
           width *= 4;
-          data = (tensor as Tensor).uint8View;
+          data = src.uint8View;
         }
       }
 
@@ -95,7 +95,7 @@ export default class GPUTexture {
         0,
         gl.RGBA,
         type,
-        (data as ArrayBufferView),
+        data,
       );
     }
   }

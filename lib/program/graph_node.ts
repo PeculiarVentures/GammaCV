@@ -8,9 +8,8 @@
 
 export default class GraphNode {
   static GlobalNodesCount: number;
-  // TODO: need access modifier
-  id: number;
-  name: string
+  public id: number;
+  public name: string
 
   static GlobalCountIncrease() {
     GraphNode.GlobalNodesCount += 1;

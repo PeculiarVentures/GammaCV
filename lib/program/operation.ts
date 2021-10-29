@@ -19,12 +19,8 @@ import type Session from './session';
 import type Tensor from './tensor';
 import type MediaInput from './media_input';
 
-// TODO: hack
-type TPropNames = 'input' | 'uniform' | 'constant' | 'attributes';
-
 export default class Operation extends GraphNode {
-  // TODO: need access modifier
-  input: Record<string, Tensor | Operation | HTMLVideoElement | HTMLCanvasElement | MediaInput>;
+  input: Record<string, Tensor | Operation | MediaInput>;
   uniform: Record<string, any>;
   constant: Record<string, string | number | boolean>;
   chunks: any[];
@@ -88,14 +84,13 @@ export default class Operation extends GraphNode {
     for (let i = 0; i < this.inputKeys.length; i += 1) {
       const key = this.inputKeys[i];
       const input = this.input[key];
-      // TODO: hack. Looks like opName can be `undefined`
-      const opName = (input as Operation).name;
+      const opName = input.name;
       const texture = sess.texture[opName];
 
       texture.bind(this.program, key, i);
 
       if (utils.isTensor(input)) {
-        texture.set((input as Tensor));
+        texture.set(input);
       }
 
       if (utils.isMediaInput(input)) {
@@ -280,7 +275,7 @@ export default class Operation extends GraphNode {
     }
   }
 
-  cloneProp(name: TPropNames) {
+  cloneProp(name: 'input' | 'uniform' | 'constant' | 'attributes') {
     const names = Object.keys(this[name]);
     const prop: Record<string, any> = {};
 

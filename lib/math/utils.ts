@@ -8,11 +8,10 @@
 
 import type Rect from './rect';
 import type Tensor from '../program/tensor';
+import type Line from './line';
 
 
-// TODO: canvas doesn't used
-// @ts-ignore
-export function sortPoints(points: number[][], canvas?: HTMLCanvasElement) { // eslint-disable-line
+export function sortPoints(points: number[][]) { // eslint-disable-line
   // How it works?
   const center = [0, 0];
   let A = null;
@@ -53,9 +52,7 @@ export function sortPoints(points: number[][], canvas?: HTMLCanvasElement) { // 
   return [A, B, C, D];
 }
 
-// TODO: conflict between types and code
 export function angleBetweenLines(line1: number[], line2: number[]) {
-// export function angleBetweenLines(line1: TLine, line2: TLine) {
   const dx1 = line1[2] - line1[0];
   const dy1 = line1[3] - line1[1];
   const dx2 = line2[2] - line2[0];

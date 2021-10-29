@@ -16,20 +16,15 @@ import type MediaInput from './media_input'
  * @name RegisterOperation
  */
 export default class RegisterOperation {
-  // TODO: need access modifier
-  name: string;
-  op: Operation;
+  private op: Operation;
   private preCompile: Function;
-  // TODO: never used
-  // @ts-ignore
   private postCompile: Function;
-  chunks: any[];
 
   private checkShape: (a: Record<string, any>) => number[];
 
   constructor(name: string) {
     this.op = new Operation(name);
-    this.name = name;
+
     this.checkShape = (a) => {
       const keys = Object.keys(a);
 
@@ -37,10 +32,10 @@ export default class RegisterOperation {
     };
     this.preCompile = () => {};
     this.postCompile = () => {};
-    this.chunks = [];
+
   }
 
-  GLSLKernel(kernel: string) {
+  public GLSLKernel(kernel: string) {
     utils.assert(
       typeof kernel === 'string',
       'RegisterOperation: The kernel should be a string but it is not.',
@@ -50,7 +45,7 @@ export default class RegisterOperation {
     return this;
   }
 
-  LoadChunk(...chunks: any[]) {
+  public LoadChunk(...chunks: any[]) {
     for (const chunk of chunks) {
       utils.assert(
         utils.isValidGLSLChunk(chunk),
@@ -63,16 +58,16 @@ export default class RegisterOperation {
     return this;
   }
 
-  Input(name: string, dtype: any) {
+  public Input(name: string, dtype: DType) {
     // TODO: error message missed
-    utils.assert(utils.isValidGLSLVariableName(name), '');
+    utils.assert(utils.isValidGLSLVariableName(name), 'RegisterOperation: Operation name can contain only letters');
     // TODO: hack
     this.op.input[name] = ({ name, dtype } as Operation);
 
     return this;
   }
 
-  Output(dtype: any) {
+  public Output(dtype: any) {
     utils.assert(
       this.op.dtype === null,
       'RegisterOperation: The operation allows a single output.',
@@ -83,7 +78,7 @@ export default class RegisterOperation {
     return this;
   }
 
-  Constant(name: string, value: number | string | boolean) {
+  public Constant(name: string, value: number | string | boolean) {
     // TODO: error message missed
     utils.assert(utils.isValidGLSLVariableName(name), '');
     this.op.constant[name] = value;
@@ -91,7 +86,7 @@ export default class RegisterOperation {
     return this;
   }
 
-  SetShapeFn(fn: (a: Record<string, any>) => number[]) {
+  public SetShapeFn(fn: (a: Record<string, any>) => number[]) {
     utils.assert(
       typeof fn === 'function',
       'RegisterOperation: SetShapeFn should receive function in first argument',
@@ -101,7 +96,7 @@ export default class RegisterOperation {
     return this;
   }
 
-  PreCompile(fn: Function) {
+  public PreCompile(fn: Function) {
     utils.assert(
       typeof fn === 'function',
       'RegisterOperation: PreCompile should receive function in first argument',
@@ -111,7 +106,7 @@ export default class RegisterOperation {
     return this;
   }
 
-  PostCompile(fn: Function) {
+  public PostCompile(fn: Function) {
     utils.assert(
       typeof fn === 'function',
       'RegisterOperation: PostCompile should receive function in first argument',
@@ -162,6 +157,8 @@ export default class RegisterOperation {
 
     op.shape = this.checkShape(inputShapes);
     op.sequence = op.getDependencies();
+
+    this.postCompile(op);
 
     return op;
   }

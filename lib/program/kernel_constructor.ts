@@ -6,7 +6,7 @@
  * All rights reserved.
  */
 
-import * as chunks from './glsl/chunks';
+import { chunks } from './glsl/chunks';
 import ENV from './environment';
 import { prepareSourceLines } from './glsl_error';
 import type Operation from './operation';
@@ -103,8 +103,7 @@ function injectChunks(op: Operation) {
     const pad = separateWidth - midString.length;
     const head = `${'-'.repeat(Math.floor(pad / 2))}${midString}${'-'.repeat(Math.ceil(pad / 2))}`;
 
-    // TODO: hack
-    if (typeof (chunks as Record<string, any>)[name] === 'function') {
+    if (typeof chunks[name] === 'function') {
       return `/*${head}*/\n${(chunks as Record<string, any>)[name](op)}\n/*${'-'.repeat(separateWidth)}*/`;
     }
 

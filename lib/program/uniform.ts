@@ -7,10 +7,10 @@
  */
 
 export default class GLUniform {
-  gl: WebGLRenderingContext
-  name: string;
-  dtype: string;
-  location: WebGLUniformLocation;
+  private gl: WebGLRenderingContext
+  public name: string;
+  public dtype: string;
+  private location: WebGLUniformLocation;
 
   constructor(gl: WebGLRenderingContext, program: WebGLProgram, name: string, dtype: string) {
     this.gl = gl;
@@ -20,7 +20,7 @@ export default class GLUniform {
   }
 
   // TODO: HACK!!! Need to update function! value must be `number | number[]`
-  set(value: number) {
+  public set(value: number) {
     const gl = this.gl;
 
     switch (this.dtype) {

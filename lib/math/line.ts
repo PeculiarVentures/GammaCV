@@ -51,7 +51,6 @@ export default class Line {
     return [x, y];
   }
 
-  // TODO: maybe also must be getter
   public data: Float32Array;
   static BYTES_PER_ELEMENT: number;
 
@@ -80,7 +79,7 @@ export default class Line {
     }
   }
 
-  set(a: number, b: number, c: number, d: number, x: number, y: number) {
+  public set(a: number, b: number, c: number, d: number, x: number, y: number) {
     this.data[0] = a;
     this.data[1] = b;
     this.data[2] = c;
@@ -91,9 +90,8 @@ export default class Line {
     this.data[7] = 0;
   }
 
-  // TODO h is never used
-  // @ts-ignore
-  fromParallelCoords(x: number, y: number, w: number, h: number, maxDistance: number, maxAngles: number) {
+  // TODO: Need to update this method in future
+  public fromParallelCoords(x: number, y: number, w: number, _h: number, maxDistance: number, maxAngles: number) {
     const x1 = 0;
     const x2 = w;
     let y1;
@@ -114,7 +112,7 @@ export default class Line {
     this.set(x1, y1, x2, y2, x, y);
   }
 
-  get length() {
+  public get length() {
     if (this.data[6]) {
       return this.data[6];
     }
@@ -128,7 +126,7 @@ export default class Line {
     return length;
   }
 
-  get angle() {
+  public get angle() {
     if (this.data[7]) {
       return this.data[7];
     }
@@ -193,7 +191,7 @@ export default class Line {
     this.data[5] = v;
   }
 
-  clear() {
+  public clear() {
     this.data[0] = 0;
     this.data[1] = 0;
     this.data[2] = 0;
@@ -204,12 +202,11 @@ export default class Line {
     this.data[7] = 0;
   }
 
-  // TODO: mismatch with types - in types it should return Rect
-  fromArray(arr: number[]) {
+  public fromArray(arr: number[]) {
     this.data.set(arr);
   }
 
-  toArray() {
+  public toArray() {
     return Array.prototype.slice.call(this.data);
   }
 }

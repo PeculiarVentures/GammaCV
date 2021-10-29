@@ -32,7 +32,7 @@ import pickValue from './pick_value';
 
 const float = () => floatCode;
 
-export {
+export const chunks: Record<string, Function> = {
   main,
   pickValue,
   float,

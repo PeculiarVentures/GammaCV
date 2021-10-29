@@ -55,7 +55,7 @@ export const ImageReduceHistogram = (tSrc: Tensor | Operation | MediaInput, k: n
  */
 
 export default (tSrc: Tensor | Operation | MediaInput, layers = 1, min = 0, max = 1, step = 1 / 255) => {
-  // TODO: Probably we should refactor arguments priority and add assertation for them
+  // TODO: Probably we should refactor arguments priority and add assertion for them
   let steps = [[
     tSrc.shape[0],
     tSrc.shape[1],

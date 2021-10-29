@@ -47,8 +47,8 @@ export default (tA: Tensor | Operation | MediaInput, tB: Tensor | Operation | Me
   }
 
   return new RegisterOperation('Concat')
-    .Input('tA', tA)
-    .Input('tB', tB)
+    .Input('tA', tA.dtype)
+    .Input('tB', tB.dtype)
     .Output(tA.dtype)
     .LoadChunk('pickValue')
     .GLSLKernel(kernel.replace('RESULT', `vec4(${mask.map(s => `chanels${s}`).join(', ')})`))

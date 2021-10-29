@@ -56,11 +56,9 @@ export default class Rect {
     return Math.abs(ax * (by - cy) + bx * (cy - ay) + cx * (ay - by)) / 2;
   }
 
-  // TODO: hack
   static NUM_ELEMENTS: number;
   static BYTES_PER_ELEMENT: number;
 
-  // TODO: should be an getter?
   public data: Float32Array | Uint8Array | Uint16Array | Uint32Array | Uint8ClampedArray
 
   /**
@@ -85,7 +83,7 @@ export default class Rect {
    * @param {number} y
    * @returns {boolean} Is insinde rect
    */
-  isInRect(x: number, y: number) {
+  public isInRect(x: number, y: number) {
     const s1 = Rect.TriangleS(x, y, this.ax, this.ay, this.bx, this.by);
     const s2 = Rect.TriangleS(x, y, this.cx, this.cy, this.bx, this.by);
     const s3 = Rect.TriangleS(this.cx, this.cy, x, y, this.dx, this.dy);
@@ -98,7 +96,7 @@ export default class Rect {
     return true;
   }
 
-  isNotEmpty() {
+  public isNotEmpty() {
     if (
       this.data[0] > 0 &&
       this.data[1] > 0 &&
@@ -115,11 +113,11 @@ export default class Rect {
     return false;
   }
 
-  clone() {
+  public clone() {
     return new Rect(this.toArray());
   }
 
-  set(ax: number, ay: number, bx: number, by: number, cx: number, cy: number, dx: number, dy: number) {
+  public set(ax: number, ay: number, bx: number, by: number, cx: number, cy: number, dx: number, dy: number) {
     this.data[0] = ax;
     this.data[1] = ay;
     this.data[2] = bx;
@@ -130,13 +128,13 @@ export default class Rect {
     this.data[7] = dy;
   }
 
-  assign(rect: Rect) {
+  public assign(rect: Rect) {
     this.data.set(rect.data);
 
     return this;
   }
 
-  scale(x: number, y: number) {
+  public scale(x: number, y: number) {
     this.data[0] *= x;
     this.data[1] *= y;
     this.data[2] *= x;
@@ -149,23 +147,19 @@ export default class Rect {
     return this;
   }
 
-  // TODO: types conflict. WTF  Intersection returns `false`???
-  fromLines(l1: Line, l2: Line, l3: Line, l4: Line) {
-    const sorted = sortPoints([
-      (Line.Intersection(l1, l2) as number[]),
-      (Line.Intersection(l2, l3) as number[]),
-      (Line.Intersection(l3, l4) as number[]),
-      (Line.Intersection(l4, l1) as number[]),
-    ]);
+  public fromLines(l1: Line, l2: Line, l3: Line, l4: Line) {
+    const p1 = Line.Intersection(l1, l2);
+    const p2 = Line.Intersection(l2, l3);
+    const p3 = Line.Intersection(l3, l4);
+    const p4 = Line.Intersection(l4, l1);
 
-    if (
-      !sorted[0] ||
-      !sorted[1] ||
-      !sorted[2] ||
-      !sorted[3]
-    ) {
+    if (!p1 || !p2 || !p3 || !p4) {
       return false;
     }
+    
+    const sorted = sortPoints([
+      p1, p2, p3, p4,
+    ]);
 
     this.data[0] = sorted[0][0];
     this.data[1] = sorted[0][1];
@@ -179,123 +173,123 @@ export default class Rect {
     return true;
   }
 
-  get ax() {
+  public get ax() {
     return this.data[0];
   }
 
-  get ay() {
+  public get ay() {
     return this.data[1];
   }
 
-  get bx() {
+  public get bx() {
     return this.data[2];
   }
 
-  get by() {
+  public get by() {
     return this.data[3];
   }
 
-  get cx() {
+  public get cx() {
     return this.data[4];
   }
 
-  get cy() {
+  public get cy() {
     return this.data[5];
   }
 
-  get dx() {
+  public get dx() {
     return this.data[6];
   }
 
-  get dy() {
+  public get dy() {
     return this.data[7];
   }
 
-  set ax(v) {
+  public set ax(v) {
     this.data[0] = v;
   }
 
-  set ay(v) {
+  public set ay(v) {
     this.data[1] = v;
   }
 
-  set bx(v) {
+  public set bx(v) {
     this.data[2] = v;
   }
 
-  set by(v) {
+  public set by(v) {
     this.data[3] = v;
   }
 
-  set cx(v) {
+  public set cx(v) {
     this.data[4] = v;
   }
 
-  set cy(v) {
+  public set cy(v) {
     this.data[5] = v;
   }
 
-  set dx(v) {
+  public set dx(v) {
     this.data[6] = v;
   }
 
-  set dy(v) {
+  public set dy(v) {
     this.data[7] = v;
   }
 
-  get distA() {
+  public get distA() {
     return Math.sqrt((this.data[6] - this.data[0]) ** 2 + (this.data[7] - this.data[1]) ** 2);
   }
 
-  get distB() {
+  public get distB() {
     return Math.sqrt((this.data[4] - this.data[2]) ** 2 + (this.data[5] - this.data[3]) ** 2);
   }
 
-  get distC() {
+  public get distC() {
     return Math.sqrt((this.data[0] - this.data[2]) ** 2 + (this.data[1] - this.data[3]) ** 2);
   }
 
-  get distD() {
+  public get distD() {
     return Math.sqrt((this.data[6] - this.data[4]) ** 2 + (this.data[7] - this.data[5]) ** 2);
   }
 
-  get distE() {
+  public get distE() {
     return Math.sqrt((this.data[0] - this.data[4]) ** 2 + (this.data[1] - this.data[5]) ** 2);
   }
 
-  get distF() {
+  public get distF() {
     return Math.sqrt((this.data[6] - this.data[2]) ** 2 + (this.data[7] - this.data[3]) ** 2);
   }
 
-  get angleA() {
+  public get angleA() {
     return angleBetweenLines(
       [this.data[6], this.data[7], this.data[0], this.data[1]],
       [this.data[0], this.data[1], this.data[2], this.data[3]],
     );
   }
 
-  get angleB() {
+  public get angleB() {
     return angleBetweenLines(
       [this.data[0], this.data[1], this.data[2], this.data[3]],
       [this.data[2], this.data[3], this.data[4], this.data[5]],
     );
   }
 
-  get angleC() {
+  public get angleC() {
     return angleBetweenLines(
       [this.data[2], this.data[3], this.data[4], this.data[5]],
       [this.data[4], this.data[5], this.data[6], this.data[7]],
     );
   }
 
-  get angleD() {
+  public get angleD() {
     return angleBetweenLines(
       [this.data[4], this.data[5], this.data[6], this.data[7]],
       [this.data[6], this.data[7], this.data[0], this.data[1]],
     );
   }
 
-  get area() {
+  public get area() {
     const A = this.distA;
     const B = this.distB;
     const C = this.distC;
@@ -305,11 +299,11 @@ export default class Rect {
     return Math.sqrt((p - A) * (p - B) * (p - C) * (p - D));
   }
 
-  get P() {
+  public get P() {
     return this.distA + this.distB + this.distC + this.distD;
   }
 
-  mul(num: number) {
+  public mul(num: number) {
     this.data[0] *= num;
     this.data[1] *= num;
     this.data[2] *= num;
@@ -322,7 +316,7 @@ export default class Rect {
     return this;
   }
 
-  scaleAt(num: number) {
+  public scaleAt(num: number) {
     this.data[0] -= num;
     this.data[1] -= num;
     this.data[2] -= num;
@@ -335,7 +329,7 @@ export default class Rect {
     return this;
   }
 
-  clear() {
+  public clear() {
     this.data[0] = 0;
     this.data[1] = 0;
     this.data[2] = 0;
@@ -346,7 +340,7 @@ export default class Rect {
     this.data[7] = 0;
   }
 
-  fromDeep(arr: number[][]) {
+  public fromDeep(arr: number[][]) {
     this.data[0] = arr[0][0];
     this.data[1] = arr[0][1];
     this.data[2] = arr[1][0];
@@ -359,7 +353,7 @@ export default class Rect {
     return this;
   }
 
-  perspective(matrix: Tensor) {
+  public perspective(matrix: Tensor) {
     const p1 = transformPoint(this.data[0], this.data[1], matrix);
     const p2 = transformPoint(this.data[2], this.data[3], matrix);
     const p3 = transformPoint(this.data[4], this.data[5], matrix);
@@ -377,17 +371,17 @@ export default class Rect {
     return this;
   }
 
-  fromArray(arr: number[]) {
+  public fromArray(arr: number[]) {
     this.data.set(arr);
 
     return this;
   }
 
-  toArray() {
+  public toArray() {
     return Array.prototype.slice.call(this.data);
   }
 
-  isInside(rect: Rect) {
+  public isInside(rect: Rect) {
     return (
       rect.ax > this.ax
       && rect.ay > this.ay
@@ -400,7 +394,7 @@ export default class Rect {
     );
   }
 
-  toJSON() {
+  public toJSON() {
     return this.toArray();
   }
 }
