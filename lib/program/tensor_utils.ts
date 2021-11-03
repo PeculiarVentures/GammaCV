@@ -40,7 +40,6 @@ export function tensorFrom(input: Operation | Tensor | MediaInput, cast?: DType)
 }
 
 export function tensorClone(from: Tensor, to: Tensor) {
-  // TODO: changed from `if (to.data.set) {
   if ('set' in to.data && to.data.set) {
     to.data.set(from.data);
   } else {
@@ -163,7 +162,6 @@ export function flipTensor(
   return output;
 }
 
-// TODO: confused. should use same args as for flipTensor?
 /**
  * @deprecated
  */

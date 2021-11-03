@@ -11,7 +11,7 @@ import GraphNode from './graph_node';
 import * as utils from '../utils';
 import ENV from './environment';
 // look into Dynamo DB provider in hancock
-type DTypeMapper = {
+interface DTypeMapper {
   'uint8': Uint8Array;
   'uint16': Uint16Array;
   'uint32': Uint32Array;
@@ -27,23 +27,67 @@ type DTypeMapper = {
  * N Dimensional data view, that helps create, store, manipulate data.
  */
 // class Tensor<T extends TensorDataView = TensorDataView> extends GraphNode {
-class Tensor<T extends DType = DType> extends GraphNode {
+  class Tensor extends GraphNode {
   public dtype: DType;
   public shape: number[];
   public size: number;
   public stride: number[];
   public offset: number;
-  // TODO: looks like data must be type `T`
-  private empty: DTypeMapper[T];
-  public data: DTypeMapper[T];
+  private empty: TensorDataView;
+  public data: TensorDataView;
+  // private empty: DTypeMapper[T];
+  // public data: DTypeMapper[T];
   public uint8View: Uint8Array;
 
-  // methods defined in other methods
-  // TODO: HACK. Looks like need to move description here
+  /**
+   * @name get
+   * @method
+   * @description Get data element by coordinates
+   * @param {...number} x - coordinates
+   *
+   * Require N number arguments, where n - dimention of a tensor.
+   * @return {number}
+   * @example
+   * const t = new gm.Tensor('uint8', [2, 3], new Uint8Array([1, 2, 3, 4, 5, 6]));
+   * t.get(0, 0); // 1
+   * t.get(0, 1); // 2
+   * t.get(1, 2); // 6
+   */
   public get(..._args: number[]): number {
     return 0;
   }
+
+  /**
+   * @name set
+   * @method
+   * @description Put value to tensor by coordinates
+   * @param {...number} x - coordinates
+   * @param {number} v - value
+   *
+   * @example
+   * const t = new gm.Tensor('uint8', [2, 3], new Uint8Array([1, 2, 3, 4, 5, 6]));
+   * t.set(0, 0, 10); // 1
+   * t.set(0, 1, 15); // 2
+   * t.set(1, 2, 20); // 6
+   *
+   * console.log(t.data); // <Uint8Array[10, 15, 3, 4, 5, 20]>
+   */
   public set(..._args: number[]) {}
+
+  /**
+   * @name index
+   * @method
+   * @description Get's index in plain data view of data element specified by coordinates
+   * @param {...number} x - coordinates
+   *
+   * Require N number arguments, where n - dimention of a tensor.
+   * @return {number}
+   * @example
+   * const t = new gm.Tensor('uint8', [2, 3], new Uint8Array([1, 2, 3, 4, 5, 6]));
+   * t.index(0, 0); // 0
+   * t.index(0, 1); // 1
+   * t.index(1, 2); // 5
+   */
   public index(..._args: number[]): number {
     return 0;
   }
@@ -55,7 +99,7 @@ class Tensor<T extends DType = DType> extends GraphNode {
    * @param {Array.<number>} [stride] - custom mapping from plain to NDArray
    * @param {number} [offset] - number of data elements to skip
    */
-  constructor(dtype: T, shape: number[], data?: DTypeMapper[T], stride?: number[], offset = 0) {
+  constructor(dtype: DType, shape: number[], data?: TensorDataView, stride?: number[], offset = 0) {
     super('Tensor');
     this.dtype = dtype;
     this.shape = shape || [data.length];
@@ -91,53 +135,10 @@ class Tensor<T extends DType = DType> extends GraphNode {
     const argsStr = indices.map(i => `i${i}`).join(',');
     const indexStr = `${this.offset}+${indices.map(i => `${this.stride[i]}*i${i}`).join('+')}`;
 
-    /**
-     * @name get
-     * @method
-     * @description Get data element by coordinates
-     * @param {...number} x - coordinates
-     *
-     * Require N number arguments, where n - dimention of a tensor.
-     * @return {number}
-     * @example
-     * const t = new gm.Tensor('uint8', [2, 3], new Uint8Array([1, 2, 3, 4, 5, 6]));
-     * t.get(0, 0); // 1
-     * t.get(0, 1); // 2
-     * t.get(1, 2); // 6
-     */
     this.get = new Function(`return function get(${argsStr}) { return this.data[${indexStr}]; }`)(); // eslint-disable-line
-    
-    /**
-     * @name set
-     * @method
-     * @description Put value to tensor by coordinates
-     * @param {...number} x - coordinates
-     * @param {number} v - value
-     *
-     * @example
-     * const t = new gm.Tensor('uint8', [2, 3], new Uint8Array([1, 2, 3, 4, 5, 6]));
-     * t.set(0, 0, 10); // 1
-     * t.set(0, 1, 15); // 2
-     * t.set(1, 2, 20); // 6
-     *
-     * console.log(t.data); // <Uint8Array[10, 15, 3, 4, 5, 20]>
-     */
+
     this.set = new Function(`return function get(${argsStr}, v) { this.data[${indexStr}] = v; }`)(); // eslint-disable-line
 
-    /**
-     * @name index
-     * @method
-     * @description Get's index in plain data view of data element specified by coordinates
-     * @param {...number} x - coordinates
-     *
-     * Require N number arguments, where n - dimention of a tensor.
-     * @return {number}
-     * @example
-     * const t = new gm.Tensor('uint8', [2, 3], new Uint8Array([1, 2, 3, 4, 5, 6]));
-     * t.index(0, 0); // 0
-     * t.index(0, 1); // 1
-     * t.index(1, 2); // 5
-     */
     this.index = new Function(`return function get(${argsStr}, v) { return ${indexStr}; }`)(); // eslint-disable-line
   }
 
@@ -158,7 +159,7 @@ class Tensor<T extends DType = DType> extends GraphNode {
    * @param {TypedArray|Array} data
    * @returns {Tensor} self
    */
-  public assign(data: TensorDataView) {
+  public assign(data: DTypeMapper[keyof DTypeMapper]) {
     const nextDtype = Tensor.DefineType(data);
     const nextLength = data.length;
 
@@ -176,7 +177,6 @@ class Tensor<T extends DType = DType> extends GraphNode {
    */
   public release() {
     if (this.empty) {
-      // TODO: hack
       this.data.set(this.empty);
     } else {
       this.data = Tensor.Malloc(this.dtype, this.size);
@@ -249,7 +249,7 @@ class Tensor<T extends DType = DType> extends GraphNode {
    * @param {number} size
    * @return {Tensor}
    */
-  static Malloc<K extends keyof DTypeMapper >(dtype: K, size: number): DTypeMapper[K] {
+  static Malloc(dtype: keyof DTypeMapper, size: number): DTypeMapper[keyof DTypeMapper] {
     switch (dtype) {
       case 'uint8':
         return new Uint8Array(size);

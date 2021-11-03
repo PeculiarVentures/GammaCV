@@ -218,7 +218,6 @@ class Session {
       }
     }
 
-    // TODO: readPixels doesn't work with type `number[]`
     gl.readPixels(
       0,
       0,
@@ -226,7 +225,7 @@ class Session {
       height,
       gl.RGBA,
       type,
-      (data as ArrayBufferView),
+      data,
     );
   }
 

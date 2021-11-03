@@ -2,14 +2,6 @@ import GraphNode from './graph_node';
 import * as utils from '../utils';
 
 export default class MediaInput extends GraphNode {
-  // TODO: unused. Need to check 
-  public inputKeys: any[];
-  // TODO: unused. Need to check 
-  public lastCtx: number;
-  // TODO: unused. Need to check 
-  public cache: boolean;
-  
-  
   public dtype: DType;
   public media: HTMLVideoElement | HTMLCanvasElement | OffscreenCanvas;
   public isInitialized:  boolean;
@@ -19,10 +11,7 @@ export default class MediaInput extends GraphNode {
     super('MediaInput');
 
     this.dtype = 'uint8';
-    this.inputKeys = [];
     this.isInitialized = false;
-    this.lastCtx = Math.random();
-    this.cache = true;
 
     this.assignMedia(media, shape);
   }

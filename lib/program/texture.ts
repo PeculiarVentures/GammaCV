@@ -85,7 +85,6 @@ export default class GPUTexture {
         }
       }
 
-      // TODO: texImage2D doesn't work with type `number[]`
       gl.texImage2D(
         gl.TEXTURE_2D,
         0,

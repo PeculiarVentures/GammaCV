@@ -9,7 +9,6 @@
 import type Operation from '../../operation';
 import ENV from '../../environment';
 
-// TODO: a lot of `as Operation` in a reason of not defined `shape` property
 export default function (op: Operation) {
   const inputs = Object.keys(op.input);
   const functions = [];
@@ -17,10 +16,10 @@ export default function (op: Operation) {
   for (let i = 0; i < inputs.length; i += 1) {
     const key = inputs[i];
 
-    if (!(op.input[key] as Operation).shape) {
+    if (!op.input[key].shape) {
       continue;
     }
-    const shape = [...(op.input[key] as Operation).shape];
+    const shape = [...op.input[key].shape];
 
     const w = shape[1].toFixed(1);
     const h = shape[0].toFixed(1);
@@ -29,7 +28,7 @@ export default function (op: Operation) {
     let funcBody = (type: string, name: string, selector: string) =>
       `${type} ${name}_${key}(float y, float x) {\n\treturn texture2D(${key}, vec2((x + 0.5) / ${w}, (y + 0.5) / ${h}))${selector};\n}`;
 
-    if (!ENV.SUPPORTS_FLOAT_TEXTURES && (op.input[key] as Operation).dtype === 'float32') {
+    if (!ENV.SUPPORTS_FLOAT_TEXTURES && op.input[key].dtype === 'float32') {
       funcBody = (type, name, selector) => `
         ${type} ${name}_${key}(float y, float x) {
           float r = decode_float(texture2D(${key}, vec2((x * 4.0 + 0.5) / ${w4}, y / ${h})));

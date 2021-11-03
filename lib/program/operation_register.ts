@@ -59,10 +59,10 @@ export default class RegisterOperation {
   }
 
   public Input(name: string, dtype: DType) {
-    // TODO: error message missed
-    utils.assert(utils.isValidGLSLVariableName(name), 'RegisterOperation: Operation name can contain only letters');
-    // TODO: hack
-    this.op.input[name] = ({ name, dtype } as Operation);
+    utils.assert(utils.isValidGLSLVariableName(name), 'RegisterOperation: Input name can contain only letters');
+    // TODO: HACK with any. Need help
+    const op: any = { name, dtype };
+    this.op.input[name] = op;
 
     return this;
   }
@@ -79,8 +79,7 @@ export default class RegisterOperation {
   }
 
   public Constant(name: string, value: number | string | boolean) {
-    // TODO: error message missed
-    utils.assert(utils.isValidGLSLVariableName(name), '');
+    utils.assert(utils.isValidGLSLVariableName(name), 'RegisterOperation: Constant name can contain only letters');
     this.op.constant[name] = value;
 
     return this;
@@ -117,8 +116,7 @@ export default class RegisterOperation {
   }
 
   Uniform(name: string, dtype: string, defaultValue: number | number[]) {
-    // TODO: error message missed
-    utils.assert(utils.isValidGLSLVariableName(name), '');
+    utils.assert(utils.isValidGLSLVariableName(name), 'RegisterOperation: Uniform name can contain only letters');
     this.op.uniform[name] = { name, dtype, defaultValue };
 
     return this;

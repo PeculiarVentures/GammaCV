@@ -19,34 +19,40 @@ export default class GLUniform {
     this.location = gl.getUniformLocation(program, this.name);
   }
 
-  // TODO: HACK!!! Need to update function! value must be `number | number[]`
-  public set(value: number) {
+  public set(value: number | number[]) {
     const gl = this.gl;
 
-    switch (this.dtype) {
-      case 'int':
-        gl.uniform1i(this.location, value);
-        break;
-      case 'float':
-        gl.uniform1f(this.location, value);
-        break;
-      case 'vec2':
-        gl.uniform2fv(this.location, (value as any));
-        break;
-      case 'vec3':
-        gl.uniform3fv(this.location, (value as any));
-        break;
-      case 'vec4':
-        gl.uniform4fv(this.location, (value as any));
-        break;
-      case 'mat3':
-        gl.uniformMatrix3fv(this.location, false, (value as any));
-        break;
-      case 'mat4':
-        gl.uniformMatrix4fv(this.location, false, (value as any));
-        break;
-      default:
-        return false;
+    if (Array.isArray(value)) {
+      switch (this.dtype) {
+        case 'vec2':
+          gl.uniform2fv(this.location, value);
+          break;
+        case 'vec3':
+          gl.uniform3fv(this.location, value);
+          break;
+        case 'vec4':
+          gl.uniform4fv(this.location, value);
+          break;
+        case 'mat3':
+          gl.uniformMatrix3fv(this.location, false, value);
+          break;
+        case 'mat4':
+          gl.uniformMatrix4fv(this.location, false, value);
+          break;
+        default:
+          return false;
+      }
+    } else {
+      switch (this.dtype) {
+        case 'int':
+          gl.uniform1i(this.location, value);
+          break;
+        case 'float':
+          gl.uniform1f(this.location, value);
+          break;
+        default:
+          return false;
+      }
     }
 
     return true;

@@ -6,7 +6,6 @@
  * All rights reserved.
  */
 
-// TODO: create an issue that need to remove deprecated API
  declare const navigator: Navigator & {
   getUserMedia: (constraints?: MediaStreamConstraints, successCallback?: (stream: MediaStream) => void) => void;
   webkitGetUserMedia?: (constraints?: MediaStreamConstraints, successCallback?: (stream: MediaStream) => void) => void;
@@ -94,19 +93,19 @@ type TCanvasElement = HTMLCanvasElement | OffscreenCanvas;
 type TCanvasRenderingContext = CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D;
 
 export default class CaptureVideo {
-  started: boolean;
-  video: HTMLVideoElement;
-  canvas: TCanvasElement;
-  canvasCtx: TCanvasRenderingContext;
-  sourceCanvas: TCanvasElement;
-  sourceCanvasCtx: TCanvasRenderingContext;
-  width: number;
-  height: number;
-  sourceWidth: number;
-  sourceHeight: number;
-  sourceMinWidth: number;
-  sourceMinHeight: number;
-  track: MediaStreamTrack | null;
+  public started: boolean;
+  private video: HTMLVideoElement;
+  private canvas: TCanvasElement;
+  private canvasCtx: TCanvasRenderingContext;
+  private sourceCanvas: TCanvasElement;
+  private sourceCanvasCtx: TCanvasRenderingContext;
+  private width: number;
+  private height: number;
+  private sourceWidth: number;
+  private sourceHeight: number;
+  private sourceMinWidth: number;
+  private sourceMinHeight: number;
+  private track: MediaStreamTrack | null;
   static IsAvailable() {
     const cfg = {
       video: {
