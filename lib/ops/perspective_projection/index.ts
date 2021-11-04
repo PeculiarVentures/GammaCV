@@ -8,9 +8,8 @@
 
 import RegisterOperation from '../../program/operation_register';
 import kernel from './kernel.glsl';
-import type Tensor from '../../program/tensor';
 
-export default (tSrc: Tensor, tTransform: Tensor, shape = [10, 10, 4], dtype = tSrc.dtype) => new RegisterOperation('PerspectiveProjection')
+export default (tSrc: InputType, tTransform: InputType, shape = [10, 10, 4], dtype = tSrc.dtype) => new RegisterOperation('PerspectiveProjection')
   .Input('tSrc', tSrc.dtype)
   .Input('tTransform', 'float32')
   .Output(dtype)

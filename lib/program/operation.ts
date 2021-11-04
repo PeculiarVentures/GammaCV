@@ -17,14 +17,21 @@ import * as utils from '../utils';
 
 import type Session from './session';
 import type Tensor from './tensor';
-import type MediaInput from './media_input';
+
+
+type PromMapper = {
+  'input': Record<string, InputType>,
+  'uniform': Record<string, GLUniform>,
+  'constant': Record<string, string | number | boolean>,
+  'attributes': Record<string, GLAttribute>,
+}
 
 export default class Operation extends GraphNode {
-  input: Record<string, Tensor | Operation | MediaInput>;
-  uniform: Record<string, any>;
-  constant: Record<string, string | number | boolean>;
-  chunks: any[];
-  inputKeys: any[];
+  input: PromMapper['input'];
+  uniform: PromMapper['uniform'];
+  constant: PromMapper['constant'];
+  chunks: AvailableGLSLChunks[];
+  inputKeys: string[];
   isInitialized: boolean;
   lastCtx: number;
   cache: boolean;
@@ -36,7 +43,7 @@ export default class Operation extends GraphNode {
   kernel: string;
   vertexShader: WebGLShader;
   fragmentShader: WebGLShader;
-  attributes: Record<string, GLAttribute>;
+  attributes: PromMapper['attributes'];
   centroids: Tensor;
   public sequence: string[];
 
@@ -94,7 +101,7 @@ export default class Operation extends GraphNode {
       }
 
       if (utils.isMediaInput(input)) {
-        texture.set(input.media as HTMLCanvasElement);
+        texture.set(input.media);
       }
     }
 
@@ -231,11 +238,12 @@ export default class Operation extends GraphNode {
 
     for (let i = 0; i < inputNames.length; i += 1) {
       const name = inputNames[i];
+      const input = this.input[name];
 
-      if (utils.isOperation(this.input[name])) {
-        (this.input[name] as Operation).traverse(handler, context);
+      if (utils.isOperation(input)) {
+        input.traverse(handler, context);
       } else {
-        handler(this.input[name], context);
+        handler(input, context);
       }
     }
 
@@ -248,9 +256,10 @@ export default class Operation extends GraphNode {
 
     for (let i = 0; i < inputNames.length; i += 1) {
       const name = inputNames[i];
+      const input = this.input[name];
 
-      if (utils.isOperation(this.input[name])) {
-        const innerDeps = (this.input[name] as Operation).getDependencies();
+      if (utils.isOperation(input)) {
+        const innerDeps = input.getDependencies();
 
         for (let j = 0; j < innerDeps.length; j += 1) {
           if (path.indexOf(innerDeps[j]) === -1) {
@@ -267,7 +276,7 @@ export default class Operation extends GraphNode {
     return path;
   }
 
-  assignInput(name: string, input: Tensor | Operation | MediaInput) {
+  assignInput(name: string, input: InputType) {
     this.input[name] = input;
 
     if (this.inputKeys.indexOf(name) === -1) {
@@ -275,9 +284,9 @@ export default class Operation extends GraphNode {
     }
   }
 
-  cloneProp(name: 'input' | 'uniform' | 'constant' | 'attributes') {
+  cloneProp<T extends keyof PromMapper>(name: T): PromMapper[T] {
     const names = Object.keys(this[name]);
-    const prop: Record<string, any> = {};
+    const prop: PromMapper[T] = {};
 
     for (let i = 0; i < names.length; i += 1) {
       const cursor = names[i];

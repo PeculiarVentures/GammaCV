@@ -11,6 +11,7 @@ export default class GLUniform {
   public name: string;
   public dtype: string;
   private location: WebGLUniformLocation;
+  public defaultValue: number | number[]
 
   constructor(gl: WebGLRenderingContext, program: WebGLProgram, name: string, dtype: string) {
     this.gl = gl;

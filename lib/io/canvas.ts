@@ -56,8 +56,8 @@ export function canvasToTensor(canvas: HTMLCanvasElement, target: Tensor) {
 export const canvasDrawLine = (
   canvas: HTMLCanvasElement,
   line: Line | number[],
-  color: string = 'rgba(255, 0, 0, 0.5)',
-  lineWeight: number = 1,
+  color = 'rgba(255, 0, 0, 0.5)',
+  lineWeight = 1,
 ) => {
   const context = canvas.getContext('2d');
 
@@ -78,8 +78,8 @@ export const canvasDrawLine = (
 export const canvasDrawCircle = (
   canvas: HTMLCanvasElement,
   center: number[],
-  radius: number = 5,
-  color: string = '#ff0000',
+  radius = 5,
+  color = '#ff0000',
 ) => {
   const context = canvas.getContext('2d');
 
@@ -92,8 +92,8 @@ export const canvasDrawCircle = (
 export const canvasFillCircle = (
   canvas: HTMLCanvasElement,
   center: number[],
-  radius: number = 5,
-  color: string = '#ff0000',
+  radius = 5,
+  color = '#ff0000',
 ) => {
   const context = canvas.getContext('2d');
 
@@ -112,10 +112,10 @@ export const clearCanvas = (canvas: HTMLCanvasElement) => {
 export const canvasDrawRect = (
   canvas: HTMLCanvasElement,
   rect: Rect,
-  color: string = '#ff0000',
-  width: number = 1,
-  cross: boolean = false,
-  fill: boolean = false,
+  color = '#ff0000',
+  width = 1,
+  cross = false,
+  fill = false,
 ) => {
   const context = canvas.getContext('2d');
 
@@ -144,7 +144,7 @@ export const canvasDrawRect = (
   context.closePath();
 };
 
-export function canvasFill(canvas: HTMLCanvasElement, color: string = '#ff0000') {
+export function canvasFill(canvas: HTMLCanvasElement, color = '#ff0000') {
   const ctx = canvas.getContext('2d');
 
   ctx.fillStyle = color;

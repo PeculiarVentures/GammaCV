@@ -65,13 +65,17 @@ export default class Rect {
    * @param {ArrayBuffer|Array|number} [a] - Source buffer to link, array to create from, or x value
    * @param {number} [b] - buffer's offset or y value
    */
-  constructor(...args: any[]) {
-    if (args[0] instanceof ArrayBuffer) {
-      this.data = new Float32Array(args[0], args[1], Rect.NUM_ELEMENTS);
-    } else if (Array.isArray(args[0])) {
-      this.data = new Float32Array(args[0]);
-    } else if (args[0] && args.length === Rect.NUM_ELEMENTS) {
-      this.data = new Float32Array(args);
+  constructor()
+  constructor(a: number[])
+  constructor(...a: number[])
+  constructor(a: ArrayBuffer, b?: number)
+  constructor(a?: ArrayBuffer | number[] | number, b?: number, ...other: number[]) {
+    if (a instanceof ArrayBuffer) {
+      this.data = new Float32Array(a, b, Rect.NUM_ELEMENTS);
+    } else if (Array.isArray(a)) {
+      this.data = new Float32Array(a);
+    } else if (a && arguments.length === Rect.NUM_ELEMENTS) {
+      this.data = new Float32Array([a, b, ...other]);
     } else {
       this.data = new Float32Array(Rect.NUM_ELEMENTS);
     }
@@ -81,7 +85,7 @@ export default class Rect {
    * Define if point with given coordinates is inside rectangle.
    * @param {number} x
    * @param {number} y
-   * @returns {boolean} Is insinde rect
+   * @returns {boolean} Is inside rect
    */
   public isInRect(x: number, y: number) {
     const s1 = Rect.TriangleS(x, y, this.ax, this.ay, this.bx, this.by);

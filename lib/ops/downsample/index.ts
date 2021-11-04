@@ -8,9 +8,6 @@
 
 
 import resizeOp from '../resize';
-import type Tensor from '../../program/tensor';
-import type Operation from '../../program/operation';
-import type MediaInput from '../../program/media_input';
 
 /**
  * @name Downsample
@@ -27,7 +24,7 @@ import type MediaInput from '../../program/media_input';
  *  pixels to be downsampled 'bicubic', 'nearest'.
  */
 
-export default (tSrc: Tensor | Operation | MediaInput, coefficient = 2, type = 'nearest') => {
+export default (tSrc: InputType, coefficient = 2, type = 'nearest') => {
   const newW = ~~(tSrc.shape[1] / coefficient);
   const newH = ~~(tSrc.shape[0] / coefficient);
 

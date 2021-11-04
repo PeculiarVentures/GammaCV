@@ -8,7 +8,6 @@
 
 import RegisterOperation from '../../program/operation_register';
 import kernel from './kernel.glsl';
-import type Tensor from '../../program/tensor';
 
 /**
  * @name StrokeWidthTransform
@@ -29,8 +28,8 @@ import type Tensor from '../../program/tensor';
  */
 
 export default (
-  tSobel: Tensor,
-  tCanny: Tensor,
+  tSobel: InputType,
+  tCanny: InputType,
   min = 3,
   max = 10,
   steps = 10,

@@ -11,11 +11,8 @@ import dirrectionKernel from './dirrection.glsl';
 import groupKernel from './group.glsl';
 import groupMaxKernel from './group_max.glsl';
 import * as utils from '../../utils';
-import type Tensor from '../../program/tensor';
-import type Operation from '../../program/operation';
-import type MediaInput from '../../program/media_input';
 
-const hogDirrection = (tSrc: Tensor | Operation | MediaInput) => new RegisterOperation('HOGDirection')
+const hogDirrection = (tSrc: InputType) => new RegisterOperation('HOGDirection')
   .Input('tSrc', 'uint8')
   .Output('float32')
   .Uniform('uWidth', 'float', tSrc.shape[1])
@@ -24,7 +21,7 @@ const hogDirrection = (tSrc: Tensor | Operation | MediaInput) => new RegisterOpe
   .GLSLKernel(dirrectionKernel)
   .Compile({ tSrc });
 
-const hogGroup = (tSrc: Tensor | Operation | MediaInput, k: number) => new RegisterOperation('HOG')
+const hogGroup = (tSrc: InputType, k: number) => new RegisterOperation('HOG')
   .Input('tSrc', 'uint8')
   .Output('float32')
   .Uniform('uSrcWidth', 'float', tSrc.shape[1])
@@ -40,7 +37,7 @@ const hogGroup = (tSrc: Tensor | Operation | MediaInput, k: number) => new Regis
   .GLSLKernel(groupKernel)
   .Compile({ tSrc });
 
-const hogGroupMax = (tSrc: Tensor | Operation | MediaInput, k: number) => new RegisterOperation('HOGMax')
+const hogGroupMax = (tSrc: InputType, k: number) => new RegisterOperation('HOGMax')
   .Input('tSrc', 'uint8')
   .Output('float32')
   .Uniform('uSrcWidth', 'float', tSrc.shape[1])
@@ -70,7 +67,7 @@ const hogGroupMax = (tSrc: Tensor | Operation | MediaInput, k: number) => new Re
  * @param {string} type - Type of HOG features extractor, currently availiable max and visualize.
  */
 
-export default (tSrc: Tensor | Operation | MediaInput, k = 10, type = 'max') => {
+export default (tSrc: InputType, k = 10, type = 'max') => {
   utils.assert(
     type === 'max' || type === 'visualize',
     `Unsupported type of HOG operation.

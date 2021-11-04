@@ -10,18 +10,15 @@ import RegisterOperation from '../../program/operation_register';
 import histogramOp from '../histogram';
 import histKernel from './hist.glsl';
 import histCumulateKernel from './hist_cumulative.glsl';
-import type Tensor from '../../program/tensor';
-import type Operation from '../../program/operation';
-import type MediaInput from '../../program/media_input';
 
-const cumulateHistEq = (tSrc: Tensor | Operation | MediaInput) => new RegisterOperation('histogramCumulation')
+const cumulateHistEq = (tSrc: InputType) => new RegisterOperation('histogramCumulation')
   .Input('tSrc', 'float32')
   .Output('float32')
   .LoadChunk('pickValue')
   .GLSLKernel(histCumulateKernel)
   .Compile({ tSrc });
 
-const histEq = (tSrc: Tensor | Operation | MediaInput, tHist: Tensor | Operation | MediaInput) => new RegisterOperation('histogramEqualization')
+const histEq = (tSrc: InputType, tHist: InputType) => new RegisterOperation('histogramEqualization')
   .Input('tSrc', 'uint8')
   .Input('tHist', 'float32')
   .Output('uint8')
@@ -39,5 +36,5 @@ const histEq = (tSrc: Tensor | Operation | MediaInput, tHist: Tensor | Operation
  *  Number of layers for a parallel reduction of histogram extraction
  */
 
-export default (tSrc: Tensor | Operation | MediaInput, parallelReductionLayers = 2) =>
+export default (tSrc: InputType, parallelReductionLayers = 2) =>
   histEq(tSrc, cumulateHistEq(histogramOp(tSrc, parallelReductionLayers)));

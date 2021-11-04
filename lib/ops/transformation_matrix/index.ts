@@ -8,9 +8,8 @@
 
 import RegisterOperation from '../../program/operation_register';
 import kernel from './kernel.glsl';
-import type Tensor from '../../program/tensor';
 
-export default (tPoints: Tensor, tDstPoints: Tensor) => new RegisterOperation('TransformationMatrix')
+export default (tPoints: InputType, tDstPoints: InputType) => new RegisterOperation('TransformationMatrix')
   .Input('tPoints', 'float32')
   .Input('tDstPoints', 'float32')
   .Output('float32')

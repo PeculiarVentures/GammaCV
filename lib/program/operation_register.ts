@@ -7,10 +7,9 @@
  */
 
 import Operation from './operation';
+import Tensor from './tensor'
 import * as utils from '../utils';
 
-import type Tensor from './tensor'
-import type MediaInput from './media_input'
 
 /**
  * @name RegisterOperation
@@ -20,7 +19,7 @@ export default class RegisterOperation {
   private preCompile: Function;
   private postCompile: Function;
 
-  private checkShape: (a: Record<string, any>) => number[];
+  private checkShape: (a: Record<string, number[]>) => number[];
 
   constructor(name: string) {
     this.op = new Operation(name);
@@ -45,7 +44,7 @@ export default class RegisterOperation {
     return this;
   }
 
-  public LoadChunk(...chunks: any[]) {
+  public LoadChunk(...chunks: AvailableGLSLChunks[]) {
     for (const chunk of chunks) {
       utils.assert(
         utils.isValidGLSLChunk(chunk),
@@ -60,14 +59,16 @@ export default class RegisterOperation {
 
   public Input(name: string, dtype: DType) {
     utils.assert(utils.isValidGLSLVariableName(name), 'RegisterOperation: Input name can contain only letters');
-    // TODO: HACK with any. Need help
-    const op: any = { name, dtype };
+    // TODO: remove soft hack by reorganizing op register, so Op itself has stale signature
+    const op = new Tensor(dtype, [0]);
+
+    op.name = name;
     this.op.input[name] = op;
 
     return this;
   }
 
-  public Output(dtype: any) {
+  public Output(dtype: DType) {
     utils.assert(
       this.op.dtype === null,
       'RegisterOperation: The operation allows a single output.',
@@ -85,7 +86,7 @@ export default class RegisterOperation {
     return this;
   }
 
-  public SetShapeFn(fn: (a: Record<string, any>) => number[]) {
+  public SetShapeFn(fn: (a: Record<string, number[]>) => number[]) {
     utils.assert(
       typeof fn === 'function',
       'RegisterOperation: SetShapeFn should receive function in first argument',
@@ -117,14 +118,15 @@ export default class RegisterOperation {
 
   Uniform(name: string, dtype: string, defaultValue: number | number[]) {
     utils.assert(utils.isValidGLSLVariableName(name), 'RegisterOperation: Uniform name can contain only letters');
-    this.op.uniform[name] = { name, dtype, defaultValue };
+    // TODO: ts-migration uniform has 2 states - before compile and after
+    this.op.uniform[name] = ({ name, dtype, defaultValue } as any);
 
     return this;
   }
 
-  Compile(input: { [key: string]: Tensor | Operation | MediaInput }) {
+  Compile(input: { [key: string]: InputType }) {
     const op = this.op.clone();
-    const inputShapes: Record<string, any> = {};
+    const inputShapes: Record<string, number[]> = {};
     const keys = Object.keys(input);
 
     this.preCompile(op);

@@ -9,9 +9,6 @@
 import RegisterOperation from '../../program/operation_register';
 import kernel from './kernel.glsl';
 import * as convolutionKernels from './kernels';
-import type Tensor from '../../program/tensor';
-import type Operation from '../../program/operation';
-import type MediaInput from '../../program/media_input';
 
 /**
  * @name Convolution
@@ -27,7 +24,7 @@ import type MediaInput from '../../program/media_input';
  * @param {number} [bias] - is added on after the factor has been accounted for
  */
 
-export default (tSrc: Tensor | Operation | MediaInput, tKernel: Tensor | Operation | MediaInput, factor = 1, bias = 0) => new RegisterOperation('Convolution2d')
+export default (tSrc: InputType, tKernel: InputType, factor = 1, bias = 0) => new RegisterOperation('Convolution2d')
   .Input('tSrc', tSrc.dtype)
   .Input('tKernel', 'float32')
   .Output(tSrc.dtype)

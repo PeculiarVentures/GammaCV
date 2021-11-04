@@ -8,7 +8,6 @@
 
 import type Rect from './rect';
 import type Tensor from '../program/tensor';
-import type Line from './line';
 
 
 export function sortPoints(points: number[][]) { // eslint-disable-line

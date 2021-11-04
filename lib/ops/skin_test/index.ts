@@ -8,7 +8,6 @@
 
 import RegisterOperation from '../../program/operation_register';
 import kernel from './kernel.glsl';
-import type Tensor from '../../program/tensor';
 
 /**
  * @name SkinTest
@@ -24,7 +23,7 @@ import type Tensor from '../../program/tensor';
  * TODO: Please describe a mask formula in description ([@worldthirteen](https://github.com/worldthirteen))
  */
 
-export default (tSrc: Tensor, ths: Record<string, number> = {}) => new RegisterOperation('SkinTest')
+export default (tSrc: InputType, ths: Record<string, number> = {}) => new RegisterOperation('SkinTest')
   .Input('tSrc', tSrc.dtype)
   .Output(tSrc.dtype)
   .Uniform('uRThreshold', 'float', ths.uRThreshold || 95.0)

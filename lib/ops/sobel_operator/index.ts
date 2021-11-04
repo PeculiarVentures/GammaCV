@@ -8,7 +8,6 @@
 
 import RegisterOperation from '../../program/operation_register';
 import kernel from './kernel.glsl';
-import type Tensor from '../../program/tensor';
 
 /**
  * @name SobelOperator
@@ -23,7 +22,7 @@ import type Tensor from '../../program/tensor';
  * @param {Tensor} tSrc - Input image.
  */
 
-export default (tSrc: Tensor) => new RegisterOperation('SobelOperator')
+export default (tSrc: InputType) => new RegisterOperation('SobelOperator')
   .Input('tSrc', tSrc.dtype)
   .Output('float32')
   .Uniform('uWidth', 'float', tSrc.shape[0])

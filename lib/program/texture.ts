@@ -64,13 +64,16 @@ export default class GPUTexture {
     );
   }
 
-  set(src: Tensor | HTMLCanvasElement | HTMLVideoElement = null) {
+  set(src: Tensor | HTMLCanvasElement | OffscreenCanvas | HTMLVideoElement = null) {
     const gl = this.gl;
 
     if (
       utils.isVideoElement(src) || utils.isCanvasElement(src)
     ) {
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, src);
+      // TODO: remove soft hack by checking WebGL OffscreenCanvas support
+    } else if (utils.isOffscreenCanvasElement(src)) {
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, src.transferToImageBitmap());
     } else {
       let width = src.shape[1];
       let type = gl.UNSIGNED_BYTE;

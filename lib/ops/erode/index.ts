@@ -10,8 +10,6 @@ import RegisterOperation from '../../program/operation_register';
 import Tensor from '../../program/tensor';
 import kernel from './kernel.glsl';
 import * as utils from '../../utils';
-import type Operation from '../../program/operation';
-import type MediaInput from '../../program/media_input';
 
 /**
  * @name Erosion
@@ -29,9 +27,9 @@ import type MediaInput from '../../program/media_input';
  */
 
 export default (
-  tSrc: Tensor | Operation | MediaInput,
+  tSrc: InputType,
   kernelSize = [2, 2],
-  tKernel?: Tensor | Operation | MediaInput,
+  tKernel?: InputType,
 ) => {
   utils.assert(
     kernelSize.length === 2,

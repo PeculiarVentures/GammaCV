@@ -12,11 +12,8 @@ import getHistogramKernel from './get_histogram.glsl';
 import reduceKernel from './reduce.glsl';
 import * as utils from '../../utils';
 import ENV from '../../program/environment';
-import type Tensor from '../../program/tensor';
-import type Operation from '../../program/operation';
-import type MediaInput from '../../program/media_input';
 
-export const ImageExtractHistogram = (tSrc: Tensor | Operation | MediaInput, k: number[], min: number, max: number, step: number, count: number) => new RegisterOperation('ImageExtractHistogram')
+export const ImageExtractHistogram = (tSrc: InputType, k: number[], min: number, max: number, step: number, count: number) => new RegisterOperation('ImageExtractHistogram')
   .Input('tSrc', tSrc.dtype)
   .Output('float32')
   .Constant('KX', k[1])
@@ -30,7 +27,7 @@ export const ImageExtractHistogram = (tSrc: Tensor | Operation | MediaInput, k: 
   .GLSLKernel(getHistogramKernel)
   .Compile({ tSrc });
 
-export const ImageReduceHistogram = (tSrc: Tensor | Operation | MediaInput, k: number[], count: number) => new RegisterOperation('ImageReduceHistogram')
+export const ImageReduceHistogram = (tSrc: InputType, k: number[], count: number) => new RegisterOperation('ImageReduceHistogram')
   .Input('tSrc', 'float32')
   .Output('float32')
   .Constant('KX', k[1])
@@ -54,7 +51,7 @@ export const ImageReduceHistogram = (tSrc: Tensor | Operation | MediaInput, k: n
  *  now we have danger limit (input width / first layer k) to be less then MAX_TEXUTRE_SIZE.
  */
 
-export default (tSrc: Tensor | Operation | MediaInput, layers = 1, min = 0, max = 1, step = 1 / 255) => {
+export default (tSrc: InputType, layers = 1, min = 0, max = 1, step = 1 / 255) => {
   // TODO: Probably we should refactor arguments priority and add assertion for them
   let steps = [[
     tSrc.shape[0],

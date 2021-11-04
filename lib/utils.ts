@@ -7,11 +7,8 @@
  */
 
 import * as gm from '.';
-import { Tensor } from '.';
-import type Operation from './program/operation';
-import type MediaInput from './program/media_input';
 
-const AVAILABLE_GLSL_CHUNKS = ['pickCurrentValue', 'pickValue', 'float'];
+const AVAILABLE_GLSL_CHUNKS: AvailableGLSLChunks[] = ['pickCurrentValue', 'pickValue', 'float'];
 
 export const assert = (expression: any, msg: string) => {
   if (!expression) {
@@ -19,7 +16,7 @@ export const assert = (expression: any, msg: string) => {
   }
 };
 
-export const assertShapesAreEqual = (a: Tensor | Operation | MediaInput, b: Tensor | Operation | MediaInput) => {
+export const assertShapesAreEqual = (a: InputType, b: InputType) => {
   if (a.shape.length !== b.shape.length) {
     return false;
   }
@@ -55,6 +52,17 @@ export const isValidShape = (shape: any) => Array.isArray(shape)
 export const isOperation = (op: any): op is gm.Operation => op instanceof gm.Operation;
 export const isMediaInput = (op: any): op is gm.MediaInput => op instanceof gm.MediaInput;
 export const isTensor = (tensor: any): tensor is gm.Tensor  => tensor instanceof gm.Tensor;
+export const isTensorDataView = (data: any): data is TensorDataView  => (
+  data instanceof Float32Array
+  || data instanceof Float64Array
+  || data instanceof Uint8Array
+  || data instanceof Uint16Array
+  || data instanceof Uint32Array
+  || data instanceof Int8Array
+  || data instanceof Int16Array
+  || data instanceof Int32Array
+  || data instanceof Uint8ClampedArray
+);
 export const isVideoElement = (input: any): input is HTMLVideoElement => {
   if (typeof HTMLVideoElement === 'function') {
     return input instanceof HTMLVideoElement;
@@ -70,7 +78,15 @@ export const isCanvasElement = (input: any): input is HTMLCanvasElement => {
   return 'getContext' in input;
 };
 
-export const isValidGLSLChunk = (name: string) => AVAILABLE_GLSL_CHUNKS.includes(name);
+export const isOffscreenCanvasElement = (input: any): input is OffscreenCanvas => {
+  if (typeof OffscreenCanvas === 'function') {
+    return input instanceof OffscreenCanvas;
+  }
+
+  return 'getContext' in input;
+};
+
+export const isValidGLSLChunk = (name: any): name is AvailableGLSLChunks => AVAILABLE_GLSL_CHUNKS.includes(name);
 export const isValidGLSLVariableName = (name: string) => /^[A-Za-z](\w+)?$/.test(name);
 export const isValidOperationShape = (shape: number[]) => shape[0] > 0 && shape[1] > 0;
 

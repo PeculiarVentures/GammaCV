@@ -10,11 +10,8 @@ import RegisterOperation from '../../program/operation_register';
 import nmsKernel from './nms.glsl';
 import hysteresisKernel from './hysteresis.glsl';
 import * as utils from '../../utils';
-import type Tensor from '../../program/tensor';
-import type Operation from '../../program/operation';
-import type MediaInput from '../../program/media_input';
 
-const CannyNMS = (tSrc: Tensor | Operation | MediaInput) => new RegisterOperation('ImageCannyEdgesNMS')
+const CannyNMS = (tSrc: InputType) => new RegisterOperation('ImageCannyEdgesNMS')
   .Input('tSrc', tSrc.dtype)
   .Output(tSrc.dtype)
   .LoadChunk('pickValue')
@@ -23,7 +20,7 @@ const CannyNMS = (tSrc: Tensor | Operation | MediaInput) => new RegisterOperatio
   .GLSLKernel(nmsKernel)
   .Compile({ tSrc });
 
-const CannyHysteresis = (tSrc: Tensor | Operation | MediaInput, low: number, high: number) => {
+const CannyHysteresis = (tSrc: InputType, low: number, high: number) => {
   utils.assert(
     low >= 0,
     'Canny low threshold should be greater equal 0',
@@ -58,4 +55,4 @@ const CannyHysteresis = (tSrc: Tensor | Operation | MediaInput, low: number, hig
  * @param {number} high - High threshold to be applied.
  */
 
-export default (input: Tensor | Operation | MediaInput, low = 0.25, high = 0.75) => CannyHysteresis(CannyNMS(input), low, high);
+export default (input: InputType, low = 0.25, high = 0.75) => CannyHysteresis(CannyNMS(input), low, high);

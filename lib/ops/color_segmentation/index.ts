@@ -11,7 +11,6 @@ import Tensor from '../../program/tensor';
 import kernel from './kernel.glsl';
 import * as utils from '../../utils';
 import type Operation from '../../program/operation';
-import type MediaInput from '../../program/media_input';
 
 /**
  * @name ColorSegmentation
@@ -25,7 +24,7 @@ import type MediaInput from '../../program/media_input';
  * @param {number} clusters - Number of clusters the input image to be clustered.
  */
 
-export default (tSrc: Tensor | Operation | MediaInput, clusters = 3) => {
+export default (tSrc: InputType, clusters = 3) => {
   utils.assert(
     tSrc.dtype === 'uint8',
     'Color Segmentation currently available for uint8 image input',

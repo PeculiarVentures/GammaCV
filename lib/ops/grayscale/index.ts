@@ -8,9 +8,6 @@
 
 import RegisterOperation from '../../program/operation_register';
 import kernel from './kernel.glsl';
-import type Tensor from '../../program/tensor';
-import type Operation from '../../program/operation';
-import type MediaInput from '../../program/media_input';
 
 /**
  * @name Grayscale
@@ -22,7 +19,7 @@ import type MediaInput from '../../program/media_input';
  * @param {Tensor} tSrc - The source image to be grayscaled.
  */
 
-export default (tSrc: Tensor | Operation | MediaInput) => new RegisterOperation('Grayscale')
+export default (tSrc: InputType) => new RegisterOperation('Grayscale')
   .Input('tSrc', 'uint8')
   .Output('uint8')
   .LoadChunk('pickValue')

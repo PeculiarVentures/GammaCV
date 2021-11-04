@@ -10,9 +10,6 @@ import RegisterOperation from '../../program/operation_register';
 import RGBToHSVKernel from './rgb_to_hsv.glsl';
 import HSVToRGBKernel from './hsv_to_rgb.glsl';
 import * as utils from '../../utils';
-import type Tensor from '../../program/tensor';
-import type Operation from '../../program/operation';
-import type MediaInput from '../../program/media_input';
 
 /**
  * @name HSVColorConverter
@@ -26,7 +23,7 @@ import type MediaInput from '../../program/media_input';
  * @param {Tensor} type - Operation supports two types of conversion: `rgb_to_hsv`, `hsv_to_rgb`.
  */
 
-export default (tSrc: Tensor | Operation | MediaInput, type: 'rgb_to_hsv' | 'hsv_to_rgb' = 'rgb_to_hsv') => {
+export default (tSrc: InputType, type: 'rgb_to_hsv' | 'hsv_to_rgb' = 'rgb_to_hsv') => {
   utils.assert(
     type === 'rgb_to_hsv' || type === 'hsv_to_rgb',
     `Unsupported type ${type}, currenlty avaliable: rgb_to_hsv, hsv_to_rgb.`,

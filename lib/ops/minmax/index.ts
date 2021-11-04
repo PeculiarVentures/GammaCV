@@ -11,11 +11,8 @@ import { parallelReductionCheckSteps2d, parallelReductionGetSteps2d } from '../.
 import getMinMax from './get_minmax.glsl';
 import reduceMinMax from './reduce_minmax.glsl';
 import * as utils from '../../utils';
-import type Tensor from '../../program/tensor';
-import type Operation from '../../program/operation';
-import type MediaInput from '../../program/media_input';
 
-export const ImageExtractMinMax = (tSrc: Tensor | Operation | MediaInput, k: number[]) => new RegisterOperation('ImageExtractMinMax')
+export const ImageExtractMinMax = (tSrc: InputType, k: number[]) => new RegisterOperation('ImageExtractMinMax')
   .Input('tSrc', tSrc.dtype)
   .Output(tSrc.dtype)
   .Constant('KX', k[1])
@@ -25,7 +22,7 @@ export const ImageExtractMinMax = (tSrc: Tensor | Operation | MediaInput, k: num
   .GLSLKernel(getMinMax)
   .Compile({ tSrc });
 
-export const ImageReduceMinMax = (tSrc: Tensor | Operation | MediaInput, k: number[]) => new RegisterOperation('ImageReduceMinMax')
+export const ImageReduceMinMax = (tSrc: InputType, k: number[]) => new RegisterOperation('ImageReduceMinMax')
   .Input('tSrc', tSrc.dtype)
   .Output(tSrc.dtype)
   .Constant('KX', k[1])
@@ -43,7 +40,7 @@ export const ImageReduceMinMax = (tSrc: Tensor | Operation | MediaInput, k: numb
  * @param {number} layers - Number of layers for a parallel reduction
  */
 
-export default (tSrc: Tensor | Operation | MediaInput, layers = 1) => {
+export default (tSrc: InputType, layers = 1) => {
   let steps = [[
     tSrc.shape[0],
     tSrc.shape[1],

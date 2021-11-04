@@ -10,9 +10,6 @@ import RegisterOperation from '../../program/operation_register';
 import * as utils from '../../utils';
 import { sat } from '../sat';
 import kernel from './kernel.glsl';
-import type Tensor from '../../program/tensor';
-import type Operation from '../../program/operation';
-import type MediaInput from '../../program/media_input';
 
 /**
  * @name AdaptiveThreshold
@@ -30,7 +27,7 @@ import type MediaInput from '../../program/media_input';
  */
 
 export default (
-  tSrc: Tensor | Operation | MediaInput,
+  tSrc: InputType,
   uS = 5,
   threshold = 50,
   channel = 0,

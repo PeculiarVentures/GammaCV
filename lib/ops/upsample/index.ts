@@ -8,8 +8,6 @@
 
 import resizeOp from '../resize';
 
-import type Tensor from '../../program/tensor';
-
 /**
  * @name Upsample
  * @description
@@ -24,7 +22,7 @@ import type Tensor from '../../program/tensor';
  *  'nearest', 'bicubic'.
  */
 
-export default (tSrc: Tensor, coefficient = 2, type = 'nearest') => {
+export default (tSrc: InputType, coefficient = 2, type = 'nearest') => {
   const newW = ~~(tSrc.shape[1] * coefficient);
   const newH = ~~(tSrc.shape[0] * coefficient);
 

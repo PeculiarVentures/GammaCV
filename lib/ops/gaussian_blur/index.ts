@@ -9,9 +9,6 @@
 import Convolutiion from '../conv2d';
 import { gaussianBlur } from '../conv2d/kernels';
 import * as utils from '../../utils';
-import type Tensor from '../../program/tensor';
-import type Operation from '../../program/operation';
-import type MediaInput from '../../program/media_input';
 
 /**
  * @name GaussianBlur
@@ -25,7 +22,7 @@ import type MediaInput from '../../program/media_input';
  * @param {number} sigma - Sigma coeficient value.
  */
 
-export default (tSrc: Tensor | Operation | MediaInput, kernelSize = 3, sigma = 3) => {
+export default (tSrc: InputType, kernelSize = 3, sigma = 3) => {
   utils.assert(
     kernelSize >= 3,
     'Kernel size should be greater equal 3',

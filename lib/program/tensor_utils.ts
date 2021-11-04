@@ -7,8 +7,6 @@
  */
 
 import Tensor from './tensor';
-import type Operation from './operation';
-import type MediaInput from './media_input';
 import * as utils from '../utils';
 
 export function range(n: number) {
@@ -21,7 +19,7 @@ export function range(n: number) {
   return result;
 }
 
-export function tensorFrom(input: Operation | Tensor | MediaInput, cast?: DType) {
+export function tensorFrom(input: InputType, cast?: DType) {
   let out = null;
 
   if (utils.isOperation(input)) {
@@ -206,12 +204,12 @@ export function tensorOnes(dtype: DType, shape: number[]) {
 }
 
 export function tensorFromFlat(
-  arr: TensorDataView,
+  arr: TensorDataView | number[],
   shape = [1, arr.length, 4],
   dtype: DType = 'float32',
   alpha?: number,
 ) {
-  const res = new Array(arr.length * 4);
+  const res: number[] = new Array(arr.length * 4);
 
   for (let i = 0; i < res.length; i += 1) {
     if ((i + 1) % 4 === 0 && typeof alpha === 'number') {

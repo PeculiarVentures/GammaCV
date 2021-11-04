@@ -161,11 +161,11 @@ class Session {
       }
 
       if (output && isLastOp && utils.isTensor(output)) {
-        this.readToTensor(output as Tensor);
+        this.readToTensor(output);
       }
 
       if (output && isLastOp && utils.isCanvasElement(output)) {
-        this.readToCanvas(output as HTMLCanvasElement, operation.shape);
+        this.readToCanvas(output, operation.shape);
       }
     }
   }

@@ -42,7 +42,8 @@ function getType(value: any) {
 }
 
 function constructHeading(op: Operation) {
-  const uniforms: Record<string, any> = Object.assign({}, op.uniform);
+  // TODO: ts-migration this uniform not the same as GLUnifrom from './uniform'??
+  const uniforms: Record<string, { dtype: string }> = Object.assign({}, op.uniform);
   const inputKeys = Object.keys(op.input);
   let head = 'precision highp float;\n';
 
@@ -104,7 +105,7 @@ function injectChunks(op: Operation) {
     const head = `${'-'.repeat(Math.floor(pad / 2))}${midString}${'-'.repeat(Math.ceil(pad / 2))}`;
 
     if (typeof chunks[name] === 'function') {
-      return `/*${head}*/\n${(chunks as Record<string, any>)[name](op)}\n/*${'-'.repeat(separateWidth)}*/`;
+      return `/*${head}*/\n${chunks[name](op)}\n/*${'-'.repeat(separateWidth)}*/`;
     }
 
     throw new TypeError(`KernelConstructor: Chunk "${name}" is not a function`);

@@ -9,7 +9,6 @@
 import RegisterOperation from '../../program/operation_register';
 import * as utils from '../../utils';
 import kernel from './kernel.glsl';
-import type Tensor from '../../program/tensor';
 
 /**
  * @name Threshold
@@ -23,7 +22,7 @@ import type Tensor from '../../program/tensor';
  * @param {number} channel - Channel to be applied
  */
 
-export default (tSrc: Tensor, threshold = 0.5, channel = 0) => {
+export default (tSrc: InputType, threshold = 0.5, channel = 0) => {
   utils.assert(
     typeof threshold === 'number',
     'Only number available as a threshold value.',

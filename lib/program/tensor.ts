@@ -10,33 +10,18 @@ import { range, tensorClone } from './tensor_utils';
 import GraphNode from './graph_node';
 import * as utils from '../utils';
 import ENV from './environment';
-// look into Dynamo DB provider in hancock
-interface DTypeMapper {
-  'uint8': Uint8Array;
-  'uint16': Uint16Array;
-  'uint32': Uint32Array;
-  'int8': Int8Array;
-  'int16': Int16Array;
-  'int32': Int32Array;
-  'float32': Float32Array;
-  'float64': Float64Array;
-  'uint8c': Uint8ClampedArray;
-};
 
 /**
  * N Dimensional data view, that helps create, store, manipulate data.
  */
-// class Tensor<T extends TensorDataView = TensorDataView> extends GraphNode {
-  class Tensor extends GraphNode {
-  public dtype: DType;
+class Tensor<T extends keyof DTypeMapper = keyof DTypeMapper> extends GraphNode {
+  public dtype: T;
   public shape: number[];
   public size: number;
   public stride: number[];
   public offset: number;
-  private empty: TensorDataView;
-  public data: TensorDataView;
-  // private empty: DTypeMapper[T];
-  // public data: DTypeMapper[T];
+  private empty: DTypeMapper[T];
+  public data: DTypeMapper[T];
   public uint8View: Uint8Array;
 
   /**
@@ -99,7 +84,7 @@ interface DTypeMapper {
    * @param {Array.<number>} [stride] - custom mapping from plain to NDArray
    * @param {number} [offset] - number of data elements to skip
    */
-  constructor(dtype: DType, shape: number[], data?: TensorDataView, stride?: number[], offset = 0) {
+  constructor(dtype: T, shape: number[], data?: DTypeMapper[T], stride?: number[], offset = 0) {
     super('Tensor');
     this.dtype = dtype;
     this.shape = shape || [data.length];
@@ -159,7 +144,7 @@ interface DTypeMapper {
    * @param {TypedArray|Array} data
    * @returns {Tensor} self
    */
-  public assign(data: DTypeMapper[keyof DTypeMapper]) {
+  public assign(data: DTypeMapper[T]) {
     const nextDtype = Tensor.DefineType(data);
     const nextLength = data.length;
 
@@ -249,7 +234,8 @@ interface DTypeMapper {
    * @param {number} size
    * @return {Tensor}
    */
-  static Malloc(dtype: keyof DTypeMapper, size: number): DTypeMapper[keyof DTypeMapper] {
+  static Malloc<V extends keyof DTypeMapper>(dtype: V, size: number): DTypeMapper[V]
+  static Malloc(dtype: DType, size: number): DTypeMapper[keyof DTypeMapper] {
     switch (dtype) {
       case 'uint8':
         return new Uint8Array(size);
@@ -270,7 +256,8 @@ interface DTypeMapper {
       case 'uint8c':
         return new Uint8ClampedArray(size);
       default:
-        throw new Error(`Tensor: Unexpected type: ${dtype}.`);
+        const invalidType: never = dtype;
+        throw new Error(`Tensor: Unexpected type: ${invalidType}.`);
     }
   }
 
@@ -282,7 +269,7 @@ interface DTypeMapper {
    * @example
    * gm.Tensor.DefineType(new Float32Array()); // float32
    */
-  static DefineType(buffer: TensorDataView) {
+  static DefineType(buffer: ArrayBufferLike | TensorDataView) {
     const str = Object.prototype.toString.call(buffer);
 
     switch (str) {
@@ -316,8 +303,9 @@ interface DTypeMapper {
    * @param {TypedArray|Array} data - initial data
    * @return {TypedArray|Array}
    */
-  static GetTypedArray(dtype: DType, data: TensorDataView): TensorDataView {
-    if (dtype === Tensor.DefineType(data)) {
+  static GetTypedArray<V extends keyof DTypeMapper>(dtype: V, data: TensorDataView | ArrayBufferLike | number[]): DTypeMapper[V]
+  static GetTypedArray(dtype: DType, data: TensorDataView | ArrayBufferLike | number[]): TensorDataView {
+    if (utils.isTensorDataView (data) && dtype === Tensor.DefineType(data)) {
       return data;
     }
 

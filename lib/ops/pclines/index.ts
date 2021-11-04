@@ -10,11 +10,8 @@ import RegisterOperation from '../../program/operation_register';
 import transformKernel from './transform.glsl';
 import enhanceKernel from './enhance.glsl';
 import peaksKernel from './peaks.glsl';
-import type Tensor from '../../program/tensor';
-import type Operation from '../../program/operation';
-import type MediaInput from '../../program/media_input';
 
-export const pcLinesReduceMax = (tSrc: Tensor | Operation | MediaInput, k = 10, f = 0) => {
+export const pcLinesReduceMax = (tSrc: InputType, k = 10, f = 0) => {
   const h = ~~(tSrc.shape[0] / k);
   const w = ~~(tSrc.shape[1] / k);
   const _k = Math.ceil(Math.max(tSrc.shape[0] / h, tSrc.shape[1] / w));
@@ -34,7 +31,7 @@ export const pcLinesReduceMax = (tSrc: Tensor | Operation | MediaInput, k = 10, 
     .Compile({ tSrc });
 };
 
-export const pcLinesEnhance = (tSrc: Tensor | Operation | MediaInput) => new RegisterOperation('PCLinesEnhanced')
+export const pcLinesEnhance = (tSrc: InputType) => new RegisterOperation('PCLinesEnhanced')
   .Input('tSrc', 'uint8')
   .Output('uint8')
   .Uniform('uWidth', 'float', tSrc.shape[0])
@@ -43,7 +40,7 @@ export const pcLinesEnhance = (tSrc: Tensor | Operation | MediaInput) => new Reg
   .GLSLKernel(enhanceKernel)
   .Compile({ tSrc });
 
-export const pcLinesTransform = (tSrc: Tensor, step = 3) => {
+export const pcLinesTransform = (tSrc: InputType, step = 3) => {
   const size = Math.max(tSrc.shape[0], tSrc.shape[1]);
 
   return new RegisterOperation('PCLinesTransform')
@@ -73,7 +70,7 @@ export const pcLinesTransform = (tSrc: Tensor, step = 3) => {
  * @param {number} dCoeficient - reduction coefficient
  */
 
-export default (input: Tensor, layersCount = 2, dStep = 2, dCoeficient = 2) => {
+export default (input: InputType, layersCount = 2, dStep = 2, dCoeficient = 2) => {
   let pipeline = pcLinesTransform(input, dStep);
 
   pipeline = pcLinesReduceMax(pipeline, dCoeficient);

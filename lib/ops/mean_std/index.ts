@@ -13,11 +13,8 @@ import getStd from './get_std.glsl';
 import reduceStd from './reduce_std.glsl';
 import joinKernel from './join.glsl';
 import * as utils from '../../utils';
-import type Tensor from '../../program/tensor';
-import type Operation from '../../program/operation';
-import type MediaInput from '../../program/media_input';
 
-export const ImageReduceStd = (tStd: Tensor | Operation | MediaInput, k: number[]) => new RegisterOperation('ImageReduceStd')
+export const ImageReduceStd = (tStd: InputType, k: number[]) => new RegisterOperation('ImageReduceStd')
   .Input('tStd', tStd.dtype)
   .Output(tStd.dtype)
   .Constant('WIDTH', tStd.shape[1])
@@ -31,7 +28,7 @@ export const ImageReduceStd = (tStd: Tensor | Operation | MediaInput, k: number[
   .GLSLKernel(reduceStd)
   .Compile({ tStd });
 
-export const ImageExtractStd = (tSrc: Tensor | Operation | MediaInput, tMean: Tensor | Operation | MediaInput, k: number[]) => new RegisterOperation('ImageExtractStd')
+export const ImageExtractStd = (tSrc: InputType, tMean: InputType, k: number[]) => new RegisterOperation('ImageExtractStd')
   .Input('tSrc', tSrc.dtype)
   .Input('tMean', tMean.dtype)
   .Output(tSrc.dtype)
@@ -46,7 +43,7 @@ export const ImageExtractStd = (tSrc: Tensor | Operation | MediaInput, tMean: Te
   .GLSLKernel(getStd)
   .Compile({ tSrc, tMean });
 
-export const ImageExtractMean = (tSrc: Tensor | Operation | MediaInput, k: number[]) => new RegisterOperation('ImageExtractMean')
+export const ImageExtractMean = (tSrc: InputType, k: number[]) => new RegisterOperation('ImageExtractMean')
   .Input('tSrc', tSrc.dtype)
   .Output(tSrc.dtype)
   .Constant('WIDTH', tSrc.shape[1])
@@ -60,7 +57,7 @@ export const ImageExtractMean = (tSrc: Tensor | Operation | MediaInput, k: numbe
   .GLSLKernel(getMean)
   .Compile({ tSrc });
 
-export const JoinOp = (tMean: Tensor | Operation | MediaInput, tStd: Tensor | Operation | MediaInput) => new RegisterOperation('ImageJoin')
+export const JoinOp = (tMean: InputType, tStd: InputType) => new RegisterOperation('ImageJoin')
   .Input('tMean', tMean.dtype)
   .Input('tStd', tStd.dtype)
   .Output(tMean.dtype)
@@ -78,7 +75,7 @@ export const JoinOp = (tMean: Tensor | Operation | MediaInput, tStd: Tensor | Op
  * @param {boolean} [ignoreStd] - if true, operatino will return only one pixel with mean values
  */
 
-export default (tSrc: Tensor | Operation | MediaInput, layers = 1, ignoreStd?: boolean) => {
+export default (tSrc: InputType, layers = 1, ignoreStd?: boolean) => {
   let steps = [[
     tSrc.shape[0],
     tSrc.shape[1],

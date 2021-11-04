@@ -9,8 +9,6 @@
 import erode from '../erode';
 import dilate from '../dilate';
 import { sub } from '../math';
-import type Tensor from '../../program/tensor';
-import type Operation from '../../program/operation';
 
 /**
  * @name MorphTransform
@@ -23,10 +21,10 @@ import type Operation from '../../program/operation';
  */
 
 export default (
-  tSrc: Tensor | Operation,
+  tSrc: InputType,
   type = 'open',
   kernelSize = [2, 2],
-  tKernel?: Tensor | Operation,
+  tKernel?: InputType,
 ) => {
   switch (type) {
     case 'open':

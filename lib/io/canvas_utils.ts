@@ -99,10 +99,10 @@ export function toImageData(
 
 export function getImageData(
   canvas: HTMLCanvasElement,
-  x: number = 0,
-  y: number = 0,
-  w: number = canvas.width,
-  h: number = canvas.height,
+  x = 0,
+  y = 0,
+  w = canvas.width,
+  h = canvas.height,
 ) {
   return canvas.getContext('2d').getImageData(x, y, w, h);
 }
@@ -110,12 +110,12 @@ export function getImageData(
 export function putImageData(
   canvas: HTMLCanvasElement,
   imageData: ImageData,
-  x: number = 0,
-  y: number = 0,
-  dx: number = 0,
-  dy: number = 0,
-  dw: number = imageData.width,
-  dh: number = imageData.height,
+  x = 0,
+  y = 0,
+  dx = 0,
+  dy = 0,
+  dw = imageData.width,
+  dh = imageData.height,
   clear: boolean = false,
 ) {
   if (imageData.width !== canvas.width || imageData.height !== canvas.height || clear) {

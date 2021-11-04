@@ -8,13 +8,9 @@
 
 import Tensor from '../program/tensor';
 import { getCanvas, getImage } from '../utils';
-export default function imageTensorFromURL(
-  url: string,
-  type: 'uint8' | 'float32' = 'uint8',
-  outShape?: number[],
-  cors: boolean = false
-): any {
-// ): Promise<Tensor<MapDTypeToDataView[typeof type]>> {
+
+export default function imageTensorFromURL<F extends keyof DTypeMapper>(url: string, type: F, outShape: number[], cors: boolean): Promise<Tensor<F>>
+export default function imageTensorFromURL(url: string, type: 'uint8' | 'float32' | 'uint8c' = 'uint8', outShape?: number[], cors: boolean = false): Promise<Tensor<DType>> {
   return new Promise((resolve, reject) => {
     const image = getImage();
     const canvas = getCanvas();

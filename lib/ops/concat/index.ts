@@ -9,9 +9,6 @@
 import RegisterOperation from '../../program/operation_register';
 import kernel from './kernel.glsl';
 import * as utils from '../../utils';
-import type Tensor from '../../program/tensor';
-import type Operation from '../../program/operation';
-import type MediaInput from '../../program/media_input';
 
 /**
  * @name Concat
@@ -28,7 +25,7 @@ import type MediaInput from '../../program/media_input';
  *  ⚠️ STILL UNDER DEVELOPMENT (EXPERIMENTAL, API COULD BE CHANGED OR DEPRECATED)
  */
 
-export default (tA: Tensor | Operation | MediaInput, tB: Tensor | Operation | MediaInput, mask = ['1.r', '1.g', '2.b', '2.a']) => {
+export default (tA: InputType, tB: InputType, mask = ['1.r', '1.g', '2.b', '2.a']) => {
   utils.assert(
     tA.dtype === tB.dtype,
     `Concat operation: inputs should have the same dtype, got ${tA.dtype} and ${tB.dtype}`,

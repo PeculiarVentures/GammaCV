@@ -16,18 +16,15 @@ import kernelSubScalar from './sub_scalar.glsl';
 import kernelAddScalar from './add_scalar.glsl';
 import kernelMultScalar from './mult_scalar.glsl';
 import kernelDivScalar from './div_scalar.glsl';
-import type Tensor from '../../program/tensor';
-import type Operation from '../../program/operation';
-import type MediaInput from '../../program/media_input';
 
 const pixelwiseMathOpValidation = (name: String, tA: any, tB: any) => {
   utils.assert(
-    utils.isTensor(tA) || utils.isOperation(tA),
+    utils.isTensor(tA) || utils.isOperation(tA) || utils.isMediaInput(tA),
     `${name}: A input is not a Tensor or Operation instance`,
   );
 
   utils.assert(
-    utils.isTensor(tB) || utils.isOperation(tB),
+    utils.isTensor(tB) || utils.isOperation(tB) || utils.isMediaInput(tB),
     `${name}: B input is not a Tensor or Operation instance`,
   );
 
@@ -49,7 +46,7 @@ const scalarMathOpValidation = (name: String, tA: any, scalar: any) => {
   );
 
   utils.assert(
-    utils.isTensor(tA) || utils.isOperation(tA),
+    utils.isTensor(tA) || utils.isOperation(tA) || utils.isMediaInput(tA),
     `${name}: A input is not a Tensor or Operation instance`,
   );
 };
@@ -70,7 +67,7 @@ const scalarMathOpValidation = (name: String, tA: any, scalar: any) => {
  * @param {Tensor} tB - The second input
  */
 
-export const sub = (tA: Tensor | Operation | MediaInput, tB: Tensor | Operation) => {
+export const sub = (tA: InputType, tB: InputType) => {
   const name = 'Sub';
 
   pixelwiseMathOpValidation(name, tA, tB);
@@ -94,7 +91,7 @@ export const sub = (tA: Tensor | Operation | MediaInput, tB: Tensor | Operation)
  * @param {Tensor} tB - The second input
  */
 
-export const add = (tA: Tensor | Operation, tB: Tensor | Operation) => {
+export const add = (tA: InputType, tB: InputType) => {
   const name = 'Add';
 
   pixelwiseMathOpValidation(name, tA, tB);
@@ -118,7 +115,7 @@ export const add = (tA: Tensor | Operation, tB: Tensor | Operation) => {
  * @param {Tensor} tB - The second input
  */
 
-export const div = (tA: Tensor | Operation, tB: Tensor | Operation) => {
+export const div = (tA: InputType, tB: InputType) => {
   const name = 'Div';
 
   pixelwiseMathOpValidation(name, tA, tB);
@@ -142,7 +139,7 @@ export const div = (tA: Tensor | Operation, tB: Tensor | Operation) => {
  * @param {Tensor} tB - The second input
  */
 
-export const mult = (tA: Tensor | Operation, tB: Tensor | Operation) => {
+export const mult = (tA: InputType, tB: InputType) => {
   const name = 'Mult';
 
   pixelwiseMathOpValidation(name, tA, tB);
@@ -166,7 +163,7 @@ export const mult = (tA: Tensor | Operation, tB: Tensor | Operation) => {
  * @param {number} scalar - Scalar
  */
 
-export const subScalar = (tA: Tensor | Operation, scalar: number) => {
+export const subScalar = (tA: InputType, scalar: number) => {
   const name = 'SubScalar';
 
   scalarMathOpValidation(name, tA, scalar);
@@ -190,7 +187,7 @@ export const subScalar = (tA: Tensor | Operation, scalar: number) => {
  * @param {number} scalar - Scalar
  */
 
-export const addScalar = (tA: Tensor | Operation, scalar: number) => {
+export const addScalar = (tA: InputType, scalar: number) => {
   const name = 'AddScalar';
 
   scalarMathOpValidation(name, tA, scalar);
@@ -214,7 +211,7 @@ export const addScalar = (tA: Tensor | Operation, scalar: number) => {
  * @param {number} scalar - Scalar
  */
 
-export const divScalar = (tA: Tensor | Operation, scalar: number) => {
+export const divScalar = (tA: InputType, scalar: number) => {
   const name = 'DivScalar';
 
   scalarMathOpValidation(name, tA, scalar);
@@ -238,7 +235,7 @@ export const divScalar = (tA: Tensor | Operation, scalar: number) => {
  * @param {number} scalar - Scalar
  */
 
-export const multScalar = (tA: Tensor | Operation, scalar: number) => {
+export const multScalar = (tA: InputType, scalar: number) => {
   const name = 'MultScalar';
 
   scalarMathOpValidation(name, tA, scalar);

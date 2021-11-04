@@ -9,9 +9,6 @@
 import RegisterOperation from '../../program/operation_register';
 import kernel from './kernel.glsl';
 import * as utils from '../../utils';
-import type Tensor from '../../program/tensor';
-import type Operation from '../../program/operation';
-import type MediaInput from '../../program/media_input';
 
 /**
  * @name MotionDetect
@@ -24,7 +21,7 @@ import type MediaInput from '../../program/media_input';
  * @param {Tensor} tPrev - Previous frame.
  */
 
-export default (tCurr: Tensor | Operation | MediaInput, tPrev: Tensor | Operation | MediaInput) => {
+export default (tCurr: InputType, tPrev: InputType) => {
   utils.assert(
     utils.assertShapesAreEqual(tCurr, tPrev),
     'MotionDetect: Current and previous input should have the same shape.',

@@ -12,11 +12,8 @@ import minMaxOp from '../minmax';
 import l2Kernel from './l2.glsl';
 import minMaxKernel from './minmax.glsl';
 import * as utils from '../../utils';
-import type Tensor from '../../program/tensor';
-import type Operation from '../../program/operation';
-import type MediaInput from '../../program/media_input';
 
-const l2Norm = (tSrc: Tensor | Operation | MediaInput, tStdMean: Tensor | Operation | MediaInput) => new RegisterOperation('l2Norm')
+const l2Norm = (tSrc: InputType, tStdMean: InputType) => new RegisterOperation('l2Norm')
   .Input('tSrc', 'uint8')
   .Input('tStdMean', 'uint8')
   .Output('uint8')
@@ -24,7 +21,7 @@ const l2Norm = (tSrc: Tensor | Operation | MediaInput, tStdMean: Tensor | Operat
   .GLSLKernel(l2Kernel)
   .Compile({ tSrc, tStdMean });
 
-const minMaxNorm = (tSrc: Tensor | Operation | MediaInput, tMinMax: Tensor | Operation | MediaInput) => new RegisterOperation('minMaxNorm')
+const minMaxNorm = (tSrc: InputType, tMinMax: InputType) => new RegisterOperation('minMaxNorm')
   .Input('tSrc', 'uint8')
   .Input('tMinMax', 'uint8')
   .Output('uint8')
@@ -40,7 +37,7 @@ const minMaxNorm = (tSrc: Tensor | Operation | MediaInput, tMinMax: Tensor | Ope
  * @param {number} parallelReductionLayers -
  *  Number of layers for a parallel reduction
  */
-export default (tSrc: Tensor, type: 'l2' | 'minmax', parallelReductionLayers = 2) => {
+export default (tSrc: InputType, type: 'l2' | 'minmax', parallelReductionLayers = 2) => {
   utils.assert(
     type === 'l2' || type === 'minmax',
     `Unsupported type of normalization operation.

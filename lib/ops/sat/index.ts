@@ -10,11 +10,8 @@ import RegisterOperation from '../../program/operation_register';
 import kernelX from './kernel_x.glsl';
 import kernelSQXS from './kernel_x_sq.glsl';
 import kernelY from './kernel_y.glsl';
-import type Tensor from '../../program/tensor';
-import type Operation from '../../program/operation';
-import type MediaInput from '../../program/media_input';
 
-const sumOp = (tSrc: Tensor | Operation | MediaInput, c = 'x', passIndex = 0, samplesPerPass = 1) =>
+const sumOp = (tSrc: InputType, c = 'x', passIndex = 0, samplesPerPass = 1) =>
   new RegisterOperation('SummedAreaTable')
     .Input('tSrc', tSrc.dtype)
     .Output('float32')
@@ -25,7 +22,7 @@ const sumOp = (tSrc: Tensor | Operation | MediaInput, c = 'x', passIndex = 0, sa
     .GLSLKernel(c === 'x' ? kernelX : kernelY)
     .Compile({ tSrc });
 
-const sqsumOp = (tSrc: Tensor | Operation | MediaInput, passIndex = 0, samplesPerPass = 1) =>
+const sqsumOp = (tSrc: InputType, passIndex = 0, samplesPerPass = 1) =>
   new RegisterOperation('SquaredSummedAreaTable')
     .Input('tSrc', tSrc.dtype)
     .Output('float32')
@@ -37,7 +34,7 @@ const sqsumOp = (tSrc: Tensor | Operation | MediaInput, passIndex = 0, samplesPe
     .Compile({ tSrc });
 
 
-const summedAreaTableBase = (tSrc: Tensor | Operation | MediaInput, passesPerAxis = 2, squared = false)=> {
+const summedAreaTableBase = (tSrc: InputType, passesPerAxis = 2, squared = false)=> {
   const samplesPerPassX = Math.ceil(tSrc.shape[1] ** (1 / passesPerAxis));
   const samplesPerPassY = Math.ceil(tSrc.shape[0] ** (1 / passesPerAxis));
 
@@ -73,7 +70,7 @@ const summedAreaTableBase = (tSrc: Tensor | Operation | MediaInput, passesPerAxi
  * @param {Tensor} tSrc - The source image to be grayscaled.
  * @param {number} [passesPerAxis] - Performance configurator of passes/samplesPerPass
  */
-export const sat = (tSrc: Tensor | Operation | MediaInput, passesPerAxis = 2) =>
+export const sat = (tSrc: InputType, passesPerAxis = 2) =>
   summedAreaTableBase(tSrc, passesPerAxis, false);
 
 /**
@@ -89,5 +86,5 @@ export const sat = (tSrc: Tensor | Operation | MediaInput, passesPerAxis = 2) =>
  * @param {Tensor} tSrc - The source image to be grayscaled.
  * @param {number} [passesPerAxis] - Performance configurator of passes/samplesPerPass
  */
-export const sqsat = (tSrc: Tensor, passesPerAxis = 2) =>
+export const sqsat = (tSrc: InputType, passesPerAxis = 2) =>
   summedAreaTableBase(tSrc, passesPerAxis, true);

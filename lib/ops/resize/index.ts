@@ -9,9 +9,6 @@
 import RegisterOperation from '../../program/operation_register';
 import kernel from './kernel.glsl';
 import * as utils from '../../utils';
-import type Tensor from '../../program/tensor';
-import type Operation from '../../program/operation';
-import type MediaInput from '../../program/media_input';
 
 /**
  * @name Resize
@@ -30,7 +27,7 @@ import type MediaInput from '../../program/media_input';
  *  pixels to be resized 'nearest', 'bicubic'.
  */
 
-export default (tSrc: Tensor | Operation | MediaInput, w: number, h: number, type = 'nearest') => {
+export default (tSrc: InputType, w: number, h: number, type = 'nearest') => {
   utils.assert(
     type === 'nearest' || type === 'bicubic' || type === 'mean' || type === 'max',
     'ResizeOperation: Unsupported type of operation. Currently supported only "nearest" and "bicubic"',
