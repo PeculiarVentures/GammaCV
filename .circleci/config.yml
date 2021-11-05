@@ -1,19 +1,22 @@
 version: 2.1
 
+orbs:
+  browser-tools: circleci/browser-tools@1.2.1
+
 aliases:
   - &docker-node-browsers
-    - image: circleci/node:14.9.0-browsers
+    - image: cimg/node:16.8-browsers
 
   - &restore-node-modules-cache
     name: Restore node_modules cache
-    key: npm-deps-{{ checksum "package.json" }}-{{ checksum "app/package.json" }}
+    key: npm-deps-{{ checksum "package-lock.json" }}-{{ checksum "app/package-lock.json" }}
 
   - &save-node-modules-cache
     name: Save node_modules cache
     paths:
       - node_modules
       - app/node_modules
-    key: npm-deps-{{ checksum "package.json" }}-{{ checksum "app/package.json" }}
+    key: npm-deps-{{ checksum "package-lock.json" }}-{{ checksum "app/package-lock.json" }}
 
 jobs:
   checkout-code:
@@ -21,8 +24,8 @@ jobs:
     steps:
       - checkout
       - restore_cache: *restore-node-modules-cache
-      - run: npm install
-      - run: npm install --prefix app/
+      - run: npm ci
+      - run: npm ci --prefix app/
       - save_cache: *save-node-modules-cache
       - persist_to_workspace:
           root: "."
@@ -34,16 +37,20 @@ jobs:
     docker: *docker-node-browsers
     steps:
       - checkout
-      - restore_cache: *restore-node-modules-cache
       - attach_workspace: { at: "." }
       - run: npm run lint
       - run: npm run lint --prefix app/
 
   test:
     docker: *docker-node-browsers
+    environment:
+      CHROME_BIN: /usr/bin/google-chrome
     steps:
+      - browser-tools/install-browser-tools:
+          install-chrome: true
+          install-firefox: false
+          install-geckodriver: false
       - checkout
-      - restore_cache: *restore-node-modules-cache
       - attach_workspace: { at: "." }
       - run: npm run test
   
@@ -51,7 +58,6 @@ jobs:
     docker: *docker-node-browsers
     steps:
       - checkout
-      - restore_cache: *restore-node-modules-cache
       - attach_workspace: { at: "." }
       - run: npm run build
       - run: npm run build --prefix app/
@@ -64,7 +70,6 @@ jobs:
     docker: *docker-node-browsers
     steps:
       - checkout
-      - restore_cache: *restore-node-modules-cache
       - attach_workspace: { at: "." }
       - run: |
           git config user.email "$GH_EMAIL"
