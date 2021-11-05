@@ -1,6 +1,6 @@
 import * as gm from '../lib';
 
-export function visualize(tensor, scale = 1) {
+export function visualize(tensor: gm.Tensor, scale = 1) {
   const debugCanvas = document.createElement('canvas');
 
   debugCanvas.height = tensor.shape[0];
@@ -15,7 +15,7 @@ export function visualize(tensor, scale = 1) {
   return debugCanvas;
 }
 
-export function logTensorAsTable(tensor, channel = 0) {
+export function logTensorAsTable(tensor: gm.Tensor, channel = 0) {
   const table = [];
 
   for (let y = 0; y < tensor.shape[0]; y += 1) {
@@ -38,7 +38,7 @@ export function logTensorAsTable(tensor, channel = 0) {
   /* eslint-enable no-console */
 }
 
-export function imageDiff(input, output) {
+export function imageDiff(input: gm.Tensor, output: gm.Tensor) {
   const result = new gm.Tensor('uint8', input.shape);
 
   for (let y = 0; y < input.shape[0]; y += 1) {

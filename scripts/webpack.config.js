@@ -5,7 +5,7 @@ export default {
   devtool: 'cheap-module-inline-source-map',
   resolve: {
     modules: [path.join(__dirname, '../node_modules')],
-    extensions: ['.js', '.jsx'],
+    extensions: ['.ts', '.tsx'],
     alias: {
       uuid: path.join(__dirname, '../app/src/utils/uuid'),
     },
@@ -17,35 +17,9 @@ export default {
         use: ['url-loader'],
       },
       {
-        test: /\.(js|jsx|jss)$/,
-        exclude: /node_modules/,
-        use: [{
-          loader: 'babel-loader',
-          options: {
-            babelrc: false,
-            presets: [
-              ['@babel/preset-env', { modules: false }],
-            ],
-            plugins: ['@babel/plugin-transform-runtime'],
-          },
-        }],
-      },
-      {
         test: /\.(glsl|frag|vert)$/,
         loader: 'raw-loader',
         exclude: /node_modules/,
-      },
-      {
-        test: /\.ts$/,
-        use: {
-          loader: 'awesome-typescript-loader',
-          options: {
-            silent: true,
-            useCache: true,
-            forceIsolatedModules: true,
-            configFileName: path.resolve(__dirname, '../tsconfig.json'),
-          },
-        },
       },
     ],
   },

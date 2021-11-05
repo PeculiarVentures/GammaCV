@@ -1,3 +1,2 @@
---timeout 15000
+--timeout 150000
 --recursive test
---require @babel/register

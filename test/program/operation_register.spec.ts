@@ -78,8 +78,8 @@ describe('Operation register', () => {
       .Compile({});
 
     assert.deepEqual(op.uniform, {
-      uName: { name: 'uName', dtype: 'float32', defaultValue: 0 },
-      uVec: { name: 'uVec', dtype: 'vec2', defaultValue: 'vec2(0.0, 1.0)' },
+      uName: ({ name: 'uName', dtype: 'float32', defaultValue: 0 } as any),
+      uVec: ({ name: 'uVec', dtype: 'vec2', defaultValue: 'vec2(0.0, 1.0)' } as any),
     }, 'Should set operation uniform');
   });
 
@@ -103,7 +103,7 @@ describe('Operation register', () => {
     let callCount = 0;
     let calledWith;
 
-    const callback = (arg) => {
+    const callback = (arg: gm.Operation) => {
       callCount += 1;
       calledWith = arg;
     };
@@ -138,22 +138,22 @@ describe('Operation register', () => {
     });
 
     it('SetShapeFn callback argument', () => {
-      assert.throw(() => new gm.RegisterOperation('Operation name').SetShapeFn(13), Error);
+      assert.throw(() => new gm.RegisterOperation('Operation name').SetShapeFn(13 as any), Error);
       assert.doesNotThrow(() => new gm.RegisterOperation('Operation name').SetShapeFn(() => [1]), Error);
     });
 
     it('SetShapeFn callback argument', () => {
-      assert.throw(() => new gm.RegisterOperation('Operation name').SetShapeFn(13), Error);
+      assert.throw(() => new gm.RegisterOperation('Operation name').SetShapeFn(13 as any), Error);
       assert.doesNotThrow(() => new gm.RegisterOperation('Operation name').SetShapeFn(() => [1]), Error);
     });
 
     it('PreCompile callback argument', () => {
-      assert.throw(() => new gm.RegisterOperation('Operation name').PreCompile(13), Error);
+      assert.throw(() => new gm.RegisterOperation('Operation name').PreCompile(13 as any), Error);
       assert.doesNotThrow(() => new gm.RegisterOperation('Operation name').PreCompile(() => [1]), Error);
     });
 
     it('PostCompile callback argument', () => {
-      assert.throw(() => new gm.RegisterOperation('Operation name').PostCompile(13), Error);
+      assert.throw(() => new gm.RegisterOperation('Operation name').PostCompile(13 as any), Error);
       assert.doesNotThrow(() => new gm.RegisterOperation('Operation name').PostCompile(() => [1]), Error);
     });
   });
@@ -161,7 +161,7 @@ describe('Operation register', () => {
   describe('LoadChunk', () => {
     it('invalid', () => {
       assert.throws(() => new gm.RegisterOperation('Operation name')
-        .LoadChunk('Something that not supported')
+        .LoadChunk('Something that not supported' as any)
         .Compile({}), Error);
     });
 

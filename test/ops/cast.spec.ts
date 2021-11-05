@@ -1,13 +1,13 @@
 import { assert } from 'chai';
 import { visualize } from '../test_utils';
-import testImage from '../assets/lena.png';
+import { assets } from '../assets';
 import * as gm from '../../lib';
 
 /* eslint-disable no-loop-func */
 
-describe('Cast', () => {
-  let sess;
-  const setup = (input, dType) => {
+describe('Cast', async () => {
+  let sess: gm.Session;
+  const setup = (input: InputType, dType?: DType) => {
     const op = gm.cast(input, dType);
     const output = gm.tensorFrom(op);
 
@@ -90,7 +90,7 @@ describe('Cast', () => {
   }
 
   it('Normal image', async () => {
-    const input = await gm.imageTensorFromURL(testImage);
+    const input = await gm.imageTensorFromURL(assets.lena);
     const test = setup(input);
 
     sess.runOp(test.op, 0, test.output);

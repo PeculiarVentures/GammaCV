@@ -1,12 +1,11 @@
 import { assert } from 'chai';
 import { visualize } from '../test_utils';
-import testImage from '../assets/lena.png';
-import testImageGrayscaled from '../assets/lena_grayscaled.png';
+import { assets } from '../assets';
 import * as gm from '../../lib';
 
 describe('Grayscale', () => {
-  let sess;
-  const setup = (input) => {
+  let sess: gm.Session;
+  const setup = (input: InputType) => {
     const op = gm.grayscale(input);
     const output = gm.tensorFrom(op);
 
@@ -63,8 +62,8 @@ describe('Grayscale', () => {
   });
 
   it('Normal image', async () => {
-    const input = await gm.imageTensorFromURL(testImage);
-    const output = await gm.imageTensorFromURL(testImageGrayscaled);
+    const input = await gm.imageTensorFromURL(assets.lena);
+    const output = await gm.imageTensorFromURL(assets.lena_grayscaled);
     const test = setup(input);
 
     // console.log(JSON.stringify(Array.from(input.data)))

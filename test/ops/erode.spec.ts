@@ -1,12 +1,10 @@
 import { assert } from 'chai';
 import { visualize } from '../test_utils';
 import * as gm from '../../lib';
-import testImageSrc from '../assets/morphology_src.png';
-import testImageEroded from '../assets/morphology_eroded.png';
-import testImageErodedCustomKernel from '../assets/morphology_eroded_custom_kernel.png';
+import { assets } from '../assets';
 
 describe('Erosion', () => {
-  let sess = null;
+  let sess: gm.Session = null;
 
   beforeEach(async () => {
     if (sess) {
@@ -18,8 +16,8 @@ describe('Erosion', () => {
   });
 
   it('erode', async () => {
-    const src = await gm.imageTensorFromURL(testImageSrc);
-    const eroded = await gm.imageTensorFromURL(testImageEroded);
+    const src = await gm.imageTensorFromURL(assets.morphology_src);
+    const eroded = await gm.imageTensorFromURL(assets.morphology_eroded);
     const op = gm.erode(src, [5, 5]);
     const out = gm.tensorFrom(op);
 
@@ -38,8 +36,8 @@ describe('Erosion', () => {
   });
 
   it('erode custom kernel', async () => {
-    const src = await gm.imageTensorFromURL(testImageSrc);
-    const eroded = await gm.imageTensorFromURL(testImageErodedCustomKernel);
+    const src = await gm.imageTensorFromURL(assets.morphology_src);
+    const eroded = await gm.imageTensorFromURL(assets.morphology_eroded_custom_kernel);
 
     const kernel = gm.tensorFromFlat([
       1, 1, 1, 1, 1,

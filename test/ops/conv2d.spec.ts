@@ -1,9 +1,9 @@
-import testImage from '../assets/lena.png';
+import { assets } from '../assets';
 import * as gm from '../../lib';
 
 describe('Convolution', () => {
-  let sess;
-  const setup = (input, kernel, factor, bias) => {
+  let sess: gm.Session;
+  const setup = (input: InputType, kernel: InputType, factor?: number, bias?: number) => {
     const op = gm.conv2d(input, kernel, factor, bias);
     const output = gm.tensorFrom(op);
 
@@ -24,7 +24,7 @@ describe('Convolution', () => {
   });
 
   it('Identity kernel', async () => {
-    const input = await gm.imageTensorFromURL(testImage);
+    const input = await gm.imageTensorFromURL(assets.lena);
     const identityKernel = gm.tensorFromFlat([
       0, 0, 0,
       0, 1, 0,

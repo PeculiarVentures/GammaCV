@@ -1,11 +1,9 @@
 import { assert } from 'chai';
-import testImage100 from './assets/haar_test_100.png';
-import testImage200 from './assets/haar_test_200.png';
-import testImage300 from './assets/haar_test_300.png';
+import { assets } from './assets';
 import * as gm from '../lib';
 
 describe('HAAR Features', () => {
-  let sess;
+  let sess: gm.Session;
   const feature1 = [
     [0, 0, 10, 20, +1],
     [10, 0, 10, 20, -1],
@@ -42,9 +40,13 @@ describe('HAAR Features', () => {
   });
 
   it('test100', async () => {
-    const input = await gm.imageTensorFromURL(testImage100);
-    const op = gm.sat(gm.grayscale(input));
+    const input = await gm.imageTensorFromURL(assets.haar_test_100).catch(console.warn);
+    const op = gm.sat(gm.grayscale(input as any));
     const out = gm.tensorFrom(op);
+
+    if (! gm.isOperation(op)) {
+      throw new Error(`Expected "sat" return "Operation" but got ${op}`)
+    }
 
     sess.init(op);
     sess.runOp(op, Math.random(), out);
@@ -61,9 +63,13 @@ describe('HAAR Features', () => {
   });
 
   it('test200', async () => {
-    const input = await gm.imageTensorFromURL(testImage200);
+    const input = await gm.imageTensorFromURL(assets.haar_test_200);
     const op = gm.sat(gm.grayscale(input));
     const out = gm.tensorFrom(op);
+
+    if (! gm.isOperation(op)) {
+      throw new Error(`Expected "sat" return "Operation" but got ${op}`)
+    }
 
     sess.init(op);
     sess.runOp(op, Math.random(), out);
@@ -80,9 +86,13 @@ describe('HAAR Features', () => {
   });
 
   it('test300', async () => {
-    const input = await gm.imageTensorFromURL(testImage300);
+    const input = await gm.imageTensorFromURL(assets.haar_test_300);
     const op = gm.sat(gm.grayscale(input));
     const out = gm.tensorFrom(op);
+
+    if (! gm.isOperation(op)) {
+      throw new Error(`Expected "sat" return "Operation" but got ${op}`)
+    }
 
     sess.init(op);
     sess.runOp(op, Math.random(), out);

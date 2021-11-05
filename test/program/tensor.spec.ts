@@ -3,8 +3,7 @@ import * as gm from '../../lib';
 
 describe('Tensor', () => {
   describe('Types', () => {
-    const types = [
-      'array',
+    const types: DType[] = [
       'uint8',
       'uint16',
       'uint32',
@@ -27,7 +26,7 @@ describe('Tensor', () => {
 
   describe('Input validation', () => {
     it('Invalid dtype', () => {
-      assert.throws(() => new gm.Tensor('uint8', [2, 2], new Float32Array(4)), Error, /different dtypes assigned/i);
+      assert.throws(() => new gm.Tensor('uint8', [2, 2], (new Float32Array(4) as any)), Error, /different dtypes assigned/i);
     });
 
     it('Invalid size', () => {

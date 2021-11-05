@@ -1,10 +1,9 @@
 import { assert } from 'chai';
 import * as gm from '../../lib';
-import videoMp4URL from '../assets/video.mp4';
-import videoOGGURL from '../assets/video.ogg';
+import { assets } from '../assets';
 
 describe('MediaInput', () => {
-  let sess;
+  let sess: gm.Session;
 
   before(async () => {
     if (sess) {
@@ -57,9 +56,9 @@ describe('MediaInput', () => {
     const sourceMp4 = document.createElement('source');
     const duration = 4;
 
-    sourceOgg.src = videoOGGURL;
+    sourceOgg.src = assets.video_ogg;
     sourceOgg.type = 'video/ogg';
-    sourceMp4.src = videoMp4URL;
+    sourceMp4.src = assets.video_mp4;
     sourceMp4.type = 'video/mp4';
 
     video.append(sourceOgg);
@@ -83,7 +82,7 @@ describe('MediaInput', () => {
     await new Promise(res => video.addEventListener('playing', res));
 
     // check first frame content
-    await new Promise((res) => {
+    await new Promise<void>((res) => {
       video.ontimeupdate = () => {
         if (video.currentTime < duration / 2) {
           sess.runOp(op, 0, out);
@@ -102,7 +101,7 @@ describe('MediaInput', () => {
     });
 
     // check second frame content
-    await new Promise((res) => {
+    await new Promise<void>((res) => {
       video.ontimeupdate = () => {
         if (video.currentTime >= duration / 4 * 3) {
           sess.runOp(op, 1, out);

@@ -3,7 +3,7 @@ import * as gm from '../../lib';
 
 
 describe('Session', () => {
-  const multScaalarOp = (tSrc, scalar) => new gm.RegisterOperation('Mult2')
+  const multScaalarOp = (tSrc: InputType, scalar: number) => new gm.RegisterOperation('Mult2')
     .Input('tSrc', 'float32')
     .Output('float32')
     .Uniform('S', 'float', scalar)
@@ -14,7 +14,7 @@ describe('Session', () => {
       }
     `)
     .Compile({ tSrc });
-  const matMultOp = (tA, tB) => new gm.RegisterOperation('MatMult')
+  const matMultOp = (tA: InputType, tB: InputType) => new gm.RegisterOperation('MatMult')
     .Input('tA', 'float32')
     .Input('tB', 'float32')
     .Output('float32')
@@ -25,7 +25,7 @@ describe('Session', () => {
       }
     `)
     .Compile({ tA, tB });
-  let sess = null;
+  let sess: gm.Session = null;
 
   beforeEach(async () => {
     if (sess) {
@@ -37,9 +37,9 @@ describe('Session', () => {
   });
 
   it('create session', () => {
-    assert.deepEqual(sess.operation, {});
+    assert.deepEqual((sess as any).operation, {});
     assert.deepEqual(sess.texture, {});
-    assert.equal(sess.textureCount, 0);
+    assert.equal((sess as any).textureCount, 0);
   });
 
   it('init operation and add to session operations', () => {
@@ -48,7 +48,7 @@ describe('Session', () => {
 
     sess.init(op);
 
-    assert.equal(sess.operation[op.name], op);
+    assert.equal((sess as any).operation[op.name], op);
   });
 
   it('init operation and create textures', () => {
@@ -57,7 +57,7 @@ describe('Session', () => {
 
     sess.init(op);
 
-    assert.equal(sess.operation[op.name], op);
+    assert.equal((sess as any).operation[op.name], op);
   });
 
   it('init operation and create textures', () => {
@@ -66,11 +66,11 @@ describe('Session', () => {
 
     sess.init(op);
 
-    assert.equal(sess.textureCount, 2, 'input and output textures should be created');
+    assert.equal((sess as any).textureCount, 2, 'input and output textures should be created');
     assert.instanceOf(sess.texture[input.name], gm.GLTexture, 'should create texture for input of op');
     assert.instanceOf(sess.texture[op.name], gm.GLTexture, 'should create texture for output of op');
-    assert.isTrue(gm.assertShapesAreEqual(sess.texture[input.name], input), 'size of existed textures should be compatible');
-    assert.isTrue(gm.assertShapesAreEqual(sess.texture[op.name], op), 'size of existed textures should be compatible');
+    assert.isTrue(gm.assertShapesAreEqual((sess as any).texture[input.name], input), 'size of existed textures should be compatible');
+    assert.isTrue(gm.assertShapesAreEqual((sess as any).texture[op.name], op), 'size of existed textures should be compatible');
   });
 
   it('run operation', () => {
@@ -162,7 +162,7 @@ describe('Session', () => {
 
     op.assignInput('tSrc', b);
 
-    sess.init(b);
+    sess.init(b as any);
     sess.runOp(op, 1, out);
 
     assert.isTrue(
@@ -194,7 +194,7 @@ describe('Session', () => {
 
     op.assignInput('tSrc', b);
 
-    sess.init(b);
+    sess.init(b as any);
     sess.runOp(op, 0, out);
 
     assert.isTrue(
@@ -227,7 +227,7 @@ describe('Session', () => {
 
     op.assignInput('tSrc', b);
 
-    sess.init(b);
+    sess.init(b as any);
     sess.runOp(op, 0, out);
 
     assert.isTrue(

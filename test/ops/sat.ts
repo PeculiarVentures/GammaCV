@@ -1,10 +1,9 @@
 import { assert } from 'chai';
 import * as gm from '../../lib';
-import sampleImage from '../assets/white_black.png';
-import lenaImg from '../assets/lena.png';
+import { assets } from '../assets';
 
 describe('Summed Area Table', () => {
-  let sess = null;
+  let sess: gm.Session = null;
 
   beforeEach(async () => {
     if (sess) {
@@ -24,6 +23,10 @@ describe('Summed Area Table', () => {
 
     const op = gm.sat(A);
     const out = gm.tensorFrom(op);
+
+    if (! gm.isOperation(op)) {
+      throw new Error(`Expected "sat" return "Operation" but got ${op}`)
+    }
 
     sess.init(op);
     sess.runOp(op, Math.random(), out);
@@ -49,6 +52,10 @@ describe('Summed Area Table', () => {
       1, 3, 6, 10, 15, 21, 28, 36, 45,
     ], [1, 9, 4], 'float32', 255);
 
+    if (! gm.isOperation(op)) {
+      throw new Error(`Expected "sat" return "Operation" but got ${op}`)
+    }
+
     sess.init(op);
     sess.runOp(op, Math.random(), out);
 
@@ -63,7 +70,7 @@ describe('Summed Area Table', () => {
   });
 
   it('sat on image', async () => {
-    const A = await gm.imageTensorFromURL(sampleImage, 'float32');
+    const A = await gm.imageTensorFromURL(assets.white_black, 'float32');
 
     const op = gm.sat(A, 2);
     const out = gm.tensorFrom(op);
@@ -78,6 +85,10 @@ describe('Summed Area Table', () => {
       765, 1530, 2295, 3570, 4845, 6120, 6885, 7650, 8415,
       765, 1530, 2295, 3825, 5355, 6885, 7650, 8415, 9180,
     ], [9, 9, 4], 'float32', 255);
+
+    if (! gm.isOperation(op)) {
+      throw new Error(`Expected "sat" return "Operation" but got ${op}`)
+    }
 
     sess.init(op);
     sess.runOp(op, Math.random(), out);
@@ -102,6 +113,10 @@ describe('Summed Area Table', () => {
     const op = gm.sqsat(A, 1);
     const out = gm.tensorFrom(op);
 
+    if (! gm.isOperation(op)) {
+      throw new Error(`Expected "sat" return "Operation" but got ${op}`)
+    }
+
     sess.init(op);
     sess.runOp(op, Math.random(), out);
 
@@ -116,7 +131,7 @@ describe('Summed Area Table', () => {
   });
 
   it('sqsat on image', async () => {
-    const A = await gm.imageTensorFromURL(sampleImage, 'float32');
+    const A = await gm.imageTensorFromURL(assets.white_black, 'float32');
 
     const op = gm.sqsat(A, 2);
     const out = gm.tensorFrom(op);
@@ -131,6 +146,10 @@ describe('Summed Area Table', () => {
       195075, 390150, 585225, 910350, 1235475, 1560600, 1755675, 1950750, 2145825,
       195075, 390150, 585225, 975375, 1365525, 1755675, 1950750, 2145825, 2340900,
     ], [9, 9, 4], 'float32', 255);
+
+    if (! gm.isOperation(op)) {
+      throw new Error(`Expected "sat" return "Operation" but got ${op}`)
+    }
 
     sess.init(op);
     sess.runOp(op, Math.random(), out);
@@ -151,6 +170,10 @@ describe('Summed Area Table', () => {
     const op = gm.sat(A, 2);
     const out = gm.tensorFrom(op);
 
+    if (! gm.isOperation(op)) {
+      throw new Error(`Expected "sat" return "Operation" but got ${op}`)
+    }
+
     sess.init(op);
     sess.runOp(op, Math.random(), out);
 
@@ -165,6 +188,10 @@ describe('Summed Area Table', () => {
     const op = gm.sqsat(A, undefined);
     const out = gm.tensorFrom(op);
 
+    if (! gm.isOperation(op)) {
+      throw new Error(`Expected "sat" return "Operation" but got ${op}`)
+    }
+
     sess.init(op);
     sess.runOp(op, Math.random(), out);
 
@@ -175,9 +202,13 @@ describe('Summed Area Table', () => {
   });
 
   it('sqsat image test', async () => {
-    const A = await gm.imageTensorFromURL(lenaImg, 'float32');
+    const A = await gm.imageTensorFromURL(assets.lena, 'float32');
     const op = gm.sqsat(A, undefined);
     const out = gm.tensorFrom(op);
+
+    if (! gm.isOperation(op)) {
+      throw new Error(`Expected "sat" return "Operation" but got ${op}`)
+    }
 
     sess.init(op);
     sess.runOp(op, Math.random(), out);

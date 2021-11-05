@@ -1,10 +1,9 @@
 import { assert } from 'chai';
 import * as gm from '../../lib';
-import upsampleTestImage from '../assets/white_black.png';
-import upsampleTestResultImage from '../assets/upsample_result.png';
+import { assets } from '../assets';
 
 describe('Upsample', () => {
-  let sess = null;
+  let sess: gm.Session = null;
 
   beforeEach(async () => {
     if (sess) {
@@ -16,10 +15,10 @@ describe('Upsample', () => {
   });
 
   it('by nearest', async () => {
-    const input = await gm.imageTensorFromURL(upsampleTestImage);
+    const input = await gm.imageTensorFromURL(assets.white_black);
     const op = gm.upsample(input, 22, 'nearest');
     const out = gm.tensorFrom(op);
-    const target = await gm.imageTensorFromURL(upsampleTestResultImage);
+    const target = await gm.imageTensorFromURL(assets.upsample_result);
 
     sess.init(op);
     sess.runOp(op, Math.random(), out);
@@ -32,10 +31,10 @@ describe('Upsample', () => {
   });
 
   it('by bicubic', async () => {
-    const input = await gm.imageTensorFromURL(upsampleTestImage, 'uint8');
+    const input = await gm.imageTensorFromURL(assets.white_black, 'uint8');
     const op = gm.upsample(input, 22, 'bicubic');
     const out = gm.tensorFrom(op);
-    const target = await gm.imageTensorFromURL(upsampleTestResultImage, 'uint8');
+    const target = await gm.imageTensorFromURL(assets.upsample_result, 'uint8');
 
     sess.init(op);
     sess.runOp(op, Math.random(), out);

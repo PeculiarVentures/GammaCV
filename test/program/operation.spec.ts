@@ -2,8 +2,8 @@ import { assert } from 'chai';
 import * as gm from '../../lib';
 
 describe('Operation', () => {
-  let sess;
-  const testOp = tSrc => new gm.RegisterOperation('Test')
+  let sess: gm.Session;
+  const testOp = (tSrc: InputType) => new gm.RegisterOperation('Test')
     .Input('tSrc', 'uint8')
     .Output('uint8')
     .GLSLKernel(`

@@ -1,10 +1,9 @@
 import { assert } from 'chai';
 import * as gm from '../../lib';
-import lenaGrayscaledTest from '../assets/lena_grayscaled.png';
-import lenaGrayscaledTestOut from '../assets/adaptive_treshold_lena_test.png';
+import { assets } from '../assets';
 
 describe('Adaptive Threshold', () => {
-  let sess = null;
+  let sess: gm.Session = null;
 
   beforeEach(async () => {
     if (sess) {
@@ -16,10 +15,10 @@ describe('Adaptive Threshold', () => {
   });
 
   it('binarize grayscale image', async () => {
-    const input = await gm.imageTensorFromURL(lenaGrayscaledTest);
+    const input = await gm.imageTensorFromURL(assets.lena_grayscaled);
     const op = gm.adaptiveThreshold(input, 11, 0);
     const out = gm.tensorFrom(op);
-    const target = await gm.imageTensorFromURL(lenaGrayscaledTestOut);
+    const target = await gm.imageTensorFromURL(assets.adaptive_treshold_lena_test);
 
     sess.init(op);
     sess.runOp(op, Math.random(), out);

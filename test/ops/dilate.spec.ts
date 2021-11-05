@@ -1,12 +1,10 @@
 import { assert } from 'chai';
 import { visualize } from '../test_utils';
 import * as gm from '../../lib';
-import testImageSrc from '../assets/morphology_src.png';
-import testImageDilated from '../assets/morphology_dilated.png';
-import testImageDilatedCustomKernel from '../assets/morphology_dilated_custom_kernel.png';
+import { assets } from '../assets';
 
 describe('Dilation', () => {
-  let sess = null;
+  let sess: gm.Session = null;
 
   beforeEach(async () => {
     if (sess) {
@@ -18,8 +16,8 @@ describe('Dilation', () => {
   });
 
   it('dilate', async () => {
-    const src = await gm.imageTensorFromURL(testImageSrc);
-    const dilated = await gm.imageTensorFromURL(testImageDilated);
+    const src = await gm.imageTensorFromURL(assets.morphology_src);
+    const dilated = await gm.imageTensorFromURL(assets.morphology_dilated);
 
     const op = gm.dilate(src, [5, 5]);
     const out = gm.tensorFrom(op);
@@ -39,8 +37,8 @@ describe('Dilation', () => {
   });
 
   it('dilate custom kernel', async () => {
-    const src = await gm.imageTensorFromURL(testImageSrc);
-    const dilated = await gm.imageTensorFromURL(testImageDilatedCustomKernel);
+    const src = await gm.imageTensorFromURL(assets.morphology_src);
+    const dilated = await gm.imageTensorFromURL(assets.morphology_dilated_custom_kernel);
 
     const kernel = gm.tensorFromFlat([
       1, 1, 1, 1, 1,

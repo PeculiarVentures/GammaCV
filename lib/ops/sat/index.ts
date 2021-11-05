@@ -34,7 +34,7 @@ const sqsumOp = (tSrc: InputType, passIndex = 0, samplesPerPass = 1) =>
     .Compile({ tSrc });
 
 
-const summedAreaTableBase = (tSrc: InputType, passesPerAxis = 2, squared = false)=> {
+const summedAreaTableBase = (tSrc: InputType, passesPerAxis = 2, squared: number | boolean = false)=> {
   const samplesPerPassX = Math.ceil(tSrc.shape[1] ** (1 / passesPerAxis));
   const samplesPerPassY = Math.ceil(tSrc.shape[0] ** (1 / passesPerAxis));
 

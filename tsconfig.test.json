@@ -11,7 +11,7 @@
       "es2017"
     ],
     "target": "ESNext",
-    "module": "ESNext",
+    "module": "CommonJS",
     "moduleResolution": "Node",
     "declarationDir": ".",
     "emitDeclarationOnly": false,
@@ -33,5 +33,6 @@
     "lib",
     "lib/global.d.ts",
     "test/**/*.spec.ts",
+    "test/**/*.ts",
   ],
 }

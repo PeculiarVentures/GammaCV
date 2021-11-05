@@ -18,11 +18,13 @@ export default class RegisterOperation {
   private op: Operation;
   private preCompile: Function;
   private postCompile: Function;
+  public name: string;
 
   private checkShape: (a: Record<string, number[]>) => number[];
 
   constructor(name: string) {
     this.op = new Operation(name);
+    this.name = name;
 
     this.checkShape = (a) => {
       const keys = Object.keys(a);
@@ -116,7 +118,7 @@ export default class RegisterOperation {
     return this;
   }
 
-  Uniform(name: string, dtype: string, defaultValue: number | number[]) {
+  Uniform(name: string, dtype: string, defaultValue: string | number | number[]) {
     utils.assert(utils.isValidGLSLVariableName(name), 'RegisterOperation: Uniform name can contain only letters');
     // TODO: ts-migration uniform has 2 states - before compile and after
     this.op.uniform[name] = ({ name, dtype, defaultValue } as any);

@@ -20,18 +20,18 @@ describe('Utils: ', () => {
   });
 
   it('tensorAssertCloseEqual', () => {
-    const a = new gm.Tensor('array', [3], [0, 1, 2]);
-    const b = new gm.Tensor('array', [3], [0, 1, 1]);
-    const c = new gm.Tensor('array', [3], [3, 1, 2]);
+    const a = new gm.Tensor('uint8', [3], new Uint8Array([0, 1, 2]));
+    const b = new gm.Tensor('uint8', [3], new Uint8Array([0, 1, 1]));
+    const c = new gm.Tensor('uint8', [3], new Uint8Array([3, 1, 2]));
 
     assert.isTrue(gm.tensorAssertCloseEqual(a, b, 1), 'Tensors actually are close equal');
     assert.isFalse(gm.tensorAssertCloseEqual(a, c, 1), 'Tensors actually are not close equal');
   });
 
   it('tensorAssertEqual', () => {
-    const a = new gm.Tensor('array', [3], [0, 1, 2]);
-    const b = new gm.Tensor('array', [3], [0, 1, 2]);
-    const c = new gm.Tensor('array', [3], [1, 1, 2]);
+    const a = new gm.Tensor('uint8', [3], new Uint8Array([0, 1, 2]));
+    const b = new gm.Tensor('uint8', [3], new Uint8Array([0, 1, 2]));
+    const c = new gm.Tensor('uint8', [3], new Uint8Array([1, 1, 2]));
 
     assert.isTrue(gm.tensorAssertEqual(a, b), 'Tensors actually are equal');
     assert.isFalse(gm.tensorAssertEqual(a, c), 'Tensors actually are not equal');

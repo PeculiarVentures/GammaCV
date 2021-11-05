@@ -1,8 +1,8 @@
 import * as gm from '../../lib';
 
 describe('Extract histogram', () => {
-  let sess;
-  const setup = (input, layers, min, max, step) => {
+  let sess: gm.Session;
+  const setup = (input: InputType, layers?: number, min?: number, max?: number, step?: number) => {
     const op = gm.histogram(input, layers, min, max, step);
     const output = gm.tensorFrom(op);
 

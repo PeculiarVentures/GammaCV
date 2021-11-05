@@ -11,7 +11,7 @@ export default class GLUniform {
   public name: string;
   public dtype: string;
   private location: WebGLUniformLocation;
-  public defaultValue: number | number[]
+  public defaultValue: string | number | number[]
 
   constructor(gl: WebGLRenderingContext, program: WebGLProgram, name: string, dtype: string) {
     this.gl = gl;
@@ -20,7 +20,7 @@ export default class GLUniform {
     this.location = gl.getUniformLocation(program, this.name);
   }
 
-  public set(value: number | number[]) {
+  public set(value: string | number | number[]) {
     const gl = this.gl;
 
     if (Array.isArray(value)) {
@@ -43,7 +43,7 @@ export default class GLUniform {
         default:
           return false;
       }
-    } else {
+    } else if (typeof value === 'number') {
       switch (this.dtype) {
         case 'int':
           gl.uniform1i(this.location, value);

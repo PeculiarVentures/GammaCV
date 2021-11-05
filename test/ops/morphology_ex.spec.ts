@@ -1,20 +1,11 @@
 import { assert } from 'chai';
 import { visualize } from '../test_utils';
 import * as gm from '../../lib';
-import testImageSrc from '../assets/morphology_src.png';
-import testImageOpen from '../assets/morphology_open.png';
-import testImageOpenCustomKernel from '../assets/morphology_open_custom_kernel.png';
-import testImageClose from '../assets/morphology_close.png';
-import testImageCloseCustomKernel from '../assets/morphology_close_custom_kernel.png';
-import testImageGradient from '../assets/morphology_gradient.png';
-import testImageGradientCustomKernel from '../assets/morphology_gradient_custom_kernel.png';
-import testImageTophat from '../assets/morphology_tophat.png';
-import testImageTophatCustomKernel from '../assets/morphology_tophat_custom_kernel.png';
-import testImageBlackhat from '../assets/morphology_blackhat.png';
-import testImageBlackhatCustomKernel from '../assets/morphology_blackhat_custom_kernel.png';
+import { assets } from '../assets';
+
 
 describe('MorphTransform', () => {
-  let sess = null;
+  let sess: gm.Session = null;
 
   beforeEach(async () => {
     if (sess) {
@@ -26,9 +17,14 @@ describe('MorphTransform', () => {
   });
 
   it('blackhat', async () => {
-    const src = await gm.imageTensorFromURL(testImageSrc);
-    const open = await gm.imageTensorFromURL(testImageBlackhat);
+    const src = await gm.imageTensorFromURL(assets.morphology_src);
+    const open = await gm.imageTensorFromURL(assets.morphology_blackhat);
     const op = gm.morphologyEx(src, 'blackhat', [5, 5]);
+
+    if (op instanceof Error) {
+      throw op;
+    }
+
     const out = gm.tensorFrom(op);
 
     sess.init(op);
@@ -46,8 +42,8 @@ describe('MorphTransform', () => {
   });
 
   it('blackhat custom kernel', async () => {
-    const src = await gm.imageTensorFromURL(testImageSrc);
-    const open = await gm.imageTensorFromURL(testImageBlackhatCustomKernel);
+    const src = await gm.imageTensorFromURL(assets.morphology_src);
+    const open = await gm.imageTensorFromURL(assets.morphology_blackhat_custom_kernel);
 
     const kernel = gm.tensorFromFlat([
       1, 1, 1, 1, 1,
@@ -58,6 +54,9 @@ describe('MorphTransform', () => {
     ], [5, 5, 4], 'float32');
 
     const op = gm.morphologyEx(src, 'blackhat', [5, 5], kernel);
+    if (op instanceof Error) {
+      throw op;
+    }
     const out = gm.tensorFrom(op);
 
     sess.init(op);
@@ -75,9 +74,12 @@ describe('MorphTransform', () => {
   });
 
   it('tophat', async () => {
-    const src = await gm.imageTensorFromURL(testImageSrc);
-    const open = await gm.imageTensorFromURL(testImageTophat);
+    const src = await gm.imageTensorFromURL(assets.morphology_src);
+    const open = await gm.imageTensorFromURL(assets.morphology_tophat);
     const op = gm.morphologyEx(src, 'tophat', [5, 5]);
+    if (op instanceof Error) {
+      throw op;
+    }
     const out = gm.tensorFrom(op);
 
     sess.init(op);
@@ -95,8 +97,8 @@ describe('MorphTransform', () => {
   });
 
   it('tophat custom kernel', async () => {
-    const src = await gm.imageTensorFromURL(testImageSrc);
-    const open = await gm.imageTensorFromURL(testImageTophatCustomKernel);
+    const src = await gm.imageTensorFromURL(assets.morphology_src);
+    const open = await gm.imageTensorFromURL(assets.morphology_tophat_custom_kernel);
 
     const kernel = gm.tensorFromFlat([
       1, 1, 1, 1, 1,
@@ -107,6 +109,9 @@ describe('MorphTransform', () => {
     ], [5, 5, 4], 'float32');
 
     const op = gm.morphologyEx(src, 'tophat', [5, 5], kernel);
+    if (op instanceof Error) {
+      throw op;
+    }
     const out = gm.tensorFrom(op);
 
     sess.init(op);
@@ -124,9 +129,12 @@ describe('MorphTransform', () => {
   });
 
   it('gradient', async () => {
-    const src = await gm.imageTensorFromURL(testImageSrc);
-    const open = await gm.imageTensorFromURL(testImageGradient);
+    const src = await gm.imageTensorFromURL(assets.morphology_src);
+    const open = await gm.imageTensorFromURL(assets.morphology_gradient);
     const op = gm.morphologyEx(src, 'gradient', [5, 5]);
+    if (op instanceof Error) {
+      throw op;
+    }
     const out = gm.tensorFrom(op);
 
     sess.init(op);
@@ -144,8 +152,8 @@ describe('MorphTransform', () => {
   });
 
   it('gradient custom kernel', async () => {
-    const src = await gm.imageTensorFromURL(testImageSrc);
-    const open = await gm.imageTensorFromURL(testImageGradientCustomKernel);
+    const src = await gm.imageTensorFromURL(assets.morphology_src);
+    const open = await gm.imageTensorFromURL(assets.morphology_gradient_custom_kernel);
 
     const kernel = gm.tensorFromFlat([
       1, 1, 1, 1, 1,
@@ -156,6 +164,9 @@ describe('MorphTransform', () => {
     ], [5, 5, 4], 'float32');
 
     const op = gm.morphologyEx(src, 'gradient', [5, 5], kernel);
+    if (op instanceof Error) {
+      throw op;
+    }
     const out = gm.tensorFrom(op);
 
     sess.init(op);
@@ -173,9 +184,12 @@ describe('MorphTransform', () => {
   });
 
   it('close', async () => {
-    const src = await gm.imageTensorFromURL(testImageSrc);
-    const close = await gm.imageTensorFromURL(testImageClose);
+    const src = await gm.imageTensorFromURL(assets.morphology_src);
+    const close = await gm.imageTensorFromURL(assets.morphology_close);
     const op = gm.morphologyEx(src, 'close', [5, 5]);
+    if (op instanceof Error) {
+      throw op;
+    }
     const out = gm.tensorFrom(op);
 
     sess.init(op);
@@ -193,8 +207,8 @@ describe('MorphTransform', () => {
   });
 
   it('close custom kernel', async () => {
-    const src = await gm.imageTensorFromURL(testImageSrc);
-    const close = await gm.imageTensorFromURL(testImageCloseCustomKernel);
+    const src = await gm.imageTensorFromURL(assets.morphology_src);
+    const close = await gm.imageTensorFromURL(assets.morphology_close_custom_kernel);
 
     const kernel = gm.tensorFromFlat([
       1, 1, 1, 1, 1,
@@ -205,6 +219,9 @@ describe('MorphTransform', () => {
     ], [5, 5, 4], 'float32');
 
     const op = gm.morphologyEx(src, 'close', [5, 5], kernel);
+    if (op instanceof Error) {
+      throw op;
+    }
     const out = gm.tensorFrom(op);
 
     sess.init(op);
@@ -222,9 +239,12 @@ describe('MorphTransform', () => {
   });
 
   it('open', async () => {
-    const src = await gm.imageTensorFromURL(testImageSrc);
-    const open = await gm.imageTensorFromURL(testImageOpen);
+    const src = await gm.imageTensorFromURL(assets.morphology_src);
+    const open = await gm.imageTensorFromURL(assets.morphology_open);
     const op = gm.morphologyEx(src, 'open', [5, 5]);
+    if (op instanceof Error) {
+      throw op;
+    }
     const out = gm.tensorFrom(op);
 
     sess.init(op);
@@ -242,8 +262,8 @@ describe('MorphTransform', () => {
   });
 
   it('open custom kernel', async () => {
-    const src = await gm.imageTensorFromURL(testImageSrc);
-    const open = await gm.imageTensorFromURL(testImageOpenCustomKernel);
+    const src = await gm.imageTensorFromURL(assets.morphology_src);
+    const open = await gm.imageTensorFromURL(assets.morphology_open_custom_kernel);
 
     const kernel = gm.tensorFromFlat([
       1, 1, 1, 1, 1,
@@ -254,6 +274,9 @@ describe('MorphTransform', () => {
     ], [5, 5, 4], 'float32');
 
     const op = gm.morphologyEx(src, 'open', [5, 5], kernel);
+    if (op instanceof Error) {
+      throw op;
+    }
     const out = gm.tensorFrom(op);
 
     sess.init(op);

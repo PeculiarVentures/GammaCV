@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import * as gm from '../../lib';
 
 describe('Substraction', () => {
-  let sess = null;
+  let sess: gm.Session = null;
 
   beforeEach(async () => {
     if (sess) {

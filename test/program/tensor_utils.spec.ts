@@ -110,8 +110,8 @@ describe('Tensor Utils', () => {
     });
 
     it('array view', () => {
-      const input = new gm.Tensor('array', [2, 2], [1, 2, 3, 4]);
-      const output = new gm.Tensor('array', [2, 2]);
+      const input = new gm.Tensor('uint8', [2, 2], new Uint8Array([1, 2, 3, 4]));
+      const output = new gm.Tensor('uint8', [2, 2]);
 
       gm.tensorClone(input, output);
 
@@ -121,7 +121,7 @@ describe('Tensor Utils', () => {
 
   describe('tensorFrom', () => {
     it('tensor', () => {
-      const input = new gm.Tensor('array', [2, 2], [1, 2, 3, 4]);
+      const input = new gm.Tensor('uint8', [2, 2], new Uint8Array([1, 2, 3, 4]));
 
       const output = gm.tensorFrom(input);
 
@@ -142,7 +142,7 @@ describe('Tensor Utils', () => {
     });
 
     it('tensor with cast', () => {
-      const input = new gm.Tensor('array', [2, 2], [1, 2, 3, 4]);
+      const input = new gm.Tensor('uint8', [2, 2], new Uint8Array([1, 2, 3, 4]));
 
       const output = gm.tensorFrom(input, 'uint8');
 
