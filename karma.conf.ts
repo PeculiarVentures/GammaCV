@@ -47,6 +47,8 @@ module.exports = function(config) {
             '--headless',
             '--hide-scrollbars',
             '--mute-audio',
+            '--no-sandbox',
+            '--js-flags=--max-old-space-size=8196',
           ],
         },
       },
