@@ -59,7 +59,7 @@ export default class Rect {
   static NUM_ELEMENTS: number;
   static BYTES_PER_ELEMENT: number;
 
-  public data: Float32Array | Uint8Array | Uint16Array | Uint32Array | Uint8ClampedArray
+  public data: Float32Array | Uint8Array | Uint16Array | Uint32Array | Uint8ClampedArray;
 
   /**
    * @param {ArrayBuffer|Array|number} [a] - Source buffer to link, array to create from, or x value
@@ -102,14 +102,14 @@ export default class Rect {
 
   public isNotEmpty() {
     if (
-      this.data[0] > 0 &&
-      this.data[1] > 0 &&
-      this.data[2] > 0 &&
-      this.data[3] > 0 &&
-      this.data[4] > 0 &&
-      this.data[5] > 0 &&
-      this.data[6] > 0 &&
-      this.data[7] > 0
+      this.data[0] > 0
+      && this.data[1] > 0
+      && this.data[2] > 0
+      && this.data[3] > 0
+      && this.data[4] > 0
+      && this.data[5] > 0
+      && this.data[6] > 0
+      && this.data[7] > 0
     ) {
       return true;
     }
@@ -121,7 +121,16 @@ export default class Rect {
     return new Rect(this.toArray());
   }
 
-  public set(ax: number, ay: number, bx: number, by: number, cx: number, cy: number, dx: number, dy: number) {
+  public set(
+    ax: number,
+    ay: number,
+    bx: number,
+    by: number,
+    cx: number,
+    cy: number,
+    dx: number,
+    dy: number,
+  ) {
     this.data[0] = ax;
     this.data[1] = ay;
     this.data[2] = bx;
@@ -160,7 +169,7 @@ export default class Rect {
     if (!p1 || !p2 || !p3 || !p4) {
       return false;
     }
-    
+
     const sorted = sortPoints([
       p1, p2, p3, p4,
     ]);

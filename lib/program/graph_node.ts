@@ -9,7 +9,7 @@
 export default class GraphNode {
   static GlobalNodesCount: number;
   public id: number;
-  public name: string
+  public name: string;
 
   static GlobalCountIncrease() {
     GraphNode.GlobalNodesCount += 1;

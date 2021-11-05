@@ -57,7 +57,12 @@ function getParam(param: number | number[], name: string) {
  * TODO: Review strategy API
  */
 
-const slidingWindowOp = (tSrc: InputType, windowSize: number | number[], stride = 1, stragtegy = 0) => {
+const slidingWindowOp = (
+  tSrc: InputType,
+  windowSize: number | number[],
+  stride = 1,
+  stragtegy = 0,
+) => {
   const win = getParam(windowSize, 'windowSize');
   const str = getParam(stride, 'stride');
   const SX = clacConvolution(tSrc.shape[1], win[0], str[0]);

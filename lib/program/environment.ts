@@ -53,8 +53,7 @@ const SOURCE_ENV: Record<string, any> = {
   MAX_TEXTURE_SIZE: parameters.MAX_TEXTURE_SIZE,
 };
 
-
-const ENV: Record<string, any> = Object.assign({}, SOURCE_ENV);
+const ENV: Record<string, any> = { ...SOURCE_ENV };
 
 export default ENV;
 

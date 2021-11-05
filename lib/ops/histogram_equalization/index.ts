@@ -26,7 +26,6 @@ const histEq = (tSrc: InputType, tHist: InputType) => new RegisterOperation('his
   .GLSLKernel(histKernel)
   .Compile({ tSrc, tHist });
 
-
 /**
  * @name Histogram Equalization
  * @description
@@ -36,5 +35,7 @@ const histEq = (tSrc: InputType, tHist: InputType) => new RegisterOperation('his
  *  Number of layers for a parallel reduction of histogram extraction
  */
 
-export default (tSrc: InputType, parallelReductionLayers = 2) =>
-  histEq(tSrc, cumulateHistEq(histogramOp(tSrc, parallelReductionLayers)));
+export default (
+  tSrc: InputType,
+  parallelReductionLayers = 2,
+) => histEq(tSrc, cumulateHistEq(histogramOp(tSrc, parallelReductionLayers)));

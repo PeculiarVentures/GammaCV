@@ -22,11 +22,13 @@ export function canvasFromTensor(
     throw Error('tensorToCanvas: Input tensor invalid');
   }
 
+  let innerRGBA = rgba;
+
   if (target.shape[2] && target.shape[2] === 4) {
-    rgba = true;
+    innerRGBA = true;
   }
 
-  const imageData = utils.toImageData(target, rgba, transposed);
+  const imageData = utils.toImageData(target, innerRGBA, transposed);
 
   canvas.getContext('2d').putImageData(imageData, 0, 0);
 }
@@ -152,14 +154,16 @@ export function canvasFill(canvas: HTMLCanvasElement, color = '#ff0000') {
 }
 
 export const canvasClear = (canvas: HTMLCanvasElement) => {
+  // eslint-disable-next-line no-self-assign
   canvas.width = canvas.width;
+  // eslint-disable-next-line no-self-assign
   canvas.height = canvas.height;
 };
 
 export const canvasInit = (canvasId: string, width: number, height: number) => {
   assertQuerySelector();
 
-  const canvas = document.querySelector < HTMLCanvasElement > (canvasId);
+  const canvas = document.querySelector<HTMLCanvasElement>(canvasId);
 
   canvas.width = width;
   canvas.height = height;

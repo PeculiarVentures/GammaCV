@@ -25,8 +25,9 @@ export default function (op: Operation) {
     const h = shape[0].toFixed(1);
     const w4 = (shape[1] * 4).toFixed(1);
 
-    let funcBody = (type: string, name: string, selector: string) =>
-      `${type} ${name}_${key}(float y, float x) {\n\treturn texture2D(${key}, vec2((x + 0.5) / ${w}, (y + 0.5) / ${h}))${selector};\n}`;
+    let funcBody = (type: string, name: string, selector: string) => (
+      `${type} ${name}_${key}(float y, float x) {\n\treturn texture2D(${key}, vec2((x + 0.5) / ${w}, (y + 0.5) / ${h}))${selector};\n}`
+    );
 
     if (!ENV.SUPPORTS_FLOAT_TEXTURES && op.input[key].dtype === 'float32') {
       funcBody = (type, name, selector) => `

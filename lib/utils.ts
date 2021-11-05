@@ -51,8 +51,8 @@ export const isValidShape = (shape: any) => Array.isArray(shape)
   && !shape.some(n => n % 1 !== 0);
 export const isOperation = (op: any): op is gm.Operation => op instanceof gm.Operation;
 export const isMediaInput = (op: any): op is gm.MediaInput => op instanceof gm.MediaInput;
-export const isTensor = (tensor: any): tensor is gm.Tensor  => tensor instanceof gm.Tensor;
-export const isTensorDataView = (data: any): data is TensorDataView  => (
+export const isTensor = (tensor: any): tensor is gm.Tensor => tensor instanceof gm.Tensor;
+export const isTensorDataView = (data: any): data is TensorDataView => (
   data instanceof Float32Array
   || data instanceof Float64Array
   || data instanceof Uint8Array
@@ -86,7 +86,9 @@ export const isOffscreenCanvasElement = (input: any): input is OffscreenCanvas =
   return 'getContext' in input;
 };
 
-export const isValidGLSLChunk = (name: any): name is AvailableGLSLChunks => AVAILABLE_GLSL_CHUNKS.includes(name);
+export const isValidGLSLChunk = (name: any): name is AvailableGLSLChunks => (
+  AVAILABLE_GLSL_CHUNKS.includes(name)
+);
 export const isValidGLSLVariableName = (name: string) => /^[A-Za-z](\w+)?$/.test(name);
 export const isValidOperationShape = (shape: number[]) => shape[0] > 0 && shape[1] > 0;
 

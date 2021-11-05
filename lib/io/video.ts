@@ -6,21 +6,32 @@
  * All rights reserved.
  */
 
- declare const navigator: Navigator & {
-  getUserMedia: (constraints?: MediaStreamConstraints, successCallback?: (stream: MediaStream) => void) => void;
-  webkitGetUserMedia?: (constraints?: MediaStreamConstraints, successCallback?: (stream: MediaStream) => void) => void;
-  mozGetUserMedia?: (constraints?: MediaStreamConstraints, successCallback?: (stream: MediaStream) => void) => void;
-  msGetUserMedia?: (constraints?: MediaStreamConstraints, successCallback?: (stream: MediaStream) => void) => void;
-  oGetUserMedia?: (constraints?: MediaStreamConstraints, successCallback?: (stream: MediaStream) => void) => void;
-}
-
- declare const window: Window & {
-  offsetWidth?: number;
-  offsetHeight?: number;
-}
-
 import Tensor from '../program/tensor';
 import { getCanvas, getVideo } from '../utils';
+
+declare const navigator: Navigator & {
+  getUserMedia: (
+    constraints?: MediaStreamConstraints, successCallback?: (stream: MediaStream) => void
+  ) => void;
+  webkitGetUserMedia?: (
+    constraints?: MediaStreamConstraints, successCallback?: (stream: MediaStream) => void
+  ) => void;
+  mozGetUserMedia?: (
+    constraints?: MediaStreamConstraints, successCallback?: (stream: MediaStream) => void
+  ) => void;
+  msGetUserMedia?: (
+    constraints?: MediaStreamConstraints, successCallback?: (stream: MediaStream) => void
+  ) => void;
+  oGetUserMedia?: (
+    constraints?: MediaStreamConstraints, successCallback?: (stream: MediaStream) => void
+  ) => void;
+};
+
+declare const window: Window & {
+  offsetWidth?: number;
+  offsetHeight?: number;
+};
+
 /**
  *
  * @param {Ratio} r
@@ -139,7 +150,6 @@ export default class CaptureVideo {
     }
 
     return getStream
-      // @ts-ignore
       .then((stream) => {
         if (stream) {
           const tracks = stream.getTracks();
@@ -149,6 +159,8 @@ export default class CaptureVideo {
 
           return deviceID || true;
         }
+
+        return false;
       })
       .catch(() => Promise.resolve(false));
   }
@@ -222,15 +234,14 @@ export default class CaptureVideo {
         width: { min: 240, ideal: 1080, max: 1920 },
         height: { min: 240, ideal: 1080, max: 1920 },
         aspectRatio: { exact: this.width / this.height },
-        deviceId: deviceID ? deviceID : undefined,
+        deviceId: deviceID || undefined,
         facingMode: exactFacingMode ? { exact: exactFacingMode } : null,
       },
     };
 
     const ua = navigator.userAgent;
 
-    const isPortrait =
-      !(window.orientation === -90
+    const isPortrait = !(window.orientation === -90
       || window.orientation === 90
       || window.offsetWidth > window.offsetHeight);
 
@@ -251,7 +262,6 @@ export default class CaptureVideo {
       || navigator.oGetUserMedia;
 
     let getStream: Promise<void | MediaStream> = Promise.resolve();
-
 
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       getStream = getStream.then(() => navigator.mediaDevices.getUserMedia(cfg));

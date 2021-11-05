@@ -100,7 +100,6 @@ class Tensor<T extends keyof DTypeMapper = keyof DTypeMapper> extends GraphNode 
     this.stride = stride || this._defineStride(this.shape);
     this.offset = offset;
 
-
     this._compileJITMethods();
 
     if (typeof data === 'undefined') {
@@ -255,9 +254,10 @@ class Tensor<T extends keyof DTypeMapper = keyof DTypeMapper> extends GraphNode 
         return new Float64Array(size);
       case 'uint8c':
         return new Uint8ClampedArray(size);
-      default:
+      default: {
         const invalidType: never = dtype;
         throw new Error(`Tensor: Unexpected type: ${invalidType}.`);
+      }
     }
   }
 
@@ -303,9 +303,15 @@ class Tensor<T extends keyof DTypeMapper = keyof DTypeMapper> extends GraphNode 
    * @param {TypedArray|Array} data - initial data
    * @return {TypedArray|Array}
    */
-  static GetTypedArray<V extends keyof DTypeMapper>(dtype: V, data: TensorDataView | ArrayBufferLike | number[]): DTypeMapper[V]
-  static GetTypedArray(dtype: DType, data: TensorDataView | ArrayBufferLike | number[]): TensorDataView {
-    if (utils.isTensorDataView (data) && dtype === Tensor.DefineType(data)) {
+  static GetTypedArray<V extends keyof DTypeMapper>(
+    dtype: V,
+    data: TensorDataView | ArrayBufferLike | number[]
+  ): DTypeMapper[V]
+  static GetTypedArray(
+    dtype: DType,
+    data: TensorDataView | ArrayBufferLike | number[],
+  ): TensorDataView {
+    if (utils.isTensorDataView(data) && dtype === Tensor.DefineType(data)) {
       return data;
     }
 

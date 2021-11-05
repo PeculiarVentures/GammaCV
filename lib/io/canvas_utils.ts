@@ -41,7 +41,6 @@ export function initMouseTracking(
   };
 }
 
-
 /**
  * toImageData
  * @param {Tensor} img

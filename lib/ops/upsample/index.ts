@@ -28,4 +28,3 @@ export default (tSrc: InputType, coefficient = 2, type = 'nearest') => {
 
   return resizeOp(tSrc, newW, newH, type);
 };
-

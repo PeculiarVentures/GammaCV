@@ -11,4 +11,3 @@ describe('io', () => {
     assert.isTrue(gm.tensorAssertCloseEqual(input, output, 0), 'Tensors are not close equal to each other.');
   });
 });
-

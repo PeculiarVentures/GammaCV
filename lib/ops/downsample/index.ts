@@ -6,7 +6,6 @@
  * All rights reserved.
  */
 
-
 import resizeOp from '../resize';
 
 /**

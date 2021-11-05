@@ -25,6 +25,7 @@ function validType(dtype: string) {
 function getType(value: any) {
   let type: string = typeof value;
 
+  // eslint-disable-next-line no-param-reassign
   value = String(value);
   const complexType = /^(vec\d|mat\d)\([^)]+\)$/.exec(value);
 
@@ -43,7 +44,7 @@ function getType(value: any) {
 
 function constructHeading(op: Operation) {
   // TODO: ts-migration this uniform not the same as GLUnifrom from './uniform'??
-  const uniforms: Record<string, { dtype: string }> = Object.assign({}, op.uniform);
+  const uniforms: Record<string, { dtype: string }> = { ...op.uniform };
   const inputKeys = Object.keys(op.input);
   let head = 'precision highp float;\n';
 
@@ -86,7 +87,6 @@ function constructHeading(op: Operation) {
 
   return head;
 }
-
 
 function injectChunks(op: Operation) {
   const separateWidth = 35;

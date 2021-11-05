@@ -7,11 +7,11 @@
  */
 
 export default class GLUniform {
-  private gl: WebGLRenderingContext
+  private gl: WebGLRenderingContext;
   public name: string;
   public dtype: string;
   private location: WebGLUniformLocation;
-  public defaultValue: string | number | number[]
+  public defaultValue: string | number | number[];
 
   constructor(gl: WebGLRenderingContext, program: WebGLProgram, name: string, dtype: string) {
     this.gl = gl;

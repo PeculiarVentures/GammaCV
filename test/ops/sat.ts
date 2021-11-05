@@ -24,8 +24,8 @@ describe('Summed Area Table', () => {
     const op = gm.sat(A);
     const out = gm.tensorFrom(op);
 
-    if (! gm.isOperation(op)) {
-      throw new Error(`Expected "sat" return "Operation" but got ${op}`)
+    if (!gm.isOperation(op)) {
+      throw new Error(`Expected "sat" return "Operation" but got ${op}`);
     }
 
     sess.init(op);
@@ -52,8 +52,8 @@ describe('Summed Area Table', () => {
       1, 3, 6, 10, 15, 21, 28, 36, 45,
     ], [1, 9, 4], 'float32', 255);
 
-    if (! gm.isOperation(op)) {
-      throw new Error(`Expected "sat" return "Operation" but got ${op}`)
+    if (!gm.isOperation(op)) {
+      throw new Error(`Expected "sat" return "Operation" but got ${op}`);
     }
 
     sess.init(op);
@@ -86,8 +86,8 @@ describe('Summed Area Table', () => {
       765, 1530, 2295, 3825, 5355, 6885, 7650, 8415, 9180,
     ], [9, 9, 4], 'float32', 255);
 
-    if (! gm.isOperation(op)) {
-      throw new Error(`Expected "sat" return "Operation" but got ${op}`)
+    if (!gm.isOperation(op)) {
+      throw new Error(`Expected "sat" return "Operation" but got ${op}`);
     }
 
     sess.init(op);
@@ -113,8 +113,8 @@ describe('Summed Area Table', () => {
     const op = gm.sqsat(A, 1);
     const out = gm.tensorFrom(op);
 
-    if (! gm.isOperation(op)) {
-      throw new Error(`Expected "sat" return "Operation" but got ${op}`)
+    if (!gm.isOperation(op)) {
+      throw new Error(`Expected "sat" return "Operation" but got ${op}`);
     }
 
     sess.init(op);
@@ -147,8 +147,8 @@ describe('Summed Area Table', () => {
       195075, 390150, 585225, 975375, 1365525, 1755675, 1950750, 2145825, 2340900,
     ], [9, 9, 4], 'float32', 255);
 
-    if (! gm.isOperation(op)) {
-      throw new Error(`Expected "sat" return "Operation" but got ${op}`)
+    if (!gm.isOperation(op)) {
+      throw new Error(`Expected "sat" return "Operation" but got ${op}`);
     }
 
     sess.init(op);
@@ -170,8 +170,8 @@ describe('Summed Area Table', () => {
     const op = gm.sat(A, 2);
     const out = gm.tensorFrom(op);
 
-    if (! gm.isOperation(op)) {
-      throw new Error(`Expected "sat" return "Operation" but got ${op}`)
+    if (!gm.isOperation(op)) {
+      throw new Error(`Expected "sat" return "Operation" but got ${op}`);
     }
 
     sess.init(op);
@@ -188,8 +188,8 @@ describe('Summed Area Table', () => {
     const op = gm.sqsat(A, undefined);
     const out = gm.tensorFrom(op);
 
-    if (! gm.isOperation(op)) {
-      throw new Error(`Expected "sat" return "Operation" but got ${op}`)
+    if (!gm.isOperation(op)) {
+      throw new Error(`Expected "sat" return "Operation" but got ${op}`);
     }
 
     sess.init(op);
@@ -206,8 +206,8 @@ describe('Summed Area Table', () => {
     const op = gm.sqsat(A, undefined);
     const out = gm.tensorFrom(op);
 
-    if (! gm.isOperation(op)) {
-      throw new Error(`Expected "sat" return "Operation" but got ${op}`)
+    if (!gm.isOperation(op)) {
+      throw new Error(`Expected "sat" return "Operation" but got ${op}`);
     }
 
     sess.init(op);

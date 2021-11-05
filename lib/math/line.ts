@@ -23,10 +23,10 @@ export default class Line {
     const x4 = l2.x2;
     const y4 = l2.y2;
 
-    const x = ((x1 * y2 - y1 * x2) * (x3 - x4) - (x1 - x2) * (x3 * y4 - y3 * x4)) /
-      ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
-    const y = ((x1 * y2 - y1 * x2) * (y3 - y4) - (y1 - y2) * (x3 * y4 - y3 * x4)) /
-      ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
+    const x = ((x1 * y2 - y1 * x2) * (x3 - x4) - (x1 - x2) * (x3 * y4 - y3 * x4))
+      / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
+    const y = ((x1 * y2 - y1 * x2) * (y3 - y4) - (y1 - y2) * (x3 * y4 - y3 * x4))
+      / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
 
     if (isNaN(x) || isNaN(y)) {
       return false;
@@ -61,9 +61,23 @@ export default class Line {
   constructor()
   constructor(a?: number[])
   constructor(a?: ArrayBuffer)
-  constructor(a?: number | number[] | ArrayBuffer, b?: number, c?: number, d?: number, x?: number, y?: number)
-  constructor(a?: number | number[] | ArrayBuffer, b?: number, c?: number, d?: number, x?: number, y?: number) {
-     if (a instanceof ArrayBuffer) {
+  constructor(
+    a?: number | number[] | ArrayBuffer,
+    b?: number,
+    c?: number,
+    d?: number,
+    x?: number,
+    y?: number,
+  )
+  constructor(
+    a?: number | number[] | ArrayBuffer,
+    b?: number,
+    c?: number,
+    d?: number,
+    x?: number,
+    y?: number,
+  ) {
+    if (a instanceof ArrayBuffer) {
       this.data = new Float32Array(a, b, 8);
     } else if (Array.isArray(a)) {
       if (a.length < 8) {
@@ -91,7 +105,14 @@ export default class Line {
   }
 
   // TODO: Need to update this method in future
-  public fromParallelCoords(x: number, y: number, w: number, _h: number, maxDistance: number, maxAngles: number) {
+  public fromParallelCoords(
+    x: number,
+    y: number,
+    w: number,
+    _h: number,
+    maxDistance: number,
+    maxAngles: number,
+  ) {
     const x1 = 0;
     const x2 = w;
     let y1;

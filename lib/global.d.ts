@@ -3,7 +3,8 @@ declare module '*.glsl' {
   export default value;
 }
 
-// TODO: ts-migration Now it the same as TypedArray. Maybe prefer it? If we don't want to extend it with new types in future
+// TODO: ts-migration Now it the same as TypedArray. Maybe prefer it?
+// If we don't want to extend it with new types in future
 type TensorDataView =
   Float32Array |
   Float64Array |
@@ -40,38 +41,4 @@ interface DTypeMapper {
 
 type AvailableGLSLChunks = 'pickCurrentValue' | 'pickValue' | 'float';
 
-
 type MediaInputType = HTMLVideoElement | HTMLCanvasElement;
-
-
-// TEST ONLY
-
-declare module '*.webm' {
-  const value: string;
-
-  export default value;
-}
-
-declare module '*.mp4' {
-  const value: string;
-
-  export default value;
-}
-
-declare module '*.ogg' {
-  const value: string;
-
-  export default value;
-}
-
-declare module '*.png' {
-  const value: string;
-
-  export default value;
-}
-
-declare module '*.json' {
-  const value: ArrayBuffer;
-
-  export default value;
-}

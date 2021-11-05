@@ -18,13 +18,12 @@ import * as utils from '../utils';
 import type Session from './session';
 import type Tensor from './tensor';
 
-
 type PromMapper = {
   'input': Record<string, InputType>,
   'uniform': Record<string, GLUniform>,
   'constant': Record<string, string | number | boolean>,
   'attributes': Record<string, GLAttribute>,
-}
+};
 
 export default class Operation extends GraphNode {
   input: PromMapper['input'];

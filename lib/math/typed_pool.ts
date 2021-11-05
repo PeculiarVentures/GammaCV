@@ -28,8 +28,6 @@ export default class TypedPool<T extends typeof Line | typeof Rect> {
     this.length = 0;
   }
 
-  
-
   public map(cb: (el: T['prototype'], index: number) => T['prototype'], ctx?: any) {
     return this.data.map(cb, ctx);
   }

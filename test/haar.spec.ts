@@ -44,8 +44,8 @@ describe('HAAR Features', () => {
     const op = gm.sat(gm.grayscale(input as any));
     const out = gm.tensorFrom(op);
 
-    if (! gm.isOperation(op)) {
-      throw new Error(`Expected "sat" return "Operation" but got ${op}`)
+    if (!gm.isOperation(op)) {
+      throw new Error(`Expected "sat" return "Operation" but got ${op}`);
     }
 
     sess.init(op);
@@ -67,8 +67,8 @@ describe('HAAR Features', () => {
     const op = gm.sat(gm.grayscale(input));
     const out = gm.tensorFrom(op);
 
-    if (! gm.isOperation(op)) {
-      throw new Error(`Expected "sat" return "Operation" but got ${op}`)
+    if (!gm.isOperation(op)) {
+      throw new Error(`Expected "sat" return "Operation" but got ${op}`);
     }
 
     sess.init(op);
@@ -90,8 +90,8 @@ describe('HAAR Features', () => {
     const op = gm.sat(gm.grayscale(input));
     const out = gm.tensorFrom(op);
 
-    if (! gm.isOperation(op)) {
-      throw new Error(`Expected "sat" return "Operation" but got ${op}`)
+    if (!gm.isOperation(op)) {
+      throw new Error(`Expected "sat" return "Operation" but got ${op}`);
     }
 
     sess.init(op);

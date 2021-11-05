@@ -14,7 +14,7 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "declarationDir": ".",
-    "emitDeclarationOnly": false,
+    "emitDeclarationOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
@@ -32,6 +32,5 @@
   "include": [
     "lib",
     "lib/global.d.ts",
-    "test/**/*.spec.ts",
   ],
 }

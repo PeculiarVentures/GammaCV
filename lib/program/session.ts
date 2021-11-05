@@ -237,8 +237,14 @@ class Session {
 
     ctx.drawImage(
       this.canvas,
-      0, 0, shape[1], shape[0],
-      0, 0, shape[1], shape[0],
+      0,
+      0,
+      shape[1],
+      shape[0],
+      0,
+      0,
+      shape[1],
+      shape[0],
     );
   }
 }

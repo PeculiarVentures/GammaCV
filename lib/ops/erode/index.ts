@@ -44,6 +44,7 @@ export default (
   }
 
   if (!tKernel) {
+    // eslint-disable-next-line no-param-reassign
     tKernel = new Tensor('float32', [kernelSize[0], kernelSize[1], 4]);
 
     for (let x = 0; x < kernelSize[0]; x += 1) {

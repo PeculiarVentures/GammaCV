@@ -9,7 +9,6 @@
 import type Rect from './rect';
 import type Tensor from '../program/tensor';
 
-
 export function sortPoints(points: number[][]) { // eslint-disable-line
   // How it works?
   const center = [0, 0];
@@ -79,7 +78,6 @@ export function transformPoint(px: number, py: number, transformation: Tensor) {
   xs0 += m.get(0, 0) * px;
   ys0 += m.get(1, 0) * px;
   ws += m.get(2, 0) * px;
-
 
   sc = 1.0 / ws;
   xs = xs0 * sc;

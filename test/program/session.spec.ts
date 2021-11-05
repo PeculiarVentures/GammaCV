@@ -1,7 +1,6 @@
 import { assert } from 'chai';
 import * as gm from '../../lib';
 
-
 describe('Session', () => {
   const multScaalarOp = (tSrc: InputType, scalar: number) => new gm.RegisterOperation('Mult2')
     .Input('tSrc', 'float32')

@@ -2,7 +2,6 @@ import glsl from 'rollup-plugin-glsl';
 import { terser } from 'rollup-plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
 import json from '@rollup/plugin-json';
-import babel from '@rollup/plugin-babel';
 import typescript from '@rollup/plugin-typescript';
 import { version } from './package.json';
 
@@ -71,14 +70,14 @@ function getConfig(
 export default [
   getConfig(
     'index.ts',
-    [babel()],
+    [],
     'dist',
     'index',
     FORMATS.UMD,
   ),
   getConfig(
     'index.ts',
-    [babel(), terser(terserOptions)],
+    [terser(terserOptions)],
     'dist',
     'index.min',
     FORMATS.UMD,

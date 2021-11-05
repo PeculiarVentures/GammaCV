@@ -44,10 +44,10 @@ export function imageDiff(input: gm.Tensor, output: gm.Tensor) {
   for (let y = 0; y < input.shape[0]; y += 1) {
     for (let x = 0; x < input.shape[1]; x += 1) {
       if (
-        input.get(y, x, 0) !== output.get(y, x, 0) ||
-        input.get(y, x, 1) !== output.get(y, x, 1) ||
-        input.get(y, x, 2) !== output.get(y, x, 2) ||
-        input.get(y, x, 3) !== output.get(y, x, 3)
+        input.get(y, x, 0) !== output.get(y, x, 0)
+        || input.get(y, x, 1) !== output.get(y, x, 1)
+        || input.get(y, x, 2) !== output.get(y, x, 2)
+        || input.get(y, x, 3) !== output.get(y, x, 3)
       ) {
         result.set(y, x, 0, 255);
         result.set(y, x, 3, 255);

@@ -55,4 +55,8 @@ const CannyHysteresis = (tSrc: InputType, low: number, high: number) => {
  * @param {number} high - High threshold to be applied.
  */
 
-export default (input: InputType, low = 0.25, high = 0.75) => CannyHysteresis(CannyNMS(input), low, high);
+export default (
+  input: InputType,
+  low = 0.25,
+  high = 0.75,
+) => CannyHysteresis(CannyNMS(input), low, high);

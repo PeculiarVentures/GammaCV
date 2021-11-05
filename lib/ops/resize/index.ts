@@ -35,10 +35,12 @@ export default (tSrc: InputType, w: number, h: number, type = 'nearest') => {
 
   if (type === 'mean') {
     utils.deprecationWarning('ResizeOperation: type "mean"', 'use "bicubic" instead');
+    // eslint-disable-next-line no-param-reassign
     type = 'bicubic';
   }
   if (type === 'max') {
     utils.deprecationWarning('ResizeOperation: type "max"', 'use "nearest" instead');
+    // eslint-disable-next-line no-param-reassign
     type = 'nearest';
   }
 

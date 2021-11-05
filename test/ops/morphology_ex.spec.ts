@@ -3,7 +3,6 @@ import { visualize } from '../test_utils';
 import * as gm from '../../lib';
 import { assets } from '../assets';
 
-
 describe('MorphTransform', () => {
   let sess: gm.Session = null;
 

@@ -61,6 +61,7 @@ export function tensorInvert(
   const shape = input.shape;
 
   if (input === output) {
+    // eslint-disable-next-line no-param-reassign
     input = input.clone();
   }
 
@@ -80,7 +81,6 @@ export function tensorInvert(
 
   return output;
 }
-
 
 export const tensorAssertEqual = (actual: Tensor, expected: Tensor) => {
   if (!utils.assertShapesAreEqual(actual, expected)) {
@@ -140,6 +140,7 @@ export function flipTensor(
   const shape = input.shape;
 
   if (input === output) {
+    // eslint-disable-next-line no-param-reassign
     input = input.clone();
   }
 
@@ -182,7 +183,7 @@ export function invertTensor(
 export function tensorMap(
   t: Tensor,
   fn: (a: number, i: number) => number,
-  out = t
+  out = t,
 ) {
   for (let i = 0; i < t.size; i += 1) {
     out.data[i] = fn(t.data[i], i);

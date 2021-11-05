@@ -7,9 +7,8 @@
  */
 
 import Operation from './operation';
-import Tensor from './tensor'
+import Tensor from './tensor';
 import * as utils from '../utils';
-
 
 /**
  * @name RegisterOperation
@@ -33,7 +32,6 @@ export default class RegisterOperation {
     };
     this.preCompile = () => {};
     this.postCompile = () => {};
-
   }
 
   public GLSLKernel(kernel: string) {

@@ -1,38 +1,17 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "allowJs": true,
-    "declaration": true,
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "jsx": "react",
-    "lib": [
-      "dom",
-      "es2017"
-    ],
-    "target": "ESNext",
     "module": "CommonJS",
-    "moduleResolution": "Node",
-    "declarationDir": ".",
     "emitDeclarationOnly": false,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "pretty": true,
-    "removeComments": false,
-    "sourceMap": true,
-    "stripInternal": true
   },
-  "exclude": [
-    "node_modules",
-    "app"
-  ],
+  "typeAcquisition": {
+    "include": ["mocha"]
+  },
   "include": [
     "lib",
     "lib/global.d.ts",
+    "test/assets/global.d.ts",
     "test/**/*.spec.ts",
-    "test/**/*.ts",
+    "test/**/*.ts"
   ],
 }
