@@ -47,7 +47,7 @@ module.exports = function(config) {
             '--headless',
             '--hide-scrollbars',
             '--mute-audio',
-            '--no-sandbox',
+            // TODO: ts-migration hack. Prevent tests fail on CircleCI https://app.circleci.com/pipelines/github/PeculiarVentures/GammaCV/391/workflows/e7c0f1cf-62a6-4dc3-bb6e-0521471cf8b8/jobs/1530
             '--js-flags=--max-old-space-size=8196',
           ],
         },
