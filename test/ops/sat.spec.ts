@@ -14,6 +14,13 @@ describe('Summed Area Table', () => {
     sess = new gm.Session();
   });
 
+  afterEach(() => {
+    if (sess) {
+      sess.destroy();
+      sess = null;
+    }
+  });
+
   it('sat simple', async () => {
     const A = gm.tensorFromFlat([
       1, 1, 1,
@@ -203,7 +210,7 @@ describe('Summed Area Table', () => {
 
   it('sqsat image test', async () => {
     const A = await gm.imageTensorFromURL(assets.lena, 'float32');
-    const op = gm.sqsat(A, undefined);
+    const op = gm.sqsat(A);
     const out = gm.tensorFrom(op);
 
     if (!gm.isOperation(op)) {

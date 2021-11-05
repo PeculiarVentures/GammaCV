@@ -13,6 +13,13 @@ describe('Threshold', () => {
     sess = new gm.Session();
   });
 
+  afterEach(() => {
+    if (sess) {
+      sess.destroy();
+      sess = null;
+    }
+  });
+
   it('Channel R', async () => {
     const input = new gm.Tensor('uint8', [1, 1, 4], new Uint8Array([110, 120, 130, 255]));
     const op = gm.threshold(input, 0.4, 0);

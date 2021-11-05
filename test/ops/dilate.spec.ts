@@ -15,6 +15,13 @@ describe('Dilation', () => {
     sess = new gm.Session();
   });
 
+  afterEach(() => {
+    if (sess) {
+      sess.destroy();
+      sess = null;
+    }
+  });
+
   it('dilate', async () => {
     const src = await gm.imageTensorFromURL(assets.morphology_src);
     const dilated = await gm.imageTensorFromURL(assets.morphology_dilated);

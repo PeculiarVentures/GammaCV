@@ -14,6 +14,13 @@ describe('Downsample', () => {
     sess = new gm.Session();
   });
 
+  afterEach(() => {
+    if (sess) {
+      sess.destroy();
+      sess = null;
+    }
+  });
+
   it('by nearest', async () => {
     const input = await gm.imageTensorFromURL(assets.upsample_result);
     const op = gm.downsample(input, 22, 'nearest');

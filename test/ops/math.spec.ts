@@ -13,6 +13,13 @@ describe('Math', () => {
     sess = new gm.Session();
   });
 
+  afterEach(() => {
+    if (sess) {
+      sess.destroy();
+      sess = null;
+    }
+  });
+
   it('A mult B', async () => {
     const A = gm.tensorFromFlat([
       2, 2,

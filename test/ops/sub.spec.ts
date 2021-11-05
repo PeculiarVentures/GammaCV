@@ -13,6 +13,13 @@ describe('Substraction', () => {
     sess = new gm.Session();
   });
 
+  afterEach(() => {
+    if (sess) {
+      sess.destroy();
+      sess = null;
+    }
+  });
+
   it('sub', async () => {
     const A = gm.tensorFromFlat([
       1, 1, 1,

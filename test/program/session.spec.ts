@@ -35,6 +35,13 @@ describe('Session', () => {
     sess = new gm.Session();
   });
 
+  afterEach(() => {
+    if (sess) {
+      sess.destroy();
+      sess = null;
+    }
+  });
+
   it('create session', () => {
     assert.deepEqual((sess as any).operation, {});
     assert.deepEqual(sess.texture, {});

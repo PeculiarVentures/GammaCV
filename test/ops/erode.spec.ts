@@ -15,6 +15,13 @@ describe('Erosion', () => {
     sess = new gm.Session();
   });
 
+  afterEach(() => {
+    if (sess) {
+      sess.destroy();
+      sess = null;
+    }
+  });
+
   it('erode', async () => {
     const src = await gm.imageTensorFromURL(assets.morphology_src);
     const eroded = await gm.imageTensorFromURL(assets.morphology_eroded);

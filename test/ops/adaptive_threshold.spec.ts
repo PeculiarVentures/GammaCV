@@ -14,6 +14,13 @@ describe('Adaptive Threshold', () => {
     sess = new gm.Session();
   });
 
+  afterEach(() => {
+    if (sess) {
+      sess.destroy();
+      sess = null;
+    }
+  });
+
   it('binarize grayscale image', async () => {
     const input = await gm.imageTensorFromURL(assets.lena_grayscaled);
     const op = gm.adaptiveThreshold(input, 11, 0);

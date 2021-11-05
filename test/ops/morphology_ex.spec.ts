@@ -15,6 +15,13 @@ describe('MorphTransform', () => {
     sess = new gm.Session();
   });
 
+  afterEach(() => {
+    if (sess) {
+      sess.destroy();
+      sess = null;
+    }
+  });
+
   it('blackhat', async () => {
     const src = await gm.imageTensorFromURL(assets.morphology_src);
     const open = await gm.imageTensorFromURL(assets.morphology_blackhat);
