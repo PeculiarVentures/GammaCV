@@ -91,7 +91,8 @@
     "sliding_window": "SlidingWindow",
     "concat": "Concat",
     "cast": "Cast",
-    "math": "Basic"
+    "math": "Basic",
+    "perspective_projection": "Perspective Projection"
   },
   "example": {
     "noAccess": "Sorry, looks like we don't have access to use your camera",
