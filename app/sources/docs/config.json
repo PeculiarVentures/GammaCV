@@ -83,6 +83,10 @@
       {
         "name": "sat",
         "path": "../../../lib/ops/sat/index.js"
+      },
+      {
+        "name": "histogram_equalization",
+        "path": "../../../lib/ops/histogram_equalization/index.js"
       }
     ]
   },
@@ -138,6 +142,10 @@
       {
         "name": "pclines",
         "path": "../../../lib/ops/pclines/index.js"
+      },
+      {
+        "name": "histogram",
+        "path": "../../../lib/ops/histogram/index.js"
       }
     ]
   },
