@@ -87,6 +87,10 @@
       {
         "name": "histogram_equalization",
         "path": "../../../lib/ops/histogram_equalization/index.js"
+      },
+      {
+        "name": "perspective_projection",
+        "path": "../../../lib/ops/perspective_projection/index.js"
       }
     ]
   },
