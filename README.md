@@ -44,6 +44,3 @@ Want to file a bug, contribute some code, or improve documentation? Excellent! R
 [Ihor Pchelnik](https://github.com/p1nta),
 [Rostyslav Kravchenko](https://github.com/RostyslavKravchenko),
 [Andrii Omelianenko](https://github.com/andrOmelianenko)
-
-
-commit naming test
