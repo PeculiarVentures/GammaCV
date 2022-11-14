@@ -2,7 +2,7 @@
  * @license MIT
  * @author Arkadiy Pilguk(apilguk@gmail.com)
  * @author Mihail Zachepilo(mihailzachepilo@gmail.com)
- * Copyright 2018 Peculiar Ventures and Pentatonica.
+ * Copyright 2022 Peculiar Ventures.
  * All rights reserved.
  */
 
@@ -41,14 +41,23 @@ export const ImageReduceHistogram = (tSrc: InputType, k: number[], count: number
 /**
  * @name Histogram
  * @description
- *  Extract histogram for given image and parameters
+ *  Extract histogram for given image and parameters.
+ *  Results in [1, histogramRange, 4] float matrix.
+ * @example
+ *  gm.histogram(tSrc);
+ * @example
+ *  const op = gm.histogram(tSrc);
+ * // ... init, run, read into tOut, see Get Started for details ...
+ * tOut.get(0, 0, 0); // get n of entires for lowest value in red channel
+ * tOut.get(0, tOut.shape[1] - 1, 4); // get n of entries for highest value in "alpha" channel
  * @param {Tensor} tSrc - Input image
- * @param {number} layers - Number of layers for a parallel reduction
- * @param {number} [min] - Minimal value of image values
- * @param {number} [max] - Maximum values of image values
+ * @param {number} [layers] -
+ *  Number of layers for a parallel reduction (1 by default), impact the performance
+ * @param {number} [min] - Minimal value in image
+ * @param {number} [max] - Maximum value in image
  * @param {number} [step] - Step between min and max values.
  * @todo Enhance operation to be not sensible to input size and layers count,
- *  now we have danger limit (input width / first layer k) to be less then MAX_TEXUTRE_SIZE.
+ *  now we have danger limit (input width / first layer k) to be less then MAX_TEXTURE_SIZE.
  */
 
 export default (tSrc: InputType, layers = 1, min = 0, max = 1, step = 1 / 255) => {

@@ -2,7 +2,7 @@
  * @license MIT
  * @author Arkadiy Pilguk(apilguk@gmail.com)
  * @author Mihail Zachepilo(mihailzachepilo@gmail.com)
- * Copyright 2018 Peculiar Ventures and Pentatonica.
+ * Copyright 2022 Peculiar Ventures.
  * All rights reserved.
  */
 
@@ -29,10 +29,12 @@ const histEq = (tSrc: InputType, tHist: InputType) => new RegisterOperation('his
 /**
  * @name Histogram Equalization
  * @description
- *  Equalize histogram for given image
+ *  Equalize histogram for given image, result has same dimensions as input image.
+ * @example
+ *  gm.equalizeHistogram(tSrc);
  * @param {Tensor} tSrc - Input image
- * @param {number} parallelReductionLayers -
- *  Number of layers for a parallel reduction of histogram extraction
+ * @param {number} [layers] -
+ *  Number of layers for a parallel reduction of histogram extraction (2 by default)
  */
 
 export default (
