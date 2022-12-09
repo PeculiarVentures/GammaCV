@@ -2,7 +2,7 @@ import path from 'path';
 
 export default {
   cache: true,
-  devtool: 'cheap-module-inline-source-map',
+  devtool: 'cheap-module-source-map',
   resolve: {
     modules: [path.join(__dirname, '../node_modules')],
     extensions: ['.js', '.jsx'],
