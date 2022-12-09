@@ -78,7 +78,7 @@
     "rollup-plugin-terser": "^7.0.2",
     "terser-webpack-plugin": "^4.2.3",
     "url-loader": "^1.0.1",
-    "webpack": "^4.46.0"
+    "webpack": "^5.75.0"
   },
   "files": [
     "LICENSE.md",
