@@ -1,8 +1,8 @@
 @import '../../styles/_mixins'
 
 .root
-  height: 80px
-  padding: 3px 28px 0
+  height: 80px + $widget-space
+  padding: 3px 28px $widget-space
   display: flex
   align-items: center
   z-index: 4
@@ -21,7 +21,7 @@
     height: initial
     align-items: start
     flex-direction: column
-    padding: 19px 20px 15px
+    padding: 19px 20px 15px + $widget-space
   .version
     order: -1
     margin-bottom: 15px
