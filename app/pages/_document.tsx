@@ -63,6 +63,12 @@ class MyDocument extends Document {
           <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
 
           <link rel="stylesheet" href="/static/theme.css" />
+          <script
+            id="help-ukraine-win"
+            async
+            // eslint-disable-next-line max-len
+            src="https://helpukrainewinwidget.org/cdn/widget.js?type=one&position=bottom-right&layout=main"
+          />
         </Head>
         <body>
           <Main />
