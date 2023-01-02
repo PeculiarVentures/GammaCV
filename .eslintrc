@@ -1,5 +1,5 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "env": {
     "browser": true,
     "es6": true,
@@ -35,6 +35,21 @@
       { "blankLine": "any", "prev": ["const", "let", "var"], "next": ["const", "let", "var"]},
       { "blankLine": "always", "prev": "*", "next": "return" }
     ],
-    "global-require": 0
+    "global-require": 0,
+    "import/no-cycle": 0,
+    "operator-linebreak": [0, "after"],
+    "arrow-parens": ["warn", "as-needed", { "requireForBlockBody": true }],
+    "implicit-arrow-linebreak": 0,
+    "no-multiple-empty-lines": 0,
+    "max-len": [0, 140],
+    "no-promise-executor-return": 0,
+    "function-paren-newline": 0,
+    "function-call-argument-newline": 0,
+    "prefer-object-spread": 0,
+    "object-curly-newline": 0,
+    "grouped-accessor-pairs": 0,
+    "default-param-last": 0,
+    "no-self-assign": 0,
+    "func-names": 0
   }
 }
