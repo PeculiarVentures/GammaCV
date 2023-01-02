@@ -77,6 +77,9 @@
     "url-loader": "^4.1.1",
     "webpack": "^5.75.0"
   },
+  "overrides": {
+    "json5": "2.2.2"
+  },
   "files": [
     "LICENSE.md",
     "README.md",
