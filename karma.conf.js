@@ -1,8 +1,12 @@
 const webpackConfig = require('./scripts/webpack.config.js').default;
 
+const isMacOnArm = process.platform === 'darwin' && process.arch === 'arm64';
+
 module.exports = function makeConfig(config) {
   config.set({
-    browsers: ['ChromeHeadlessWithGPU'],
+    browsers: isMacOnArm
+      ? ['ChromeHeadlessWithGPUonMacARM']
+      : ['ChromeHeadlessWithGPU'],
     frameworks: ['mocha'],
     singleRun: !!process.env.SINGLE_RUN,
     preprocessors: {
@@ -26,6 +30,19 @@ module.exports = function makeConfig(config) {
         base: 'ChromeHeadless',
         flags: [
           '--headless',
+          '--hide-scrollbars',
+          '--mute-audio',
+        ],
+      },
+      ChromeHeadlessWithGPUonMacARM: {
+        base: 'Chrome',
+        flags: [
+          '--headless',
+          '--remote-debugging-port=9222',
+          '--use-angle=metal',
+          '--ignore-gpu-blocklist',
+          '--no-sandbox',
+          '--disable-dev-shm-usage',
           '--hide-scrollbars',
           '--mute-audio',
         ],
