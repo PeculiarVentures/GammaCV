@@ -32,7 +32,7 @@ const handleMDFile = (docItem) => {
   fs.copyFileSync(path.join(sourceDirectory, docItem.path), path.join(destinationDirectory, `${docItem.name}.md`));
 };
 
-const renderMDHeading = (title, level = 2, prefix, postfix = '') => `${'#'.repeat(level)} ${prefix ? `${prefix} ` : ''}${title}${postfix ? ` ${postfix}` : ''}\n\n`;
+const renderMDHeading = (title, prefix, level = 2, postfix = '') => `${'#'.repeat(level)} ${prefix ? `${prefix} ` : ''}${title}${postfix ? ` ${postfix}` : ''}\n\n`;
 
 const renderMDParagraph = (text) => `${text}\n\n`;
 
@@ -91,11 +91,11 @@ const renderMDFunctionHeadingPostfix = (params, returns, docsIds) => {
 const renderMDHeadingGroup = (name, type, postfix) => {
   switch (type) {
     case 'class':
-      return renderMDHeading(name, 2, '<span>Class</span>');
+      return renderMDHeading(name, '<span>Class</span>');
     case 'function':
-      return renderMDHeading(name, 2, '<span>Function </span>', postfix);
+      return renderMDHeading(name, '<span>Function </span>', 2, postfix);
     default:
-      return renderMDHeading(name, 2);
+      return renderMDHeading(name);
   }
 };
 
@@ -114,7 +114,7 @@ const renderMDMethods = (methods, docsIds) => {
     const methodPostfix = renderMDFunctionHeadingPostfix(params, returns, docsIds);
     const methodPrefix = scope === 'static' ? '<span>Static</span> ' : '';
 
-    methodsMD.push(renderMDHeading(name, 4, methodPrefix, methodPostfix));
+    methodsMD.push(renderMDHeading(name, methodPrefix, 4, methodPostfix));
 
     if (description) {
       methodsMD.push(renderMDParagraph(description));
@@ -156,17 +156,17 @@ const renderMD = (data, docsIds) => {
     }
 
     if (params && params.length) {
-      out.push(renderMDHeading('Params', 6));
+      out.push(renderMDHeading('Params', '', 6));
       out.push(renderMDParamsTable(params, docsIds));
     }
 
     if (examples && examples.length) {
-      out.push(renderMDHeading('Example', 6));
+      out.push(renderMDHeading('Example', '', 6));
       out.push(renderMDExamples(examples));
     }
 
     if (methods) {
-      out.push(renderMDHeading('Methods', 6));
+      out.push(renderMDHeading('Methods', '', 6));
       out.push(renderMDMethods(methods, docsIds));
     }
   });
