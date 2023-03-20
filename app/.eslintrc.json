@@ -7,6 +7,12 @@
   "extends": [
     "airbnb-typescript"
   ],
+  "plugins": [
+    "jsx-a11y",
+    "import",
+    "react",
+    "react-hooks"
+  ],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
