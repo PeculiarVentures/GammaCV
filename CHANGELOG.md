@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.5.3] - 2023-03-28
+### Changed
+- Bundle updated by updating build tools. No API-breaking changes.
+
 ## [0.5.2] - 2021-05-13
 ### Fixed
 - Fix import-time crash on environments without Canvas and OffscreenCanvas support
