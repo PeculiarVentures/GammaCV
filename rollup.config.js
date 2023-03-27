@@ -10,7 +10,7 @@ const banner = `/**
  * @license MIT
  * @author Arkadiy Pilguk(apilguk@gmail.com)
  * @author Mihail Zachepilo(mihailzachepilo@gmail.com)
- * Copyright 2018 Peculiar Ventures and Pentatonica.
+ * Copyright 2018-2023 Peculiar Ventures.
  * All rights reserved.
  */
 `;
