@@ -1,8 +1,8 @@
-const webpackConfig = require('./scripts/webpack.config.js').default;
+import webpackConfig from './scripts/webpack.config.js';
 
 const isMacOnArm = process.platform === 'darwin' && process.arch === 'arm64';
 
-module.exports = function makeConfig(config) {
+export default function makeConfig(config) {
   config.set({
     browsers: isMacOnArm
       ? ['ChromeHeadlessWithGPUonMacARM']
@@ -50,4 +50,4 @@ module.exports = function makeConfig(config) {
     },
     logLevel: config.LOG_WARN,
   });
-};
+}

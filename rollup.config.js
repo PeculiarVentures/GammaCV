@@ -1,8 +1,8 @@
-import resolve from 'rollup-plugin-node-resolve';
+import resolve from '@rollup/plugin-node-resolve';
 import glsl from 'rollup-plugin-glsl';
-import { terser } from 'rollup-plugin-terser';
-import json from 'rollup-plugin-json';
-import babel from 'rollup-plugin-babel';
+import terser from '@rollup/plugin-terser';
+import json from '@rollup/plugin-json';
+import babel from '@rollup/plugin-babel';
 import { version } from './package.json';
 
 const banner = `/**
@@ -45,8 +45,7 @@ function getConfig(
     input: `lib/${entry}`,
     plugins: [
       resolve({
-        jsnext: true,
-        main: true,
+        mainFields: ['jsnext', 'main'],
       }),
       json(),
       glsl({
@@ -69,14 +68,14 @@ function getConfig(
 export default [
   getConfig(
     'index.js',
-    [babel()],
+    [babel({ babelHelpers: 'bundled' })],
     'dist',
     'index',
     FORMATS.UMD,
   ),
   getConfig(
     'index.js',
-    [babel(), terser(terserOptions)],
+    [babel({ babelHelpers: 'bundled' }), terser(terserOptions)],
     'dist',
     'index.min',
     FORMATS.UMD,
