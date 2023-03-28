@@ -27,4 +27,13 @@ module.exports = {
 
     return config;
   },
+  async redirects() {
+    return [
+      {
+        source: '/docs',
+        destination: '/docs/get_started',
+        permanent: false,
+      },
+    ];
+  },
 };
