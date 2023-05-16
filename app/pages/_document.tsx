@@ -64,10 +64,15 @@ class MyDocument extends Document {
 
           <link rel="stylesheet" href="/static/theme.css" />
           <script
+            dangerouslySetInnerHTML={{
+              __html: '// Disable analytic for "helpukrainewinwidget", since it doesn\'t work properly \n window.__HELPUKRAINEWIDGET_DISABLE_ANALYICS = true;',
+            }}
+          />
+          <script
             id="help-ukraine-win"
             async
             // eslint-disable-next-line max-len
-            src="https://helpukrainewinwidget.org/cdn/widget.js?type=one&position=bottom-right&layout=main"
+            src="https://helpukrainewinwidget.org/cdn/widget.js?type=one&position=bottom-right&layout=collapsed"
           />
         </Head>
         <body>
