@@ -1,6 +1,4 @@
-process.env.CHROME_BIN = require('puppeteer').executablePath();
 const webpackConfig = require('./webpack.config.js').default;
-
 
 module.exports = function makeConfig(config) {
   config.set({
@@ -12,6 +10,14 @@ module.exports = function makeConfig(config) {
     files: [
       '../test/**/*.spec.js',
     ],
+    webpackMiddleware: {
+      stats: 'errors-only',
+      logLevel: 'error',
+    },
+    logLevel: config.LOG_WARN,
+    detectBrowsers: {
+      usePhantomJS: false,
+    },
     plugins: [
       'karma-mocha',
       'karma-webpack',
@@ -22,7 +28,6 @@ module.exports = function makeConfig(config) {
       'karma-safari-launcher',
       'karma-safaritechpreview-launcher',
       'karma-opera-launcher',
-      'karma-phantomjs-launcher',
       'karma-detect-browsers',
     ],
     webpack: webpackConfig,
