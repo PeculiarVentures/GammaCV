@@ -33,6 +33,7 @@ export const SidebarGroup: React.FC<ISidebarGroupProps> = (props, context) => {
           >
             <Link
               href={`/docs/${doc.name}`}
+              legacyBehavior
             >
               <a
                 className={clx({

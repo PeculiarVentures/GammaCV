@@ -19,7 +19,7 @@ export const Header: React.FC<IHeaderProps> = (props: IHeaderProps, context) => 
   const burgerIcon = showSidebar ? 'cross_icon.svg' : 'menu_icon.svg';
 
   const renderDocsLink = () => (
-    <Link href="/docs/get_started">
+    <Link href="/docs/get_started" legacyBehavior>
       <a
         className={clx(
           s.nav_item,
@@ -59,6 +59,7 @@ export const Header: React.FC<IHeaderProps> = (props: IHeaderProps, context) => 
     >
       <Link
         href="/"
+        legacyBehavior
       >
         <a className={s.logo}>
           {match
@@ -71,7 +72,7 @@ export const Header: React.FC<IHeaderProps> = (props: IHeaderProps, context) => 
 
       {match ? renderDisplayDocsButton() : renderDocsLink()}
 
-      <Link href="/examples">
+      <Link href="/examples" legacyBehavior>
         <a
           className={clx(
             s.nav_item,
