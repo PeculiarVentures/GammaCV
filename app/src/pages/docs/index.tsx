@@ -40,6 +40,7 @@ export const DocsPage: React.FC<IDocsPageProps> = (props) => {
         <>
           <a className={s.anchor_link} id={idProp.replace(/ /g, '')}></a>
           <Link
+            legacyBehavior
             href={{
               hash: idProp.replace(/ /g, ''),
               pathname: '/docs/[id]',
@@ -60,7 +61,7 @@ export const DocsPage: React.FC<IDocsPageProps> = (props) => {
     },
     tableHead: () => null,
     link: ({ href, children }) => (
-      <Link href={href}>
+      <Link href={href} legacyBehavior>
         <a className="text_primary">
           {children}
         </a>

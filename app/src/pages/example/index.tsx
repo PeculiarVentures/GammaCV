@@ -513,7 +513,7 @@ export default class ExamplePage
             {intl.getText('example.dontSupport')}
           </Typography>
         </div>
-        <Link href="/examples">
+        <Link href="/examples" legacyBehavior>
           <Button
             size="large"
             color="primary"

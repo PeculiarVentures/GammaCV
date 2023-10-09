@@ -22,6 +22,7 @@ export const ExampleItem: React.FC<IExampleItemProps & React.HTMLAttributes<HTML
   return (
     <Link
       href={`/examples/${path}`}
+      legacyBehavior
     >
       <a
         style={style}
