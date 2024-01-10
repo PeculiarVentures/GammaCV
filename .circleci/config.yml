@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  browser-tools: circleci/browser-tools@1.4.2
+  browser-tools: circleci/browser-tools@1.4.6
 
 aliases:
   - &docker-node-browsers
@@ -43,13 +43,8 @@ jobs:
 
   test:
     docker: *docker-node-browsers
-    environment:
-      CHROME_BIN: /usr/bin/google-chrome
     steps:
-      - browser-tools/install-browser-tools:
-          install-chrome: true
-          install-firefox: false
-          install-geckodriver: false
+      - browser-tools/install-chrome
       - checkout
       - attach_workspace: { at: "." }
       - run: npm run test
