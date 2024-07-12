@@ -32,7 +32,7 @@
     "lib-pintl": "0.0.4",
     "lib-react-components": "^3.1.7",
     "micro-fps": "0.1.2",
-    "next": "13.5.4",
+    "next": "14.1.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
