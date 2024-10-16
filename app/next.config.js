@@ -1,6 +1,7 @@
 const pkg = require('../package.json');
 
 module.exports = {
+  output: 'export',
   env: {
     LIB_VERSION: pkg.version,
   },
