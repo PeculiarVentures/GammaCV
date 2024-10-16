@@ -29,7 +29,7 @@
   "dependencies": {
     "classnames": "^2.3.2",
     "gammacv": "file:../",
-    "lib-pintl": "0.0.4",
+    "lib-pintl": "^0.2.0",
     "lib-react-components": "^3.1.7",
     "micro-fps": "0.1.2",
     "next": "13.5.7",
