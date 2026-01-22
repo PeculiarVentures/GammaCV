@@ -28,6 +28,7 @@ export default function makeConfig(config) {
     customLaunchers: {
       ChromeHeadlessWithGPU: {
         base: 'ChromeHeadless',
+        displayName: 'Chrome GPU',
         flags: [
           '--headless',
           '--hide-scrollbars',
@@ -36,6 +37,7 @@ export default function makeConfig(config) {
       },
       ChromeHeadlessWithGPUonMacARM: {
         base: 'Chrome',
+        displayName: 'Chrome GPU (Mac ARM)',
         flags: [
           '--headless',
           '--remote-debugging-port=9222',
