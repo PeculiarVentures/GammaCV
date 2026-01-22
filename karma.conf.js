@@ -33,11 +33,6 @@ export default function makeConfig(config) {
           '--headless',
           '--hide-scrollbars',
           '--mute-audio',
-          '--use-gl=swiftshader',
-          '--enable-webgl',
-          '--ignore-gpu-blocklist',
-          '--no-sandbox',
-          '--disable-dev-shm-usage',
         ],
       },
       ChromeHeadlessWithGPUonMacARM: {

@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  browser-tools: circleci/browser-tools@1.4.6
+  browser-tools: circleci/browser-tools@2.4.0
 
 aliases:
   - &docker-node-browsers
@@ -44,7 +44,8 @@ jobs:
   test:
     docker: *docker-node-browsers
     steps:
-      - browser-tools/install-chrome
+      - browser-tools/install_browser_tools:
+          chrome_version: 143.0.7499.169
       - checkout
       - attach_workspace: { at: "." }
       - run: npm run test
