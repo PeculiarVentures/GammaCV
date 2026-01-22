@@ -44,7 +44,7 @@ jobs:
   test:
     docker: *docker-node-browsers
     steps:
-      - browser-tools/install_browser_tools:
+      - browser-tools/install_chrome:
           chrome_version: 143.0.7499.169
       - checkout
       - attach_workspace: { at: "." }
