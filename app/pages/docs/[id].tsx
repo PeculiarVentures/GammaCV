@@ -1,9 +1,10 @@
 import React from 'react';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
+import type { IntlContext } from 'lib-pintl';
 import { DocsPage } from '../../src/pages';
 
-const Doc = (props, context) => {
+const Doc = (props: any, context: { intl: IntlContext }) => {
   const { id, data } = props;
   const { intl } = context;
   const TITLE = `${intl.getText('operations', undefined, id)} - GammaCV`;

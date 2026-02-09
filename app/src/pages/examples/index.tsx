@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Typography, TextField, Box } from 'lib-react-components';
 import PropTypes from 'prop-types';
+import type { IntlContext } from 'lib-pintl';
 import { GroupItem } from './group_item';
 import { ExampleItem } from './example_item';
 import s from './index.module.sass';
@@ -9,7 +10,7 @@ interface IExamplesPageProps {
   config: IExampleGroup[];
 }
 
-export const ExamplesPage: React.FC<IExamplesPageProps> = (props, context) => {
+export const ExamplesPage = (props: IExamplesPageProps, context: { intl: IntlContext }) => {
   const { config } = props;
   const { intl } = context;
   const [searchValue, setSearchValue] = useState('');

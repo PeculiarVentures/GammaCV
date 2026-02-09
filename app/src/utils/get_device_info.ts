@@ -7,6 +7,13 @@ export interface IDeviceInfo {
 }
 
 export const getDeviceInfo = (): IDeviceInfo => {
+  if (typeof window === 'undefined') {
+    return {
+      type: 'desktop',
+      width: 1280,
+      height: 720,
+    };
+  }
   const { innerWidth, innerHeight } = window;
   let type: TDeviceType = 'desktop';
 

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
+import type { IntlContext } from 'lib-pintl';
 import { CircularProgress } from 'lib-react-components';
 
-const Example = (props, context) => {
+const Example = (props: any, context: { intl: IntlContext }) => {
   const { id, description } = props;
   const { intl } = context;
   const [loading, setLoading] = useState(true);

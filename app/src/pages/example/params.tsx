@@ -3,6 +3,7 @@ import {
   Typography, Slider, Select, Box, Button,
 } from 'lib-react-components';
 import PropTypes from 'prop-types';
+import type { IntlContext } from 'lib-pintl';
 import s from './params.module.sass';
 
 interface IParamsWrapperProps {
@@ -14,6 +15,8 @@ interface IParamsWrapperProps {
   isMobile: boolean;
 }
 export default class ParamsWrapper extends React.Component<IParamsWrapperProps> {
+  context!: { intl: IntlContext };
+
   icons = {
     constant: <img src="/static/images/constant_icon.svg" alt="Constant icon" />,
     uniform: <img src="/static/images/uniform_icon.svg" alt="Uniform icon" />,
