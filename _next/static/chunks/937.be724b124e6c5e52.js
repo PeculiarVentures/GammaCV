@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[937],{2937:(e,t,a)=>{a.r(t),a.d(t,{default:()=>s});var n=a(502);let s={op:(e,t)=>{let a=e;return n.QA(a,[t.DILATE.w,t.DILATE.h])},params:{DILATE:{name:"DILATION",w:{name:"W",type:"constant",min:1,max:20,step:1,default:10},h:{name:"H",type:"constant",min:1,max:20,step:1,default:10}}}}}}]);

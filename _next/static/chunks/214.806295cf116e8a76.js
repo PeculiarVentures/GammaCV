@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[214],{1214:(e,t,r)=>{r.r(t),r.d(t,{default:()=>l});var u=r(502);let l={init:(e,t)=>{let r=u.Uj(e);return t.feedDict({prevFrame:r}),{prevFrame:r}},op:e=>u.wg(e),tick(e,t){let{canvas:r,operation:l,output:n,session:p,context:a,input:c}=t;e%5==0?u.tu(c,a.prevFrame):p.runOp(l,e,n),u.nD(r,n)}}}}]);
