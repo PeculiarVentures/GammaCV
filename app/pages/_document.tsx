@@ -61,19 +61,7 @@ class MyDocument extends Document {
         <Head>
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
-
           <link rel="stylesheet" href="/static/theme.css" />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: '// Disable analytic for "helpukrainewinwidget", since it doesn\'t work properly \n window.__HELPUKRAINEWIDGET_DISABLE_ANALYICS = true;',
-            }}
-          />
-          <script
-            id="help-ukraine-win"
-            async
-            // eslint-disable-next-line max-len
-            src="https://helpukrainewinwidget.org/cdn/widget.js?type=one&position=bottom-right&layout=collapsed"
-          />
         </Head>
         <body>
           <Main />
