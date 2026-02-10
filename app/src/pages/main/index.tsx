@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, Box } from 'lib-react-components';
+import { IntlContext } from 'lib-pintl';
 import s from './index.module.sass';
 
 const facts = [
@@ -21,7 +22,7 @@ const facts = [
   },
 ];
 
-export const MainPage = (props, context) => {
+export const MainPage = (_: unknown, context: { intl: IntlContext }) => {
   const { intl } = context;
 
   return (

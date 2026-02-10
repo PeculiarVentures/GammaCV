@@ -5,6 +5,7 @@ import {
   Button,
   CircularProgress,
 } from 'lib-react-components';
+import type { IntlContext } from 'lib-pintl';
 import Link from 'next/link';
 import clx from 'classnames';
 import microFps from 'micro-fps';
@@ -43,7 +44,9 @@ interface IExamplePageState {
 }
 
 export default class ExamplePage
-  extends React.Component<IExamplePageProps, IExamplePageState> {
+  extends React.Component<IExamplePageProps, IExamplePageState, { intl: IntlContext }> {
+  context!: { intl: IntlContext };
+
   timeout = null;
 
   timeoutRequestAnimation = null;
@@ -172,6 +175,12 @@ export default class ExamplePage
     if (!error) {
       this.start();
     }
+
+    const device = getDeviceInfo();
+    this.setState({
+      device,
+      showParams: device.type !== 'mobile',
+    });
   }
 
   componentWillUnmount() {
