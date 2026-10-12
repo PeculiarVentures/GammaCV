@@ -33,6 +33,12 @@ export default function makeConfig(config) {
           '--headless',
           '--hide-scrollbars',
           '--mute-audio',
+          // CircleCI's Linux containers need software rendering for WebGL.
+          ...(process.env.CIRCLECI && process.platform === 'linux' ? [
+            '--use-gl=angle',
+            '--use-angle=swiftshader-webgl',
+            '--enable-unsafe-swiftshader',
+          ] : []),
         ],
       },
       ChromeHeadlessWithGPUonMacARM: {
