@@ -44,11 +44,15 @@ jobs:
   test:
     docker: *docker-node-browsers
     steps:
-      - browser-tools/install_chrome:
-          chrome_version: 143.0.7499.169
+      - browser-tools/install_chrome_for_testing:
+          version: "143.0.7499.169"
+          install_chromedriver: false
       - checkout
       - attach_workspace: { at: "." }
-      - run: npm run test
+      - run:
+          command: npm run test
+          environment:
+            CHROME_BIN: /usr/local/bin/chrome
   
   build_app:
     docker: *docker-node-browsers
